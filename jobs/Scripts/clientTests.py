@@ -90,18 +90,23 @@ def start_client_side_tests(args, case, process, script_path, last_log_line, aud
 
         # Client init communication:
         # 1. Client sends 'ready' to server
-        # 2. Server sends 'ready' to client
+        # 2. Server sends 'windows' or 'ubuntu' to client
         # 3. Client starts doing actions
 
-        if response == "ready":
+        if response == "windows" or response == "ubuntu":
             # get list of actions for the current game / benchmark
-            actions_key = "{}_actions".format(game_name.lower())
+            if response == "windows"
+                actions_key = "{}_actions".format(game_name.lower())
+            else:
+                actions_key = "{}_actions_ubuntu".format(game_name.lower())
+
             if actions_key in case:
                 actions = case[actions_key]
             else:
                 # use default list of actions if some specific list of actions doesn't exist
                 with open(os.path.abspath(args.common_actions_path), "r", encoding="utf-8") as common_actions_file:
-                    actions = json.load(common_actions_file)[actions_key]
+                    if response == "windows":
+                        actions = json.load(common_actions_file)[actions_key]
 
             # Replacing record_video command to record_audio
             if "-microphone true" in case["server_keys"].lower():

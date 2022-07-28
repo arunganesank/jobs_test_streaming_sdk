@@ -6,20 +6,26 @@ import zipfile
 import subprocess
 from subprocess import PIPE, STDOUT
 import shlex
-import win32api
 import sys
 import traceback
 from shutil import copyfile
 from datetime import datetime
 import pydirectinput, pyautogui
-import win32gui
-import win32con
 import pyshark
 import json
 import multiprocessing
+import platform
 from threading import Thread
 from PIL import Image
 from grayArtifacts import check_artifacts
+
+if platform.system == "Windows":
+    import win32api
+    import win32gui
+    import win32con
+else:
+    import Tkinter
+
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
@@ -71,33 +77,36 @@ def close_process(process):
 
 
 def collect_traces(archive_path, archive_name):
-    gpuview_path = os.getenv("GPUVIEW_PATH")
-    executable_name = "log_extended.cmd"
-    target_name = "Merged.etl"
+    if platform.system == "Windows":
+        gpuview_path = os.getenv("GPUVIEW_PATH")
+        executable_name = "log_extended.cmd"
+        target_name = "Merged.etl"
 
-    try:
-        for filename in glob(os.path.join(gpuview_path, "*.etl")):
-            os.remove(filename)
-    except Exception:
-        pass
+        try:
+            for filename in glob(os.path.join(gpuview_path, "*.etl")):
+                os.remove(filename)
+        except Exception:
+            pass
 
-    script = "powershell \"Start-Process cmd '/k cd \"{}\" && .\\log_extended.cmd & exit 0' -Verb RunAs\"".format(gpuview_path)
+        script = "powershell \"Start-Process cmd '/k cd \"{}\" && .\\log_extended.cmd & exit 0' -Verb RunAs\"".format(gpuview_path)
 
-    proc = psutil.Popen(script, stdout=PIPE, stderr=PIPE, shell=True)
+        proc = psutil.Popen(script, stdout=PIPE, stderr=PIPE, shell=True)
 
-    target_path = os.path.join(gpuview_path, target_name)
+        target_path = os.path.join(gpuview_path, target_name)
 
-    start_time = datetime.now()
+        start_time = datetime.now()
 
-    while (datetime.now() - start_time).total_seconds() <= 30:
-        if os.path.exists(target_path):
-            sleep(5)
-            break
+        while (datetime.now() - start_time).total_seconds() <= 30:
+            if os.path.exists(target_path):
+                sleep(5)
+                break
+        else:
+            raise Exception("Could not find etl file by path {}".format(target_path))
+
+        with zipfile.ZipFile(os.path.join(archive_path, archive_name), "w", zipfile.ZIP_DEFLATED) as archive:
+            archive.write(target_path, arcname=target_name)
     else:
-        raise Exception("Could not find etl file by path {}".format(target_path))
-
-    with zipfile.ZipFile(os.path.join(archive_path, archive_name), "w", zipfile.ZIP_DEFLATED) as archive:
-        archive.write(target_path, arcname=target_name)
+        raise Exception("Traces collecting aren't supported on Ubuntu")
 
 
 def parse_arguments(arguments):
@@ -132,22 +141,22 @@ def close_streaming_process(execution_type, case, process):
 
             main_logger.info("Finish closing")
 
-            # additional try to kill Streaming SDK server/client (to be sure that all processes are closed)
-            subprocess.call("taskkill /f /im RemoteGameClient.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
-            subprocess.call("taskkill /f /im RemoteGameServer.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
+            if platform.system == "Windows":
+                # additional try to kill Streaming SDK server/client (to be sure that all processes are closed)
+                subprocess.call("taskkill /f /im RemoteGameClient.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
+                subprocess.call("taskkill /f /im RemoteGameServer.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
 
-            if execution_type == "server":
-                crash_window = win32gui.FindWindow(None, "RemoteGameServer.exe")
-            else:
-                crash_window = win32gui.FindWindow(None, "RemoteGameClient.exe")
+                if execution_type == "server":
+                    crash_window = win32gui.FindWindow(None, "RemoteGameServer.exe")
+                else:
+                    crash_window = win32gui.FindWindow(None, "RemoteGameClient.exe")
 
-            if crash_window:
-                main_logger.info("Crash window was found. Closing it...")
-                win32gui.PostMessage(crash_window, win32con.WM_CLOSE, 0, 0)
+                if crash_window:
+                    main_logger.info("Crash window was found. Closing it...")
+                    win32gui.PostMessage(crash_window, win32con.WM_CLOSE, 0, 0)
 
             process = None
 
-        if process:
             main_logger.info("StreamingSDK instance was killed")
         else:
             main_logger.info("Keep StreamingSDK instance")
@@ -281,8 +290,6 @@ def start_streaming(execution_type, script_path):
 
     main_logger.info("Start Streaming SDK")
 
-    main_logger.info("Screen resolution: width = {}, height = {}".format(win32api.GetSystemMetrics(0), win32api.GetSystemMetrics(1)))
-
     return process
 
 
@@ -291,6 +298,7 @@ def collect_iperf_info(args, log_name_base):
     current_dir = os.getcwd()
 
     try:
+        #TODO: add support for Ubuntu
         logs_path = os.path.join(args.output, "tool_logs")
 
         # change current dir to dir with iperf
@@ -316,8 +324,14 @@ def collect_iperf_info(args, log_name_base):
 
 
 def close_game(game_name):
-    edge_x = win32api.GetSystemMetrics(0)
-    edge_y = win32api.GetSystemMetrics(1)
+    if platform.system == "Windows":
+        edge_x = win32api.GetSystemMetrics(0)
+        edge_y = win32api.GetSystemMetrics(1)
+    else:
+        root = Tkinter.Tk()
+        edge_x = root.winfo_screenwidth()
+        edge_y = root.winfo_screenheight()
+
     center_x = edge_x / 2
     center_y = edge_y / 2
 
@@ -410,7 +424,10 @@ def execute_adb_command(command, return_output=False):
 
 
 def track_used_memory(case, execution_type):
-    process_name = "RemoteGameClient.exe" if execution_type == "client" else "RemoteGameServer.exe"
+    if platform.system == "Windows":
+        process_name = "RemoteGameClient.exe" if execution_type == "client" else "RemoteGameServer.exe"
+    else:
+        process_name = "RemoteGameClient" if execution_type == "client" else "RemoteGameServer"
 
     for process in psutil.process_iter():
         if process.name() == process_name:
@@ -539,17 +556,20 @@ def contains_encryption_errors(error_messages):
 
 
 def start_clumsy(keys, client_ip=None, server_ip=None, android_ip=None, second_client_ip=None):
-    script = "powershell \"Start-Process cmd '/k clumsy.exe {} & exit 0' -Verb RunAs\"".format(keys.replace("\"", "\\\""))
+    if platform.system == "Windows":
+        script = "powershell \"Start-Process cmd '/k clumsy.exe {} & exit 0' -Verb RunAs\"".format(keys.replace("\"", "\\\""))
 
-    ips = {"client_ip": client_ip, "server_ip": server_ip, "android_ip": android_ip, "second_client_ip": second_client_ip}
+        ips = {"client_ip": client_ip, "server_ip": server_ip, "android_ip": android_ip, "second_client_ip": second_client_ip}
 
-    for ip_key, ip_value in ips.items():
-        if ip_value is not None:
-            script = script.replace("<{}>".format(ip_key), ip_value)
+        for ip_key, ip_value in ips.items():
+            if ip_value is not None:
+                script = script.replace("<{}>".format(ip_key), ip_value)
 
-    psutil.Popen(script, stdout=PIPE, stderr=PIPE, shell=True)
+        psutil.Popen(script, stdout=PIPE, stderr=PIPE, shell=True)
 
-    sleep(1.5)
+        sleep(1.5)
+    else:
+        raise Exception("Clumsy isn't supported on Ubuntu")
 
 
 def close_clumsy():

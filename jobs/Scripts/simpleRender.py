@@ -17,7 +17,6 @@ from pyffmpeg import FFmpeg
 import copy
 import traceback
 import time
-import win32api
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
@@ -354,7 +353,10 @@ def execute_tests(args, current_conf):
                     keys_description = "Client keys: {}".format(prepared_keys)
                     case["script_info"].append(keys_description)
 
-                script_path = os.path.join(args.output, "{}.bat".format(case["case"]))
+                if platform.system == "Windows":
+                    script_path = os.path.join(args.output, "{}.bat".format(case["case"]))
+                else:
+                    script_path = os.path.join(args.output, "{}.sh".format(case["case"]))
 
                 with open(script_path, "w") as f:
                     f.write(execution_script)
