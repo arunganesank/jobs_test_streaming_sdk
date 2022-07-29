@@ -11,6 +11,7 @@ from utils import parse_arguments, execute_adb_command, get_mc_config, close_clu
 from actions import *
 import base64
 import keyboard
+import platform
 
 if platform.system() == "Windows":
     import win32gui
