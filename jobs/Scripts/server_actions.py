@@ -7,7 +7,6 @@ from subprocess import PIPE
 import traceback
 import pyautogui
 import keyboard
-from pyffmpeg import FFmpeg
 from threading import Thread
 from utils import *
 from actions import *
@@ -16,6 +15,7 @@ import platform
 if platform.system() == "Windows":
     import win32gui
     import win32api
+    from pyffmpeg import FFmpeg
 else:
     from gi.repository import Wnck
 

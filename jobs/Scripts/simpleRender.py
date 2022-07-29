@@ -13,10 +13,12 @@ from serverTests import start_server_side_tests
 from queue import Queue
 from subprocess import PIPE, STDOUT
 from threading import Thread
-from pyffmpeg import FFmpeg
 import copy
 import traceback
 import time
+
+if platform.system() == "Windows":
+    from pyffmpeg import FFmpeg
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
