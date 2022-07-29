@@ -14,7 +14,7 @@ from utils import *
 from actions import *
 import platform
 
-if platform.system == "Windows":
+if platform.system() == "Windows":
     import win32gui
     import win32api
 else:
@@ -56,7 +56,7 @@ class CheckWindow(Action):
     def execute(self):
         result = False
 
-        if platform.system == "Windows":
+        if platform.system() == "Windows":
             window = win32gui.FindWindow(None, self.window_name)
 
             if window is not None and window != 0:

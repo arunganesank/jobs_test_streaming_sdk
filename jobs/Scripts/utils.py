@@ -19,7 +19,7 @@ from threading import Thread
 from PIL import Image
 from grayArtifacts import check_artifacts
 
-if platform.system == "Windows":
+if platform.system() == "Windows":
     import win32api
     import win32gui
     import win32con
@@ -77,7 +77,7 @@ def close_process(process):
 
 
 def collect_traces(archive_path, archive_name):
-    if platform.system == "Windows":
+    if platform.system() == "Windows":
         gpuview_path = os.getenv("GPUVIEW_PATH")
         executable_name = "log_extended.cmd"
         target_name = "Merged.etl"
@@ -141,7 +141,7 @@ def close_streaming_process(execution_type, case, process):
 
             main_logger.info("Finish closing")
 
-            if platform.system == "Windows":
+            if platform.system() == "Windows":
                 # additional try to kill Streaming SDK server/client (to be sure that all processes are closed)
                 subprocess.call("taskkill /f /im RemoteGameClient.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
                 subprocess.call("taskkill /f /im RemoteGameServer.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
@@ -324,7 +324,7 @@ def collect_iperf_info(args, log_name_base):
 
 
 def close_game(game_name):
-    if platform.system == "Windows":
+    if platform.system() == "Windows":
         edge_x = win32api.GetSystemMetrics(0)
         edge_y = win32api.GetSystemMetrics(1)
     else:
@@ -424,7 +424,7 @@ def execute_adb_command(command, return_output=False):
 
 
 def track_used_memory(case, execution_type):
-    if platform.system == "Windows":
+    if platform.system() == "Windows":
         process_name = "RemoteGameClient.exe" if execution_type == "client" else "RemoteGameServer.exe"
     else:
         process_name = "RemoteGameClient" if execution_type == "client" else "RemoteGameServer"
@@ -556,7 +556,7 @@ def contains_encryption_errors(error_messages):
 
 
 def start_clumsy(keys, client_ip=None, server_ip=None, android_ip=None, second_client_ip=None):
-    if platform.system == "Windows":
+    if platform.system() == "Windows":
         script = "powershell \"Start-Process cmd '/k clumsy.exe {} & exit 0' -Verb RunAs\"".format(keys.replace("\"", "\\\""))
 
         ips = {"client_ip": client_ip, "server_ip": server_ip, "android_ip": android_ip, "second_client_ip": second_client_ip}

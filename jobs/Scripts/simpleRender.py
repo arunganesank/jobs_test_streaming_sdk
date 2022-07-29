@@ -353,7 +353,7 @@ def execute_tests(args, current_conf):
                     keys_description = "Client keys: {}".format(prepared_keys)
                     case["script_info"].append(keys_description)
 
-                if platform.system == "Windows":
+                if platform.system() == "Windows":
                     script_path = os.path.join(args.output, "{}.bat".format(case["case"]))
                 else:
                     script_path = os.path.join(args.output, "{}.sh".format(case["case"]))
