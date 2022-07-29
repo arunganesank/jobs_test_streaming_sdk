@@ -23,9 +23,6 @@ if platform.system() == "Windows":
     import win32api
     import win32gui
     import win32con
-else:
-    import Tkinter
-
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
@@ -328,9 +325,9 @@ def close_game(game_name):
         edge_x = win32api.GetSystemMetrics(0)
         edge_y = win32api.GetSystemMetrics(1)
     else:
-        root = Tkinter.Tk()
-        edge_x = root.winfo_screenwidth()
-        edge_y = root.winfo_screenheight()
+        process = subprocess.Popen("xdpyinfo | awk '/dimensions/{print $2}'", stdout=PIPE)
+        stdout, stderr = process.communicate()
+        edge_x, edge_y = stdout.strip().split("x")
 
     center_x = edge_x / 2
     center_y = edge_y / 2

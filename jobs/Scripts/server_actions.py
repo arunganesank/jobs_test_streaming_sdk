@@ -17,7 +17,6 @@ if platform.system() == "Windows":
     import win32gui
     import win32api
 else:
-    import Tkinter
     from gi.repository import Wnck
 
 csgoFirstExec = True
@@ -314,9 +313,9 @@ class ClickServer(Action):
             edge_x = win32api.GetSystemMetrics(0)
             edge_y = win32api.GetSystemMetrics(1)
         else:
-            root = Tkinter.Tk()
-            edge_x = root.winfo_screenwidth()
-            edge_y = root.winfo_screenheight()
+            process = subprocess.Popen("xdpyinfo | awk '/dimensions/{print $2}'", stdout=PIPE)
+            stdout, stderr = process.communicate()
+            edge_x, edge_y = stdout.strip().split("x")
 
         if "center_" in self.x_description:
             x = edge_x / 2 + int(self.x_description.replace("center_", ""))
@@ -399,9 +398,9 @@ class DoTestActions(Action):
                     edge_x = win32api.GetSystemMetrics(0)
                     edge_y = win32api.GetSystemMetrics(1)
                 else:
-                    root = Tkinter.Tk()
-                    edge_x = root.winfo_screenwidth()
-                    edge_y = root.winfo_screenheight()
+                    process = subprocess.Popen("xdpyinfo | awk '/dimensions/{print $2}'", stdout=PIPE)
+                    stdout, stderr = process.communicate()
+                    edge_x, edge_y = stdout.strip().split("x")
 
                 center_x = edge_x / 2
                 center_y = edge_y / 2
