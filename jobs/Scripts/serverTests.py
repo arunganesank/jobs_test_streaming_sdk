@@ -6,8 +6,6 @@ from time import sleep, time
 import psutil
 from subprocess import PIPE
 import traceback
-import win32gui
-import win32api
 import shlex
 import pyautogui
 from utils import *
@@ -17,6 +15,7 @@ from instance_state import ServerInstanceState
 from server_actions import *
 import android_actions
 from analyzeLogs import analyze_logs
+
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
