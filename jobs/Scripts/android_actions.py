@@ -5,8 +5,6 @@ import psutil
 import subprocess
 from subprocess import PIPE
 import traceback
-import win32gui
-import win32api
 import pyautogui
 from pyffmpeg import FFmpeg
 from threading import Thread
@@ -15,6 +13,10 @@ from actions import *
 import base64
 import keyboard
 from pyffmpeg import FFmpeg
+
+if platform.system() == "Windows":
+    import win32gui
+    import win32api
 
 pyautogui.FAILSAFE = False
 MC_CONFIG = get_mc_config()
