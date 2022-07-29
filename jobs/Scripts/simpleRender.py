@@ -310,7 +310,7 @@ def execute_tests(args, current_conf):
             error_messages = set()
 
             try:
-                if system.platform() == "Windows":
+                if platform.system() == "Windows":
                     if args.execution_type == "server":
                         # copy settings.json to update transport protocol using by server instance
                         settings_json_path = os.path.join(os.getenv("APPDATA"), "..", "Local", "AMD", "RemoteGameServer", "settings", "settings.json")
