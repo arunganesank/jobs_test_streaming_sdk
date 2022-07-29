@@ -10,7 +10,6 @@ import win32gui
 import win32api
 import shlex
 import pyautogui
-import pydirectinput
 from utils import *
 from threading import Thread
 import re
@@ -121,7 +120,7 @@ def start_server_side_tests(args, case, process, android_client_closed, script_p
     # some games can kick by AFK reason
     # press space before each test case to prevent it
     if game_name in GAMES_WITH_TIMEOUTS:
-        pydirectinput.press("space")
+        pyautogui.press("space")
 
     params = {}
     processes = {}
