@@ -95,7 +95,7 @@ def start_client_side_tests(args, case, process, script_path, last_log_line, aud
 
         if response == "windows" or response == "ubuntu":
             # get list of actions for the current game / benchmark
-            if response == "windows"
+            if response == "windows":
                 actions_key = "{}_actions".format(game_name.lower())
             else:
                 actions_key = "{}_actions_ubuntu".format(game_name.lower())
