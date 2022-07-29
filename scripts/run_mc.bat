@@ -10,6 +10,6 @@ for /f %%i in ('python get_screen_resolution.py') do set SCREEN_RESOLUTION=%%i
 python prepare_xmls.py --os_name "MC"
 python prepare_test_cases.py --os_name "Windows"
 
-python -m pip install -r ../jobs_launcher/install/requirements-win.txt
+python -m pip install -r requirements-win.txt
 
 python ..\jobs_launcher\executeTests.py --test_filter %TESTS_FILTER% --file_filter %FILE_FILTER% --tests_root ..\jobs --work_root ..\Work\Results --work_dir StreamingSDK --cmd_variables clientTool "..\StreamingSDK\RemoteGameClient.exe" ipAddress %IP_ADDRESS% communicationPort %COMMUNICATION_PORT% serverGPUName %SERVER_GPU_NAME% serverOSName %SERVER_OS_NAME% screenResolution %SCREEN_RESOLUTION%
