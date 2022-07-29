@@ -6,11 +6,11 @@ import pyscreenshot
 import json
 from threading import Thread
 from utils import *
-import win32api
 from actions import *
 
 if platform.system() == "Windows":
     from pyffmpeg import FFmpeg
+    import win32api
 
 pyautogui.FAILSAFE = False
 MC_CONFIG = get_mc_config()
