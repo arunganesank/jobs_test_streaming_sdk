@@ -86,6 +86,7 @@ def start_server_side_tests(args, case, process, android_client_closed, script_p
 
     # configure socket
     sock = socket.socket()
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.bind(("", int(args.communication_port)))
     # max one connection
     if args.test_group in MC_CONFIG["second_win_client"]:
