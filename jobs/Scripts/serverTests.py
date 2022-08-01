@@ -328,6 +328,8 @@ def start_server_side_tests(args, case, process, android_client_closed, script_p
         if args.test_group in MC_CONFIG["second_win_client"]:
             connection_sc.close()
 
+        sock.close()
+
         # restart game if it's required
         global REBOOTING_GAMES
         
