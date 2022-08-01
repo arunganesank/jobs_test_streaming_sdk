@@ -11,6 +11,7 @@ import pyautogui
 from utils import *
 from threading import Thread
 import re
+import platform
 from instance_state import ServerInstanceState
 from server_actions import *
 import android_actions
@@ -151,7 +152,10 @@ def start_server_side_tests(args, case, process, android_client_closed, script_p
             # non-blocking usage
             connection.setblocking(False)
 
-            connection.send("ready".encode("utf-8"))
+            if platform.system() == "Windows":
+                connection.send("windows".encode("utf-8"))
+            else:
+                connection.send("ubuntu".encode("utf-8"))
 
             # build params dict with all necessary variables for test actions
             params["output_path"] = output_path
