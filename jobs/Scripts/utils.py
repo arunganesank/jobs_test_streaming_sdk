@@ -328,6 +328,8 @@ def close_game(game_name):
         process = subprocess.Popen("xdpyinfo | awk '/dimensions/{print $2}'", stdout=PIPE, shell=True)
         stdout, stderr = process.communicate()
         edge_x, edge_y = stdout.decode("utf-8").strip().split("x")
+        edge_x = int(edge_x)
+        edge_y = int(edge_y)
 
     center_x = edge_x / 2
     center_y = edge_y / 2
