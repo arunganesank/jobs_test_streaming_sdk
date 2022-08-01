@@ -325,9 +325,9 @@ def close_game(game_name):
         edge_x = win32api.GetSystemMetrics(0)
         edge_y = win32api.GetSystemMetrics(1)
     else:
-        process = subprocess.Popen("xdpyinfo | awk '/dimensions/{print $2}'", stdout=PIPE)
+        process = subprocess.Popen("xdpyinfo | awk '/dimensions/{print $2}'", stdout=PIPE, shell=True)
         stdout, stderr = process.communicate()
-        edge_x, edge_y = stdout.strip().split("x")
+        edge_x, edge_y = stdout.decode("utf-8").strip().split("x")
 
     center_x = edge_x / 2
     center_y = edge_y / 2
