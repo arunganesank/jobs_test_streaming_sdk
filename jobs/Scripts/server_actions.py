@@ -16,8 +16,6 @@ if platform.system() == "Windows":
     import win32gui
     import win32api
     from pyffmpeg import FFmpeg
-else:
-    from gi.repository import Wnck
 
 csgoFirstExec = True
 pyautogui.FAILSAFE = False
@@ -54,41 +52,40 @@ class CheckWindow(Action):
     def execute(self):
         result = False
 
-        if platform.system() == "Windows":
-            window = win32gui.FindWindow(None, self.window_name)
+        if self.window_name:
+            if platform.system() == "Windows":
+                window = win32gui.FindWindow(None, self.window_name)
 
-            if window is not None and window != 0:
-                self.logger.info("Window {} was succesfully found".format(self.window_name))
-
-                if self.is_game:
-                    make_game_foreground(self.game_name, self.logger)
-            else:
-                self.logger.error("Window {} wasn't found at all".format(self.window_name))
-                return False
-        else:
-            screen = Wnck.Screen.get_default()
-            screen.force_update()
-            windows = screen.get_windows()
-
-            for window in windows:
-                self.logger.info(window.get_name())
-                self.logger.info(self.window_name)
-                if window.get_name() == self.window_name:
+                if window is not None and window != 0:
                     self.logger.info("Window {} was succesfully found".format(self.window_name))
+
+                    if self.is_game:
+                        make_game_foreground(self.game_name, self.logger)
+                else:
+                    self.logger.error("Window {} wasn't found at all".format(self.window_name))
+                    return False
+            else:
+                process = subprocess.Popen("wmctrl -l | awk '{print $4}'", stdout=PIPE, shell=True)
+                stdout, stderr = process.communicate()
+                windows = stdout.trim().split("\n")
+
+                for window in windows:
+                    if window == self.window_name:
+                        self.logger.info("Window {} was succesfully found".format(self.window_name))
+                        break
+                else:
+                    self.logger.error("Window {} wasn't found at all".format(self.window_name))
+                    return False
+
+            for process in psutil.process_iter():
+                if self.process_name in process.name():
+                    self.logger.info("Process {} was succesfully found".format(self.process_name))
+                    self.processes[self.process_name] = process
+                    result = True
                     break
             else:
-                self.logger.error("Window {} wasn't found at all".format(self.window_name))
-                return False
-
-        for process in psutil.process_iter():
-            if self.process_name in process.name():
-                self.logger.info("Process {} was succesfully found".format(self.process_name))
-                self.processes[self.process_name] = process
-                result = True
-                break
-        else:
-            self.logger.info("Process {} wasn't found at all".format(self.process_name))
-            result = False
+                self.logger.info("Process {} wasn't found at all".format(self.process_name))
+                result = False
 
         return result
 

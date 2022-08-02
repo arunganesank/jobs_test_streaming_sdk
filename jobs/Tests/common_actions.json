@@ -279,14 +279,14 @@
 
     "heavendx9_actions_ubuntu": [
         "check_window \"Unigine Heaven Benchmark 4.0 (Basic Edition)\" \"browser_x64\"",
-        "check_game \"Unigine Heaven Benchmark 4.0 Basic (Direct3D9)\" \"heaven_x64\"",
+        "check_game \"\" \"heaven_x64\"",
         "skip_if_done 8",
         "execute_cmd \"/scripts/launch_heaven\"",
         "sleep 6",
         "click_server center_305 center_175",
         "sleep 15",
         "check_window \"Unigine Heaven Benchmark 4.0 (Basic Edition)\" \"browser_x64\"",
-        "check_game \"Unigine Heaven Benchmark 4.0 Basic (Direct3D9)\" \"heaven_x64\"",
+        "check_game \"\" \"heaven_x64\"",
 
         "start_streaming",
         "sleep 4",
