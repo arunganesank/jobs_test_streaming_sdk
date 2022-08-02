@@ -77,15 +77,15 @@ class CheckWindow(Action):
                     self.logger.error("Window {} wasn't found at all".format(self.window_name))
                     return False
 
-            for process in psutil.process_iter():
-                if self.process_name in process.name():
-                    self.logger.info("Process {} was succesfully found".format(self.process_name))
-                    self.processes[self.process_name] = process
-                    result = True
-                    break
-            else:
-                self.logger.info("Process {} wasn't found at all".format(self.process_name))
-                result = False
+        for process in psutil.process_iter():
+            if self.process_name in process.name():
+                self.logger.info("Process {} was succesfully found".format(self.process_name))
+                self.processes[self.process_name] = process
+                result = True
+                break
+        else:
+            self.logger.info("Process {} wasn't found at all".format(self.process_name))
+            result = False
 
         return result
 
