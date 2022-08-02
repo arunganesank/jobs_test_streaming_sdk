@@ -65,9 +65,9 @@ class CheckWindow(Action):
                     self.logger.error("Window {} wasn't found at all".format(self.window_name))
                     return False
             else:
-                process = subprocess.Popen("wmctrl -l | awk '{print $4}'", stdout=PIPE, shell=True)
+                process = subprocess.Popen("wmctrl -l", stdout=PIPE, shell=True)
                 stdout, stderr = process.communicate()
-                windows = stdout.trim().split("\n")
+                windows = [" ".join(x.split()[3::]) for x in stdout.decode("utf-8").strip().split("\n")]
 
                 for window in windows:
                     if window == self.window_name:
