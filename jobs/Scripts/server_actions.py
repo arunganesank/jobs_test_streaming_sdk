@@ -71,6 +71,8 @@ class CheckWindow(Action):
             windows = screen.get_windows()
 
             for window in windows:
+                self.logger.info(window.get_name())
+                self.logger.info(self.window_name)
                 if window.get_name() == self.window_name:
                     self.logger.info("Window {} was succesfully found".format(self.window_name))
                     break
