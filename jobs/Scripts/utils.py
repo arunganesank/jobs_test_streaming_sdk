@@ -291,11 +291,16 @@ def start_streaming(execution_type, script_path):
 
 
 def collect_iperf_info(args, log_name_base):
-    iperf_base_path = "C:\\iperf"
+    if platform.system() == "Windows":
+        iperf_base_path = "C:\\iperf"
+        server_executable_name = "ServerTrafficListener.bat"
+    else:
+        iperf_base_path = os.getenv("IPERF_PATH")
+        server_executable_name = "./ServerTrafficListener.sh"
+
     current_dir = os.getcwd()
 
     try:
-        #TODO: add support for Ubuntu
         logs_path = os.path.join(args.output, "tool_logs")
 
         # change current dir to dir with iperf
@@ -303,7 +308,7 @@ def collect_iperf_info(args, log_name_base):
 
         if args.execution_type == "server":
             # run iperf scripts
-            proc = psutil.Popen("ServerTrafficListener.bat", stdout=PIPE, stderr=PIPE, shell=True)
+            proc = psutil.Popen(server_executable_name, stdout=PIPE, stderr=PIPE, shell=True)
             proc.communicate(timeout=30)
         else:
             # run iperf scripts
