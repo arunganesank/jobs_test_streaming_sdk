@@ -236,8 +236,8 @@ class OpenGame(Action):
                 click("center_-30", "center_-220", self.logger)
                 sleep(15)
                 click("edge_-80", "395", self.logger)
-                sleep(1)
-                click("edge_-160", "595", self.logger)
+                sleep(2)
+                click("edge_-160", "590", self.logger)
                 sleep(1)
             elif self.game_name == "csgo":
                 sleep(30)

@@ -517,8 +517,8 @@
         "click_server center_-30 center_-220",
         "sleep 15",
         "click_server edge_-80 395",
-        "sleep 1",
-        "click_server edge_-160 595",
+        "sleep 2",
+        "click_server edge_-160 590",
         "sleep 1",
         "check_game \"dota2.exe\" \"dota2.exe\"",
 
@@ -582,8 +582,8 @@
         "click_server center_-30 center_-220",
         "sleep 15",
         "click_server edge_-80 395",
-        "sleep 1",
-        "click_server edge_-160 595",
+        "sleep 2",
+        "click_server edge_-160 590",
         "sleep 1",
         "check_game \"dota2.exe\" \"dota2.exe\"",
 
