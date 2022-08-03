@@ -210,12 +210,12 @@ class OpenGame(Action):
                 sleep(1)
                 click("center_-270", "center_-485", self.logger)
                 sleep(1)
-                click("center_-725", "center_255", self.logger)
+                click("center_-725", "center_355", self.logger)
                 sleep(1)
                 if self.game_name == "dota2dx11":
-                    click("center_-725", "center_300", self.logger)
+                    click("center_-725", "center_400", self.logger)
                 else:
-                    click("center_-725", "center_345", self.logger)
+                    click("center_-725", "center_445", self.logger)
                 sleep(1)
                 press_keys("esc", self.logger)
                 sleep(3)
@@ -233,20 +233,18 @@ class OpenGame(Action):
                 sleep(1)
                 click("center_-342", "center_-230", self.logger)
                 sleep(1)
-                click("center_380", "center_-292", self.logger)
+                click("center_-30", "center_-220", self.logger)
                 sleep(15)
-                click("center_-335", "center_427", self.logger)
-                click("center_-335", "center_427", self.logger)
+                click("edge_-80", "395", self.logger)
+                sleep(2)
+                click("edge_-160", "590", self.logger)
                 sleep(1)
-                click("195", "390", self.logger)
-                sleep(1)
-                click("70", "470", self.logger)
-                sleep(1)
-                click("70", "590", self.logger)
             elif self.game_name == "csgo":
                 sleep(30)
                 press_keys("esc", self.logger)
-                sleep(5)
+                sleep(3)
+                press_keys("esc", self.logger)
+                sleep(3)
                 click("center_-919", "center_-437", self.logger)
                 sleep(1)
                 click("center_-662", "center_-463", self.logger)
@@ -314,6 +312,10 @@ def make_game_foreground(game_name, logger):
         icon_path = os.path.join(base_path, "Valorant.png")
     elif "lol" in game_name.lower():
         icon_path = os.path.join(base_path, "LoL.png")
+    elif "dota2" in game_name.lower():
+        icon_path = os.path.join(base_path, "Dota2.png")
+    elif "csgo" in game_name.lower():
+        icon_path = os.path.join(base_path, "CSGO.png")
     else:
         logger.error(f"Unknown game: {game_name}")
         return
