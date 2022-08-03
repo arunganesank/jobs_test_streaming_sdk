@@ -483,7 +483,7 @@
 
     "dota2dx11_actions": [
         "check_game \"Dota 2\" \"dota2.exe\"",
-        "skip_if_done 40",
+        "skip_if_done 35",
         "execute_cmd \"C:\\JN\\dota2.exe.lnk\"",
         "sleep 30",
         "click_server center_0 center_0",
@@ -548,7 +548,7 @@
 
     "dota2vulkan_actions": [
         "check_game \"Dota 2\" \"dota2.exe\"",
-        "skip_if_done 40",
+        "skip_if_done 35",
         "execute_cmd \"C:\\JN\\dota2.exe.lnk\"",
         "sleep 30",
         "click_server center_0 center_0",

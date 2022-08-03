@@ -312,6 +312,10 @@ def make_game_foreground(game_name, logger):
         icon_path = os.path.join(base_path, "Valorant.png")
     elif "lol" in game_name.lower():
         icon_path = os.path.join(base_path, "LoL.png")
+    elif "dota2" in game_name.lower():
+        icon_path = os.path.join(base_path, "Dota2.png")
+    elif "csgo" in game_name.lower():
+        icon_path = os.path.join(base_path, "CSGO.png")
     else:
         logger.error(f"Unknown game: {game_name}")
         return
