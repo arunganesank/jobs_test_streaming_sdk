@@ -603,9 +603,9 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
         if flag_resolution and 'encode_resolution' in saved_values:
             for i in range(1, len(saved_values['encode_resolution'])):
                 if not ((saved_values['encode_resolution'][i-1] == saved_values['encode_resolution'][i]) and (saved_values['encode_resolution'][i] == flag_resolution)):
-                    json_content["message"].append("Application problem: Encode Resolution in Flags doesn't match to Encode Resolution from logs. Resolution from Flags: {}, from logs {}".format(flag_resolution, saved_values['encode_resolution'][i]))
-                    if json_content["test_status"] != "error":
-                        if case["case"].find('STR_CFG') == -1: 
+                    if case["case"].find('STR_CFG') == -1:
+                        json_content["message"].append("Application problem: Encode Resolution in Flags doesn't match to Encode Resolution from logs. Resolution from Flags: {}, from logs {}".format(flag_resolution, saved_values['encode_resolution'][i]))
+                        if json_content["test_status"] != "error": 
                             json_content["test_status"] = "failed"
                     break
 
