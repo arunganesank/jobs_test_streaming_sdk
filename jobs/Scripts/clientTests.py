@@ -41,7 +41,8 @@ ACTIONS_MAPPING = {
     "skip_if_done": SkipIfDone,
     "record_metrics": RecordMetrics,
     "record_audio": RecordMicrophone,
-    "start_streaming": StartStreaming
+    "start_streaming": StartStreaming,
+    "start_latency_tool": StartLatencyTool
 }
 
 

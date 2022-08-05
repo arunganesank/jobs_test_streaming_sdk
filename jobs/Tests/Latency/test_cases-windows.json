@@ -1,0 +1,24 @@
+[
+    {
+        "case": "STR_SM_001",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "client_keys": "-Fullscreen true",
+        "transport_protocol": "udp",
+        "use_latency_tool": true,
+        "script_info": [
+            "Default settings"
+        ]
+    },
+    {
+        "case": "STR_SM_002",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "client_keys": "-Fullscreen true",
+        "transport_protocol": "tcp",
+        "use_latency_tool": true,
+        "script_info": [
+            "Default settings"
+        ]
+    }
+]

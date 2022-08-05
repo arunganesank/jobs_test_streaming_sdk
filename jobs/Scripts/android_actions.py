@@ -38,7 +38,7 @@ class OpenGame(Action):
             "dota2dx11": "C:\\JN\\dota2.exe.lnk",
             "dota2vulkan": "C:\\JN\\dota2.exe.lnk",
             "csgo": "C:\\JN\\csgo.exe.url",
-            "nothing": None
+            "empty": None
         }
 
         games_windows = {
@@ -55,7 +55,7 @@ class OpenGame(Action):
             "dota2dx11": ["Dota 2", "dota2.exe"],
             "dota2vulkan": ["Dota 2", "dota2.exe"],
             "csgo": ["Counter-Strike: Global Offensive - Direct3D 9", "csgo.exe"],
-            "nothing": [None, None]
+            "empty": [None, None]
         }
 
         self.game_name = self.params["game_name"]

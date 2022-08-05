@@ -630,3 +630,17 @@ class RecoveryClumsy(Action):
             close_clumsy()
             sleep(2)
             make_game_foreground(self.game_name, self.logger)
+
+
+# Start Latency tool
+class StartStreaming(MulticonnectionAction):
+    def parse(self):
+        self.action = self.params["action_line"]
+        self.args = self.params["args"]
+        self.tool_path = os.path.join(os.path.split(self.args.server_tool)[0], "LatencyTestServer.exe")
+
+    def execute(self):
+        self.process = start_latency_tool(self.args.execution_type, self.tool_path)
+
+        self.sock.send("done".encode("utf-8"))
+

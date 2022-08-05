@@ -213,6 +213,15 @@ def save_results(args, case, cases, execution_time = 0.0, test_case_status = "",
         if args.test_group in MC_CONFIG["android_client"]:
             test_case_report["android_log"] = os.path.join("tool_logs", case["case"] + "_android.log")
 
+        latency_tool_log_path = os.path.join(args.output, "tool_logs", case["case"] + "_latency_{}".format(execution_type) + ".log")
+
+        if os.path.exists(latency_tool_log_path):
+            latency_tool_log_key = "latency_tool_log_" + "server" if args.execution_type == "server" else "client"
+            test_case_report["latency_tool_log_key"] = latency_tool_log_path
+
+            if execution_type == "client":
+                analyze_latency_tool_logs(test_case_report, latency_tool_log_path)
+
         if args.collect_traces == "AfterTests" or args.collect_traces == "BeforeTests":
             if args.execution_type == "server":
                 test_case_report["server_trace_archive"] = os.path.join("gpuview", case["case"] + "_server.zip")
@@ -375,12 +384,17 @@ def execute_tests(args, current_conf):
             except Exception as e:
                 PROCESS = close_streaming_process(args.execution_type, case, PROCESS)
 
+                if "use_latency_tool" in self.case and self.case["use_latency_tool"]:
+                    close_latency_tool(args.execution_type)
+
                 if (args.test_group in MC_CONFIG["android_client"]) and args.execution_type == "server":
                     # close Streaming SDK android app
                     close_android_app()
                     save_android_log(args, case, current_try, log_name_postfix="_android")
 
                 last_log_line = save_logs(args, case, last_log_line, current_try)
+                save_latency_tool_logs(args, case, current_try)
+
                 execution_time = time.time() - case_start_time
                 save_results(args, case, cases, execution_time = execution_time, test_case_status = "failed", error_messages = error_messages)
                 main_logger.error("Failed to execute test case (try #{}): {}".format(current_try, str(e)))
