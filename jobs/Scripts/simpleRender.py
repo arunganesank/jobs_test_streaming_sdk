@@ -343,7 +343,11 @@ def execute_tests(args, current_conf):
                         main_logger.info("Datagram size in settings.json ({}): {}".format(case["case"], settings_json_content["Headset"]["DatagramSize"]))
 
                 prepared_keys = prepare_keys(args, case)
-                execution_script = "{tool} {keys}".format(tool=tool_path, keys=prepared_keys)
+
+                if platform.system() == "Windows":
+                    execution_script = "{tool} {keys}".format(tool=tool_path, keys=prepared_keys)
+                else:
+                    execution_script = "sudo {tool} {keys}".format(tool=tool_path, keys=prepared_keys)
 
                 case["prepared_keys"] = prepared_keys
 
