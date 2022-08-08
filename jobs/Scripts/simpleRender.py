@@ -369,6 +369,9 @@ def execute_tests(args, current_conf):
                     f.write(execution_script)
 
                 if args.execution_type == "server":
+                    if platform.system() != "Windows":
+                        os.system('chmod +x {}'.format(script_path))
+
                     PROCESS, last_log_line, android_client_closed = start_server_side_tests(args, case, PROCESS, android_client_closed, script_path, last_log_line, current_try, error_messages)
                 else:
                     PROCESS, last_log_line = start_client_side_tests(args, case, PROCESS, script_path, last_log_line, audio_device_name, current_try, error_messages)
