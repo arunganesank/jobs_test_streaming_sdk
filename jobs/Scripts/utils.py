@@ -133,8 +133,6 @@ def close_streaming_process(execution_type, case, process):
             # close the current Streaming SDK process
             main_logger.info("Start closing")
 
-            main_logger.info("Finish closing")
-
             if platform.system() == "Windows":
                 if process is not None:
                     close_process(process)
@@ -153,11 +151,11 @@ def close_streaming_process(execution_type, case, process):
                     win32gui.PostMessage(crash_window, win32con.WM_CLOSE, 0, 0)
             else:
                 if process is not None:
-                    subprocess.call("sudo pkill -9 -P {}".format(process.pid), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
+                    os.system("sudo pkill -9 -P {}".format(process.pid))
+ 
+            main_logger.info("Finish closing")
 
             process = None
-
-            main_logger.info("StreamingSDK instance was killed")
         else:
             main_logger.info("Keep StreamingSDK instance")
 
@@ -212,9 +210,7 @@ def save_logs(args, case, last_log_line, current_try, is_multiconnection=False):
             # Firstly, convert utf-2 le bom to utf-8 with BOM. Secondly, remove BOM
             logs = logs.decode("utf-16-le").encode("utf-8").decode("utf-8-sig").encode("utf-8")
 
-            lines = logs.split(b"\n")
-        else:
-            lines = logs.encode("utf-8").split(b"\n")
+        lines = logs.split(b"\n")
 
         # index of first line of the current log in whole log file
         first_log_line_index = 0
@@ -441,7 +437,13 @@ def track_used_memory(case, execution_type):
 
     for process in psutil.process_iter():
         if process.name() == process_name:
-            value = psutil.Process(process.pid).memory_full_info().uss / 1024 ** 2
+            if platform.system() == "Windows":
+                value = psutil.Process(process.pid).memory_full_info().uss / 1024 ** 2
+            else:
+                command = "sudo python3.9 -c 'import psutil; print(psutil.Process({}).memory_full_info().uss / 1024 ** 2)'".format(process.pid)
+                proc = psutil.Popen(command, stdout=PIPE, shell=True)
+                stdout, stderr = proc.communicate(timeout=30)
+                value = stdout.strip()
 
             if "used_memory" in case and isinstance(case["used_memory"], list):
                 case["used_memory"].append(value)
