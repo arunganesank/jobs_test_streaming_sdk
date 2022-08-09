@@ -349,7 +349,7 @@ def execute_tests(args, current_conf):
                 if platform.system() == "Windows":
                     execution_script = "{tool} {keys}".format(tool=tool_path, keys=prepared_keys)
                 else:
-                    execution_script = "sudo {tool} {keys}".format(tool=tool_path, keys=prepared_keys)
+                    execution_script = "sudo -E {tool} {keys}".format(tool=tool_path, keys=prepared_keys)
 
                 case["prepared_keys"] = prepared_keys
 

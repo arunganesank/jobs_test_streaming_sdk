@@ -621,6 +621,9 @@ class StartStreaming(MulticonnectionAction):
 
         # start server
         if self.process is None:
+            if platform.system() != "Windows":
+                sleep(5)
+
             should_collect_traces = (self.args.collect_traces == "BeforeTests")
             self.process = start_streaming(self.args.execution_type, self.script_path)
 
