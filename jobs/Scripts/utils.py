@@ -443,7 +443,8 @@ def track_used_memory(case, execution_type):
                 command = "sudo python3.9 -c 'import psutil; print(psutil.Process({}).memory_full_info().uss / 1024 ** 2)'".format(process.pid)
                 proc = psutil.Popen(command, stdout=PIPE, shell=True)
                 stdout, stderr = proc.communicate(timeout=30)
-                value = stdout.strip()
+                value = stdout.decode("utf-8").strip()
+                main_logger.error(value)
 
             if "used_memory" in case and isinstance(case["used_memory"], list):
                 case["used_memory"].append(value)
