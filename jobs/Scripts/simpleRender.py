@@ -310,37 +310,39 @@ def execute_tests(args, current_conf):
             error_messages = set()
 
             try:
-                if platform.system() == "Windows":
-                    if args.execution_type == "server":
-                        # copy settings.json to update transport protocol using by server instance
+                if args.execution_type == "server":
+                    # copy settings.json to update transport protocol using by server instance
+                    if platform.system() == "Windows":
                         settings_json_path = os.path.join(os.getenv("APPDATA"), "..", "Local", "AMD", "RemoteGameServer", "settings", "settings.json")
+                    else:
+                        settings_json_path = "/root/.AMD/cl.cacheRemoteGameServer/settings/settings.json"
 
+                    copyfile(
+                        os.path.realpath(
+                            os.path.join(os.path.dirname(__file__),
+                            "..",
+                            "Configs",
+                            "settings_{}.json".format(case["transport_protocol"].upper()))
+                        ), 
+                        settings_json_path
+                    )
+
+                    if case["case"].find('STR_CFG') != -1 or case["case"].find('STR_CFR') != -1:
                         copyfile(
                             os.path.realpath(
                                 os.path.join(os.path.dirname(__file__),
                                 "..",
                                 "Configs",
-                                "settings_{}.json".format(case["transport_protocol"].upper()))
-                            ), 
+                                "{}.json".format(case["case"]))
+                            ),
                             settings_json_path
                         )
 
-                        if case["case"].find('STR_CFG') != -1 or case["case"].find('STR_CFR') != -1:
-                            copyfile(
-                                os.path.realpath(
-                                    os.path.join(os.path.dirname(__file__),
-                                    "..",
-                                    "Configs",
-                                    "{}.json".format(case["case"]))
-                                ),
-                                settings_json_path
-                            )
+                    with open(settings_json_path, "r") as file:
+                        settings_json_content = json.load(file)
 
-                        with open(settings_json_path, "r") as file:
-                            settings_json_content = json.load(file)
-
-                        main_logger.info("Network in settings.json ({}): {}".format(case["case"], settings_json_content["Headset"]["Network"]))
-                        main_logger.info("Datagram size in settings.json ({}): {}".format(case["case"], settings_json_content["Headset"]["DatagramSize"]))
+                    main_logger.info("Network in settings.json ({}): {}".format(case["case"], settings_json_content["Headset"]["Network"]))
+                    main_logger.info("Datagram size in settings.json ({}): {}".format(case["case"], settings_json_content["Headset"]["DatagramSize"]))
 
                 prepared_keys = prepare_keys(args, case)
 
