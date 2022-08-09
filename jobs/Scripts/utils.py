@@ -151,7 +151,7 @@ def close_streaming_process(execution_type, case, process):
                     win32gui.PostMessage(crash_window, win32con.WM_CLOSE, 0, 0)
             else:
                 if process is not None:
-                    os.system("sudo pkill -9 -P {}".format(process.pid))
+                    os.system("sudo kill -9 {}".format(process.pid))
  
             main_logger.info("Finish closing")
 
