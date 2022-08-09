@@ -133,12 +133,12 @@ def close_streaming_process(execution_type, case, process):
             # close the current Streaming SDK process
             main_logger.info("Start closing")
 
-            if process is not None:
-                close_process(process)
-
             main_logger.info("Finish closing")
 
             if platform.system() == "Windows":
+                if process is not None:
+                    close_process(process)
+
                 # additional try to kill Streaming SDK server/client (to be sure that all processes are closed)
                 subprocess.call("taskkill /f /im RemoteGameClient.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
                 subprocess.call("taskkill /f /im RemoteGameServer.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
@@ -151,6 +151,9 @@ def close_streaming_process(execution_type, case, process):
                 if crash_window:
                     main_logger.info("Crash window was found. Closing it...")
                     win32gui.PostMessage(crash_window, win32con.WM_CLOSE, 0, 0)
+            else:
+                if process is not None:
+                    subprocess.call("sudo pkill -9 -P {}".format(process.pid), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
 
             process = None
 
@@ -205,10 +208,13 @@ def save_logs(args, case, last_log_line, current_try, is_multiconnection=False):
         with open(log_source_path, "rb") as file:
             logs = file.read()
 
-        # Firstly, convert utf-2 le bom to utf-8 with BOM. Secondly, remove BOM
-        logs = logs.decode("utf-16-le").encode("utf-8").decode("utf-8-sig").encode("utf-8")
+        if platform.system() == "Windows":
+            # Firstly, convert utf-2 le bom to utf-8 with BOM. Secondly, remove BOM
+            logs = logs.decode("utf-16-le").encode("utf-8").decode("utf-8-sig").encode("utf-8")
 
-        lines = logs.split(b"\n")
+            lines = logs.split(b"\n")
+        else:
+            lines = logs.encode("utf-8").split(b"\n")
 
         # index of first line of the current log in whole log file
         first_log_line_index = 0
