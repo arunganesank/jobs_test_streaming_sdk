@@ -7,6 +7,7 @@ import re
 import traceback
 import datetime
 from typing import Protocol
+import platform
 from utils import get_mc_config
 
 sys.path.append(os.path.abspath(os.path.join(
