@@ -320,7 +320,7 @@
     "heavenopengl_actions_ubuntu": [
         "check_window \"Unigine Heaven Benchmark 4.0 (Basic Edition)\" \"browser_x64\"",
         "check_game \"\" \"heaven_x64\"",
-        "skip_if_done 8",
+        "skip_if_done 6",
         "execute_cmd \"/scripts/launch_heaven\"",
         "sleep 6",
         "click_server center_305 center_175",
@@ -466,7 +466,7 @@
     "valleyopengl_actions_ubuntu": [
         "check_window \"Unigine Valley Benchmark (Basic Edition)\" \"browser_x64\"",
         "check_game \"\" \"valley_x64\"",
-        "skip_if_done 8",
+        "skip_if_done 6",
         "execute_cmd \"/scripts/launch_valley\"",
         "sleep 6",
         "click_server center_305 center_175",

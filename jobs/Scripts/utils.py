@@ -155,11 +155,10 @@ def close_streaming_process(execution_type, case, process):
  
             main_logger.info("Finish closing")
 
-            process = None
+            return None
         else:
             main_logger.info("Keep StreamingSDK instance")
 
-        return process
     except Exception as e:
         main_logger.error("Failed to close Streaming SDK process. Exception: {}".format(str(e)))
         main_logger.error("Traceback: {}".format(traceback.format_exc()))
@@ -444,7 +443,6 @@ def track_used_memory(case, execution_type):
                 proc = psutil.Popen(command, stdout=PIPE, shell=True)
                 stdout, stderr = proc.communicate(timeout=30)
                 value = stdout.decode("utf-8").strip()
-                main_logger.error(value)
 
             if "used_memory" in case and isinstance(case["used_memory"], list):
                 case["used_memory"].append(value)
