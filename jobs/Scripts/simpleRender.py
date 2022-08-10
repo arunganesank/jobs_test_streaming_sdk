@@ -315,7 +315,7 @@ def execute_tests(args, current_conf):
                     if platform.system() == "Windows":
                         settings_json_path = os.path.join(os.getenv("APPDATA"), "..", "Local", "AMD", "RemoteGameServer", "settings", "settings.json")
                     else:
-                        settings_json_path = "/root/.AMD/cl.cacheRemoteGameServer/settings/settings.json"
+                        settings_json_path = "/home/{}/.AMD/cl.cacheRemoteGameServer/settings/settings.json".format(os.getenv("USER"))
 
                     copyfile(
                         os.path.realpath(

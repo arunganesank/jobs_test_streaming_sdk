@@ -671,7 +671,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
         if platform.system() == "Windows":
             settings_json_path = os.path.join(os.getenv("APPDATA"), "..", "Local", "AMD", "RemoteGameServer", "settings", "settings.json")
         else:
-            settings_json_path = "/root/.AMD/cl.cacheRemoteGameServer/settings/settings.json"
+            settings_json_path = "/home/{}/.AMD/cl.cacheRemoteGameServer/settings/settings.json".format(os.getenv("USER"))
 
         with open(settings_json_path, "r") as file:
             settings_json_content = json.load(file)
