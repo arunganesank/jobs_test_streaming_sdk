@@ -5,7 +5,7 @@
         "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
         "client_keys": "-Fullscreen true",
         "transport_protocol": "udp",
-        "start_first": "client",
+        "start_first": "server",
         "script_info": [
             "Default settings"
         ]
@@ -16,7 +16,7 @@
         "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
         "client_keys": "-Fullscreen true",
         "transport_protocol": "tcp",
-        "start_first": "client",
+        "start_first": "server",
         "script_info": [
             "Default settings"
         ]
