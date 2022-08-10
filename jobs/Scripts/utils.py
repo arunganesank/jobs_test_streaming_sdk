@@ -127,7 +127,7 @@ def should_case_be_closed(execution_type, case):
     return "keep_{}".format(execution_type) not in case or not case["keep_{}".format(execution_type)]
 
 
-def close_streaming_process(execution_type, case, process):
+def close_streaming_process(execution_type, case, process, tool_path=None):
     try:
         if should_case_be_closed(execution_type, case):
             # close the current Streaming SDK process
@@ -150,8 +150,8 @@ def close_streaming_process(execution_type, case, process):
                     main_logger.info("Crash window was found. Closing it...")
                     win32gui.PostMessage(crash_window, win32con.WM_CLOSE, 0, 0)
             else:
-                if process is not None:
-                    os.system("sudo pkill -9 -f .*RemoteGameServer.*")
+                if process is not None and tool_path is not None:
+                    os.system("sudo pkill -9 -f \"^{}\"".format(os.path.abspath(tool_path)))
  
             main_logger.info("Finish closing")
 
