@@ -2,10 +2,10 @@
     {
         "case": "STR_SM_001",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -protocol udp",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
         "client_keys": "-Fullscreen true",
         "transport_protocol": "udp",
-        "start_first": "server",
+        "start_first": "client",
         "script_info": [
             "Default settings"
         ]
@@ -13,10 +13,10 @@
     {
         "case": "STR_SM_002",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -protocol tcp",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
         "client_keys": "-Fullscreen true",
         "transport_protocol": "tcp",
-        "start_first": "server",
+        "start_first": "client",
         "script_info": [
             "Default settings"
         ]
