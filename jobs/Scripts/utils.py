@@ -355,8 +355,9 @@ def start_latency_tool(execution_type, tool_path):
 
 
 def close_latency_tool(execution_type):
-    if execution_type == "server":
-        pyautogui.press("Q")
+    pyautogui.press("Q")
+
+    sleep(5)
 
     subprocess.call("taskkill /f /im LatencyToolClient.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
     subprocess.call("taskkill /f /im LatencyToolServer.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
