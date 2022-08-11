@@ -198,6 +198,15 @@ def parse_block_line(line, saved_values):
         send_time_worst = float(line.split('/')[2].replace('ms', ''))
         saved_values['send_time_worst'].append(send_time_worst)
 
+    elif 'Server Gpu Stats' in line:
+        # Line example:
+        # 2022-08-05 17:44:58.831     23D4 [RemoteGamePipeline]    Info: Server Gpu Stats: CLK: 1847 Mhz, Usage: 99 %, Temp: 109 C
+        if 'gpu_temp' not in saved_values:
+            saved_values['gpu_temp'] = []
+
+        gpu_temp = float(line.split('Temp:')[1].replace('C', '').strip())
+        saved_values['gpu_temp'].append(gpu_temp)
+
 
 def parse_line(line, saved_values):
     if 'Bitrate: ' in line:
@@ -665,6 +674,17 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
                     if json_content["test_status"] != "error":
                         json_content["test_status"] = "failed"
 
+        # rule №13: if GPU temp > 100 -> warning
+        if 'gpu_temp' in saved_values:
+            max_temp = 0
+
+            for value in saved_values['gpu_temp']:
+                if max_temp < value:
+                    max_temp = value
+
+            if max_temp > 100:
+                json_content["message"].append("Hardware problem: GPU temperature is too high: {}".format(max_temp))
+
         #rules for Config & ConfigOverwrite (CN/CRN)
         #where Config = C, ConfirReswrite = CR, N - case number
         #C1-C9, C23-C31 - skipped
@@ -893,7 +913,7 @@ def analyze_logs(work_dir, json_content, case, execution_type="server"):
                                 #parse_error(line, saved_errors)
                                 pass
 
-                        if 'Queue depth' in line:
+                        if 'Server Gpu Stats' in line:
                             end_of_block = True
 
                         if 'Encode Resolution:' in line:
