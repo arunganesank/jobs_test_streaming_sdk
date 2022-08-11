@@ -286,13 +286,13 @@ def analyze_latency_tool_logs(test_case_report, log_path):
 
     if total_injects and total_reacts:
         test_case_report["latency_tool_results"]["accuracy"] = total_reacts / total_injects * 100
-    elif average_reactions is not None:
+    if average_reactions is not None:
         test_case_report["latency_tool_results"]["average_reactions"] = average_reactions
-    elif min_latency is not None:
+    if min_latency is not None:
         test_case_report["latency_tool_results"]["min_latency"] = min_latency
-    elif max_matency is not None:
+    if max_matency is not None:
         test_case_report["latency_tool_results"]["max_matency"] = max_matency
-    elif average_latency is not None:
+    if average_latency is not None:
         test_case_report["latency_tool_results"]["average_latency"] = average_latency
 
 
