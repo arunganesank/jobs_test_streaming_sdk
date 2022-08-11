@@ -447,7 +447,7 @@ class StartStreaming(Action):
 
 
 # [Client + Server action] start Latency tool on client and server
-class StartStreaming(Action):
+class StartLatencyTool(Action):
     def parse(self):
         self.action = self.params["action_line"]
         self.args = self.params["args"]

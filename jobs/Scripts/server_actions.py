@@ -633,7 +633,7 @@ class RecoveryClumsy(Action):
 
 
 # Start Latency tool
-class StartStreaming(MulticonnectionAction):
+class StartLatencyTool(MulticonnectionAction):
     def parse(self):
         self.action = self.params["action_line"]
         self.args = self.params["args"]
