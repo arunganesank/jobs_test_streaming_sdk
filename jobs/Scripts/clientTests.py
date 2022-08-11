@@ -90,12 +90,16 @@ def start_client_side_tests(args, case, process, script_path, last_log_line, aud
 
         # Client init communication:
         # 1. Client sends 'ready' to server
-        # 2. Server sends 'ready' to client
+        # 2. Server sends 'windows' or 'ubuntu' to client
         # 3. Client starts doing actions
 
-        if response == "ready":
+        if response == "windows" or response == "ubuntu":
             # get list of actions for the current game / benchmark
-            actions_key = "{}_actions".format(game_name.lower())
+            if response == "windows":
+                actions_key = "{}_actions".format(game_name.lower())
+            else:
+                actions_key = "{}_actions_ubuntu".format(game_name.lower())
+
             if actions_key in case:
                 actions = case[actions_key]
             else:

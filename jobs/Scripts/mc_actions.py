@@ -4,7 +4,6 @@ import traceback
 import pyautogui
 import pyscreenshot
 import json
-import pydirectinput
 from pyffmpeg import FFmpeg
 from threading import Thread
 from utils import collect_traces, parse_arguments, collect_iperf_info, track_used_memory, analyze_encryption, check_artifacts_and_save_status

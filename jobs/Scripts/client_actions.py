@@ -4,12 +4,13 @@ import traceback
 import pyautogui
 import pyscreenshot
 import json
-import pydirectinput
-from pyffmpeg import FFmpeg
 from threading import Thread
 from utils import *
-import win32api
 from actions import *
+
+if platform.system() == "Windows":
+    from pyffmpeg import FFmpeg
+    import win32api
 
 pyautogui.FAILSAFE = False
 MC_CONFIG = get_mc_config()
@@ -373,11 +374,11 @@ def do_test_actions(game_name, logger):
     try:
         if game_name == "apexlegends":
             for i in range(40):
-                pydirectinput.press("q")
+                pyautogui.press("q")
                 sleep(1)
         elif game_name == "valorant":
             for i in range(10):
-                pydirectinput.press("x")
+                pyautogui.press("x")
                 sleep(1)
                 pyautogui.click()
                 sleep(3)

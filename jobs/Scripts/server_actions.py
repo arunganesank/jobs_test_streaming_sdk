@@ -5,15 +5,17 @@ from time import sleep, strftime, gmtime
 import psutil
 from subprocess import PIPE
 import traceback
-import win32gui
-import win32api
 import pyautogui
-import pydirectinput
 import keyboard
-from pyffmpeg import FFmpeg
 from threading import Thread
 from utils import *
 from actions import *
+import platform
+
+if platform.system() == "Windows":
+    import win32gui
+    import win32api
+    from pyffmpeg import FFmpeg
 
 csgoFirstExec = True
 pyautogui.FAILSAFE = False
@@ -50,16 +52,30 @@ class CheckWindow(Action):
     def execute(self):
         result = False
 
-        window = win32gui.FindWindow(None, self.window_name)
+        if self.window_name:
+            if platform.system() == "Windows":
+                window = win32gui.FindWindow(None, self.window_name)
 
-        if window is not None and window != 0:
-            self.logger.info("Window {} was succesfully found".format(self.window_name))
+                if window is not None and window != 0:
+                    self.logger.info("Window {} was succesfully found".format(self.window_name))
 
-            if self.is_game:
-                make_game_foreground(self.game_name, self.logger)
-        else:
-            self.logger.error("Window {} wasn't found at all".format(self.window_name))
-            return False
+                    if self.is_game:
+                        make_game_foreground(self.game_name, self.logger)
+                else:
+                    self.logger.error("Window {} wasn't found at all".format(self.window_name))
+                    return False
+            else:
+                process = subprocess.Popen("wmctrl -l", stdout=PIPE, shell=True)
+                stdout, stderr = process.communicate()
+                windows = [" ".join(x.split()[3::]) for x in stdout.decode("utf-8").strip().split("\n")]
+
+                for window in windows:
+                    if window == self.window_name:
+                        self.logger.info("Window {} was succesfully found".format(self.window_name))
+                        break
+                else:
+                    self.logger.error("Window {} wasn't found at all".format(self.window_name))
+                    return False
 
         for process in psutil.process_iter():
             if self.process_name in process.name():
@@ -184,12 +200,12 @@ class PressKeysServer(Action):
 
                 for i in range(times):
                     for key_to_press in keys_to_press:
-                        pydirectinput.keyDown(key_to_press)
+                        pyautogui.keyDown(key_to_press)
 
                     sleep(0.1)
 
                     for key_to_press in keys_to_press:
-                        pydirectinput.keyUp(key_to_press)
+                        pyautogui.keyUp(key_to_press)
 
                     if i != times - 1:
                         sleep(0.5)
@@ -197,12 +213,12 @@ class PressKeysServer(Action):
                 keys_to_press = key.split("+")
 
                 for key_to_press in keys_to_press:
-                    pydirectinput.keyDown(key_to_press)
+                    pyautogui.keyDown(key_to_press)
 
                 sleep(duration)
 
                 for key_to_press in keys_to_press:
-                    pydirectinput.keyUp(key_to_press)
+                    pyautogui.keyUp(key_to_press)
 
             # if it isn't the last key - make a delay
             if i != len(keys) - 1:
@@ -261,6 +277,7 @@ class NextCase(Action):
 
 
 class IPerf(Action):
+    #TODO: add support for Ubuntu
     def parse(self):
         self.json_content = self.params["json_content"]
 
@@ -295,17 +312,27 @@ class ClickServer(Action):
 
     @Action.server_action_decorator
     def execute(self):
+        if platform.system() == "Windows":
+            edge_x = win32api.GetSystemMetrics(0)
+            edge_y = win32api.GetSystemMetrics(1)
+        else:
+            process = subprocess.Popen("xdpyinfo | awk '/dimensions/{print $2}'", stdout=PIPE, shell=True)
+            stdout, stderr = process.communicate()
+            edge_x, edge_y = stdout.decode("utf-8").strip().split("x")
+            edge_x = int(edge_x)
+            edge_y = int(edge_y)
+
         if "center_" in self.x_description:
-            x = win32api.GetSystemMetrics(0) / 2 + int(self.x_description.replace("center_", ""))
+            x = edge_x / 2 + int(self.x_description.replace("center_", ""))
         elif "edge_" in self.x_description:
-            x = win32api.GetSystemMetrics(0) + int(self.x_description.replace("edge_", ""))
+            x = edge_x + int(self.x_description.replace("edge_", ""))
         else:
             x = int(self.x_description)
 
         if "center_" in self.y_description:
-            y = win32api.GetSystemMetrics(1) / 2 + int(self.y_description.replace("center_", ""))
+            y = edge_y / 2 + int(self.y_description.replace("center_", ""))
         elif "edge_" in self.y_description:
-            y = win32api.GetSystemMetrics(1) + int(self.y_description.replace("edge_", ""))
+            y = edge_y + int(self.y_description.replace("edge_", ""))
         else:
             y = int(self.y_description)
 
@@ -355,38 +382,46 @@ class DoTestActions(Action):
                 pass
             elif self.game_name == "valorant":
                 sleep(2.0)
-                pydirectinput.keyDown("space")
+                pyautogui.keyDown("space")
                 sleep(0.1)
-                pydirectinput.keyUp("space")            
+                pyautogui.keyUp("space")            
             elif self.game_name == "apexlegends":
-                pydirectinput.keyDown("a")
-                pydirectinput.keyDown("space")
+                pyautogui.keyDown("a")
+                pyautogui.keyDown("space")
                 sleep(0.5)
-                pydirectinput.keyUp("a")
-                pydirectinput.keyUp("space")
+                pyautogui.keyUp("a")
+                pyautogui.keyUp("space")
 
-                pydirectinput.keyDown("d")
-                pydirectinput.keyDown("space")
+                pyautogui.keyDown("d")
+                pyautogui.keyDown("space")
                 sleep(0.5)
-                pydirectinput.keyUp("d")
-                pydirectinput.keyUp("space")
+                pyautogui.keyUp("d")
+                pyautogui.keyUp("space")
                 pyautogui.click(button="right")
             elif self.game_name == "lol":
-                edge_x = win32api.GetSystemMetrics(0)
-                edge_y = win32api.GetSystemMetrics(1)
+                if platform.system() == "Windows":
+                    edge_x = win32api.GetSystemMetrics(0)
+                    edge_y = win32api.GetSystemMetrics(1)
+                else:
+                    process = subprocess.Popen("xdpyinfo | awk '/dimensions/{print $2}'", stdout=PIPE, shell=True)
+                    stdout, stderr = process.communicate()
+                    edge_x, edge_y = stdout.decode("utf-8").strip().split("x")
+                    edge_x = int(edge_x)
+                    edge_y = int(edge_y)
+
                 center_x = edge_x / 2
                 center_y = edge_y / 2
 
                 # avoid to long cycle of test actions (split it to parts)
 
                 if self.stage == 0:
-                    pydirectinput.press("e")
+                    pyautogui.press("e")
                     sleep(0.1)
-                    pydirectinput.press("e")
+                    pyautogui.press("e")
                     sleep(0.1)
-                    pydirectinput.press("r")
+                    pyautogui.press("r")
                     sleep(0.1)
-                    pydirectinput.press("r")
+                    pyautogui.press("r")
                     sleep(1.5)
                 elif self.stage == 1:
                     pyautogui.moveTo(center_x + 360, center_y - 360)
@@ -412,9 +447,9 @@ class DoTestActions(Action):
                 if self.stage > 2:
                     self.stage = 0
             elif self.game_name == "dota2dx11" or self.game_name == "dota2vulkan":
-                pydirectinput.press("r")
+                pyautogui.press("r")
                 sleep(1)
-                pydirectinput.press("w")
+                pyautogui.press("w")
             elif self.game_name == "csgo":
                 global csgoFirstExec
                 if csgoFirstExec:
@@ -431,11 +466,11 @@ class DoTestActions(Action):
                         if command != "`":
                             keyboard.write(command)
                         else:
-                            pydirectinput.press("`")
+                            pyautogui.press("`")
                         sleep(0.15)
-                        pydirectinput.press("enter")
+                        pyautogui.press("enter")
 
-                pydirectinput.press("4")
+                pyautogui.press("4")
                 sleep(1)
                 pyautogui.click()
             else:

@@ -7,6 +7,7 @@ import re
 import traceback
 import datetime
 from typing import Protocol
+import platform
 from utils import get_mc_config
 
 sys.path.append(os.path.abspath(os.path.join(
@@ -129,7 +130,12 @@ def parse_block_line(line, saved_values):
             if 'tx_rates_by_time' not in saved_values:
                 saved_values['tx_rates_by_time'] = []
 
-            time = line.split('.')[0]
+            if platform.system() == "Windows":
+                time = line.split('.')[0]
+            else:
+                parts = line.split()
+                time = parts[0] + " " + parts[1]
+
             saved_values['tx_rates_by_time'].append((time, tx_rate))
 
     elif 'Queue depth' in line:
@@ -213,13 +219,25 @@ def parse_line(line, saved_values):
     elif 'VIDEO_OP_CODE_FORCE_IDR' in line:
         if 'code_force_idr' not in saved_values:
             saved_values['code_force_idr'] = []
-        timestamp_idr = line.split('  ')[0]
+
+        if platform.system() == "Windows":
+            timestamp_idr = line.split('.')[0]
+        else:
+            parts = line.split()
+            timestamp_idr = parts[0] + " " + parts[1]
+
         saved_values['code_force_idr'].append(timestamp_idr)
 
     elif 'Input Queue Full' in line:
         if 'input_queue_full' not in saved_values:
             saved_values['input_queue_full'] = []
-        timestamp_iqf = line.split('  ')[0]
+
+        if platform.system() == "Windows":
+            timestamp_iqf = line.split('.')[0]
+        else:
+            parts = line.split()
+            timestamp_iqf = parts[0] + " " + parts[1]
+
         saved_values['input_queue_full'].append(timestamp_iqf)
     
     elif 'Info: Initialize(): Codec:' in line:
@@ -566,7 +584,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
             invalid_count = 0
 
             for i in range(len(saved_values['input_queue_full'])-1):
-                if ((datetime.datetime.strptime(saved_values['input_queue_full'][i], "%Y-%m-%d %H:%M:%S.%f"))-(datetime.datetime.strptime(saved_values['input_queue_full'][i+1], "%Y-%m-%d %H:%M:%S.%f"))).microseconds <  3000000:
+                if ((datetime.datetime.strptime(saved_values['input_queue_full'][i], "%Y-%m-%d %H:%M:%S"))-(datetime.datetime.strptime(saved_values['input_queue_full'][i+1], "%Y-%m-%d %H:%M:%S"))).microseconds <  3000000:
                     invalid_count += 1
                 else:
                     invalid_count = 0
@@ -580,7 +598,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
             invalid_count = 0
 
             for i in range(len(saved_values['code_force_idr'])-1):
-                if ((datetime.datetime.strptime(saved_values['code_force_idr'][i], "%Y-%m-%d %H:%M:%S.%f"))-(datetime.datetime.strptime(saved_values['code_force_idr'][i+1], "%Y-%m-%d %H:%M:%S.%f"))).microseconds <  3000000:
+                if ((datetime.datetime.strptime(saved_values['code_force_idr'][i], "%Y-%m-%d %H:%M:%S"))-(datetime.datetime.strptime(saved_values['code_force_idr'][i+1], "%Y-%m-%d %H:%M:%S"))).microseconds <  3000000:
                     invalid_count += 1
                 else:
                     invalid_count = 0
@@ -650,7 +668,11 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
         #rules for Config & ConfigOverwrite (CN/CRN)
         #where Config = C, ConfirReswrite = CR, N - case number
         #C1-C9, C23-C31 - skipped
-        settings_json_path = os.path.join(os.getenv("APPDATA"), "..", "Local", "AMD", "RemoteGameServer", "settings", "settings.json")
+        if platform.system() == "Windows":
+            settings_json_path = os.path.join(os.getenv("APPDATA"), "..", "Local", "AMD", "RemoteGameServer", "settings", "settings.json")
+        else:
+            settings_json_path = "/home/{}/.AMD/cl.cacheRemoteGameServer/settings/settings.json".format(os.getenv("USER"))
+
         with open(settings_json_path, "r") as file:
             settings_json_content = json.load(file)
 

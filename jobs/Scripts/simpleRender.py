@@ -13,11 +13,12 @@ from serverTests import start_server_side_tests
 from queue import Queue
 from subprocess import PIPE, STDOUT
 from threading import Thread
-from pyffmpeg import FFmpeg
 import copy
 import traceback
 import time
-import win32api
+
+if platform.system() == "Windows":
+    from pyffmpeg import FFmpeg
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
@@ -311,7 +312,10 @@ def execute_tests(args, current_conf):
             try:
                 if args.execution_type == "server":
                     # copy settings.json to update transport protocol using by server instance
-                    settings_json_path = os.path.join(os.getenv("APPDATA"), "..", "Local", "AMD", "RemoteGameServer", "settings", "settings.json")
+                    if platform.system() == "Windows":
+                        settings_json_path = os.path.join(os.getenv("APPDATA"), "..", "Local", "AMD", "RemoteGameServer", "settings", "settings.json")
+                    else:
+                        settings_json_path = "/home/{}/.AMD/cl.cacheRemoteGameServer/settings/settings.json".format(os.getenv("USER"))
 
                     copyfile(
                         os.path.realpath(
@@ -341,7 +345,11 @@ def execute_tests(args, current_conf):
                     main_logger.info("Datagram size in settings.json ({}): {}".format(case["case"], settings_json_content["Headset"]["DatagramSize"]))
 
                 prepared_keys = prepare_keys(args, case)
-                execution_script = "{tool} {keys}".format(tool=tool_path, keys=prepared_keys)
+
+                if platform.system() == "Windows":
+                    execution_script = "{tool} {keys}".format(tool=tool_path, keys=prepared_keys)
+                else:
+                    execution_script = "sudo -E {tool} {keys}".format(tool=tool_path, keys=prepared_keys)
 
                 case["prepared_keys"] = prepared_keys
 
@@ -354,12 +362,18 @@ def execute_tests(args, current_conf):
                     keys_description = "Client keys: {}".format(prepared_keys)
                     case["script_info"].append(keys_description)
 
-                script_path = os.path.join(args.output, "{}.bat".format(case["case"]))
+                if platform.system() == "Windows":
+                    script_path = os.path.join(args.output, "{}.bat".format(case["case"]))
+                else:
+                    script_path = os.path.join(args.output, "{}.sh".format(case["case"]))
 
                 with open(script_path, "w") as f:
                     f.write(execution_script)
 
                 if args.execution_type == "server":
+                    if platform.system() != "Windows":
+                        os.system('chmod +x {}'.format(script_path))
+
                     PROCESS, last_log_line, android_client_closed = start_server_side_tests(args, case, PROCESS, android_client_closed, script_path, last_log_line, current_try, error_messages)
                 else:
                     PROCESS, last_log_line = start_client_side_tests(args, case, PROCESS, script_path, last_log_line, audio_device_name, current_try, error_messages)
