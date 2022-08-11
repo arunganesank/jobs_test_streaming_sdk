@@ -254,6 +254,9 @@ def start_server_side_tests(args, case, process, android_client_closed, script_p
 
             main_logger.info("Finish to wait new actions")
 
+            if "Latency" in args.test_group and args.game_name == "Empty":
+                close_latency_tool(args.execution_type)
+
             process = close_streaming_process(args.execution_type, case, process)
 
             if args.test_group in MC_CONFIG["second_win_client"]:
@@ -265,6 +268,7 @@ def start_server_side_tests(args, case, process, android_client_closed, script_p
                 save_android_log(args, case, current_try, log_name_postfix="_android")
 
             last_log_line = save_logs(args, case, last_log_line, current_try)
+            save_latency_tool_logs(args, case, current_try)
 
             with open(os.path.join(args.output, case["case"] + CASE_REPORT_SUFFIX), "r") as file:
                 json_content = json.load(file)[0]

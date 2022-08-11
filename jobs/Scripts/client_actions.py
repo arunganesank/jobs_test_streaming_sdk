@@ -453,9 +453,10 @@ class StartLatencyTool(Action):
         self.args = self.params["args"]
         self.case = self.params["case"]
         self.tool_path = os.path.join(os.path.split(self.args.server_tool)[0], "LatencyTestClient.exe")
+        self.test_group = self.params["args"].test_group
 
     def execute(self):
-        if "use_latency_tool" in self.case and self.case["use_latency_tool"]:
+        if "Latency" not in self.test_group:
             return
 
         self.process = start_latency_tool(self.args.execution_type, self.tool_path)

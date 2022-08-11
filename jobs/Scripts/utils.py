@@ -239,24 +239,26 @@ def save_logs(args, case, last_log_line, current_try, is_multiconnection=False):
 
 def save_latency_tool_logs(args, case, current_try):
     try:
-        log_source_path = os.path.join(os.path.split(args.server_tool)[0], "LatencyTestServer.exe" if execution_type == "server" else "LatencyTestClient.exe") + ".log"
-        log_destination_path = os.path.join(args.output, "tool_logs", case["case"] + "_latency_{}".format(execution_type) + ".log")
+        log_source_path = os.path.join(os.path.split(args.server_tool)[0], "LatencyTestServer.exe" if args.execution_type == "server" else "LatencyTestClient.exe") + ".log"
+        log_destination_path = os.path.join(args.output, "tool_logs", case["case"] + "_latency_{}".format(args.execution_type) + ".log")
 
         with open(log_source_path, "rb") as file:
             logs = file.read()
 
+        logs = logs.decode("utf-16-le").encode("utf-8").decode("utf-8-sig").encode("utf-8")
+
         with open(log_destination_path, "ab") as file:
-            file.write("\n---------- Try #{} ----------\n\n".format(current_try))
+            file.write("\n---------- Try #{} ----------\n\n".format(current_try).encode("utf-8"))
             file.write(logs)
 
-        main_logger.info("Finish latency tool logs saving for {}".format(execution_type))
+        main_logger.info("Finish latency tool logs saving for {}".format(args.execution_type))
     except Exception as e:
         main_logger.error("Failed during latency tool logs saving. Exception: {}".format(str(e)))
         main_logger.error("Traceback: {}".format(traceback.format_exc()))
 
 
 def analyze_latency_tool_logs(test_case_report, log_path):
-    with open(log_path, "rb") as file:
+    with open(log_path, "r") as file:
         logs = file.read()
 
     test_case_report["latency_tool_results"] = {}

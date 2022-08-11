@@ -384,16 +384,12 @@ def execute_tests(args, current_conf):
             except Exception as e:
                 PROCESS = close_streaming_process(args.execution_type, case, PROCESS)
 
-                if "use_latency_tool" in case and case["use_latency_tool"]:
-                    close_latency_tool(args.execution_type)
-
                 if (args.test_group in MC_CONFIG["android_client"]) and args.execution_type == "server":
                     # close Streaming SDK android app
                     close_android_app()
                     save_android_log(args, case, current_try, log_name_postfix="_android")
 
                 last_log_line = save_logs(args, case, last_log_line, current_try)
-                save_latency_tool_logs(args, case, current_try)
 
                 execution_time = time.time() - case_start_time
                 save_results(args, case, cases, execution_time = execution_time, test_case_status = "failed", error_messages = error_messages)

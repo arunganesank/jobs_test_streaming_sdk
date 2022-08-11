@@ -171,8 +171,12 @@ def start_client_side_tests(args, case, process, script_path, last_log_line, aud
             command_object = NextCase(sock, params, instance_state, main_logger)
             command_object.do_action()
 
+            if "Latency" in args.test_group and args.game_name == "Empty":
+                close_latency_tool(args.execution_type)
+
             process = close_streaming_process(args.execution_type, case, process)
             last_log_line = save_logs(args, case, last_log_line, current_try)
+            save_latency_tool_logs(args, case, current_try)
 
             with open(os.path.join(args.output, case["case"] + CASE_REPORT_SUFFIX), "r") as file:
                 json_content = json.load(file)[0]
