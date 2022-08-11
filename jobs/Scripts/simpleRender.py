@@ -384,7 +384,7 @@ def execute_tests(args, current_conf):
             except Exception as e:
                 PROCESS = close_streaming_process(args.execution_type, case, PROCESS)
 
-                if "use_latency_tool" in self.case and self.case["use_latency_tool"]:
+                if "use_latency_tool" in case and case["use_latency_tool"]:
                     close_latency_tool(args.execution_type)
 
                 if (args.test_group in MC_CONFIG["android_client"]) and args.execution_type == "server":
