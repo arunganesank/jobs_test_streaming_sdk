@@ -159,6 +159,8 @@ def close_streaming_process(execution_type, case, process, tool_path=None):
         else:
             main_logger.info("Keep StreamingSDK instance")
 
+        return process
+
     except Exception as e:
         main_logger.error("Failed to close Streaming SDK process. Exception: {}".format(str(e)))
         main_logger.error("Traceback: {}".format(traceback.format_exc()))
