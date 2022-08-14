@@ -6,6 +6,7 @@ import psutil
 from subprocess import PIPE
 import traceback
 import pyautogui
+import pydirectinput
 import keyboard
 from threading import Thread
 from utils import *
@@ -200,12 +201,12 @@ class PressKeysServer(Action):
 
                 for i in range(times):
                     for key_to_press in keys_to_press:
-                        pyautogui.keyDown(key_to_press)
+                        pydirectinput.keyDown(key_to_press)
 
                     sleep(0.1)
 
                     for key_to_press in keys_to_press:
-                        pyautogui.keyUp(key_to_press)
+                        pydirectinput.keyUp(key_to_press)
 
                     if i != times - 1:
                         sleep(0.5)
@@ -213,12 +214,12 @@ class PressKeysServer(Action):
                 keys_to_press = key.split("+")
 
                 for key_to_press in keys_to_press:
-                    pyautogui.keyDown(key_to_press)
+                    pydirectinput.keyDown(key_to_press)
 
                 sleep(duration)
 
                 for key_to_press in keys_to_press:
-                    pyautogui.keyUp(key_to_press)
+                    pydirectinput.keyUp(key_to_press)
 
             # if it isn't the last key - make a delay
             if i != len(keys) - 1:
@@ -382,22 +383,22 @@ class DoTestActions(Action):
                 pass
             elif self.game_name == "valorant":
                 sleep(2.0)
-                pyautogui.keyDown("space")
+                pydirectinput.keyDown("space")
                 sleep(0.1)
                 pyautogui.keyUp("space")            
             elif self.game_name == "apexlegends":
-                pyautogui.keyDown("a")
-                pyautogui.keyDown("space")
+                pydirectinput.keyDown("a")
+                pydirectinput.keyDown("space")
                 sleep(0.5)
-                pyautogui.keyUp("a")
-                pyautogui.keyUp("space")
+                pydirectinput.keyUp("a")
+                pydirectinput.keyUp("space")
 
-                pyautogui.keyDown("d")
-                pyautogui.keyDown("space")
+                pydirectinput.keyDown("d")
+                pydirectinput.keyDown("space")
                 sleep(0.5)
-                pyautogui.keyUp("d")
-                pyautogui.keyUp("space")
-                pyautogui.click(button="right")
+                pydirectinput.keyUp("d")
+                pydirectinput.keyUp("space")
+                pydirectinput.click(button="right")
             elif self.game_name == "lol":
                 if platform.system() == "Windows":
                     edge_x = win32api.GetSystemMetrics(0)
@@ -415,13 +416,13 @@ class DoTestActions(Action):
                 # avoid to long cycle of test actions (split it to parts)
 
                 if self.stage == 0:
-                    pyautogui.press("e")
+                    pydirectinput.press("e")
                     sleep(0.1)
-                    pyautogui.press("e")
+                    pydirectinput.press("e")
                     sleep(0.1)
-                    pyautogui.press("r")
+                    pydirectinput.press("r")
                     sleep(0.1)
-                    pyautogui.press("r")
+                    pydirectinput.press("r")
                     sleep(1.5)
                 elif self.stage == 1:
                     pyautogui.moveTo(center_x + 360, center_y - 360)
@@ -447,9 +448,9 @@ class DoTestActions(Action):
                 if self.stage > 2:
                     self.stage = 0
             elif self.game_name == "dota2dx11" or self.game_name == "dota2vulkan":
-                pyautogui.press("r")
+                pydirectinput.press("r")
                 sleep(1)
-                pyautogui.press("w")
+                pydirectinput.press("w")
             elif self.game_name == "csgo":
                 global csgoFirstExec
                 if csgoFirstExec:
@@ -466,11 +467,11 @@ class DoTestActions(Action):
                         if command != "`":
                             keyboard.write(command)
                         else:
-                            pyautogui.press("`")
+                            pydirectinput.press("`")
                         sleep(0.15)
-                        pyautogui.press("enter")
+                        pydirectinput.press("enter")
 
-                pyautogui.press("4")
+                pydirectinput.press("4")
                 sleep(1)
                 pyautogui.click()
             else:

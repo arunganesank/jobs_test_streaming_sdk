@@ -2,6 +2,7 @@ import os
 from time import sleep, strftime, gmtime
 import traceback
 import pyautogui
+import pydirectinput
 import pyscreenshot
 import json
 from threading import Thread
@@ -270,7 +271,7 @@ class PressKeys(Action):
             key = keys[i]
 
             self.logger.info("Press: {}".format(key))
-            pyautogui.press(key)
+            pydirectinput.press(key)
 
             # if it isn't the last key - make a delay
             if i != len(keys) - 1:

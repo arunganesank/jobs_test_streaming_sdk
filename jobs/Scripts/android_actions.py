@@ -6,6 +6,7 @@ import subprocess
 from subprocess import PIPE
 import traceback
 import pyautogui
+import pydirectinput
 from threading import Thread
 from utils import parse_arguments, execute_adb_command, get_mc_config, close_clumsy, locateOnScreen
 from actions import *
@@ -273,9 +274,9 @@ class OpenGame(Action):
                     if command != "`":
                         keyboard.write(command)
                     else:
-                        pyautogui.press("`")
+                        pydirectinput.press("`")
                     sleep(0.5)
-                    pyautogui.press("enter")
+                    pydirectinput.press("enter")
 
 def make_window_foreground(window, logger):
     try:
@@ -392,24 +393,24 @@ def press_keys(keys_string, logger):
 
             for i in range(times):
                 for key_to_press in keys_to_press:
-                    pyautogui.keyDown(key_to_press)
+                    pydirectinput.keyDown(key_to_press)
 
                 sleep(0.1)
 
                 for key_to_press in keys_to_press:
-                    pyautogui.keyUp(key_to_press)
+                    pydirectinput.keyUp(key_to_press)
 
                 sleep(0.5)
         else:
             keys_to_press = key.split("+")
 
             for key_to_press in keys_to_press:
-                pyautogui.keyDown(key_to_press)
+                pydirectinput.keyDown(key_to_press)
 
             sleep(duration)
 
             for key_to_press in keys_to_press:
-                pyautogui.keyUp(key_to_press)
+                pydirectinput.keyUp(key_to_press)
 
         # if it isn't the last key - make a delay
         if i != len(keys) - 1:
@@ -618,38 +619,38 @@ def do_test_actions(game_name, logger):
     try:
         if game_name == "apexlegends":
             for i in range(30):
-                pyautogui.press("q")
-                pyautogui.keyDown("a")
-                pyautogui.keyDown("space")
+                pydirectinput.press("q")
+                pydirectinput.keyDown("a")
+                pydirectinput.keyDown("space")
                 sleep(0.5)
-                pyautogui.keyUp("a")
-                pyautogui.keyUp("space")
+                pydirectinput.keyUp("a")
+                pydirectinput.keyUp("space")
 
-                pyautogui.press("q")
-                pyautogui.keyDown("d")
-                pyautogui.keyDown("space")
+                pydirectinput.press("q")
+                pydirectinput.keyDown("d")
+                pydirectinput.keyDown("space")
                 sleep(0.5)
-                pyautogui.keyUp("d")
-                pyautogui.keyUp("space")
+                pydirectinput.keyUp("d")
+                pydirectinput.keyUp("space")
         elif game_name == "valorant":
             for i in range(10):
                 pyautogui.keyDown("space")
                 sleep(0.1)
-                pyautogui.keyUp("space")
+                pydirectinput.keyUp("space")
 
-                pyautogui.press("x")
+                pydirectinput.press("x")
                 sleep(1)
-                pyautogui.click()
+                pydirectinput.click()
                 sleep(3)
         elif game_name == "dota2dx11" or game_name == "dota2vulkan":
             for i in range(6):
-                pyautogui.press("r")
+                pydirectinput.press("r")
                 sleep(3)
-                pyautogui.press("w")
+                pydirectinput.press("w")
                 sleep(3)
         elif game_name == "csgo":
             for i in range(20):
-                pyautogui.press("4")
+                pydirectinput.press("4")
                 sleep(1.5)
                 pyautogui.click()
             
@@ -660,14 +661,14 @@ def do_test_actions(game_name, logger):
             center_y = edge_y / 2
 
             for i in range(5):
-                pyautogui.press("e")
+                pydirectinput.press("e")
                 sleep(0.1)
-                pyautogui.press("e")
+                pydirectinput.press("e")
                 sleep(0.1)
 
-                pyautogui.press("r")
+                pydirectinput.press("r")
                 sleep(0.1)
-                pyautogui.press("r")
+                pydirectinput.press("r")
                 sleep(1.5)
 
                 pyautogui.moveTo(center_x + 360, center_y - 360)

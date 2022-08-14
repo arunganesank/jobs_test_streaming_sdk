@@ -11,6 +11,7 @@ import traceback
 from shutil import copyfile
 from datetime import datetime
 import pyautogui
+import pydirectinput
 import pyshark
 import json
 import multiprocessing
@@ -343,9 +344,9 @@ def close_game(game_name):
     center_y = edge_y / 2
 
     if game_name == "lol":
-        pyautogui.keyDown("esc")
+        pydirectinput.keyDown("esc")
         sleep(0.1)
-        pyautogui.keyUp("esc")
+        pydirectinput.keyUp("esc")
 
         sleep(2)
 
