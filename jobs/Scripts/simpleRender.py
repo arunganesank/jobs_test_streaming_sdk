@@ -363,9 +363,9 @@ def execute_tests(args, current_conf):
                     case["script_info"].append(keys_description)
 
                 if platform.system() == "Windows":
-                    script_path = os.path.join(args.output, "{}.bat".format(case["case"]))
+                    script_path = os.path.abspath(os.path.join(args.output, "{}.bat".format(case["case"])))
                 else:
-                    script_path = os.path.join(args.output, "{}.sh".format(case["case"]))
+                    script_path = os.path.abspath(os.path.join(args.output, "{}.sh".format(case["case"])))
 
                 with open(script_path, "w") as f:
                     f.write(execution_script)
