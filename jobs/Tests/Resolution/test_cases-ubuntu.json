@@ -1,0 +1,68 @@
+[
+    {
+        "case": "STR_LRN_001",
+        "status": "active",
+        "server_keys": "-Resolution 1920,1080 -extStats true -Framerate 60",
+        "client_keys": "-Fullscreen true",
+        "transport_protocol": "udp",
+        "script_info": [
+            "FullHD",
+            "UDP"
+        ]
+   },
+    {
+        "case": "STR_LRN_002",
+        "status": "active",
+        "server_keys": "-Resolution 1280,720 -extStats true -Framerate 60",
+        "client_keys": "-Fullscreen true",
+        "transport_protocol": "udp",
+        "script_info": [
+            "HD",
+            "UDP"
+        ]
+   },
+    {
+        "case": "STR_LRN_003",
+        "status": "active",
+        "server_keys": "-extStats true -Framerate 60",
+        "client_keys": "-Fullscreen false",
+        "transport_protocol": "udp",
+        "script_info": [
+            "Fullscreen disabled",
+            "UDP"
+        ]
+   },
+    {
+        "case": "STR_LRN_004",
+        "status": "active",
+        "server_keys": "-Resolution 1920,1080 -extStats true -Framerate 60",
+        "client_keys": "-Fullscreen true",
+        "transport_protocol": "tcp",
+        "script_info": [
+            "FullHD",
+            "UDP"
+        ]
+   },
+    {
+        "case": "STR_LRN_005",
+        "status": "active",
+        "server_keys": "-Resolution 1280,720 -extStats true -Framerate 60",
+        "client_keys": "-Fullscreen true",
+        "transport_protocol": "tcp",
+        "script_info": [
+            "HD",
+            "UDP"
+        ]
+   },
+    {
+        "case": "STR_LRN_006",
+        "status": "active",
+        "server_keys": "-extStats true -Framerate 60",
+        "client_keys": "-Fullscreen false",
+        "transport_protocol": "tcp",
+        "script_info": [
+            "Fullscreen disabled",
+            "UDP"
+        ]
+   }
+]

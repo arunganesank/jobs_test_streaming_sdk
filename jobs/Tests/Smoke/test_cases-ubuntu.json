@@ -1,24 +1,22 @@
 [
     {
-        "case": "STR_SM_001",
+        "case": "STR_LSM_001",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen true",
+        "server_keys": "-Resolution <resolution> -extStats true -Capture amd -Framerate 60 -Bitrate 50000000 -QoS true",
+        "client_keys": "",
         "transport_protocol": "udp",
-        "start_first": "server",
         "script_info": [
-            "Default settings"
+            "Default settings with UDP"
         ]
     },
     {
-        "case": "STR_SM_002",
+        "case": "STR_LSM_002",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen true",
+        "server_keys": "-Resolution <resolution> -extStats true -Capture amd -Framerate 60 -Bitrate 50000000 -QoS true",
+        "client_keys": "",
         "transport_protocol": "tcp",
-        "start_first": "server",
         "script_info": [
-            "Default settings"
+            "Default settings with TCP"
         ]
     }
 ]
