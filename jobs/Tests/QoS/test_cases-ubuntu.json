@@ -717,7 +717,7 @@
     },
     {
         "case": "STR_LQS_066",
-        "status": "active",
+        "status": "skipped",
         "server_keys": "-Resolution <resolution> -Framerate 60 -extStats true -AdjustResolution true",
         "client_keys": "-Fullscreen true",
         "transport_protocol": "tcp",
@@ -727,7 +727,7 @@
     },
     {
         "case": "STR_LQS_067",
-        "status": "active",
+        "status": "skipped",
         "server_keys": "-Resolution <resolution> -Framerate 60 -extStats true -AdjustResolution true -AdjustFramerate true -AdjustBitrate true",
         "client_keys": "-Fullscreen true",
         "transport_protocol": "tcp",
