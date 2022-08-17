@@ -128,6 +128,8 @@ def make_game_foreground(game_name, logger):
         icon_path = os.path.join(base_path, "Dota2.png")
     elif "csgo" in game_name.lower():
         icon_path = os.path.join(base_path, "CSGO.png")
+    elif "empty" in game_name.lower():
+        icon_path = os.path.join(base_path, "LatencyTool.png")
     else:
         logger.error(f"Unknown game: {game_name}")
         return

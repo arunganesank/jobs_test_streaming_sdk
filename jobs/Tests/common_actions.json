@@ -467,6 +467,8 @@
         "click",
         "sleep 1",
         "start_latency_tool",
+        "sleep 3",
+        "check_game \"VIDEORENDER\" \"RuntimeBroker.exe\"",
         "make_screen empty",
         "sleep 4",
         "record_video 10",
