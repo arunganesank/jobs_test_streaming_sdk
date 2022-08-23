@@ -471,7 +471,9 @@
         "click",
         "sleep 1"
         "start_latency_tool",
-        "make_screen before_any_actions",
+        "sleep 3",
+        "check_game \"VIDEORENDER\" \"RuntimeBroker.exe\"",
+        "make_screen empty",
         "sleep 4",
         "record_video 10",
         "sleep_and_screen 5 4 4 empty"
@@ -480,7 +482,7 @@
     "empty_actions_android": [
         "open_game",
         "sleep 5",
-        "make_screen before_any_actions",
+        "make_screen empty",
         "sleep 3",
         "record_video 10",
         "sleep_and_screen 5 4 4 empty"
