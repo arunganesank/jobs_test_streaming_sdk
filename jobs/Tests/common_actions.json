@@ -469,7 +469,7 @@
         "click",
         "sleep 1",
         "click",
-        "sleep 1"
+        "sleep 1",
         "start_latency_tool",
         "sleep 3",
         "check_game \"VIDEORENDER\" \"RuntimeBroker.exe\"",
