@@ -259,7 +259,7 @@ def save_latency_tool_logs(args, case, current_try):
         return None
 
 
-def analyze_latency_tool_logs(test_case_report, log_path):    
+def analyze_latency_tool_logs(test_case_report, log_path):
     with open(log_path, "r") as file:
         logs = file.read()
 
