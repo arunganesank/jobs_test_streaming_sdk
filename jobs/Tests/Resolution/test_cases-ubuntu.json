@@ -96,7 +96,8 @@
         "client_keys": "-Fullscreen true",
         "transport_protocol": "udp",
         "script_info": [
-            "2K"
+            "2K",
+            "AVC"
         ]
     },
     {
@@ -106,7 +107,8 @@
         "client_keys": "-Fullscreen true",
         "transport_protocol": "udp",
         "script_info": [
-            "FullHD"
+            "FullHD",
+            "AVC"
         ]
     },
     {
@@ -116,7 +118,8 @@
         "client_keys": "-Fullscreen true",
         "transport_protocol": "udp",
         "script_info": [
-            "HD"
+            "HD",
+            "AVC"
         ]
     },
     {
@@ -126,7 +129,8 @@
         "client_keys": "-Fullscreen false",
         "transport_protocol": "udp",
         "script_info": [
-            "Fullscreen disabled"
+            "Fullscreen disabled",
+            "AVC"
         ]
     },
     {
@@ -136,7 +140,8 @@
         "client_keys": "-Fullscreen false",
         "transport_protocol": "udp",
         "script_info": [
-            "64:27 resolution"
+            "64:27 resolution",
+            "AVC"
         ]
     },
     {
@@ -146,7 +151,8 @@
         "client_keys": "-Fullscreen false",
         "transport_protocol": "udp",
         "script_info": [
-            "5:3 resolution"
+            "5:3 resolution",
+            "AVC"
         ]
     },
     {
@@ -156,7 +162,8 @@
         "client_keys": "-Fullscreen false",
         "transport_protocol": "udp",
         "script_info": [
-            "3:2 resolution"
+            "3:2 resolution",
+            "AVC"
         ]
     },
     {
@@ -166,7 +173,8 @@
         "client_keys": "-Fullscreen false",
         "transport_protocol": "udp",
         "script_info": [
-            "4:3 resolution"
+            "4:3 resolution",
+            "AVC"
         ]
     },
     {
@@ -176,7 +184,8 @@
         "client_keys": "-Fullscreen false",
         "transport_protocol": "udp",
         "script_info": [
-            "5:4 resolution"
+            "5:4 resolution",
+            "AVC"
         ]
     },
     {
@@ -276,7 +285,8 @@
         "client_keys": "-Fullscreen true",
         "transport_protocol": "tcp",
         "script_info": [
-            "2K"
+            "2K",
+            "AVC"
         ]
     },
     {
@@ -286,7 +296,8 @@
         "client_keys": "-Fullscreen true",
         "transport_protocol": "tcp",
         "script_info": [
-            "FullHD"
+            "FullHD",
+            "AVC"
         ]
     },
     {
@@ -296,7 +307,8 @@
         "client_keys": "-Fullscreen true",
         "transport_protocol": "tcp",
         "script_info": [
-            "HD"
+            "HD",
+            "AVC"
         ]
     },
     {
@@ -306,7 +318,8 @@
         "client_keys": "-Fullscreen false",
         "transport_protocol": "tcp",
         "script_info": [
-            "Fullscreen disabled"
+            "Fullscreen disabled",
+            "AVC"
         ]
     },
     {
@@ -316,7 +329,8 @@
         "client_keys": "-Fullscreen false",
         "transport_protocol": "tcp",
         "script_info": [
-            "64:27 resolution"
+            "64:27 resolution",
+            "AVC"
         ]
     },
     {
@@ -326,7 +340,8 @@
         "client_keys": "-Fullscreen false",
         "transport_protocol": "tcp",
         "script_info": [
-            "5:3 resolution"
+            "5:3 resolution",
+            "AVC"
         ]
     },
     {
@@ -336,7 +351,8 @@
         "client_keys": "-Fullscreen false",
         "transport_protocol": "tcp",
         "script_info": [
-            "3:2 resolution"
+            "3:2 resolution",
+            "AVC"
         ]
     },
     {
@@ -346,7 +362,8 @@
         "client_keys": "-Fullscreen false",
         "transport_protocol": "tcp",
         "script_info": [
-            "4:3 resolution"
+            "4:3 resolution",
+            "AVC"
         ]
     },
     {
@@ -356,7 +373,8 @@
         "client_keys": "-Fullscreen false",
         "transport_protocol": "tcp",
         "script_info": [
-            "5:4 resolution"
+            "5:4 resolution",
+            "AVC"
         ]
     }
 ]
