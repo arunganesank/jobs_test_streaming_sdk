@@ -8,7 +8,7 @@
         "script_info": [
             "WUXGA"
         ]
-   },
+    },
     {
         "case": "STR_ARN_002",
         "status": "active",
@@ -18,9 +18,29 @@
         "script_info": [
             "HD"
         ]
-   },
+    },
     {
-        "case": "STR_ARN_003",
+       "case": "STR_ARN_003",
+       "status": "active",
+       "server_keys": "-Resolution 2560,1440 -extStats true -Framerate 30",
+       "client_keys": "",
+       "transport_protocol": "udp",
+       "script_info": [
+           "QHD"
+        ]
+    },
+    {
+       "case": "STR_ARN_004",
+       "status": "active",
+       "server_keys": "-Resolution 2400,1080 -extStats true -Framerate 30",
+       "client_keys": "",
+       "transport_protocol": "udp",
+       "script_info": [
+           "20:9 resolution"
+        ]
+    },
+    {
+        "case": "STR_ARN_005",
         "status": "active",
         "server_keys": "-Resolution 1920,1200 -extStats true -Framerate 30",
         "client_keys": "",
@@ -28,9 +48,9 @@
         "script_info": [
             "WUXGA"
         ]
-   },
+    },
     {
-        "case": "STR_ARN_004",
+        "case": "STR_ARN_006",
         "status": "active",
         "server_keys": "-Resolution 1280,720 -extStats true -Framerate 30",
         "client_keys": "",
@@ -38,5 +58,25 @@
         "script_info": [
             "HD"
         ]
-   }
+    },
+    {
+       "case": "STR_ARN_007",
+       "status": "active",
+       "server_keys": "-Resolution 2560,1440 -extStats true -Framerate 30",
+       "client_keys": "",
+       "transport_protocol": "tcp",
+       "script_info": [
+           "QHD"
+        ]
+    },
+    {
+       "case": "STR_ARN_008",
+       "status": "active",
+       "server_keys": "-Resolution 2400,1080 -extStats true -Framerate 30",
+       "client_keys": "",
+       "transport_protocol": "tcp",
+       "script_info": [
+           "20:9 resolution"
+        ]
+    }
 ]
