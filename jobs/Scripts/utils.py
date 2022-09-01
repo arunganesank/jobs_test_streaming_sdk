@@ -252,12 +252,14 @@ def save_latency_tool_logs(args, case, current_try):
             file.write(logs)
 
         main_logger.info("Finish latency tool logs saving for {}".format(args.execution_type))
+        return log_destination_path
     except Exception as e:
         main_logger.error("Failed during latency tool logs saving. Exception: {}".format(str(e)))
         main_logger.error("Traceback: {}".format(traceback.format_exc()))
+        return None
 
 
-def analyze_latency_tool_logs(test_case_report, log_path):
+def analyze_latency_tool_logs(test_case_report, log_path):    
     with open(log_path, "r") as file:
         logs = file.read()
 

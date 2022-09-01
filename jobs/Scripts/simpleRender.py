@@ -219,9 +219,6 @@ def save_results(args, case, cases, execution_time = 0.0, test_case_status = "",
             latency_tool_log_key = "latency_tool_log_" + "server" if args.execution_type == "server" else "client"
             test_case_report[latency_tool_log_key] = latency_tool_log_path
 
-            if args.execution_type == "client":
-                analyze_latency_tool_logs(test_case_report, latency_tool_log_path)
-
         if args.collect_traces == "AfterTests" or args.collect_traces == "BeforeTests":
             if args.execution_type == "server":
                 test_case_report["server_trace_archive"] = os.path.join("gpuview", case["case"] + "_server.zip")
