@@ -980,7 +980,7 @@ def analyze_logs(work_dir, json_content, case, execution_type="server"):
         
         if latency_tool_results:
 
-            json_content["test_status"] != "passed"
+            json_content["test_status"] = "passed"
 
             latency_test_accuracy = latency_tool_results["accuracy"]
             latency_test_average_reactions = latency_tool_results["average_reactions"]
