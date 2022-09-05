@@ -181,7 +181,8 @@ def start_client_side_tests(args, case, process, script_path, last_log_line, aud
             with open(os.path.join(args.output, case["case"] + CASE_REPORT_SUFFIX), "r") as file:
                 json_content = json.load(file)[0]
 
-            analyze_latency_tool_logs(json_content, latency_log_path)
+            if latency_log_path:
+                analyze_latency_tool_logs(json_content, latency_log_path)
 
             # check that encryption is valid
             if contains_encryption_errors(error_messages):
