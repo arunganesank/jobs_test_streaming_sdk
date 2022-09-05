@@ -978,7 +978,7 @@ def analyze_logs(work_dir, json_content, case, execution_type="server"):
 
         latency_tool_results = json_content["latency_tool_results"]
         
-        if latency_tool_results and json_content["test_status"] != "skipped":
+        if latency_tool_results:
 
             json_content["test_status"] != "passed"
 
