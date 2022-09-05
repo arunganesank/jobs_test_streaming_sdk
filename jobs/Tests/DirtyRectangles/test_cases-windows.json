@@ -2,9 +2,8 @@
     {
         "case": "STR_DRT_001",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -EnableDirtyRects true",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -EnableDirtyRects true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Default settings with dirty rects"
         ]
@@ -12,9 +11,8 @@
     {
         "case": "STR_DRT_002",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -EnableDirtyRects true -DrawDirtyRects true",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -EnableDirtyRects true -DrawDirtyRects true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Drawing dirty dects"
         ]
@@ -22,9 +20,8 @@
     {
         "case": "STR_DRT_003",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -EnableDirtyRects true",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -EnableDirtyRects true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Default settings with dirty rects"
         ]
@@ -32,9 +29,8 @@
     {
         "case": "STR_DRT_004",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -EnableDirtyRects true -DrawDirtyRects true",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -EnableDirtyRects true -DrawDirtyRects true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Drawing dirty dects"
         ]

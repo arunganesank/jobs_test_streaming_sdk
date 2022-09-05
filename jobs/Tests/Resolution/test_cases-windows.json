@@ -2,9 +2,8 @@
     {
         "case": "STR_RN_001",
         "status": "active",
-        "server_keys": "-Resolution 1920,1080 -extStats true -Framerate 60",
+        "server_keys": "-Resolution 1920,1080 -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "FullHD"
         ]
@@ -12,9 +11,8 @@
     {
         "case": "STR_RN_002",
         "status": "active",
-        "server_keys": "-Resolution 1280,720 -extStats true -Framerate 60",
+        "server_keys": "-Resolution 1280,720 -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "HD"
         ]
@@ -22,9 +20,8 @@
     {
         "case": "STR_RN_003",
         "status": "active",
-        "server_keys": "-Resolution 1920,1200 -extStats true -Framerate 60",
+        "server_keys": "-Resolution 1920,1200 -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen false",
-        "transport_protocol": "udp",
         "script_info": [
             "Fullscreen disabled"
         ]
@@ -32,9 +29,8 @@
     {
         "case": "STR_RN_004",
         "status": "active",
-        "server_keys": "-Resolution 1920,1080 -extStats true -Framerate 60",
+        "server_keys": "-Resolution 1920,1080 -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "FullHD"
         ]
@@ -42,9 +38,8 @@
     {
         "case": "STR_RN_005",
         "status": "active",
-        "server_keys": "-Resolution 1280,720 -extStats true -Framerate 60",
+        "server_keys": "-Resolution 1280,720 -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "HD"
         ]
@@ -52,9 +47,8 @@
     {
         "case": "STR_RN_006",
         "status": "active",
-        "server_keys": "-Resolution 1920,1200 -extStats true -Framerate 60",
+        "server_keys": "-Resolution 1920,1200 -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen false",
-        "transport_protocol": "tcp",
         "script_info": [
             "Fullscreen disabled"
         ]

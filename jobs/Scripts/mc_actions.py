@@ -6,7 +6,7 @@ import pyscreenshot
 import json
 from pyffmpeg import FFmpeg
 from threading import Thread
-from utils import collect_traces, parse_arguments, collect_iperf_info, track_used_memory, analyze_encryption, check_artifacts_and_save_status
+from utils import collect_traces, parse_arguments, collect_iperf_info, track_used_memory, analyze_encryption, check_artifacts_and_save_status, getTransportProtocol
 import win32api
 from actions import *
 
@@ -140,7 +140,7 @@ class Encryption(Action):
         try:
             self.sock.send("start".encode("utf-8"))
 
-            compressing_thread = Thread(target=analyze_encryption, args=(self.params["case"], "second_client", self.params["transport_protocol"], \
+            compressing_thread = Thread(target=analyze_encryption, args=(self.params["case"], "second_client", getTransportProtocol(self.params["case"]), \
                 "-encrypt" in self.params["case"]["server_keys"].lower(), self.params["messages"], self.params["args"].ip_address))
             compressing_thread.start()
         except Exception as e:

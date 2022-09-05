@@ -2,10 +2,9 @@
     {
         "case": "STR_CLM_001",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag"
         ]
@@ -13,10 +12,9 @@
     {
         "case": "STR_CLM_002",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --drop on --drop-inbound on --drop-outbound on --drop-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Drop"
         ]
@@ -24,10 +22,9 @@
     {
         "case": "STR_CLM_003",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --throttle on --throttle-inbound on --throttle-outbound on --throttle-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Throttle"
         ]
@@ -35,10 +32,9 @@
     {
         "case": "STR_CLM_004",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --duplicate on --duplicate-inbound on --duplicate-outbound on --duplicate-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Duplicate"
         ]
@@ -46,10 +42,9 @@
     {
         "case": "STR_CLM_005",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --ood on --ood-inbound on --ood-outbound on --ood-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Out of order"
         ]
@@ -57,10 +52,9 @@
     {
         "case": "STR_CLM_006",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --tamper on --tamper-inbound on --tamper-outbound on --tamper-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Tamper"
         ]
@@ -68,10 +62,9 @@
     {
         "case": "STR_CLM_007",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 8 --drop on --drop-inbound on --drop-outbound on --drop-chance 2",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag + Drop"
         ]
@@ -79,10 +72,9 @@
     {
         "case": "STR_CLM_008",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 8 --ood on --ood-inbound on --ood-outbound on --ood-chance 2",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag + Out of order"
         ]
@@ -90,10 +82,9 @@
     {
         "case": "STR_CLM_009",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 8 --duplicate on --duplicate-inbound on --duplicate-outbound on --duplicate-chance 2",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag + Duplicate"
         ]
@@ -101,10 +92,9 @@
     {
         "case": "STR_CLM_010",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --drop on --drop-inbound on --drop-outbound on --drop-chance 2 --ood on --ood-inbound on --ood-outbound on --ood-chance 2",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Drop + Out of order"
         ]
@@ -112,10 +102,9 @@
     {
         "case": "STR_CLM_011",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag",
             "Framerate 30"
@@ -124,10 +113,9 @@
     {
         "case": "STR_CLM_012",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 90",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 90 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag",
             "Framerate 90"
@@ -136,10 +124,9 @@
     {
         "case": "STR_CLM_013",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Bitrate 10000000",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Bitrate 10000000 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag",
             "Bitrate 10000000",
@@ -149,10 +136,9 @@
     {
         "case": "STR_CLM_014",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 90 -Bitrate 10000000",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 90 -Bitrate 10000000 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag",
             "Bitrate 10000000",
@@ -162,10 +148,9 @@
     {
         "case": "STR_CLM_015",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Bitrate 100000000",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Bitrate 100000000 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag",
             "Bitrate 100000000",
@@ -175,10 +160,9 @@
     {
         "case": "STR_CLM_016",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 90 -Bitrate 100000000",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 90 -Bitrate 100000000 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag",
             "Bitrate 100000000",
@@ -188,10 +172,9 @@
     {
         "case": "STR_CLM_017",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "-Fullscreen true -ForceDisplayFramerate true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag",
             "Force Display Frame Rate"
@@ -200,11 +183,10 @@
     {
         "case": "STR_CLM_018",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 7",
         "keep_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "keep_client": true,
         "keep_server": true,
         "script_info": [
@@ -215,10 +197,9 @@
     {
         "case": "STR_CLM_019",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "recovery_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "keep_client": true,
         "keep_server": true,
         "script_info": [
@@ -229,11 +210,10 @@
     {
         "case": "STR_CLM_020",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 20",
         "keep_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "keep_client": true,
         "keep_server": true,
         "script_info": [
@@ -244,10 +224,9 @@
     {
         "case": "STR_CLM_021",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "recovery_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Recovery test #4",
             "Clumsy Lag"
@@ -256,11 +235,10 @@
     {
         "case": "STR_CLM_022",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --drop on --drop-inbound on --drop-outbound on --drop-chance 4",
         "keep_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "keep_client": true,
         "keep_server": true,
         "script_info": [
@@ -271,10 +249,9 @@
     {
         "case": "STR_CLM_023",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "recovery_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "keep_client": true,
         "keep_server": true,
         "script_info": [
@@ -285,11 +262,10 @@
     {
         "case": "STR_CLM_024",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --drop on --drop-inbound on --drop-outbound on --drop-chance 10",
         "keep_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "keep_client": true,
         "keep_server": true,
         "script_info": [
@@ -300,10 +276,9 @@
     {
         "case": "STR_CLM_025",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "recovery_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Recovery test #4",
             "Clumsy Drop"
@@ -312,10 +287,9 @@
     {
         "case": "STR_CLM_026",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "client_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag Client"
         ]
@@ -323,10 +297,9 @@
     {
         "case": "STR_CLM_027",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "client_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --drop on --drop-inbound on --drop-outbound on --drop-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Client Drop Client"
         ]
@@ -334,10 +307,9 @@
     {
         "case": "STR_CLM_028",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "client_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --throttle on --throttle-inbound on --throttle-outbound on --throttle-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Throttle Client"
         ]
@@ -345,10 +317,9 @@
     {
         "case": "STR_CLM_029",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "client_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --duplicate on --duplicate-inbound on --duplicate-outbound on --duplicate-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Duplicate Client"
         ]
@@ -356,10 +327,9 @@
     {
         "case": "STR_CLM_030",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "client_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --ood on --ood-inbound on --ood-outbound on --ood-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Out of order Client"
         ]
@@ -367,10 +337,9 @@
     {
         "case": "STR_CLM_031",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "client_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --tamper on --tamper-inbound on --tamper-outbound on --tamper-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Tamper Client"
         ]
@@ -378,11 +347,10 @@
     {
         "case": "STR_CLM_032",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "server_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 6 --drop on --drop-inbound on --drop-outbound on --drop-chance 2 --throttle on --throttle-inbound on --throttle-outbound on --throttle-chance 2 --duplicate on --duplicate-inbound on --duplicate-outbound on --duplicate-chance 2 --ood on --ood-inbound on --ood-outbound on --ood-chance 2 --tamper on --tamper-inbound on --tamper-outbound on --tamper-chance 2",
         "keep_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "keep_client": true,
         "keep_server": true,
         "script_info": [
@@ -392,10 +360,9 @@
     {
         "case": "STR_CLM_033",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "recovery_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Stress testing Clumsy #2"
         ]
@@ -403,10 +370,9 @@
     {
         "case": "STR_CLM_034",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag"
         ]
@@ -414,10 +380,9 @@
     {
         "case": "STR_CLM_035",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --drop on --drop-inbound on --drop-outbound on --drop-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Drop"
         ]
@@ -425,10 +390,9 @@
     {
         "case": "STR_CLM_036",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --throttle on --throttle-inbound on --throttle-outbound on --throttle-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Throttle"
         ]
@@ -436,10 +400,9 @@
     {
         "case": "STR_CLM_037",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --duplicate on --duplicate-inbound on --duplicate-outbound on --duplicate-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Duplicate"
         ]
@@ -447,10 +410,9 @@
     {
         "case": "STR_CLM_038",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --ood on --ood-inbound on --ood-outbound on --ood-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Out of order"
         ]
@@ -458,10 +420,9 @@
     {
         "case": "STR_CLM_039",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --tamper on --tamper-inbound on --tamper-outbound on --tamper-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Tamper"
         ]
@@ -469,10 +430,9 @@
     {
         "case": "STR_CLM_040",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 8 --drop on --drop-inbound on --drop-outbound on --drop-chance 2",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag + Drop"
         ]
@@ -480,10 +440,9 @@
     {
         "case": "STR_CLM_041",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 8 --ood on --ood-inbound on --ood-outbound on --ood-chance 2",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag + Out of order"
         ]
@@ -491,10 +450,9 @@
     {
         "case": "STR_CLM_042",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 8 --duplicate on --duplicate-inbound on --duplicate-outbound on --duplicate-chance 2",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag + Duplicate"
         ]
@@ -502,10 +460,9 @@
     {
         "case": "STR_CLM_043",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --drop on --drop-inbound on --drop-outbound on --drop-chance 2 --ood on --ood-inbound on --ood-outbound on --ood-chance 2",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Drop + Out of order"
         ]
@@ -513,10 +470,9 @@
     {
         "case": "STR_CLM_044",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag",
             "Framerate 30"
@@ -525,10 +481,9 @@
     {
         "case": "STR_CLM_045",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 90",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 90 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag",
             "Framerate 90"
@@ -537,10 +492,9 @@
     {
         "case": "STR_CLM_046",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Bitrate 10000000",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Bitrate 10000000 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag",
             "Bitrate 10000000",
@@ -550,10 +504,9 @@
     {
         "case": "STR_CLM_047",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 90 -Bitrate 10000000",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 90 -Bitrate 10000000 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag",
             "Bitrate 10000000",
@@ -563,10 +516,9 @@
     {
         "case": "STR_CLM_048",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Bitrate 100000000",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Bitrate 100000000 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag",
             "Bitrate 100000000",
@@ -576,10 +528,9 @@
     {
         "case": "STR_CLM_049",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 90 -Bitrate 100000000",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 90 -Bitrate 100000000 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag",
             "Bitrate 100000000",
@@ -589,10 +540,9 @@
     {
         "case": "STR_CLM_050",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "-Fullscreen true -ForceDisplayFramerate true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag",
             "Force Display Frame Rate"
@@ -601,11 +551,10 @@
     {
         "case": "STR_CLM_051",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 7",
         "keep_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "keep_client": true,
         "keep_server": true,
         "script_info": [
@@ -616,10 +565,9 @@
     {
         "case": "STR_CLM_052",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "recovery_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "keep_client": true,
         "keep_server": true,
         "script_info": [
@@ -630,11 +578,10 @@
     {
         "case": "STR_CLM_053",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 20",
         "keep_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "keep_client": true,
         "keep_server": true,
         "script_info": [
@@ -645,10 +592,9 @@
     {
         "case": "STR_CLM_054",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "recovery_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Recovery test #4",
             "Clumsy Lag"
@@ -657,11 +603,10 @@
     {
         "case": "STR_CLM_055",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --drop on --drop-inbound on --drop-outbound on --drop-chance 4",
         "keep_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "keep_client": true,
         "keep_server": true,
         "script_info": [
@@ -672,10 +617,9 @@
     {
         "case": "STR_CLM_056",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "recovery_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "keep_client": true,
         "keep_server": true,
         "script_info": [
@@ -686,11 +630,10 @@
     {
         "case": "STR_CLM_057",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --drop on --drop-inbound on --drop-outbound on --drop-chance 10",
         "keep_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "keep_client": true,
         "keep_server": true,
         "script_info": [
@@ -701,10 +644,9 @@
     {
         "case": "STR_CLM_058",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "recovery_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Recovery test #4",
             "Clumsy Drop"
@@ -713,10 +655,9 @@
     {
         "case": "STR_CLM_059",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "client_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag Client"
         ]
@@ -724,10 +665,9 @@
     {
         "case": "STR_CLM_060",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "client_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --drop on --drop-inbound on --drop-outbound on --drop-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Client Drop Client"
         ]
@@ -735,10 +675,9 @@
     {
         "case": "STR_CLM_061",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "client_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --throttle on --throttle-inbound on --throttle-outbound on --throttle-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Throttle Client"
         ]
@@ -746,10 +685,9 @@
     {
         "case": "STR_CLM_062",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "client_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --duplicate on --duplicate-inbound on --duplicate-outbound on --duplicate-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Duplicate Client"
         ]
@@ -757,10 +695,9 @@
     {
         "case": "STR_CLM_063",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "client_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --ood on --ood-inbound on --ood-outbound on --ood-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Out of order Client"
         ]
@@ -768,10 +705,9 @@
     {
         "case": "STR_CLM_064",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "client_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --tamper on --tamper-inbound on --tamper-outbound on --tamper-chance 3",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Tamper Client"
         ]
@@ -779,11 +715,10 @@
     {
         "case": "STR_CLM_065",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "server_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 6 --drop on --drop-inbound on --drop-outbound on --drop-chance 2 --throttle on --throttle-inbound on --throttle-outbound on --throttle-chance 2 --duplicate on --duplicate-inbound on --duplicate-outbound on --duplicate-chance 2 --ood on --ood-inbound on --ood-outbound on --ood-chance 2 --tamper on --tamper-inbound on --tamper-outbound on --tamper-chance 2",
         "keep_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "keep_client": true,
         "keep_server": true,
         "script_info": [
@@ -793,10 +728,9 @@
     {
         "case": "STR_CLM_066",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "recovery_server_clumsy": true,
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Stress testing Clumsy #2"
         ]

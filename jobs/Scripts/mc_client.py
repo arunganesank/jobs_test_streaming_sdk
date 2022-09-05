@@ -103,7 +103,7 @@ def prepare_keys(args, case):
 
     return "{keys} -connectionurl {transport_protocol}://{ip_address}:1235".format(
         keys=keys,
-        transport_protocol=case["transport_protocol"],
+        transport_protocol = getTransportProtocol(case),
         ip_address=args.ip_address
     )
 
@@ -141,7 +141,6 @@ def prepare_empty_reports(args, current_conf):
             test_case_report['tool'] = 'StreamingSDK'
             test_case_report['render_time'] = 0.0
             test_case_report['execution_time'] = 0.0
-            test_case_report['transport_protocol'] = case['transport_protocol'].upper()
             test_case_report['tool_path'] = args.tool
             test_case_report['date_time'] = datetime.now().strftime(
                 '%m/%d/%Y %H:%M:%S')
@@ -303,7 +302,6 @@ def execute_tests(args, current_conf):
             params["case"] = case
             params["client_type"] = "second_client"
             params["audio_device_name"] = audio_device_name
-            params["transport_protocol"] = case["transport_protocol"]
             params["messages"] = error_messages
             params["case_json_path"] = os.path.join(args.output, case["case"] + CASE_REPORT_SUFFIX)
 

@@ -2,9 +2,8 @@
    {
        "case": "STR_CT_001",
        "status": "active",
-       "server_keys": "-Resolution <resolution> -Convert OpenGL -extStats true -Framerate 60",
+       "server_keys": "-Resolution <resolution> -Convert OpenGL -extStats true -Framerate 60 -Protocol udp",
        "client_keys": "-Fullscreen true",
-       "transport_protocol": "udp",
        "script_info": [
            "Conversion OpenGL"
        ]
@@ -12,9 +11,8 @@
    {
        "case": "STR_CT_002",
        "status": "skipped",
-       "server_keys": "-Resolution <resolution> -Convert Vulkan -extStats true -Framerate 60",
+       "server_keys": "-Resolution <resolution> -Convert Vulkan -extStats true -Framerate 60 -Protocol udp",
        "client_keys": "-Fullscreen true",
-       "transport_protocol": "udp",
        "script_info": [
            "Conversion Vulkan"
        ]
@@ -22,9 +20,8 @@
    {
        "case": "STR_CT_003",
        "status": "active",
-       "server_keys": "-Resolution <resolution> -Convert OpenGL -extStats true -Framerate 60",
+       "server_keys": "-Resolution <resolution> -Convert OpenGL -extStats true -Framerate 60 -Protocol tcp",
        "client_keys": "-Fullscreen true",
-       "transport_protocol": "tcp",
        "script_info": [
            "Conversion OpenGL"
        ]
@@ -32,9 +29,8 @@
    {
        "case": "STR_CT_004",
        "status": "skipped",
-       "server_keys": "-Resolution <resolution> -Convert Vulkan -extStats true -Framerate 60",
+       "server_keys": "-Resolution <resolution> -Convert Vulkan -extStats true -Framerate 60 -Protocol tcp",
        "client_keys": "-Fullscreen true",
-       "transport_protocol": "tcp",
        "script_info": [
            "Conversion Vulkan"
        ]

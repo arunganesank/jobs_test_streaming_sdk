@@ -142,7 +142,6 @@ def prepare_empty_reports(args):
             test_case_report['render_time'] = 0.0
             test_case_report['execution_time'] = 0.0
             test_case_report['keys'] = case['server_keys']
-            test_case_report['transport_protocol'] = case['transport_protocol'].upper()
             test_case_report['server_tool_path'] = args.server_tool
             test_case_report['client_tool_path'] = args.client_tool
             test_case_report['date_time'] = datetime.now().strftime(
@@ -284,7 +283,7 @@ def execute_tests(args):
                         os.path.join(os.path.dirname(__file__),
                         "..",
                         "Configs",
-                        "settings_{}.json".format(case["transport_protocol"].upper()))
+                        "settings_{}.json".format(getTransportProtocol(case).upper()))
                     ), 
                     settings_json_path
                 )

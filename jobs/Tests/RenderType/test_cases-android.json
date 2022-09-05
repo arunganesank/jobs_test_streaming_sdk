@@ -2,9 +2,8 @@
     {
         "case": "STR_ART_001",
         "status": "skipped",
-        "server_keys": "-extStats true -Framerate 30 -Resolution <resolution> -Render OpenGL",
+        "server_keys": "-extStats true -Framerate 30 -Resolution <resolution> -Render OpenGL -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Render type OpenGL"
         ]
@@ -12,9 +11,8 @@
     {
         "case": "STR_ART_002",
         "status": "skipped",
-        "server_keys": "-extStats true -Framerate 30 -Resolution <resolution> -Render Vulkan",
+        "server_keys": "-extStats true -Framerate 30 -Resolution <resolution> -Render Vulkan -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Render type Vulkan"
         ]
@@ -22,9 +20,8 @@
     {
         "case": "STR_ART_003",
         "status": "skipped",
-        "server_keys": "-extStats true -Framerate 30 -Resolution <resolution> -Render OpenGL",
+        "server_keys": "-extStats true -Framerate 30 -Resolution <resolution> -Render OpenGL -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Render type OpenGL"
         ]
@@ -32,9 +29,8 @@
     {
         "case": "STR_ART_004",
         "status": "skipped",
-        "server_keys": "-extStats true -Framerate 30 -Resolution <resolution> -Render Vulkan",
+        "server_keys": "-extStats true -Framerate 30 -Resolution <resolution> -Render Vulkan -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Render type Vulkan"
         ]

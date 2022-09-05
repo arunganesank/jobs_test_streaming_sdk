@@ -2,9 +2,8 @@
     {
         "case": "STR_CPT_001",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -Capture dd -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -Capture dd -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "DD Capture Type"
         ]
@@ -12,9 +11,8 @@
     {
         "case": "STR_CPT_002",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -Capture fake -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -Capture fake -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Fake Capture Type"
         ]
@@ -22,9 +20,8 @@
     {
         "case": "STR_CPT_003",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -Capture dd -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -Capture dd -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "DD Capture Type"
         ]
@@ -32,9 +29,8 @@
     {
         "case": "STR_CPT_004",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -Capture fake -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -Capture fake -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Fake Capture Type"
         ]

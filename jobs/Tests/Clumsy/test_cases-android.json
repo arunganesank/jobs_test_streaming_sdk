@@ -2,10 +2,9 @@
     {
         "case": "STR_ACL_001",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag"
         ]
@@ -13,10 +12,9 @@
     {
         "case": "STR_ACL_002",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --drop on --drop-inbound on --drop-outbound on --drop-chance 3",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Drop"
         ]
@@ -24,10 +22,9 @@
     {
         "case": "STR_ACL_003",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --throttle on --throttle-inbound on --throttle-outbound on --throttle-chance 3",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Throttle"
         ]
@@ -35,10 +32,9 @@
     {
         "case": "STR_ACL_004",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --duplicate on --duplicate-inbound on --duplicate-outbound on --duplicate-chance 3",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Duplicate"
         ]
@@ -46,10 +42,9 @@
     {
         "case": "STR_ACL_005",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --ood on --ood-inbound on --ood-outbound on --ood-chance 3",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Out of order"
         ]
@@ -57,10 +52,9 @@
     {
         "case": "STR_ACL_006",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --tamper on --tamper-inbound on --tamper-outbound on --tamper-chance 3",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Tamper"
         ]
@@ -68,10 +62,9 @@
     {
         "case": "STR_ACL_007",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 8 --drop on --drop-inbound on --drop-outbound on --drop-chance 2",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag + Drop"
         ]
@@ -79,10 +72,9 @@
     {
         "case": "STR_ACL_008",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 8 --ood on --ood-inbound on --ood-outbound on --ood-chance 2",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag + Out of order"
         ]
@@ -90,10 +82,9 @@
     {
         "case": "STR_ACL_009",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 8 --duplicate on --duplicate-inbound on --duplicate-outbound on --duplicate-chance 2",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag + Duplicate"
         ]
@@ -101,10 +92,9 @@
     {
         "case": "STR_ACL_010",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --drop on --drop-inbound on --drop-outbound on --drop-chance 2 --ood on --ood-inbound on --ood-outbound on --ood-chance 2",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Drop + Out of order"
         ]
@@ -112,10 +102,9 @@
     {
         "case": "STR_ACL_011",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag",
             "Framerate 60"
@@ -124,10 +113,9 @@
     {
         "case": "STR_ACL_012",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Bitrate 10000000",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Bitrate 10000000 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag",
             "Bitrate 10000000",
@@ -137,10 +125,9 @@
     {
         "case": "STR_ACL_013",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Bitrate 10000000",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Bitrate 10000000 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag",
             "Bitrate 10000000",
@@ -150,10 +137,9 @@
     {
         "case": "STR_ACL_014",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Bitrate 100000000",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Bitrate 100000000 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag",
             "Bitrate 100000000",
@@ -163,10 +149,9 @@
     {
         "case": "STR_ACL_015",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Bitrate 100000000",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Bitrate 100000000 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Clumsy Lag",
             "Bitrate 100000000",
@@ -176,11 +161,10 @@
     {
         "case": "STR_ACL_016",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 7",
         "keep_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "udp",
         "keep_android": true,
         "keep_server": true,
         "script_info": [
@@ -191,10 +175,9 @@
     {
         "case": "STR_ACL_017",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "recovery_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "udp",
         "keep_android": true,
         "keep_server": true,
         "script_info": [
@@ -205,11 +188,10 @@
     {
         "case": "STR_ACL_018",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 20",
         "keep_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "udp",
         "keep_android": true,
         "keep_server": true,
         "script_info": [
@@ -220,10 +202,9 @@
     {
         "case": "STR_ACL_019",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "recovery_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Recovery test #4",
             "Clumsy Lag"
@@ -232,11 +213,10 @@
     {
         "case": "STR_ACL_020",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --drop on --drop-inbound on --drop-outbound on --drop-chance 4",
         "keep_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "udp",
         "keep_android": true,
         "keep_server": true,
         "script_info": [
@@ -247,10 +227,9 @@
     {
         "case": "STR_ACL_021",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "recovery_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "udp",
         "keep_android": true,
         "keep_server": true,
         "script_info": [
@@ -261,11 +240,10 @@
     {
         "case": "STR_ACL_022",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --drop on --drop-inbound on --drop-outbound on --drop-chance 10",
         "keep_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "udp",
         "keep_android": true,
         "keep_server": true,
         "script_info": [
@@ -276,10 +254,9 @@
     {
         "case": "STR_ACL_023",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "recovery_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Recovery test #4",
             "Clumsy Drop"
@@ -288,11 +265,10 @@
     {
         "case": "STR_CLM_024",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "android_clumsy_keys": "--filter \"udp and (udp.DstPort == 1235 or udp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 6 --drop on --drop-inbound on --drop-outbound on --drop-chance 2 --throttle on --throttle-inbound on --throttle-outbound on --throttle-chance 2 --duplicate on --duplicate-inbound on --duplicate-outbound on --duplicate-chance 2 --ood on --ood-inbound on --ood-outbound on --ood-chance 2 --tamper on --tamper-inbound on --tamper-outbound on --tamper-chance 2",
         "keep_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "udp",
         "keep_android": true,
         "keep_server": true,
         "script_info": [
@@ -302,10 +278,9 @@
     {
         "case": "STR_CLM_025",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol udp",
         "recovery_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Stress testing Clumsy #2"
         ]
@@ -313,10 +288,9 @@
     {
         "case": "STR_ACL_026",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag"
         ]
@@ -324,10 +298,9 @@
     {
         "case": "STR_ACL_027",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --drop on --drop-inbound on --drop-outbound on --drop-chance 3",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Drop"
         ]
@@ -335,10 +308,9 @@
     {
         "case": "STR_ACL_028",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --throttle on --throttle-inbound on --throttle-outbound on --throttle-chance 3",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Throttle"
         ]
@@ -346,10 +318,9 @@
     {
         "case": "STR_ACL_029",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --duplicate on --duplicate-inbound on --duplicate-outbound on --duplicate-chance 3",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Duplicate"
         ]
@@ -357,10 +328,9 @@
     {
         "case": "STR_ACL_030",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --ood on --ood-inbound on --ood-outbound on --ood-chance 3",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Out of order"
         ]
@@ -368,10 +338,9 @@
     {
         "case": "STR_ACL_031",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --tamper on --tamper-inbound on --tamper-outbound on --tamper-chance 3",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Tamper"
         ]
@@ -379,10 +348,9 @@
     {
         "case": "STR_ACL_032",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 8 --drop on --drop-inbound on --drop-outbound on --drop-chance 2",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag + Drop"
         ]
@@ -390,10 +358,9 @@
     {
         "case": "STR_ACL_033",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 8 --ood on --ood-inbound on --ood-outbound on --ood-chance 2",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag + Out of order"
         ]
@@ -401,10 +368,9 @@
     {
         "case": "STR_ACL_034",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 8 --duplicate on --duplicate-inbound on --duplicate-outbound on --duplicate-chance 2",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag + Duplicate"
         ]
@@ -412,10 +378,9 @@
     {
         "case": "STR_ACL_035",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --drop on --drop-inbound on --drop-outbound on --drop-chance 2 --ood on --ood-inbound on --ood-outbound on --ood-chance 2",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Drop + Out of order"
         ]
@@ -423,10 +388,9 @@
     {
         "case": "STR_ACL_036",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag",
             "Framerate 60"
@@ -435,10 +399,9 @@
     {
         "case": "STR_ACL_037",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Bitrate 10000000",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Bitrate 10000000 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag",
             "Bitrate 10000000",
@@ -448,10 +411,9 @@
     {
         "case": "STR_ACL_038",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Bitrate 10000000",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Bitrate 10000000 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag",
             "Bitrate 10000000",
@@ -461,10 +423,9 @@
     {
         "case": "STR_ACL_039",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Bitrate 100000000",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Bitrate 100000000 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag",
             "Bitrate 100000000",
@@ -474,10 +435,9 @@
     {
         "case": "STR_ACL_040",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Bitrate 100000000",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Bitrate 100000000 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 10",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Clumsy Lag",
             "Bitrate 100000000",
@@ -487,11 +447,10 @@
     {
         "case": "STR_ACL_041",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 7",
         "keep_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "tcp",
         "keep_android": true,
         "keep_server": true,
         "script_info": [
@@ -502,10 +461,9 @@
     {
         "case": "STR_ACL_042",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "recovery_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "tcp",
         "keep_android": true,
         "keep_server": true,
         "script_info": [
@@ -516,11 +474,10 @@
     {
         "case": "STR_ACL_043",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 20",
         "keep_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "tcp",
         "keep_android": true,
         "keep_server": true,
         "script_info": [
@@ -531,10 +488,9 @@
     {
         "case": "STR_ACL_044",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "recovery_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Recovery test #4",
             "Clumsy Lag"
@@ -543,11 +499,10 @@
     {
         "case": "STR_ACL_045",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --drop on --drop-inbound on --drop-outbound on --drop-chance 4",
         "keep_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "tcp",
         "keep_android": true,
         "keep_server": true,
         "script_info": [
@@ -558,10 +513,9 @@
     {
         "case": "STR_ACL_046",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "recovery_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "tcp",
         "keep_android": true,
         "keep_server": true,
         "script_info": [
@@ -572,11 +526,10 @@
     {
         "case": "STR_ACL_047",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --drop on --drop-inbound on --drop-outbound on --drop-chance 10",
         "keep_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "tcp",
         "keep_android": true,
         "keep_server": true,
         "script_info": [
@@ -587,10 +540,9 @@
     {
         "case": "STR_ACL_048",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "recovery_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Recovery test #4",
             "Clumsy Drop"
@@ -599,11 +551,10 @@
     {
         "case": "STR_CLM_049",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "android_clumsy_keys": "--filter \"tcp and (tcp.DstPort == 1235 or tcp.SrcPort == 1235)\" --lag on --lag-inbound on --lag-outbound on --lag-time 6 --drop on --drop-inbound on --drop-outbound on --drop-chance 2 --throttle on --throttle-inbound on --throttle-outbound on --throttle-chance 2 --duplicate on --duplicate-inbound on --duplicate-outbound on --duplicate-chance 2 --ood on --ood-inbound on --ood-outbound on --ood-chance 2 --tamper on --tamper-inbound on --tamper-outbound on --tamper-chance 2",
         "keep_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "tcp",
         "keep_android": true,
         "keep_server": true,
         "script_info": [
@@ -613,10 +564,9 @@
     {
         "case": "STR_CLM_050",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 30 -Protocol tcp",
         "recovery_android_clumsy": true,
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Stress testing Clumsy #2"
         ]
