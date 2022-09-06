@@ -172,6 +172,7 @@ def start_server_side_tests(args, case, process, android_client_closed, script_p
             params["client_type"] = "android"
             params["messages"] = error_messages
             params["client_address"] = address[0]
+            params["transport_protocol"] = getTransportProtocol(case)
             params["script_path"] = script_path
             params["process"] = process
             params["android_client_closed"] = android_client_closed

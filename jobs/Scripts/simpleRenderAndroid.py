@@ -143,6 +143,7 @@ def prepare_empty_reports(args):
             test_case_report['execution_time'] = 0.0
             test_case_report['keys'] = case['server_keys']
             test_case_report['server_tool_path'] = args.server_tool
+            test_case_report["transport_protocol"] = getTransportProtocol(case).upper()
             test_case_report['client_tool_path'] = args.client_tool
             test_case_report['date_time'] = datetime.now().strftime(
                 '%m/%d/%Y %H:%M:%S')
