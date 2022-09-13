@@ -194,8 +194,7 @@ def start_client_side_tests(args, case, process, script_path, last_log_line, aud
 
             json_content["message"] = json_content["message"] + list(error_messages)
 
-            if args.test_group in MC_CONFIG["second_win_client"] or args.test_group in MC_CONFIG["android_client"]:
-                analyze_logs(args.output, json_content, case, execution_type="windows_client")
+            analyze_logs(args.output, json_content, case, execution_type="windows_client")
 
             # execute iperf if it's necessary
             main_logger.info("Send iperf command")
