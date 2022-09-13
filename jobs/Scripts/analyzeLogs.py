@@ -484,8 +484,10 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
                 if json_content["test_status"] != "error":
                     json_content["test_status"] = "failed"
 
+        # rule is temporary disabled
         # rule №5: |desync value| > 50ms -> issue with app
-        if 'desync_values' in saved_values:
+        #if 'desync_values' in saved_values:
+        if False:
             bad_desync_value = None
 
             if get_capture(case["prepared_keys"]) != "fake":
