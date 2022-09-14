@@ -8,7 +8,6 @@ from subprocess import PIPE
 import traceback
 import shlex
 import pyautogui
-import pydirectinput
 from utils import *
 from threading import Thread
 import re
@@ -17,6 +16,9 @@ from instance_state import ServerInstanceState
 from server_actions import *
 import android_actions
 from analyzeLogs import analyze_logs
+
+if platform.system() == "Windows":
+    import pydirectinput
 
 
 ROOT_PATH = os.path.abspath(os.path.join(
@@ -123,7 +125,10 @@ def start_server_side_tests(args, case, process, android_client_closed, script_p
     # some games can kick by AFK reason
     # press space before each test case to prevent it
     if game_name in GAMES_WITH_TIMEOUTS:
-        pydirectinput.press("space")
+        if platform.system() == "Windows":
+            pydirectinput.press("space")
+        else:
+            pyautogui.press("space")
 
     params = {}
     processes = {}

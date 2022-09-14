@@ -6,7 +6,6 @@ import psutil
 from subprocess import PIPE
 import traceback
 import pyautogui
-import pydirectinput
 import keyboard
 from threading import Thread
 from utils import *
@@ -17,6 +16,7 @@ if platform.system() == "Windows":
     import win32gui
     import win32api
     from pyffmpeg import FFmpeg
+    import pydirectinput
 
 csgoFirstExec = True
 pyautogui.FAILSAFE = False
@@ -203,12 +203,18 @@ class PressKeysServer(Action):
 
                 for i in range(times):
                     for key_to_press in keys_to_press:
-                        pydirectinput.keyDown(key_to_press)
+                        if platform.system() == "Windows":
+                            pydirectinput.keyDown(key_to_press)
+                        else:
+                            pyautogui.keyDown(key_to_press)
 
                     sleep(0.1)
 
                     for key_to_press in keys_to_press:
-                        pydirectinput.keyUp(key_to_press)
+                        if platform.system() == "Windows":
+                            pydirectinput.keyUp(key_to_press)
+                        else:
+                            pyautogui.keyUp(key_to_press)
 
                     if i != times - 1:
                         sleep(0.5)
@@ -216,12 +222,18 @@ class PressKeysServer(Action):
                 keys_to_press = key.split("+")
 
                 for key_to_press in keys_to_press:
-                    pydirectinput.keyDown(key_to_press)
+                    if platform.system() == "Windows":
+                        pydirectinput.keyDown(key_to_press)
+                    else:
+                        pyautogui.keyDown(key_to_press)
 
                 sleep(duration)
 
                 for key_to_press in keys_to_press:
-                    pydirectinput.keyUp(key_to_press)
+                    if platform.system() == "Windows":
+                        pydirectinput.keyUp(key_to_press)
+                    else:
+                        pyautogui.keyUp(key_to_press)
 
             # if it isn't the last key - make a delay
             if i != len(keys) - 1:
