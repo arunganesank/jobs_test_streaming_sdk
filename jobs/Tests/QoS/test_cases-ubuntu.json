@@ -4,7 +4,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -AdjustFramerate false -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Adjust Framerate disabled"
         ]
@@ -14,7 +13,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -AdjustBitrate false -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Adjust Bitrate disabled"
         ]
@@ -24,7 +22,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -FrameratePeriod 2 -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Framerate Period 2"
         ]
@@ -34,7 +31,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -BitratePeriod 5000000 -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Bitrate Period 5000000"
         ]
@@ -44,7 +40,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -FramerateStep 2 -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Framerate Step 2"
         ]
@@ -54,7 +49,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -BitrateStep 5000000 -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Bitrate Step 5000000"
         ]
@@ -64,7 +58,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -MinFramerate 100 -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Minimal Framerate 100"
         ]
@@ -74,7 +67,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -MinBitrate 10000000 -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Minimal Bitrate 10000000"
         ]
@@ -84,7 +76,6 @@
         "status": "skipped",
         "server_keys": "-Resolution <resolution> -Framerate 0 -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Framerate 0"
         ]
@@ -94,7 +85,6 @@
         "status": "skipped",
         "server_keys": "-Resolution <resolution> -Framerate 0 -RateControl cbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Framerate 0",
             "CBR"
@@ -105,7 +95,6 @@
         "status": "skipped",
         "server_keys": "-Resolution <resolution> -Framerate 0 -RateControl lvbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Framerate 0",
             "LVBR"
@@ -116,7 +105,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 30 -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Framerate 30"
         ]
@@ -126,7 +114,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 30 -RateControl cbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Framerate 30",
             "CBR"
@@ -137,7 +124,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 30 -RateControl lvbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Framerate 30",
             "LVBR"
@@ -148,7 +134,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 60 -RateControl cbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Framerate 60",
             "CBR"
@@ -159,7 +144,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 60 -RateControl lvbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Framerate 60",
             "LVBR"
@@ -170,7 +154,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 90 -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Framerate 90"
         ]
@@ -180,7 +163,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 90 -RateControl cbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Framerate 90",
             "CBR"
@@ -191,7 +173,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 90 -RateControl lvbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Framerate 90",
             "LVBR"
@@ -202,7 +183,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 30 -Bitrate 10000000 -RateControl cbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Bitrate 10000000",
             "Framerate 30",
@@ -214,7 +194,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 90 -Bitrate 10000000 -RateControl cbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Bitrate 10000000",
             "Framerate 90",
@@ -226,7 +205,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 30 -Bitrate 10000000 -RateControl lvbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Bitrate 10000000",
             "Framerate 30",
@@ -238,7 +216,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 90 -Bitrate 10000000 -RateControl lvbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Bitrate 10000000",
             "Framerate 90",
@@ -250,7 +227,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 30 -Bitrate 10000000 -RateControl vbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Bitrate 10000000",
             "Framerate 30",
@@ -262,7 +238,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 90 -Bitrate 10000000 -RateControl vbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Bitrate 10000000",
             "Framerate 90",
@@ -274,7 +249,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 30 -Bitrate 100000000 -RateControl cbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Bitrate 100000000",
             "Framerate 30",
@@ -286,7 +260,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 90 -Bitrate 100000000 -RateControl cbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Bitrate 100000000",
             "Framerate 90",
@@ -298,7 +271,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 30 -Bitrate 100000000 -RateControl lvbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Bitrate 100000000",
             "Framerate 30",
@@ -310,7 +282,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 90 -Bitrate 100000000 -RateControl lvbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Bitrate 100000000",
             "Framerate 90",
@@ -322,7 +293,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 30 -Bitrate 100000000 -RateControl vbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Bitrate 100000000",
             "Framerate 30",
@@ -334,7 +304,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 90 -Bitrate 100000000 -RateControl vbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Bitrate 100000000",
             "Framerate 90",
@@ -346,7 +315,6 @@
         "status": "skipped",
         "server_keys": "-Resolution <resolution> -Framerate 60 -extStats true -AdjustResolution true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Adjust Resolution true"
         ]
@@ -356,7 +324,6 @@
         "status": "skipped",
         "server_keys": "-Resolution <resolution> -Framerate 60 -extStats true -AdjustResolution true -AdjustFramerate true -AdjustBitrate true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Adjust Resolution true",
             "Adjust Framerate, Bitrate false"
@@ -367,7 +334,6 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 100 -extStats true -CapFPS true -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Server Framerate 100",
             "CapFPS true"

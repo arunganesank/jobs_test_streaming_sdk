@@ -2,7 +2,7 @@
     {
         "case": "STR_LTT_001",
         "status": "active",
-        "server_keys": "-Resolution 1920,1200 -extStats true -Capture amd -Framerate 60 -Bitrate 50000000 -QoS true",
+        "server_keys": "-Resolution 1920,1080 -extStats true -Capture amd -Framerate 60 -Bitrate 50000000 -QoS true",
         "client_keys": "-Fullscreen true",
         "transport_protocol": "udp",
         "use_latency_tool": true,
@@ -211,7 +211,7 @@
     {
         "case": "STR_LTT_017",
         "status": "active",
-        "server_keys": "-Resolution 1920,1200 -extStats true -Capture amd -Framerate 60 -Bitrate 50000000 -QoS true",
+        "server_keys": "-Resolution 1920,1080 -extStats true -Capture amd -Framerate 60 -Bitrate 50000000 -QoS true",
         "client_keys": "-Fullscreen true",
         "transport_protocol": "tcp",
         "use_latency_tool": true,
