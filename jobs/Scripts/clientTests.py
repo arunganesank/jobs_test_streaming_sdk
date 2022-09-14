@@ -176,10 +176,13 @@ def start_client_side_tests(args, case, process, script_path, last_log_line, aud
 
             process = close_streaming_process(args.execution_type, case, process)
             last_log_line = save_logs(args, case, last_log_line, current_try)
-            save_latency_tool_logs(args, case, current_try)
+            latency_log_path = save_latency_tool_logs(args, case, current_try)
 
             with open(os.path.join(args.output, case["case"] + CASE_REPORT_SUFFIX), "r") as file:
                 json_content = json.load(file)[0]
+
+            if latency_log_path:
+                analyze_latency_tool_logs(json_content, latency_log_path)
 
             # check that encryption is valid
             if contains_encryption_errors(error_messages):
@@ -191,8 +194,7 @@ def start_client_side_tests(args, case, process, script_path, last_log_line, aud
 
             json_content["message"] = json_content["message"] + list(error_messages)
 
-            if args.test_group in MC_CONFIG["second_win_client"] or args.test_group in MC_CONFIG["android_client"]:
-                analyze_logs(args.output, json_content, case, execution_type="windows_client")
+            analyze_logs(args.output, json_content, case, execution_type="windows_client")
 
             # execute iperf if it's necessary
             main_logger.info("Send iperf command")

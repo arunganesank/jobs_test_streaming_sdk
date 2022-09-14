@@ -252,9 +252,11 @@ def save_latency_tool_logs(args, case, current_try):
             file.write(logs)
 
         main_logger.info("Finish latency tool logs saving for {}".format(args.execution_type))
+        return log_destination_path
     except Exception as e:
         main_logger.error("Failed during latency tool logs saving. Exception: {}".format(str(e)))
         main_logger.error("Traceback: {}".format(traceback.format_exc()))
+        return None
 
 
 def analyze_latency_tool_logs(test_case_report, log_path):
@@ -267,7 +269,7 @@ def analyze_latency_tool_logs(test_case_report, log_path):
     total_reacts = None
     average_reactions = None
     min_latency = None
-    max_matency = None
+    max_latency = None
     average_latency = None
 
     for line in logs.split("\n"):
@@ -280,20 +282,34 @@ def analyze_latency_tool_logs(test_case_report, log_path):
         elif "Min latency" in line:
             min_latency = int(line.split("Min latency:")[1].replace("ms", "").strip())
         elif "Max latency" in line:
-            max_matency = int(line.split("Max latency:")[1].replace("ms", "").strip())
+            max_latency = int(line.split("Max latency:")[1].replace("ms", "").strip())
         elif "AVERAGE LATENCY" in line:
             average_latency = int(line.split("AVERAGE LATENCY:")[1].replace("ms", "").strip())
 
     if total_injects and total_reacts:
         test_case_report["latency_tool_results"]["accuracy"] = total_reacts / total_injects * 100
+    else:
+        test_case_report["latency_tool_results"]["accuracy"] = 0.0
+
     if average_reactions is not None:
         test_case_report["latency_tool_results"]["average_reactions"] = average_reactions
+    else:
+        test_case_report["latency_tool_results"]["average_reactions"] = -1
+
     if min_latency is not None:
         test_case_report["latency_tool_results"]["min_latency"] = min_latency
-    if max_matency is not None:
-        test_case_report["latency_tool_results"]["max_matency"] = max_matency
+    else:
+        test_case_report["latency_tool_results"]["min_latency"] = -1
+
+    if max_latency is not None:
+        test_case_report["latency_tool_results"]["max_latency"] = max_latency
+    else:
+        test_case_report["latency_tool_results"]["max_latency"] = -1
+
     if average_latency is not None:
         test_case_report["latency_tool_results"]["average_latency"] = average_latency
+    else:
+        test_case_report["latency_tool_results"]["average_latency"] = -1
 
 
 def save_android_log(args, case, current_try, log_name_postfix="_client"):

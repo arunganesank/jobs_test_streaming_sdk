@@ -457,8 +457,10 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
                 if json_content["test_status"] != "error":
                     json_content["test_status"] = "failed"
 
+        # rule is temporary disabled
         # rule №5: |desync value| > 50ms -> issue with app
-        if 'desync_values' in saved_values:
+        #if 'desync_values' in saved_values:
+        if False:
             bad_desync_value = None
 
             if get_capture(case["prepared_keys"]) != "fake":
@@ -975,6 +977,29 @@ def analyze_logs(work_dir, json_content, case, execution_type="server"):
 
         else:
             main_logger.info("Test case skipped: {}".format(json_content["test_case"]))
+        
+        if "latency_tool_results" in json_content:
+            latency_tool_results = json_content["latency_tool_results"]
+
+            json_content["test_status"] = "passed"
+
+            latency_test_accuracy = latency_tool_results["accuracy"]
+            latency_test_average_reactions = latency_tool_results["average_reactions"]
+            latency_test_min = latency_tool_results["min_latency"]
+            latency_test_max = latency_tool_results["max_latency"]
+            latency_test_average = latency_tool_results["average_latency"]
+
+            # latency rule №0 - min_latency == 1000 -> error
+            if latency_test_min == 1000:
+                json_content["message"].append("Latency test was crushed or not launched at all, min latency 1000")
+                json_content["test_status"] = "error"
+
+            # latency rule №1 - accuracy < 95% -> fail
+            if latency_test_accuracy < 95:
+                json_content["message"].append("Too low accuracy, {}%".format(latency_test_accuracy))
+                if json_content["test_status"] != "error":
+                    json_content["test_status"] = "failed" 
+            
     except Exception as e:
         main_logger.error("Failed to analyze logs. Exception: {}".format(str(e)))
         main_logger.error("Traceback: {}".format(traceback.format_exc()))
