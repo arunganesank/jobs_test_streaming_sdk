@@ -2,7 +2,6 @@ import os
 from time import sleep, strftime, gmtime
 import traceback
 import pyautogui
-import pydirectinput
 import pyscreenshot
 import json
 from threading import Thread
@@ -12,6 +11,7 @@ from actions import *
 if platform.system() == "Windows":
     from pyffmpeg import FFmpeg
     import win32api
+    import pydirectinput
 
 pyautogui.FAILSAFE = False
 MC_CONFIG = get_mc_config()
@@ -273,7 +273,10 @@ class PressKeys(Action):
             key = keys[i]
 
             self.logger.info("Press: {}".format(key))
-            pydirectinput.press(key)
+            if platform.system() == "Windows":
+                pydirectinput.press(key)
+            else:
+                pyautogui.press(key)
 
             # if it isn't the last key - make a delay
             if i != len(keys) - 1:

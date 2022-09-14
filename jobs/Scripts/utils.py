@@ -11,7 +11,6 @@ import traceback
 from shutil import copyfile
 from datetime import datetime
 import pyautogui
-import pydirectinput
 import pyshark
 import json
 import multiprocessing
@@ -24,6 +23,7 @@ if platform.system() == "Windows":
     import win32api
     import win32gui
     import win32con
+    import pydirectinput
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
