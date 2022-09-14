@@ -17,7 +17,8 @@ KEYS_TO_COPY = [
     "used_memory_server",
     "android_log", "second_client_log",
     "used_memory_second_client",
-    "second_client_configuration"
+    "second_client_configuration",
+    "latency_tool_log_server"
 ]
 
 

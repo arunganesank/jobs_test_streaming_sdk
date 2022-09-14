@@ -247,6 +247,81 @@ def save_logs(args, case, last_log_line, current_try, is_multiconnection=False):
         return None
 
 
+def save_latency_tool_logs(args, case, current_try):
+    try:
+        log_source_path = os.path.join(os.path.split(args.server_tool)[0], "LatencyTestServer.exe" if args.execution_type == "server" else "LatencyTestClient.exe") + ".log"
+        log_destination_path = os.path.join(args.output, "tool_logs", case["case"] + "_latency_{}".format(args.execution_type) + ".log")
+
+        with open(log_source_path, "rb") as file:
+            logs = file.read()
+
+        logs = logs.decode("utf-16-le").encode("utf-8").decode("utf-8-sig").encode("utf-8")
+
+        with open(log_destination_path, "ab") as file:
+            file.write("\n---------- Try #{} ----------\n\n".format(current_try).encode("utf-8"))
+            file.write(logs)
+
+        main_logger.info("Finish latency tool logs saving for {}".format(args.execution_type))
+        return log_destination_path
+    except Exception as e:
+        main_logger.error("Failed during latency tool logs saving. Exception: {}".format(str(e)))
+        main_logger.error("Traceback: {}".format(traceback.format_exc()))
+        return None
+
+
+def analyze_latency_tool_logs(test_case_report, log_path):
+    with open(log_path, "r") as file:
+        logs = file.read()
+
+    test_case_report["latency_tool_results"] = {}
+
+    total_injects = None
+    total_reacts = None
+    average_reactions = None
+    min_latency = None
+    max_latency = None
+    average_latency = None
+
+    for line in logs.split("\n"):
+        if "Total mouse injected" in line:
+            total_injects = int(line.split("Total mouse injected:")[1].strip())
+        elif "Total surface reacted" in line:
+            total_reacts = int(line.split("Total surface reacted:")[1].strip())
+        elif "Average reaction per second" in line:
+            average_reactions = int(line.split("Average reaction per second :")[1].strip())
+        elif "Min latency" in line:
+            min_latency = int(line.split("Min latency:")[1].replace("ms", "").strip())
+        elif "Max latency" in line:
+            max_latency = int(line.split("Max latency:")[1].replace("ms", "").strip())
+        elif "AVERAGE LATENCY" in line:
+            average_latency = int(line.split("AVERAGE LATENCY:")[1].replace("ms", "").strip())
+
+    if total_injects and total_reacts:
+        test_case_report["latency_tool_results"]["accuracy"] = total_reacts / total_injects * 100
+    else:
+        test_case_report["latency_tool_results"]["accuracy"] = 0.0
+
+    if average_reactions is not None:
+        test_case_report["latency_tool_results"]["average_reactions"] = average_reactions
+    else:
+        test_case_report["latency_tool_results"]["average_reactions"] = -1
+
+    if min_latency is not None:
+        test_case_report["latency_tool_results"]["min_latency"] = min_latency
+    else:
+        test_case_report["latency_tool_results"]["min_latency"] = -1
+
+    if max_latency is not None:
+        test_case_report["latency_tool_results"]["max_latency"] = max_latency
+    else:
+        test_case_report["latency_tool_results"]["max_latency"] = -1
+
+    if average_latency is not None:
+        test_case_report["latency_tool_results"]["average_latency"] = average_latency
+    else:
+        test_case_report["latency_tool_results"]["average_latency"] = -1
+
+
 def save_android_log(args, case, current_try, log_name_postfix="_client"):
     try:
         out, err = execute_adb_command("adb logcat -d", return_output=True)
@@ -292,6 +367,24 @@ def start_streaming(execution_type, script_path):
     main_logger.info("Start Streaming SDK")
 
     return process
+
+
+def start_latency_tool(execution_type, tool_path):
+    main_logger.info("Start Latency tool")
+
+    # start Streaming SDK process
+    process = psutil.Popen(tool_path, stdout=PIPE, stderr=PIPE, shell=True)
+
+    return process
+
+
+def close_latency_tool(execution_type):
+    pyautogui.press("Q")
+
+    sleep(5)
+
+    subprocess.call("taskkill /f /im LatencyToolClient.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
+    subprocess.call("taskkill /f /im LatencyToolServer.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
 
 
 def collect_iperf_info(args, log_name_base):

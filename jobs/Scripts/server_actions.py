@@ -145,6 +145,8 @@ def make_game_foreground(game_name, logger):
         icon_path = os.path.join(base_path, "Dota2.png")
     elif "csgo" in game_name.lower():
         icon_path = os.path.join(base_path, "CSGO.png")
+    elif "empty" in game_name.lower():
+        icon_path = os.path.join(base_path, "LatencyTool.png")
     else:
         logger.error(f"Unknown game: {game_name}")
         return
@@ -666,3 +668,17 @@ class RecoveryClumsy(Action):
             close_clumsy()
             sleep(2)
             make_game_foreground(self.game_name, self.logger)
+
+
+# Start Latency tool
+class StartLatencyTool(MulticonnectionAction):
+    def parse(self):
+        self.action = self.params["action_line"]
+        self.args = self.params["args"]
+        self.tool_path = os.path.join(os.path.split(self.args.server_tool)[0], "LatencyTestServer.exe")
+
+    def execute(self):
+        self.process = start_latency_tool(self.args.execution_type, self.tool_path)
+
+        self.sock.send("done".encode("utf-8"))
+
