@@ -113,7 +113,7 @@ def prepare_keys(args, case):
     else:
         return "{keys} -connectionurl {transport_protocol}://{ip_address}:1235".format(
             keys=keys,
-            transport_protocol=case["transport_protocol"],
+            transport_protocol = getTransportProtocol(case),
             ip_address=args.ip_address
         )
 
@@ -158,7 +158,6 @@ def prepare_empty_reports(args, current_conf):
             test_case_report['render_time'] = 0.0
             test_case_report['execution_time'] = 0.0
             test_case_report['execution_type'] = args.execution_type
-            test_case_report['transport_protocol'] = case['transport_protocol'].upper()
             test_case_report['tool_path'] = args.server_tool if args.execution_type == 'server' else args.client_tool
             test_case_report['date_time'] = datetime.now().strftime(
                 '%m/%d/%Y %H:%M:%S')
@@ -328,7 +327,7 @@ def execute_tests(args, current_conf):
                             os.path.join(os.path.dirname(__file__),
                             "..",
                             "Configs",
-                            "settings_{}.json".format(case["transport_protocol"].upper()))
+                            "settings.json")
                         ), 
                         settings_json_path
                     )

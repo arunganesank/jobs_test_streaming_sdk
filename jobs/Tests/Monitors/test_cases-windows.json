@@ -2,9 +2,8 @@
     {
         "case": "STR_MN_001",
         "status": "skipped",
-        "server_keys": "-Resolution <resolution> -MonitorID 2 -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -MonitorID 2 -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Monitor ID"
         ]
@@ -12,9 +11,8 @@
     {
         "case": "STR_MN_002",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -EDID true -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -EDID true -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "EDID"
         ]
@@ -22,9 +20,8 @@
     {
         "case": "STR_MN_003",
         "status": "skipped",
-        "server_keys": "-Resolution <resolution> -MonitorID 2 -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -MonitorID 2 -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Monitor ID"
         ]
@@ -32,9 +29,8 @@
     {
         "case": "STR_MN_004",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -EDID true -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -EDID true -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "EDID"
         ]

@@ -129,7 +129,7 @@ def start_client_side_tests(args, case, process, script_path, last_log_line, aud
             params["game_name"] = game_name
             params["client_type"] = "win_client"
             params["messages"] = error_messages
-            params["transport_protocol"] = case["transport_protocol"]
+            params["transport_protocol"] = getTransportProtocol(case)
             params["script_path"] = script_path
             params["process"] = process
             params["case_json_path"] = os.path.join(args.output, case["case"] + CASE_REPORT_SUFFIX)

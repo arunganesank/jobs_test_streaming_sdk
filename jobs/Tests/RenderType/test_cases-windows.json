@@ -2,9 +2,8 @@
     {
         "case": "STR_RT_001",
         "status": "skipped",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Render OpenGL",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Render OpenGL -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Render type OpenGL"
         ]
@@ -12,9 +11,8 @@
     {
         "case": "STR_RT_002",
         "status": "skipped",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Render Vulkan",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Render Vulkan -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "Render type Vulkan"
         ]
@@ -22,9 +20,8 @@
     {
         "case": "STR_RT_003",
         "status": "skipped",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true -Render OpenGL",
-        "transport_protocol": "udp",
         "script_info": [
             "Client render type OpenGL"
         ]
@@ -32,9 +29,8 @@
     {
         "case": "STR_RT_004",
         "status": "skipped",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true -Render Vulkan",
-        "transport_protocol": "udp",
         "script_info": [
             "Client Render type Vulkan"
         ]
@@ -42,9 +38,8 @@
     {
         "case": "STR_RT_005",
         "status": "skipped",
-        "server_keys": "-Resolution <resolution> -Render OpenGL -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -Render OpenGL -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Render type OpenGL"
         ]
@@ -52,9 +47,8 @@
     {
         "case": "STR_RT_006",
         "status": "skipped",
-        "server_keys": "-Resolution <resolution> -Render Vulkan -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -Render Vulkan -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "Render type Vulkan"
         ]
@@ -62,9 +56,8 @@
     {
         "case": "STR_RT_007",
         "status": "skipped",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true -Render OpenGL",
-        "transport_protocol": "tcp",
         "script_info": [
             "Client render type OpenGL"
         ]
@@ -72,9 +65,8 @@
     {
         "case": "STR_RT_008",
         "status": "skipped",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true -Render Vulkan",
-        "transport_protocol": "tcp",
         "script_info": [
             "Client Render type Vulkan"
         ]

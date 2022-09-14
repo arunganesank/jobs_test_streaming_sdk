@@ -2,9 +2,8 @@
     {
         "case": "STR_CFG_023",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Audio block",
             "In_CaptureSource = true"
@@ -13,9 +12,8 @@
     {
         "case": "STR_CFG_024",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Audio block",
             "In_ChannelLayout: 1"
@@ -24,9 +22,8 @@
     {
         "case": "STR_CFG_025",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Audio block",
             "In_Channels: 1"
@@ -35,9 +32,8 @@
     {
         "case": "STR_CFG_026",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Audio block",
             "In_SampleFormat: \"DBL\""
@@ -46,9 +42,8 @@
     {
         "case": "STR_CFG_027",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Audio block",
             "In_SampleRate: 21050"
@@ -57,9 +52,8 @@
     {
         "case": "STR_CFG_028",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Audio block",
             "In_StreamSampleRate: 21050"
@@ -68,9 +62,8 @@
     {
         "case": "STR_CFG_029",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Audio block",
             "Out_AudioBitrate: 256000"
@@ -79,9 +72,8 @@
     {
         "case": "STR_CFG_030",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Audio block",
             "Out_TimeShift: 3000"
@@ -90,9 +82,8 @@
     {
         "case": "STR_CFG_031",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Display block",
             "EnableDump: true, DumpPath: \"C:/User/user/DumpTest\""
@@ -101,9 +92,8 @@
     {
         "case": "STR_CFG_032",
         "status": "active",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Display block",
             "height: 720, width: 1280 in EncoderResolution part"
@@ -112,9 +102,8 @@
     {
         "case": "STR_CFG_033",
         "status": "active",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Display block",
             "KeepAspectRatio: true"
@@ -123,9 +112,8 @@
     {
         "case": "STR_CFG_034",
         "status": "active",
-        "server_keys": "-extStats true -CaptureMode asap",
+        "server_keys": "-extStats true -CaptureMode asap -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Display block",
             "MaxFrameRate: 50"
@@ -134,9 +122,8 @@
     {
         "case": "STR_CFG_035",
         "status": "active",
-        "server_keys": "-extStats true -CaptureMode asap",
+        "server_keys": "-extStats true -CaptureMode asap -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Display block",
             "MinFrameRate: 70"
@@ -145,9 +132,8 @@
     {
         "case": "STR_CFG_036",
         "status": "active",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Display block",
             "VideoBitrate: 80000000"
@@ -156,9 +142,8 @@
     {
         "case": "STR_CFG_037",
         "status": "active",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Display block",
             "VideoCodec: \"avc\""
@@ -167,9 +152,8 @@
     {
         "case": "STR_CFG_038",
         "status": "active",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Display block",
             "VideoCodec: \"havc\""
@@ -178,9 +162,8 @@
     {
         "case": "STR_CFG_039",
         "status": "active",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Display block",
             "VideoEnableHDR: true"
@@ -189,9 +172,8 @@
     {
         "case": "STR_CFG_040",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Display block",
             "VideoSliceCount: 3"
@@ -200,9 +182,8 @@
     {
         "case": "STR_CFG_041",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Display block",
             "VideoSliceOutput: true"
@@ -211,9 +192,8 @@
     {
         "case": "STR_CFG_042",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Display block",
             "VideoSliceOutput: true",
@@ -223,9 +203,8 @@
     {
         "case": "STR_CFG_043",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "Headset block",
             "VerifyFirewall: false"
@@ -234,9 +213,8 @@
     {
         "case": "STR_CFG_001",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Audio block",
             "In_CaptureSource = true"
@@ -245,9 +223,8 @@
     {
         "case": "STR_CFG_002",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Audio block",
             "In_ChannelLayout: 1"
@@ -256,9 +233,8 @@
     {
         "case": "STR_CFG_003",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Audio block",
             "In_Channels: 1"
@@ -267,9 +243,8 @@
     {
         "case": "STR_CFG_004",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Audio block",
             "In_SampleFormat: \"DBL\""
@@ -278,9 +253,8 @@
     {
         "case": "STR_CFG_005",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Audio block",
             "In_SampleRate: 21050"
@@ -289,9 +263,8 @@
     {
         "case": "STR_CFG_006",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Audio block",
             "In_StreamSampleRate: 21050"
@@ -300,9 +273,8 @@
     {
         "case": "STR_CFG_007",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Audio block",
             "Out_AudioBitrate: 256000"
@@ -311,9 +283,8 @@
     {
         "case": "STR_CFG_008",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Audio block",
             "Out_TimeShift: 3000"
@@ -322,9 +293,8 @@
     {
         "case": "STR_CFG_009",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Display block",
             "EnableDump: true, DumpPath: \"C:/User/user/DumpTest\""
@@ -333,9 +303,8 @@
     {
         "case": "STR_CFG_010",
         "status": "active",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Display block",
             "height: 720, width: 1280 in EncoderResolution part"
@@ -344,9 +313,8 @@
     {
         "case": "STR_CFG_011",
         "status": "active",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Display block",
             "KeepAspectRatio: true"
@@ -355,9 +323,8 @@
     {
         "case": "STR_CFG_012",
         "status": "active",
-        "server_keys": "-extStats true -CaptureMode asap",
+        "server_keys": "-extStats true -CaptureMode asap -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Display block",
             "MaxFrameRate: 50"
@@ -366,9 +333,8 @@
     {
         "case": "STR_CFG_013",
         "status": "active",
-        "server_keys": "-extStats true -CaptureMode asap",
+        "server_keys": "-extStats true -CaptureMode asap -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Display block",
             "MinFrameRate: 70"
@@ -377,9 +343,8 @@
     {
         "case": "STR_CFG_014",
         "status": "active",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Display block",
             "VideoBitrate: 80000000"
@@ -388,9 +353,8 @@
     {
         "case": "STR_CFG_015",
         "status": "active",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Display block",
             "VideoCodec: \"avc\""
@@ -399,9 +363,8 @@
     {
         "case": "STR_CFG_016",
         "status": "active",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Display block",
             "VideoCodec: \"havc\""
@@ -410,9 +373,8 @@
     {
         "case": "STR_CFG_017",
         "status": "active",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Display block",
             "VideoEnableHDR: true"
@@ -421,9 +383,8 @@
     {
         "case": "STR_CFG_018",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Display block",
             "VideoSliceCount: 3"
@@ -432,9 +393,8 @@
     {
         "case": "STR_CFG_019",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Display block",
             "VideoSliceOutput: true"
@@ -443,9 +403,8 @@
     {
         "case": "STR_CFG_020",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Display block",
             "VideoSliceOutput: true",
@@ -455,9 +414,8 @@
     {
         "case": "STR_CFG_021",
         "status": "active",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Headset block",
             "DatagramSize: 32753"
@@ -466,9 +424,8 @@
     {
         "case": "STR_CFG_022",
         "status": "skipped",
-        "server_keys": "-extStats true",
+        "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "Headset block",
             "VerifyFirewall: false"

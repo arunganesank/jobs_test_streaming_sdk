@@ -2,9 +2,8 @@
     {
         "case": "STR_AHD_001",
         "status": "skipped",
-        "server_keys": "-Resolution <resolution> -extStats true -EnableHDR true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -EnableHDR true -Framerate 30 -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "HDR enabled"
         ]
@@ -12,9 +11,8 @@
     {
         "case": "STR_AHD_002",
         "status": "skipped",
-        "server_keys": "-Resolution <resolution> -extStats true -EnableHDR true -Framerate 30",
+        "server_keys": "-Resolution <resolution> -extStats true -EnableHDR true -Framerate 30 -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "HDR enabled"
         ]

@@ -717,3 +717,10 @@ def locateOnScreen(template, tries=3, **kwargs):
     if not coords:
         raise Exception("No such element on screen")
     return (coords[0], coords[1], coords[2], coords[3])
+
+# Function return protocol type(tcp\udp) from server keys in case
+def getTransportProtocol(case):
+    current_protocol = "tcp"
+    if "-protocol udp" in case["server_keys"].lower():
+        current_protocol = "udp"
+    return current_protocol

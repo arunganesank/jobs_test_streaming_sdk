@@ -2,9 +2,8 @@
     {
         "case": "STR_ARN_001",
         "status": "active",
-        "server_keys": "-Resolution 1920,1200 -extStats true -Framerate 30",
+        "server_keys": "-Resolution 1920,1200 -extStats true -Framerate 30 -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "WUXGA"
         ]
@@ -12,9 +11,8 @@
     {
         "case": "STR_ARN_002",
         "status": "active",
-        "server_keys": "-Resolution 1280,720 -extStats true -Framerate 30",
+        "server_keys": "-Resolution 1280,720 -extStats true -Framerate 30 -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "HD"
         ]
@@ -86,9 +84,8 @@
     {
         "case": "STR_ARN_009",
         "status": "active",
-        "server_keys": "-Resolution 1920,1200 -extStats true -Framerate 30",
+        "server_keys": "-Resolution 1920,1200 -extStats true -Framerate 30 -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "WUXGA"
         ]
@@ -96,9 +93,8 @@
     {
         "case": "STR_ARN_010",
         "status": "active",
-        "server_keys": "-Resolution 1280,720 -extStats true -Framerate 30",
+        "server_keys": "-Resolution 1280,720 -extStats true -Framerate 30 -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "HD"
         ]

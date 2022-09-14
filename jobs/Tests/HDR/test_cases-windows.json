@@ -2,9 +2,8 @@
     {
         "case": "STR_HDR_001",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -EnableHDR true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -EnableHDR true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "HDR enabled"
         ]
@@ -12,9 +11,8 @@
     {
         "case": "STR_HDR_002",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -EnableHDR true -Framerate 60",
+        "server_keys": "-Resolution <resolution> -extStats true -EnableHDR true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "HDR enabled"
         ]
