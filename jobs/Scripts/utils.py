@@ -362,7 +362,10 @@ def start_streaming(execution_type, script_path):
     main_logger.info("Start StreamingSDK {}".format(execution_type))
 
     # start Streaming SDK process
-    process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
+    if platform.system() == "Windows":
+        process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
+    else:
+        process = psutil.Popen(f"xterm -e {script_path}", stdout=PIPE, stderr=PIPE, shell=True)
 
     main_logger.info("Start Streaming SDK")
 
