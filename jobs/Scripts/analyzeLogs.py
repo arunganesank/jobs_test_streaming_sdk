@@ -7,6 +7,7 @@ import re
 import traceback
 import datetime
 from typing import Protocol
+import platform
 from utils import get_mc_config
 
 sys.path.append(os.path.abspath(os.path.join(
@@ -129,7 +130,12 @@ def parse_block_line(line, saved_values):
             if 'tx_rates_by_time' not in saved_values:
                 saved_values['tx_rates_by_time'] = []
 
-            time = line.split('.')[0]
+            if platform.system() == "Windows":
+                time = line.split('.')[0]
+            else:
+                parts = line.split()
+                time = parts[0] + " " + parts[1]
+
             saved_values['tx_rates_by_time'].append((time, tx_rate))
 
     elif 'Queue depth' in line:
@@ -192,6 +198,15 @@ def parse_block_line(line, saved_values):
         send_time_worst = float(line.split('/')[2].replace('ms', ''))
         saved_values['send_time_worst'].append(send_time_worst)
 
+    elif 'Server Gpu Stats' in line:
+        # Line example:
+        # 2022-08-05 17:44:58.831     23D4 [RemoteGamePipeline]    Info: Server Gpu Stats: CLK: 1847 Mhz, Usage: 99 %, Temp: 109 C
+        if 'gpu_temp' not in saved_values:
+            saved_values['gpu_temp'] = []
+
+        gpu_temp = float(line.split('Temp:')[1].replace('C', '').strip())
+        saved_values['gpu_temp'].append(gpu_temp)
+
 
 def parse_line(line, saved_values):
     if 'Bitrate: ' in line:
@@ -213,13 +228,25 @@ def parse_line(line, saved_values):
     elif 'VIDEO_OP_CODE_FORCE_IDR' in line:
         if 'code_force_idr' not in saved_values:
             saved_values['code_force_idr'] = []
-        timestamp_idr = line.split('  ')[0]
+
+        if platform.system() == "Windows":
+            timestamp_idr = line.split('.')[0]
+        else:
+            parts = line.split()
+            timestamp_idr = parts[0] + " " + parts[1]
+
         saved_values['code_force_idr'].append(timestamp_idr)
 
     elif 'Input Queue Full' in line:
         if 'input_queue_full' not in saved_values:
             saved_values['input_queue_full'] = []
-        timestamp_iqf = line.split('  ')[0]
+
+        if platform.system() == "Windows":
+            timestamp_iqf = line.split('.')[0]
+        else:
+            parts = line.split()
+            timestamp_iqf = parts[0] + " " + parts[1]
+
         saved_values['input_queue_full'].append(timestamp_iqf)
     
     elif 'Info: Initialize(): Codec:' in line:
@@ -568,7 +595,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
             invalid_count = 0
 
             for i in range(len(saved_values['input_queue_full'])-1):
-                if ((datetime.datetime.strptime(saved_values['input_queue_full'][i], "%Y-%m-%d %H:%M:%S.%f"))-(datetime.datetime.strptime(saved_values['input_queue_full'][i+1], "%Y-%m-%d %H:%M:%S.%f"))).microseconds <  3000000:
+                if ((datetime.datetime.strptime(saved_values['input_queue_full'][i], "%Y-%m-%d %H:%M:%S"))-(datetime.datetime.strptime(saved_values['input_queue_full'][i+1], "%Y-%m-%d %H:%M:%S"))).microseconds <  3000000:
                     invalid_count += 1
                 else:
                     invalid_count = 0
@@ -582,7 +609,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
             invalid_count = 0
 
             for i in range(len(saved_values['code_force_idr'])-1):
-                if ((datetime.datetime.strptime(saved_values['code_force_idr'][i], "%Y-%m-%d %H:%M:%S.%f"))-(datetime.datetime.strptime(saved_values['code_force_idr'][i+1], "%Y-%m-%d %H:%M:%S.%f"))).microseconds <  3000000:
+                if ((datetime.datetime.strptime(saved_values['code_force_idr'][i], "%Y-%m-%d %H:%M:%S"))-(datetime.datetime.strptime(saved_values['code_force_idr'][i+1], "%Y-%m-%d %H:%M:%S"))).microseconds <  3000000:
                     invalid_count += 1
                 else:
                     invalid_count = 0
@@ -605,9 +632,9 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
         if flag_resolution and 'encode_resolution' in saved_values:
             for i in range(1, len(saved_values['encode_resolution'])):
                 if not ((saved_values['encode_resolution'][i-1] == saved_values['encode_resolution'][i]) and (saved_values['encode_resolution'][i] == flag_resolution)):
-                    json_content["message"].append("Application problem: Encode Resolution in Flags doesn't match to Encode Resolution from logs. Resolution from Flags: {}, from logs {}".format(flag_resolution, saved_values['encode_resolution'][i]))
-                    if json_content["test_status"] != "error":
-                        if case["case"].find('STR_CFG') == -1: 
+                    if case["case"].find('STR_CFG') == -1:
+                        json_content["message"].append("Application problem: Encode Resolution in Flags doesn't match to Encode Resolution from logs. Resolution from Flags: {}, from logs {}".format(flag_resolution, saved_values['encode_resolution'][i]))
+                        if json_content["test_status"] != "error": 
                             json_content["test_status"] = "failed"
                     break
 
@@ -649,10 +676,25 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
                     if json_content["test_status"] != "error":
                         json_content["test_status"] = "failed"
 
+        # rule №13: if GPU temp > 100 -> warning
+        if 'gpu_temp' in saved_values:
+            max_temp = 0
+
+            for value in saved_values['gpu_temp']:
+                if max_temp < value:
+                    max_temp = value
+
+            if max_temp > 100:
+                json_content["message"].append("Hardware problem: GPU temperature is too high: {}".format(max_temp))
+
         #rules for Config & ConfigOverwrite (CN/CRN)
         #where Config = C, ConfirReswrite = CR, N - case number
         #C1-C9, C23-C31 - skipped
-        settings_json_path = os.path.join(os.getenv("APPDATA"), "..", "Local", "AMD", "RemoteGameServer", "settings", "settings.json")
+        if platform.system() == "Windows":
+            settings_json_path = os.path.join(os.getenv("APPDATA"), "..", "Local", "AMD", "RemoteGameServer", "settings", "settings.json")
+        else:
+            settings_json_path = "/home/{}/.AMD/cl.cacheRemoteGameServer/settings/settings.json".format(os.getenv("USER"))
+
         with open(settings_json_path, "r") as file:
             settings_json_content = json.load(file)
 
@@ -873,7 +915,7 @@ def analyze_logs(work_dir, json_content, case, execution_type="server"):
                                 #parse_error(line, saved_errors)
                                 pass
 
-                        if 'Queue depth' in line:
+                        if 'Server Gpu Stats' in line:
                             end_of_block = True
 
                         if 'Encode Resolution:' in line:

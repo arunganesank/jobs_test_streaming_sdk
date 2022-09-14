@@ -4,7 +4,6 @@ import traceback
 import pyautogui
 import pyscreenshot
 import json
-import pydirectinput
 from pyffmpeg import FFmpeg
 from threading import Thread
 from utils import collect_traces, parse_arguments, collect_iperf_info, track_used_memory, analyze_encryption, check_artifacts_and_save_status
@@ -119,8 +118,10 @@ class RecordVideo(Action):
         self.logger.info("-f gdigrab -video_size {resolution} -i desktop -f dshow -i audio=\"{audio_device_name}\" -t {time} -q:v 3 -pix_fmt yuv420p {video}"
             .format(resolution=self.resolution, audio_device_name=self.audio_device_name, time=time_flag_value, video=video_full_path))
 
-        recorder.options("-f gdigrab -video_size {resolution} -i desktop -f dshow -i audio=\"{audio_device_name}\" -t {time} -q:v 3 -pix_fmt yuv420p {video}"
-            .format(resolution=self.resolution, audio_device_name=self.audio_device_name, time=time_flag_value, video=video_full_path))
+        #recorder.options("-f gdigrab -video_size {resolution} -i desktop -f dshow -i audio=\"{audio_device_name}\" -t {time} -q:v 3 -pix_fmt yuv420p {video}"
+        #    .format(resolution=self.resolution, audio_device_name=self.audio_device_name, time=time_flag_value, video=video_full_path))
+        recorder.options("-f gdigrab -video_size {resolution} -i desktop -t {time} -q:v 3 -pix_fmt yuv420p {video}"
+            .format(resolution=self.resolution, time=time_flag_value, video=video_full_path))
 
         self.logger.info("Finish to record video")
 

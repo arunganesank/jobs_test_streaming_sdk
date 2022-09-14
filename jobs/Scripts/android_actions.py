@@ -5,17 +5,19 @@ import psutil
 import subprocess
 from subprocess import PIPE
 import traceback
-import win32gui
-import win32api
 import pyautogui
 import pydirectinput
-from pyffmpeg import FFmpeg
 from threading import Thread
 from utils import parse_arguments, execute_adb_command, get_mc_config, close_clumsy, locateOnScreen
 from actions import *
 import base64
 import keyboard
-from pyffmpeg import FFmpeg
+import platform
+
+if platform.system() == "Windows":
+    import win32gui
+    import win32api
+    from pyffmpeg import FFmpeg
 
 pyautogui.FAILSAFE = False
 MC_CONFIG = get_mc_config()
@@ -632,13 +634,13 @@ def do_test_actions(game_name, logger):
                 pydirectinput.keyUp("space")
         elif game_name == "valorant":
             for i in range(10):
-                pydirectinput.keyDown("space")
+                pyautogui.keyDown("space")
                 sleep(0.1)
                 pydirectinput.keyUp("space")
 
                 pydirectinput.press("x")
                 sleep(1)
-                pyautogui.click()
+                pydirectinput.click()
                 sleep(3)
         elif game_name == "dota2dx11" or game_name == "dota2vulkan":
             for i in range(6):

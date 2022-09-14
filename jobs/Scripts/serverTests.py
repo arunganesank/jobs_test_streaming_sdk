@@ -6,18 +6,18 @@ from time import sleep, time
 import psutil
 from subprocess import PIPE
 import traceback
-import win32gui
-import win32api
 import shlex
 import pyautogui
 import pydirectinput
 from utils import *
 from threading import Thread
 import re
+import platform
 from instance_state import ServerInstanceState
 from server_actions import *
 import android_actions
 from analyzeLogs import analyze_logs
+
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
@@ -88,6 +88,7 @@ def start_server_side_tests(args, case, process, android_client_closed, script_p
 
     # configure socket
     sock = socket.socket()
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.bind(("", int(args.communication_port)))
     # max one connection
     if args.test_group in MC_CONFIG["second_win_client"]:
@@ -154,7 +155,10 @@ def start_server_side_tests(args, case, process, android_client_closed, script_p
             # non-blocking usage
             connection.setblocking(False)
 
-            connection.send("ready".encode("utf-8"))
+            if platform.system() == "Windows":
+                connection.send("windows".encode("utf-8"))
+            else:
+                connection.send("ubuntu".encode("utf-8"))
 
             # build params dict with all necessary variables for test actions
             params["output_path"] = output_path
@@ -254,10 +258,7 @@ def start_server_side_tests(args, case, process, android_client_closed, script_p
 
             main_logger.info("Finish to wait new actions")
 
-            if "Latency" in args.test_group and args.game_name == "Empty":
-                close_latency_tool(args.execution_type)
-
-            process = close_streaming_process(args.execution_type, case, process)
+            process = close_streaming_process(args.execution_type, case, process, tool_path=args.server_tool)
 
             if args.test_group in MC_CONFIG["second_win_client"]:
                 connection_sc.send("finish passed".encode("utf-8"))
@@ -330,6 +331,8 @@ def start_server_side_tests(args, case, process, android_client_closed, script_p
         connection.close()
         if args.test_group in MC_CONFIG["second_win_client"]:
             connection_sc.close()
+
+        sock.close()
 
         # restart game if it's required
         global REBOOTING_GAMES

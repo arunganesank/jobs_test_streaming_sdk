@@ -13,9 +13,9 @@ for /f %%i in ('python get_screen_resolution.py') do set SCREEN_RESOLUTION=%%i
 if not defined RETRIES set RETRIES=1
 if not defined EXECUTION_TYPE set EXECUTION_TYPE="client"
 
-python prepare_xmls.py --os_name "Windows"
-python prepare_test_cases.py --os_name "Windows"
+python prepare_xmls.py --os_name "Ubuntu"
+python prepare_test_cases.py --os_name "Ubuntu"
 
-python -m pip install -r ../jobs_launcher/install/requirements.txt
+python -m pip install -r requirements-win.txt
 
 python ..\jobs_launcher\executeTests.py --test_filter %TESTS_FILTER% --file_filter %FILE_FILTER% --tests_root ..\jobs --work_root ..\Work\Results --work_dir StreamingSDK --cmd_variables clientTool "..\StreamingSDK\RemoteGameClient.exe" serverTool "..\StreamingSDK\RemoteGameServer.exe" executionType %EXECUTION_TYPE% ipAddress %IP_ADDRESS% communicationPort %COMMUNICATION_PORT% retries %RETRIES% serverGPUName %SERVER_GPU_NAME% serverOSName %SERVER_OS_NAME% gameName %GAME_NAME% collectTraces %COLLECT_TRACES% screenResolution %SCREEN_RESOLUTION%

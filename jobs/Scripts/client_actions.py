@@ -2,14 +2,16 @@ import os
 from time import sleep, strftime, gmtime
 import traceback
 import pyautogui
+import pydirectinput
 import pyscreenshot
 import json
-import pydirectinput
-from pyffmpeg import FFmpeg
 from threading import Thread
 from utils import *
-import win32api
 from actions import *
+
+if platform.system() == "Windows":
+    from pyffmpeg import FFmpeg
+    import win32api
 
 pyautogui.FAILSAFE = False
 MC_CONFIG = get_mc_config()
@@ -215,10 +217,10 @@ class RecordVideo(Action):
         recorder = FFmpeg()
         self.logger.info("Start to record video")
 
-        #recorder.options("-f gdigrab -video_size {resolution} -i desktop -f dshow -i audio=\"{audio_device_name}\" -t {time} -q:v 3 -pix_fmt yuv420p {video}"
+        #recorder.options("-f gdigrab -video_size {resolution} -i desktop -f dshow -i audio=\"{audio_device_name}\" -t {time} -q:v 3 -pix_fmt yuv420p {video} -crf 32"
         #    .format(resolution=self.resolution, audio_device_name=self.audio_device_name, time=time_flag_value, video=video_full_path))
-        recorder.options("-f gdigrab -video_size {resolution} -i desktop -t {time} -q:v 3 -pix_fmt yuv420p {video}"
-            .format(resolution=self.resolution, audio_device_name=self.audio_device_name, time=time_flag_value, video=video_full_path))
+        recorder.options("-f gdigrab -video_size {resolution} -i desktop -t {time} -q:v 3 -pix_fmt yuv420p {video} -crf 32"
+            .format(resolution=self.resolution, time=time_flag_value, video=video_full_path))
 
         self.logger.info("Finish to record video")
 
@@ -271,7 +273,7 @@ class PressKeys(Action):
             key = keys[i]
 
             self.logger.info("Press: {}".format(key))
-            pyautogui.press(key)
+            pydirectinput.press(key)
 
             # if it isn't the last key - make a delay
             if i != len(keys) - 1:
@@ -375,11 +377,11 @@ def do_test_actions(game_name, logger):
     try:
         if game_name == "apexlegends":
             for i in range(40):
-                pydirectinput.press("q")
+                pyautogui.press("q")
                 sleep(1)
         elif game_name == "valorant":
             for i in range(10):
-                pydirectinput.press("x")
+                pyautogui.press("x")
                 sleep(1)
                 pyautogui.click()
                 sleep(3)
