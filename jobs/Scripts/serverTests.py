@@ -47,7 +47,8 @@ ACTIONS_MAPPING = {
     "gpuview": GPUView,
     "record_metrics": RecordMetrics,
     "record_audio": RecordMicrophone,
-    "recovery_clumsy": RecoveryClumsy
+    "recovery_clumsy": RecoveryClumsy,
+    "start_latency_tool": StartLatencyTool
 }
 
 
@@ -268,6 +269,7 @@ def start_server_side_tests(args, case, process, android_client_closed, script_p
                 save_android_log(args, case, current_try, log_name_postfix="_android")
 
             last_log_line = save_logs(args, case, last_log_line, current_try)
+            save_latency_tool_logs(args, case, current_try)
 
             with open(os.path.join(args.output, case["case"] + CASE_REPORT_SUFFIX), "r") as file:
                 json_content = json.load(file)[0]

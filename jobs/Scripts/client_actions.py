@@ -217,8 +217,10 @@ class RecordVideo(Action):
         recorder = FFmpeg()
         self.logger.info("Start to record video")
 
-        recorder.options("-f gdigrab -video_size {resolution} -i desktop -f dshow -i audio=\"{audio_device_name}\" -t {time} -q:v 3 -pix_fmt yuv420p {video} -crf 32"
-            .format(resolution=self.resolution, audio_device_name=self.audio_device_name, time=time_flag_value, video=video_full_path))
+        #recorder.options("-f gdigrab -video_size {resolution} -i desktop -f dshow -i audio=\"{audio_device_name}\" -t {time} -q:v 3 -pix_fmt yuv420p {video} -crf 32"
+        #    .format(resolution=self.resolution, audio_device_name=self.audio_device_name, time=time_flag_value, video=video_full_path))
+        recorder.options("-f gdigrab -video_size {resolution} -i desktop -t {time} -q:v 3 -pix_fmt yuv420p {video} -crf 32"
+            .format(resolution=self.resolution, time=time_flag_value, video=video_full_path))
 
         self.logger.info("Finish to record video")
 
@@ -312,7 +314,7 @@ class SleepAndScreen(Action):
                 response = self.sock.recv(1024).decode("utf-8")
                 self.logger.info("Server response for 'encryption' action: {}".format(response))
 
-                compressing_thread = Thread(target=analyze_encryption, args=(self.params["case"], "client", getTransportProtocol(self.params["case"]), \
+                compressing_thread = Thread(target=analyze_encryption, args=(self.params["case"], "client", self.params["transport_protocol"], \
                     "-encrypt" in self.params["case"]["server_keys"].lower(), self.params["messages"], self.params["args"].ip_address))
                 compressing_thread.start()
             except Exception as e:
@@ -446,3 +448,27 @@ class StartStreaming(Action):
 
                 if should_collect_traces:
                     collect_traces(self.archive_path, self.archive_name + "_client.zip")
+
+
+# [Client + Server action] start Latency tool on client and server
+class StartLatencyTool(Action):
+    def parse(self):
+        self.action = self.params["action_line"]
+        self.args = self.params["args"]
+        self.case = self.params["case"]
+        self.tool_path = os.path.join(os.path.split(self.args.server_tool)[0], "LatencyTestClient.exe")
+        self.test_group = self.params["args"].test_group
+
+    def execute(self):
+        if "Latency" not in self.test_group:
+            return
+
+        self.process = start_latency_tool(self.args.execution_type, self.tool_path)
+
+        self.sock.send(self.action.encode("utf-8"))
+
+        self.wait_server_answer(analyze_answer = True, abort_if_fail = True)
+
+        sleep(8)
+
+        pyautogui.press("S")
