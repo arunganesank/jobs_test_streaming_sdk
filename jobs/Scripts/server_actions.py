@@ -452,7 +452,7 @@ class DoTestActions(Action):
                     pydirectinput.press("r")
                     sleep(1.5)
                 elif self.stage == 1:
-                    pyautogui.moveTo(center_x + 380, center_y - 360)
+                    pyautogui.moveTo(center_x + 430, center_y - 360)
                     sleep(0.1)
                     pyautogui.click()
                     sleep(0.1)
@@ -461,7 +461,7 @@ class DoTestActions(Action):
                     pyautogui.click(button="right")
                     sleep(1.5)
                 elif self.stage == 2:
-                    pyautogui.moveTo(edge_x - 270, edge_y - 20)
+                    pyautogui.moveTo(edge_x - 220, edge_y - 20)
                     sleep(0.1)
                     pyautogui.click()
                     sleep(0.1)

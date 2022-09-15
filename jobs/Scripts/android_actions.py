@@ -671,7 +671,7 @@ def do_test_actions(game_name, logger):
                 pydirectinput.press("r")
                 sleep(1.5)
 
-                pyautogui.moveTo(center_x + 380, center_y - 360)
+                pyautogui.moveTo(center_x + 430, center_y - 360)
                 sleep(0.1)
                 pyautogui.click()
                 sleep(0.1)
@@ -679,7 +679,7 @@ def do_test_actions(game_name, logger):
                 sleep(0.1)
                 pyautogui.click(button="right")
                 sleep(1.5)
-                pyautogui.moveTo(edge_x - 270, edge_y - 20)
+                pyautogui.moveTo(edge_x - 220, edge_y - 20)
                 sleep(0.1)
                 pyautogui.click()
                 sleep(0.1)
