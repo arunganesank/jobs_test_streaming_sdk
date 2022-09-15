@@ -640,9 +640,9 @@
         "sleep 1",
         "click_server center_70 center_-198",
         "sleep 15",
-        "click_server edge_-80 360",
-        "sleep 2",
         "click_server edge_-160 570",
+        "sleep 1",
+        "click_server edge_-80 360",
         "sleep 1",
         "check_game \"dota2.exe\" \"dota2.exe\"",
 
