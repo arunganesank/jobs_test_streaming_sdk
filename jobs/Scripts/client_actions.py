@@ -382,12 +382,6 @@ def do_test_actions(game_name, logger):
             for i in range(40):
                 pyautogui.press("q")
                 sleep(1)
-        elif game_name == "valorant":
-            for i in range(10):
-                pyautogui.press("x")
-                sleep(1)
-                pyautogui.click()
-                sleep(3)
 
     except Exception as e:
         logger.error("Failed to do test actions: {}".format(str(e)))
