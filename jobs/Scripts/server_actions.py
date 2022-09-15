@@ -396,10 +396,23 @@ class DoTestActions(Action):
             if self.game_name == "borderlands3":
                 pass
             elif self.game_name == "valorant":
-                sleep(2.0)
-                pydirectinput.keyDown("space")
-                sleep(0.1)
-                pyautogui.keyUp("space")            
+                if self.stage == 0:
+                    sleep(1)
+                    pydirectinput.keyDown("space")
+                    sleep(0.1)
+                    pyautogui.keyUp("space")
+                elif self.stage == 1:
+                    pyautogui.press("x")
+                    sleep(1)
+                    pyautogui.click()
+                    sleep(1)
+                elif self.stage == 2:
+                    sleep(2)
+
+                self.stage += 1
+
+                if self.stage > 2:
+                    self.stage = 0        
             elif self.game_name == "apexlegends":
                 pydirectinput.keyDown("a")
                 pydirectinput.keyDown("space")
