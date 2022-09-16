@@ -284,7 +284,7 @@ def execute_tests(args):
                         os.path.join(os.path.dirname(__file__),
                         "..",
                         "Configs",
-                        "settings_{}.json".format(getTransportProtocol(case).upper()))
+                        "settings.json")
                     ), 
                     settings_json_path
                 )
