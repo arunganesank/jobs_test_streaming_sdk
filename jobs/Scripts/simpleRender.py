@@ -216,7 +216,7 @@ def save_results(args, case, cases, execution_time = 0.0, test_case_status = "",
         latency_tool_log_path = os.path.join(args.output, "tool_logs", case["case"] + "_latency_{}".format(args.execution_type) + ".log")
 
         if os.path.exists(latency_tool_log_path):
-            latency_tool_log_key = "latency_tool_log_" + "server" if args.execution_type == "server" else "client"
+            latency_tool_log_key = "latency_tool_log_" + ("server" if args.execution_type == "server" else "client")
             test_case_report[latency_tool_log_key] = latency_tool_log_path
 
         if args.collect_traces == "AfterTests" or args.collect_traces == "BeforeTests":
