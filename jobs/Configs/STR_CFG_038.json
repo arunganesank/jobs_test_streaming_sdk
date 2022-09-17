@@ -47,9 +47,9 @@
 		"MinFrameRate" : 30.0000000000000000,
 		"NonLinearScale" : false,
 		"VideoBitrate" : 50000000,
-		"VideoCodec" : "havc",
+		"VideoCodec" : "hevc",
 		"VideoEnableHDR" : false,
-		"VideoSliceCount" : 1,
+		"VideoSliceCount" : 300,
 		"VideoSliceOutput" : false
 	},
 	"Headset" : 
