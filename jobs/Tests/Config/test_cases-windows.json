@@ -192,6 +192,16 @@
     },
     {
         "case": "STR_CFG_041",
+        "status": "active",
+        "server_keys": "-extStats true -Protocol tcp",
+        "client_keys": "",
+        "script_info": [
+            "Headset block",
+            "DatagramSize: 32753"
+        ]
+    },
+    {
+        "case": "STR_CFG_042",
         "status": "skipped",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
@@ -382,7 +392,7 @@
     },
     {
         "case": "STR_CFG_019",
-        "status": "active",
+        "status": "skipped",
         "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
         "script_info": [

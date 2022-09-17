@@ -35,7 +35,7 @@
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
         "script_info": [
-            "Config values - Network: \"TCP\""
+            "Config values - Network: \"UDP\""
         ],
         "case_delay": 15
     },
