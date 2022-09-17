@@ -274,6 +274,7 @@
         "status": "skipped",
         "server_keys": "-extStats true -MAXUSERS 2 -Protocol udp",
         "client_keys": "",
+        "second_client_keys": "-fullscreen true",
         "script_info": [
             "Config values - MaxUserCount: 1"
         ],
@@ -554,6 +555,7 @@
         "status": "skipped",
         "server_keys": "-extStats true -MAXUSERS 2 -Protocol tcp",
         "client_keys": "",
+        "second_client_keys": "-fullscreen true",
         "script_info": [
             "Config values - MaxUserCount: 1"
         ],
