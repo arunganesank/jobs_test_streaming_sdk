@@ -27,8 +27,8 @@
 		"EnableDump" : false,
 		"EncoderResolution" : 
 		{
-			"height" : 720,
-			"width" : 1280
+			"height" : 1440,
+			"width" : 2560
 		},
 		"EncoderStereo" : false,
 		"EyeResolution" : 
@@ -43,7 +43,7 @@
 		},
 		"IPD" : 0.0640000030398369,
 		"KeepAspectRatio" : false,
-		"MaxFrameRate" : 10000.0000000000000000,
+		"MaxFrameRate" : 50,
 		"MinFrameRate" : 30.0000000000000000,
 		"NonLinearScale" : false,
 		"VideoBitrate" : 50000000,

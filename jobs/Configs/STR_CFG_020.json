@@ -49,12 +49,12 @@
 		"VideoBitrate" : 50000000,
 		"VideoCodec" : "hevc",
 		"VideoEnableHDR" : false,
-		"VideoSliceCount" : 4,
-		"VideoSliceOutput" : true
+		"VideoSliceCount" : 1,
+		"VideoSliceOutput" : false
 	},
 	"Headset" : 
 	{
-		"DatagramSize" : 65507,
+		"DatagramSize" : 32753,
 		"EnableNetwork" : true,
 		"LogPath" : null,
 		"MaxUserCount" : 1,

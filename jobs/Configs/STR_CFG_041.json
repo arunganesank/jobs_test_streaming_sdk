@@ -50,11 +50,11 @@
 		"VideoCodec" : "hevc",
 		"VideoEnableHDR" : false,
 		"VideoSliceCount" : 1,
-		"VideoSliceOutput" : true
+		"VideoSliceOutput" : false
 	},
 	"Headset" : 
 	{
-		"DatagramSize" : 65507,
+		"DatagramSize" : 32753,
 		"EnableNetwork" : true,
 		"LogPath" : null,
 		"MaxUserCount" : 1,
