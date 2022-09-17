@@ -173,7 +173,7 @@
     },
     {
         "case": "STR_MCWA_019",
-        "status": "skipped",
+        "status": "active",
         "server_keys": "-MAXUSERS 2 -Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
         "keep_client": true,
@@ -184,7 +184,7 @@
     },
     {
         "case": "STR_MCWA_020",
-        "status": "skipped",
+        "status": "active",
         "server_keys": "-MAXUSERS 2 -Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
         "script_info": [
@@ -365,7 +365,7 @@
     },
     {
         "case": "STR_MCWA_039",
-        "status": "skipped",
+        "status": "active",
         "server_keys": "-MAXUSERS 2 -Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true",
         "keep_client": true,
@@ -376,7 +376,7 @@
     },
     {
         "case": "STR_MCWA_040",
-        "status": "skipped",
+        "status": "active",
         "server_keys": "-MAXUSERS 2 -Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true",
         "script_info": [

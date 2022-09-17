@@ -58,8 +58,8 @@
 		"EnableNetwork" : true,
 		"LogPath" : null,
 		"MaxUserCount" : 1,
-		"Microphone" : false,
-		"Network" : "TCP",
+		"Microphone" : true,
+		"Network" : "UDP",
 		"Port" : 1235,
 		"UserConnectionTimeout" : 30,
 		"VerifyFirewall" : true

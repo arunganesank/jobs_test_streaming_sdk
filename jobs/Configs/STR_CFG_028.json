@@ -6,8 +6,8 @@
 		"In_Channels" : 2,
 		"In_SampleFormat" : "S16",
 		"In_SampleRate" : 44100,
-		"In_StreamSampleRate" : 21050,
-		"Out_AudioBitrate" : 128000,
+		"In_StreamSampleRate" : 0,
+		"Out_AudioBitrate" : 256000,
 		"Out_TimeShift" : 0
 	},
 	"Common" : 

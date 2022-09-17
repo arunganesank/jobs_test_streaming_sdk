@@ -48,9 +48,9 @@
 		"NonLinearScale" : false,
 		"VideoBitrate" : 50000000,
 		"VideoCodec" : "hevc",
-		"VideoEnableHDR" : true,
+		"VideoEnableHDR" : false,
 		"VideoSliceCount" : 1,
-		"VideoSliceOutput" : false
+		"VideoSliceOutput" : true
 	},
 	"Headset" : 
 	{

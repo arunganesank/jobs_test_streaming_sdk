@@ -48,14 +48,14 @@
 		"NonLinearScale" : false,
 		"VideoBitrate" : 50000000,
 		"VideoCodec" : "hevc",
-		"VideoEnableHDR" : false,
+		"VideoEnableHDR" : true,
 		"VideoSliceCount" : 1,
 		"VideoSliceOutput" : false
 	},
 	"Headset" : 
 	{
 		"DatagramSize" : 65507,
-		"EnableNetwork" : false,
+		"EnableNetwork" : true,
 		"LogPath" : null,
 		"MaxUserCount" : 1,
 		"Microphone" : false,

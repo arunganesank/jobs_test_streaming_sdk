@@ -1,6 +1,6 @@
 [
     {
-        "case": "STR_CFG_023",
+        "case": "STR_CFG_022",
         "status": "skipped",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
@@ -10,7 +10,7 @@
         ]
     },
     {
-        "case": "STR_CFG_024",
+        "case": "STR_CFG_023",
         "status": "skipped",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
@@ -20,7 +20,7 @@
         ]
     },
     {
-        "case": "STR_CFG_025",
+        "case": "STR_CFG_024",
         "status": "skipped",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
@@ -30,7 +30,7 @@
         ]
     },
     {
-        "case": "STR_CFG_026",
+        "case": "STR_CFG_025",
         "status": "skipped",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
@@ -40,7 +40,7 @@
         ]
     },
     {
-        "case": "STR_CFG_027",
+        "case": "STR_CFG_026",
         "status": "skipped",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
@@ -50,7 +50,7 @@
         ]
     },
     {
-        "case": "STR_CFG_028",
+        "case": "STR_CFG_027",
         "status": "skipped",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
@@ -60,7 +60,7 @@
         ]
     },
     {
-        "case": "STR_CFG_029",
+        "case": "STR_CFG_028",
         "status": "skipped",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
@@ -70,7 +70,7 @@
         ]
     },
     {
-        "case": "STR_CFG_030",
+        "case": "STR_CFG_029",
         "status": "skipped",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
@@ -80,17 +80,7 @@
         ]
     },
     {
-        "case": "STR_CFG_031",
-        "status": "skipped",
-        "server_keys": "-extStats true -Protocol tcp",
-        "client_keys": "",
-        "script_info": [
-            "Display block",
-            "EnableDump: true, DumpPath: \"C:/User/user/DumpTest\""
-        ]
-    },
-    {
-        "case": "STR_CFG_032",
+        "case": "STR_CFG_030",
         "status": "active",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
@@ -100,7 +90,7 @@
         ]
     },
     {
-        "case": "STR_CFG_033",
+        "case": "STR_CFG_031",
         "status": "active",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
@@ -110,7 +100,7 @@
         ]
     },
     {
-        "case": "STR_CFG_034",
+        "case": "STR_CFG_032",
         "status": "active",
         "server_keys": "-extStats true -CaptureMode asap -Protocol tcp",
         "client_keys": "",
@@ -120,7 +110,7 @@
         ]
     },
     {
-        "case": "STR_CFG_035",
+        "case": "STR_CFG_033",
         "status": "active",
         "server_keys": "-extStats true -CaptureMode asap -Protocol tcp",
         "client_keys": "",
@@ -130,7 +120,7 @@
         ]
     },
     {
-        "case": "STR_CFG_036",
+        "case": "STR_CFG_034",
         "status": "active",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
@@ -140,7 +130,7 @@
         ]
     },
     {
-        "case": "STR_CFG_037",
+        "case": "STR_CFG_035",
         "status": "active",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
@@ -150,7 +140,7 @@
         ]
     },
     {
-        "case": "STR_CFG_038",
+        "case": "STR_CFG_036",
         "status": "active",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
@@ -160,7 +150,7 @@
         ]
     },
     {
-        "case": "STR_CFG_039",
+        "case": "STR_CFG_037",
         "status": "active",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
@@ -170,18 +160,18 @@
         ]
     },
     {
-        "case": "STR_CFG_040",
-        "status": "skipped",
+        "case": "STR_CFG_038",
+        "status": "active",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
         "script_info": [
             "Display block",
-            "VideoSliceCount: 3"
+            "VideoSliceCount: 300"
         ]
     },
     {
-        "case": "STR_CFG_041",
-        "status": "skipped",
+        "case": "STR_CFG_039",
+        "status": "active",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
         "script_info": [
@@ -190,18 +180,28 @@
         ]
     },
     {
-        "case": "STR_CFG_042",
+        "case": "STR_CFG_040",
         "status": "skipped",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
         "script_info": [
             "Display block",
             "VideoSliceOutput: true",
-            "VideoSliceCount: 4"
+            "VideoSliceCount: 500"
         ]
     },
     {
-        "case": "STR_CFG_043",
+        "case": "STR_CFG_041",
+        "status": "active",
+        "server_keys": "-extStats true -Protocol tcp",
+        "client_keys": "",
+        "script_info": [
+            "Headset block",
+            "DatagramSize: 32753"
+        ]
+    },
+    {
+        "case": "STR_CFG_042",
         "status": "skipped",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "",
@@ -292,16 +292,6 @@
     },
     {
         "case": "STR_CFG_009",
-        "status": "skipped",
-        "server_keys": "-extStats true -Protocol udp",
-        "client_keys": "",
-        "script_info": [
-            "Display block",
-            "EnableDump: true, DumpPath: \"C:/User/user/DumpTest\""
-        ]
-    },
-    {
-        "case": "STR_CFG_010",
         "status": "active",
         "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
@@ -311,7 +301,7 @@
         ]
     },
     {
-        "case": "STR_CFG_011",
+        "case": "STR_CFG_010",
         "status": "active",
         "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
@@ -321,7 +311,7 @@
         ]
     },
     {
-        "case": "STR_CFG_012",
+        "case": "STR_CFG_011",
         "status": "active",
         "server_keys": "-extStats true -CaptureMode asap -Protocol udp",
         "client_keys": "",
@@ -331,7 +321,7 @@
         ]
     },
     {
-        "case": "STR_CFG_013",
+        "case": "STR_CFG_012",
         "status": "active",
         "server_keys": "-extStats true -CaptureMode asap -Protocol udp",
         "client_keys": "",
@@ -341,7 +331,7 @@
         ]
     },
     {
-        "case": "STR_CFG_014",
+        "case": "STR_CFG_013",
         "status": "active",
         "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
@@ -351,7 +341,7 @@
         ]
     },
     {
-        "case": "STR_CFG_015",
+        "case": "STR_CFG_014",
         "status": "active",
         "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
@@ -361,7 +351,7 @@
         ]
     },
     {
-        "case": "STR_CFG_016",
+        "case": "STR_CFG_015",
         "status": "active",
         "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
@@ -371,7 +361,7 @@
         ]
     },
     {
-        "case": "STR_CFG_017",
+        "case": "STR_CFG_016",
         "status": "active",
         "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
@@ -381,13 +371,23 @@
         ]
     },
     {
-        "case": "STR_CFG_018",
-        "status": "skipped",
+        "case": "STR_CFG_017",
+        "status": "active",
         "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
         "script_info": [
             "Display block",
-            "VideoSliceCount: 3"
+            "VideoSliceCount: 300"
+        ]
+    },
+    {
+        "case": "STR_CFG_018",
+        "status": "active",
+        "server_keys": "-extStats true -Protocol udp",
+        "client_keys": "",
+        "script_info": [
+            "Display block",
+            "VideoSliceOutput: true"
         ]
     },
     {
@@ -397,22 +397,12 @@
         "client_keys": "",
         "script_info": [
             "Display block",
-            "VideoSliceOutput: true"
+            "VideoSliceOutput: true",
+            "VideoSliceCount: 500"
         ]
     },
     {
         "case": "STR_CFG_020",
-        "status": "skipped",
-        "server_keys": "-extStats true -Protocol udp",
-        "client_keys": "",
-        "script_info": [
-            "Display block",
-            "VideoSliceOutput: true",
-            "VideoSliceCount: 4"
-        ]
-    },
-    {
-        "case": "STR_CFG_021",
         "status": "active",
         "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",
@@ -422,7 +412,7 @@
         ]
     },
     {
-        "case": "STR_CFG_022",
+        "case": "STR_CFG_021",
         "status": "skipped",
         "server_keys": "-extStats true -Protocol udp",
         "client_keys": "",

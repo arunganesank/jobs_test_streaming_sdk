@@ -23,12 +23,12 @@
 	{
 		"10BitSRGB" : false,
 		"DOF" : 6,
-		"DumpPath" : "C:/User/user/dumpTest",
-		"EnableDump" : true,
+		"DumpPath" : null,
+		"EnableDump" : false,
 		"EncoderResolution" : 
 		{
-			"height" : 1440,
-			"width" : 2560
+			"height" : 720,
+			"width" : 1280
 		},
 		"EncoderStereo" : false,
 		"EyeResolution" : 
