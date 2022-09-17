@@ -11,7 +11,7 @@
     },
     {
         "case": "STR_CFR_012",
-        "status": "active",
+        "status": "skipped",
         "server_keys": "-extStats true -SLICES 500 -Protocol tcp",
         "client_keys": "",
         "script_info": [
@@ -111,7 +111,7 @@
     },
     {
         "case": "STR_CFR_002",
-        "status": "active",
+        "status": "skipped",
         "server_keys": "-extStats true -SLICES 500 -Protocol udp",
         "client_keys": "",
         "script_info": [
