@@ -170,7 +170,7 @@
     {
         "case": "STR_ECR_012",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Encrypt SIMPLE -Protocol udp",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Encrypt SIMPLE -Protocol tcp",
         "client_keys": "-Fullscreen true -Encrypt SIMPLE",
         "second_client_keys": "",
         "start_first": "server",
@@ -185,7 +185,7 @@
     {
         "case": "STR_ECR_013",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Encrypt AES -Pass \"Test\" -Protocol udp",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Encrypt AES -Pass \"Test\" -Protocol tcp",
         "client_keys": "-Fullscreen true -Encrypt AES -Pass \"Test\"",
         "second_client_keys": "",
         "start_first": "server",
@@ -200,7 +200,7 @@
     {
         "case": "STR_ECR_014",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Encrypt AES -Pass \"Test\" -Protocol udp",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Encrypt AES -Pass \"Test\" -Protocol tcp",
         "client_keys": "-Fullscreen true -Encrypt AES -Pass \"NotTest\"",
         "second_client_keys": "",
         "start_first": "server",
@@ -217,7 +217,7 @@
     {
         "case": "STR_ECR_015",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt SIMPLE -Protocol udp",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt SIMPLE -Protocol tcp",
         "client_keys": "-Fullscreen true -Encrypt SIMPLE",
         "second_client_keys": "-Fullscreen true -Encrypt SIMPLE",
         "start_first": "server",
@@ -231,7 +231,7 @@
     {
         "case": "STR_ECR_016",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt SIMPLE -Protocol udp",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt SIMPLE -Protocol tcp",
         "client_keys": "-Fullscreen true -Encrypt SIMPLE",
         "second_client_keys": "-Fullscreen true",
         "start_first": "server",
@@ -246,7 +246,7 @@
     {
         "case": "STR_ECR_017",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt SIMPLE -Protocol udp",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt SIMPLE -Protocol tcp",
         "client_keys": "-Fullscreen true",
         "second_client_keys": "-Fullscreen true",
         "start_first": "server",
@@ -261,7 +261,7 @@
     {
         "case": "STR_ECR_018",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Protocol udp",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Protocol tcp",
         "client_keys": "-Fullscreen true -Encrypt SIMPLE",
         "second_client_keys": "-Fullscreen true",
         "start_first": "server",
@@ -277,7 +277,7 @@
     {
         "case": "STR_ECR_019",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt AES -Pass \"test\" -Protocol udp",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt AES -Pass \"test\" -Protocol tcp",
         "client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
         "second_client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
         "start_first": "server",
@@ -292,7 +292,7 @@
     {
         "case": "STR_ECR_020",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt AES -Pass \"test\" -Protocol udp",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt AES -Pass \"test\" -Protocol tcp",
         "client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
         "second_client_keys": "-Fullscreen true -Encrypt AES -Pass \"fail\"",
         "start_first": "server",
@@ -308,7 +308,7 @@
     {
         "case": "STR_ECR_021",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt AES -Pass \"test\" -Protocol udp",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt AES -Pass \"test\" -Protocol tcp",
         "client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
         "second_client_keys": "-Fullscreen true -Encrypt SIMPLE",
         "start_first": "server",
@@ -323,7 +323,7 @@
     {
         "case": "STR_ECR_022",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Protocol udp",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Protocol tcp",
         "client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
         "second_client_keys": "-Fullscreen true -Encrypt SIMPLE",
         "start_first": "server",
