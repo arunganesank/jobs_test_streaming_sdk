@@ -68,6 +68,7 @@
         "second_client_keys": "-Fullscreen true",
         "start_first": "server",
         "expected_connection_problems": ["second_client"],
+        "ignore_encryption_check": true,
         "script_info": [
             "Server: Simple Encryption",
             "Client 1: Simple Encryption",
@@ -83,6 +84,7 @@
         "second_client_keys": "-Fullscreen true",
         "start_first": "server",
         "expected_connection_problems": ["server", "client", "second_client"],
+        "ignore_encryption_check": true,
         "script_info": [
             "Server: Simple Encryption",
             "Client 1: without Encryption",
@@ -113,7 +115,6 @@
         "client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
         "second_client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
         "start_first": "server",
-        "ignore_encryption_check": true,
         "script_info": [
             "Server: AES Encryption",
             "Client 1: AES Encryption correct Passphrase",
@@ -145,6 +146,7 @@
         "second_client_keys": "-Fullscreen true -Encrypt SIMPLE",
         "start_first": "server",
         "expected_connection_problems": ["second_client"],
+        "ignore_encryption_check": true,
         "script_info": [
             "Server: AES Encryption",
             "Client 1: AES Encryption correct Passphrase",
@@ -160,6 +162,7 @@
         "second_client_keys": "-Fullscreen true -Encrypt SIMPLE",
         "start_first": "server",
         "expected_connection_problems": ["server", "client", "second_client"],
+        "ignore_encryption_check": true,
         "script_info": [
             "Server: without Encryption",
             "Client 1: AES Encryption correct Passphrase",
@@ -236,6 +239,7 @@
         "second_client_keys": "-Fullscreen true",
         "start_first": "server",
         "expected_connection_problems": ["second_client"],
+        "ignore_encryption_check": true,
         "script_info": [
             "Server: Simple Encryption",
             "Client 1: Simple Encryption",
@@ -251,6 +255,7 @@
         "second_client_keys": "-Fullscreen true",
         "start_first": "server",
         "expected_connection_problems": ["server", "client", "second_client"],
+        "ignore_encryption_check": true,
         "script_info": [
             "Server: Simple Encryption",
             "Client 1: without Encryption",
@@ -281,7 +286,6 @@
         "client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
         "second_client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
         "start_first": "server",
-        "ignore_encryption_check": true,
         "script_info": [
             "Server: AES Encryption",
             "Client 1: AES Encryption correct Passphrase",
@@ -313,6 +317,7 @@
         "second_client_keys": "-Fullscreen true -Encrypt SIMPLE",
         "start_first": "server",
         "expected_connection_problems": ["second_client"],
+        "ignore_encryption_check": true,
         "script_info": [
             "Server: AES Encryption",
             "Client 1: AES Encryption correct Passphrase",
@@ -328,6 +333,7 @@
         "second_client_keys": "-Fullscreen true -Encrypt SIMPLE",
         "start_first": "server",
         "expected_connection_problems": ["server", "client", "second_client"],
+        "ignore_encryption_check": true,
         "script_info": [
             "Server: without Encryption",
             "Client 1: AES Encryption correct Passphrase",
