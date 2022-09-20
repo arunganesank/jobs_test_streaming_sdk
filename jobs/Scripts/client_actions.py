@@ -466,6 +466,6 @@ class StartLatencyTool(Action):
 
         self.wait_server_answer(analyze_answer = True, abort_if_fail = True)
 
-        sleep(8)
+        sleep(15)
 
         pyautogui.press("S")
