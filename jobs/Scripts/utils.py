@@ -128,47 +128,6 @@ def should_case_be_closed(execution_type, case):
     return "keep_{}".format(execution_type) not in case or not case["keep_{}".format(execution_type)]
 
 
-def close_streaming_process(execution_type, case, process, tool_path=None):
-    try:
-        if should_case_be_closed(execution_type, case):
-            # close the current Streaming SDK process
-            main_logger.info("Start closing")
-
-            if platform.system() == "Windows":
-                if process is not None:
-                    close_process(process)
-
-                # additional try to kill Streaming SDK server/client (to be sure that all processes are closed)
-                subprocess.call("taskkill /f /im RemoteGameClient.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
-                subprocess.call("taskkill /f /im RemoteGameServer.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
-
-                if execution_type == "server":
-                    crash_window = win32gui.FindWindow(None, "RemoteGameServer.exe")
-                else:
-                    crash_window = win32gui.FindWindow(None, "RemoteGameClient.exe")
-
-                if crash_window:
-                    main_logger.info("Crash window was found. Closing it...")
-                    win32gui.PostMessage(crash_window, win32con.WM_CLOSE, 0, 0)
-            else:
-                if process is not None and tool_path is not None:
-                    os.system("sudo pkill -9 -f \"^{}\"".format(os.path.abspath(tool_path)))
- 
-            main_logger.info("Finish closing")
-
-            return None
-        else:
-            main_logger.info("Keep StreamingSDK instance")
-
-        return process
-
-    except Exception as e:
-        main_logger.error("Failed to close Streaming SDK process. Exception: {}".format(str(e)))
-        main_logger.error("Traceback: {}".format(traceback.format_exc()))
-
-        return None
-
-
 def close_android_app(case=None, multiconnection=False):
     try:
         key = "android" if multiconnection else "client"
@@ -356,20 +315,6 @@ def save_android_log(args, case, current_try, log_name_postfix="_client"):
         main_logger.error("Traceback: {}".format(traceback.format_exc()))
 
         return None
-
-
-def start_streaming(execution_type, script_path):
-    main_logger.info("Start StreamingSDK {}".format(execution_type))
-
-    # start Streaming SDK process
-    if platform.system() == "Windows":
-        process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
-    else:
-        process = psutil.Popen(f"xterm -e {script_path}", stdout=PIPE, stderr=PIPE, shell=True)
-
-    main_logger.info("Start Streaming SDK")
-
-    return process
 
 
 def start_latency_tool(execution_type, tool_path):
@@ -705,7 +650,7 @@ def check_artifacts_and_save_status(artifact_path, json_path, logger, limit=1000
     checking_thread.start()
 
 
-def locateOnScreen(template, tries=3, **kwargs):
+def locateOnScreen(template, tries=3, delay=0, **kwargs):
     coords = None
     if not "confidence" in kwargs:
         kwargs["confidence"] = 0.95
@@ -714,9 +659,17 @@ def locateOnScreen(template, tries=3, **kwargs):
             coords = pyautogui.locateOnScreen(img, **kwargs)
         tries -= 1
         kwargs["confidence"] -= 0.07
+
+        if not coords and delay:
+            time.sleep(delay)
     if not coords:
         raise Exception("No such element on screen")
     return (coords[0], coords[1], coords[2], coords[3])
+
+
+def click_on_center_of(coords):
+    pyautogui.click(coords[0] + coords[2] / 2, coords[1] + coords[3] / 2)
+
 
 # Function return protocol type(tcp\udp) from server keys in case
 def getTransportProtocol(case):

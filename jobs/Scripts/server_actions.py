@@ -131,7 +131,7 @@ def make_window_foreground(window, logger):
 
 
 def make_game_foreground(game_name, logger):
-    base_path = os.path.realpath(os.path.join(os.path.dirname(__file__), "..", "Icons"))
+    base_path = os.path.realpath(os.path.join(os.path.dirname(__file__), "..", "Elements", "Icons"))
 
     if "heaven" in game_name.lower():
         icon_path = os.path.join(base_path, "Heaven.png")
@@ -154,7 +154,7 @@ def make_game_foreground(game_name, logger):
     # sometimes first click on app can be ignored
     for i in range(2):
         try:
-            game_icon_coords = locateOnScreen(icon_path)
+            game_icon_coords = locate_on_screen(icon_path)
             game_icon_center = pyautogui.center(game_icon_coords)
             pyautogui.click(game_icon_center[0], game_icon_center[1])
             sleep(4)
