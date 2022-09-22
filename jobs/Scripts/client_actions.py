@@ -7,7 +7,7 @@ import json
 from threading import Thread
 from utils import *
 from actions import *
-from streaming_actions import start_streaming
+from streaming_actions import start_streaming, StreamingType
 
 if platform.system() == "Windows":
     from pyffmpeg import FFmpeg

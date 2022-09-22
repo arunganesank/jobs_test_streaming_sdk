@@ -179,7 +179,7 @@ def close_streaming(execution_type, case, process, tool_path=None, streaming_typ
 
 
 def close_streaming_sdk(execution_type, case, process, tool_path=None):
-    if should_case_be_closed(execution_type, case):
+    if utils.should_case_be_closed(execution_type, case):
         # close the current Streaming SDK process
         main_logger.info("Start closing")
 
@@ -213,7 +213,7 @@ def close_streaming_sdk(execution_type, case, process, tool_path=None):
 
 
 def close_streaming_amd_link(execution_type, case, process, tool_path=None):
-    if should_case_be_closed(execution_type, case):
+    if utils.should_case_be_closed(execution_type, case):
         # close the current Streaming SDK process
         main_logger.info("Start closing") 
 
