@@ -658,7 +658,7 @@ class StartStreaming(MulticonnectionAction):
 
             if self.args.streaming_type == StreamingType.AMD_LINK:
                 self.process = start_streaming(self.args.execution_type, self.script_path, streaming_type=self.args.streaming_type, socket=self.sock)
-                make_game_foreground(self.game_name, self.logger)
+                make_game_foreground(self.args.game_name, self.logger)
             else:
                 self.process = start_streaming(self.args.execution_type, self.script_path, streaming_type=self.args.streaming_type)
 
