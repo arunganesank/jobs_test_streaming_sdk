@@ -12,6 +12,7 @@ from utils import *
 from subprocess import PIPE, STDOUT
 import json
 from analyzeLogs import analyze_logs
+from streaming_actions import close_streaming
 
 sys.path.append(os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir)))
@@ -178,7 +179,7 @@ def start_client_side_tests(args, case, process, script_path, last_log_line, aud
             if "Latency" in args.test_group and args.game_name == "Empty":
                 close_latency_tool(args.execution_type)
 
-            process = close_streaming_process(args.execution_type, case, process)
+            process = close_streaming(args.execution_type, case, process)
             last_log_line = save_logs(args, case, last_log_line, current_try)
 
             if "Latency" in args.test_group and args.game_name == "Empty":

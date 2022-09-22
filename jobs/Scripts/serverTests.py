@@ -16,6 +16,7 @@ from instance_state import ServerInstanceState
 from server_actions import *
 import android_actions
 from analyzeLogs import analyze_logs
+from streaming_actions import close_streaming
 
 if platform.system() == "Windows":
     import pydirectinput
@@ -263,7 +264,7 @@ def start_server_side_tests(args, case, process, android_client_closed, script_p
 
             main_logger.info("Finish to wait new actions")
 
-            process = close_streaming_process(args.execution_type, case, process, tool_path=args.server_tool)
+            process = close_streaming(args.execution_type, case, process, tool_path=args.server_tool)
 
             if args.test_group in MC_CONFIG["second_win_client"]:
                 connection_sc.send("finish passed".encode("utf-8"))

@@ -8,9 +8,10 @@ import traceback
 import pyautogui
 import keyboard
 from threading import Thread
+import platform
 from utils import *
 from actions import *
-import platform
+from streaming_actions import StreamingType, start_streaming
 
 if platform.system() == "Windows":
     import win32gui
@@ -654,7 +655,12 @@ class StartStreaming(MulticonnectionAction):
         # start server
         if self.process is None:
             should_collect_traces = (self.args.collect_traces == "BeforeTests")
-            self.process = start_streaming(self.args.execution_type, self.script_path)
+
+            if self.args.streaming_type == StreamingType.AMD_LINK:
+                self.process = start_streaming(self.args.execution_type, self.script_path, streaming_type=self.args.streaming_type, socket=self.sock)
+                make_game_foreground(self.game_name, self.logger)
+            else:
+                self.process = start_streaming(self.args.execution_type, self.script_path, streaming_type=self.args.streaming_type)
 
             if self.args.test_group in mc_config["second_win_client"] or self.args.test_group in mc_config["android_client"]:
                 sleep(5)

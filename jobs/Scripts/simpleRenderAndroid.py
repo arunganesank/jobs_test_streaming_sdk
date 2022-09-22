@@ -18,6 +18,7 @@ import re
 from instance_state import AndroidInstanceState
 from android_actions import *
 from analyzeLogs import analyze_logs
+from streaming_actions import start_streaming, close_streaming
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
@@ -415,7 +416,7 @@ def execute_tests(args):
                 # close Streaming SDK android app
                 client_closed = close_android_app(case)
                 # close Streaming SDK server instance
-                process = close_streaming_process("server", case, process)
+                process = close_streaming("server", case, process)
                 last_log_line_server = save_logs(args, case, last_log_line_server, current_try)
                 save_android_log(args, case, current_try)
 

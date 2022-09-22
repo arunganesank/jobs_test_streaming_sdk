@@ -7,6 +7,7 @@ import json
 from threading import Thread
 from utils import *
 from actions import *
+from streaming_actions import start_streaming
 
 if platform.system() == "Windows":
     from pyffmpeg import FFmpeg
@@ -422,29 +423,41 @@ class StartStreaming(Action):
         self.process = self.params["process"]
 
     def execute(self):
-        # start client before server (default case)
-        if "start_first" not in self.case or self.case["start_first"] != "server":
+        if self.args.streaming_type == StreamingType.AMD_LINK:
+            self.sock.send(self.action.encode("utf-8"))
+
             if self.process is None:
                 should_collect_traces = (self.args.collect_traces == "BeforeTests")
-                self.process = start_streaming(self.args.execution_type, self.script_path)
+                self.process = start_streaming(self.args.execution_type, self.script_path, streaming_type=self.args.streaming_type, socket=self.sock)
 
                 if should_collect_traces:
                     collect_traces(self.archive_path, self.archive_name + "_client.zip")
-                elif "start_first" in self.case and self.case["start_first"] == "client":
-                    sleep(5)
 
-        self.sock.send(self.action.encode("utf-8"))
+            self.wait_server_answer(analyze_answer = True, abort_if_fail = True)
+        else:
+            # start client before server (default case)
+            if "start_first" not in self.case or self.case["start_first"] != "server":
+                if self.process is None:
+                    should_collect_traces = (self.args.collect_traces == "BeforeTests")
+                    self.process = start_streaming(self.args.execution_type, self.script_path, streaming_type=self.args.streaming_type, socket=self.sock)
 
-        self.wait_server_answer(analyze_answer = True, abort_if_fail = True)
+                    if should_collect_traces:
+                        collect_traces(self.archive_path, self.archive_name + "_client.zip")
+                    elif "start_first" in self.case and self.case["start_first"] == "client":
+                        sleep(5)
 
-        # start server before client
-        if "start_first" in self.case and self.case["start_first"] == "server":
-            if self.process is None:
-                should_collect_traces = (self.args.collect_traces == "BeforeTests")
-                self.process = start_streaming(self.args.execution_type, self.script_path)
+            self.sock.send(self.action.encode("utf-8"))
 
-                if should_collect_traces:
-                    collect_traces(self.archive_path, self.archive_name + "_client.zip")
+            self.wait_server_answer(analyze_answer = True, abort_if_fail = True)
+
+            # start server before client
+            if "start_first" in self.case and self.case["start_first"] == "server":
+                if self.process is None:
+                    should_collect_traces = (self.args.collect_traces == "BeforeTests")
+                    self.process = start_streaming(self.args.execution_type, self.script_path, streaming_type=self.args.streaming_type, socket=self.sock)
+
+                    if should_collect_traces:
+                        collect_traces(self.archive_path, self.archive_name + "_client.zip")
 
 
 # [Client + Server action] start Latency tool on client and server

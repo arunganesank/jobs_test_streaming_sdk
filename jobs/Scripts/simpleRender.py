@@ -16,6 +16,7 @@ from threading import Thread
 import copy
 import traceback
 import time
+from streaming_actions import StreamingType, close_streaming
 
 if platform.system() == "Windows":
     from pyffmpeg import FFmpeg
@@ -392,7 +393,7 @@ def execute_tests(args, current_conf):
 
                 break
             except Exception as e:
-                PROCESS = close_streaming_process(args.execution_type, case, PROCESS)
+                PROCESS = close_streaming(args.execution_type, case, PROCESS)
 
                 if (args.test_group in MC_CONFIG["android_client"]) and args.execution_type == "server":
                     # close Streaming SDK android app
@@ -440,6 +441,7 @@ def createArgsParser():
     parser.add_argument('--collect_traces', required=True)
     parser.add_argument('--screen_resolution', required=True)
     parser.add_argument('--track_used_memory', required=False, default=False)
+    parser.add_argument('--streaming_type', required=False, default="SDK")
 
     return parser
 
@@ -448,6 +450,7 @@ if __name__ == '__main__':
     main_logger.info('simpleRender start working...')
 
     args = createArgsParser().parse_args()
+    args.streaming_type = StreamingType[args.streaming_type]
 
     try:
         os.makedirs(args.output)
