@@ -650,7 +650,7 @@ def check_artifacts_and_save_status(artifact_path, json_path, logger, limit=1000
     checking_thread.start()
 
 
-def locateOnScreen(template, tries=3, delay=0, **kwargs):
+def locate_on_screen(template, tries=3, delay=0, **kwargs):
     coords = None
     if not "confidence" in kwargs:
         kwargs["confidence"] = 0.95
