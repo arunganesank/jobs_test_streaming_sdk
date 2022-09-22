@@ -54,7 +54,7 @@ def start_streaming_amd_link(execution_type, socket):
     if execution_type == "server":
         try:
             pyautogui.hotkey("win", "m")
-            time.sleep(1)
+            sleep(1)
 
             script_path = "C:\\JN\\Adrenalin.lnk"
             process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
@@ -118,7 +118,7 @@ def start_streaming_amd_link(execution_type, socket):
 
         try:
             pyautogui.hotkey("win", "m")
-            time.sleep(1)
+            sleep(1)
 
             script_path = "C:\\JN\\AMDLink.lnk"
             process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
@@ -226,7 +226,7 @@ def close_streaming_amd_link(execution_type, case, process, tool_path=None):
 
         if execution_type == "server":
             pyautogui.hotkey("win", "m")
-            time.sleep(1)
+            sleep(1)
 
             script_path = "C:\\JN\\Adrenalin.lnk"
             process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
@@ -234,9 +234,9 @@ def close_streaming_amd_link(execution_type, case, process, tool_path=None):
             # click on pc name and select disconnect
             coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "Elements", "AMDLink", "pc_icon.png"), delay=1)
             pyautogui.moveTo(coords[0] + coords[2] / 2, coords[1] + coords[3] / 2)
-            time.sleep(1)
+            sleep(1)
             pyautogui.click(button="right")
-            time.sleep(1)
+            sleep(1)
             pyautogui.click(button="right")
 
             coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "Elements", "AMDLink", "disconnect_button.png"), delay=1)
