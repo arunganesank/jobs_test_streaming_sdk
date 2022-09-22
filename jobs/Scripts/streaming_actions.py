@@ -107,7 +107,13 @@ def start_streaming_amd_link(execution_type, socket):
             raise e
 
         # wait answer from client
-        answer = socket.recv(1024).decode("utf-8")
+        while True:
+            try:
+                answer = socket.recv(1024).decode("utf-8")
+                break
+            except Exception as e:
+                sleep(0.1)
+                continue
 
         if answer != "done":
             raise Exception("Failed to open AMD Link on client side")
