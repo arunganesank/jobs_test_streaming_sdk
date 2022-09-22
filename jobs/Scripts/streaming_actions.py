@@ -163,8 +163,13 @@ def start_streaming_amd_link(execution_type, socket):
             coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "skip_optimization.png"), delay=1)
             utils.click_on_center_of(coords)
 
-            coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming.png"), delay=1)
-            utils.click_on_center_of(coords)
+            try:
+                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming.png"), delay=1)
+                utils.click_on_center_of(coords)
+            except:
+                # Start Streaming button can be hovered
+                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming_2.png"), delay=1)
+                utils.click_on_center_of(coords)
 
             sleep(5)
 
