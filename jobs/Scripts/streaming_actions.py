@@ -8,6 +8,7 @@ import traceback
 import platform
 import win32clipboard
 from enum import Enum
+import pyautogui
 import utils
 
 if platform.system() == "Windows":
