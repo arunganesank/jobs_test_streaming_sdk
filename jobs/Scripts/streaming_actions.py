@@ -53,6 +53,8 @@ def start_streaming_sdk(execution_type, script_path):
 def start_streaming_amd_link(execution_type, socket):
     if execution_type == "server":
         try:
+            pyautogui.hotkey("alt", "tab")
+            sleep(1)
             pyautogui.hotkey("win", "m")
             sleep(1)
 
@@ -117,6 +119,8 @@ def start_streaming_amd_link(execution_type, socket):
            raise Exception("Failed to receive invite code on server side") 
 
         try:
+            pyautogui.hotkey("alt", "tab")
+            sleep(1)
             pyautogui.hotkey("win", "m")
             sleep(1)
 
@@ -225,6 +229,8 @@ def close_streaming_amd_link(execution_type, case, process, tool_path=None):
         main_logger.info("Start closing") 
 
         if execution_type == "server":
+            pyautogui.hotkey("alt", "tab")
+            sleep(1)
             pyautogui.hotkey("win", "m")
             sleep(1)
 
