@@ -101,13 +101,13 @@ def start_streaming_amd_link(execution_type, socket):
             raise e
 
         # wait answer from client
-        answer = sock.recv(1024).decode("utf-8")
+        answer = socket.recv(1024).decode("utf-8")
 
         if answer != "done":
             raise Exception("Failed to open AMD Link on client side")
     else:
         # wait invite code
-        invite_code = sock.recv(1024).decode("utf-8")
+        invite_code = socket.recv(1024).decode("utf-8")
 
         if invite_code == "failed":
            raise Exception("Failed to receive invite code on server side") 
