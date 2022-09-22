@@ -565,10 +565,6 @@ def analyze_encryption(case, execution_type, transport_protocol, is_encrypted, m
         main_logger.info("Ignore encryption analyzing due to expected problems")
         return
 
-    if "expected_connection_problems" in case and execution_type in case["expected_connection_problems"]:
-        main_logger.info("Force ignore encryption analyzing")
-        return
-
     encryption_is_valid = validate_encryption(execution_type, transport_protocol, "src", is_encrypted, address)
 
     if not encryption_is_valid:
