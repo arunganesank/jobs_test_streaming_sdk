@@ -661,7 +661,7 @@ def locate_on_screen(template, tries=3, delay=0, **kwargs):
         kwargs["confidence"] -= 0.07
 
         if not coords and delay:
-            time.sleep(delay)
+            sleep(delay)
     if not coords:
         raise Exception("No such element on screen")
     return (coords[0], coords[1], coords[2], coords[3])
