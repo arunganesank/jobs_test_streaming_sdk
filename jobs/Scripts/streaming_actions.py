@@ -207,7 +207,7 @@ def close_streaming_sdk(execution_type, case, process, tool_path=None):
 
         if platform.system() == "Windows":
             if process is not None:
-                close_process(process)
+                utils.close_process(process)
 
             # additional try to kill Streaming SDK server/client (to be sure that all processes are closed)
             subprocess.call("taskkill /f /im RemoteGameClient.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)

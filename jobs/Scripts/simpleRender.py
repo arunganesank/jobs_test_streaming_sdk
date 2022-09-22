@@ -393,7 +393,7 @@ def execute_tests(args, current_conf):
 
                 break
             except Exception as e:
-                PROCESS = close_streaming(args.execution_type, case, PROCESS)
+                PROCESS = close_streaming(args.execution_type, case, PROCESS, streaming_type=args.streaming_type)
 
                 if (args.test_group in MC_CONFIG["android_client"]) and args.execution_type == "server":
                     # close Streaming SDK android app
