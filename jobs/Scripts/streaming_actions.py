@@ -52,6 +52,9 @@ def start_streaming_sdk(execution_type, script_path):
 def start_streaming_amd_link(execution_type, socket):
     if execution_type == "server":
         try:
+            pyautogui.hotkey("win", "m")
+            time.sleep(1)
+
             script_path = "C:\\JN\\Adrenalin.lnk"
             process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
 
@@ -113,6 +116,9 @@ def start_streaming_amd_link(execution_type, socket):
            raise Exception("Failed to receive invite code on server side") 
 
         try:
+            pyautogui.hotkey("win", "m")
+            time.sleep(1)
+
             script_path = "C:\\JN\\AMDLink.lnk"
             process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
 
@@ -218,6 +224,9 @@ def close_streaming_amd_link(execution_type, case, process, tool_path=None):
         main_logger.info("Start closing") 
 
         if execution_type == "server":
+            pyautogui.hotkey("win", "m")
+            time.sleep(1)
+
             script_path = "C:\\JN\\Adrenalin.lnk"
             process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
 
