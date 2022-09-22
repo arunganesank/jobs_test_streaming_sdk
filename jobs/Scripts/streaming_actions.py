@@ -85,8 +85,8 @@ def start_streaming_amd_link(execution_type, socket):
             utils.click_on_center_of(coords)
 
             coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "full_access.png"), delay=1)
-            # first click - make full acess active, second click - select full access, third click - click on code to display copy button
-            for i in range(3):
+            # first click - make full acess active, second click - select full access, third click - click on code to display copy button + one additional click (sometimes first click not work)
+            for i in range(4):
                 utils.click_on_center_of(coords)
                 sleep(1)
 
