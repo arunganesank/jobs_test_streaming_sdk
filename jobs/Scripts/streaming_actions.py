@@ -251,10 +251,10 @@ def close_streaming_amd_link(execution_type, case, process, tool_path=None):
             # click on pc name and select disconnect
             coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "pc_icon.png"), delay=1)
             pyautogui.moveTo(coords[0] + coords[2] / 2, coords[1] + coords[3] / 2)
-            sleep(1)
-            pyautogui.click(button="right")
-            sleep(1)
-            pyautogui.click(button="right")
+            # sometimes right click doesn't open context menu, do it few times
+            for i in range(3):
+                sleep(1)
+                pyautogui.click(button="right")
 
             coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "disconnect_button.png"), delay=1)
             utils.click_on_center_of(coords)
