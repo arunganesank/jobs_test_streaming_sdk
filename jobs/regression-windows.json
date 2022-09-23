@@ -19,7 +19,8 @@
             "RateControl":"STR_RC_001,STR_RC_002,STR_RC_003,STR_RC_004,STR_RC_005,STR_RC_030,STR_RC_032,STR_RC_033,STR_RC_034,STR_RC_035,STR_RC_036,STR_RC_061",
             "Resolution":"STR_RN_002,STR_RN_003,STR_RN_005,STR_RN_006",
             "Slices":"STR_SL_002,STR_SL_006",
-            "VSync":"STR_VS_001,STR_VS_002"
+            "VSync":"STR_VS_001,STR_VS_002",
+            "HDR":"STR_HDR_001,STR_HDR_002"
         },
         {
             "Encryption":"STR_ECR_004,STR_ECR_005,STR_ECR_008,STR_ECR_009,STR_ECR_010,STR_ECR_015,STR_ECR_016,STR_ECR_019,STR_ECR_020,STR_ECR_021",
