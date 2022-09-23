@@ -306,7 +306,8 @@ def execute_tests(args, current_conf):
         case_start_time = time.time()
 
         # take tool keys based on type of the instance (server/client)
-        keys = case["server_keys"] if args.execution_type == "server" else case["client_keys"]
+        if args.streaming_type != StreamingType.AMD_LINK:
+           keys = case["server_keys"] if args.execution_type == "server" else case["client_keys"]
 
         current_try = 0
 
@@ -352,7 +353,7 @@ def execute_tests(args, current_conf):
                     main_logger.info("Network in settings.json ({}): {}".format(case["case"], settings_json_content["Headset"]["Network"]))
                     main_logger.info("Datagram size in settings.json ({}): {}".format(case["case"], settings_json_content["Headset"]["DatagramSize"]))
 
-                if args.streaming_type != StreamingType.SDK:
+                if args.streaming_type != StreamingType.AMD_LINK:
                     prepared_keys = prepare_keys(args, case)
 
                     if platform.system() == "Windows":
