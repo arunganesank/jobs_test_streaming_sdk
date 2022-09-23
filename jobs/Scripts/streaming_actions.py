@@ -63,7 +63,7 @@ def set_dropdown_option(case, field_width, label_image_name, param_name):
     utils.click_on_center_of(coords)
 
 
-def configure_boolean_option(case, field_width, label_image_name, param_name)
+def configure_boolean_option(case, field_width, label_image_name, param_name):
     label_coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", f"{label_image_name}.png"))
     region = (label_coords[0] + field_width, label_coords[1], field_width, label_coords[3])
     try:
