@@ -656,8 +656,10 @@ class StartStreaming(MulticonnectionAction):
         if self.process is None:
             should_collect_traces = (self.args.collect_traces == "BeforeTests")
 
+            debug_screen_path = os.path.join(self.params["screen_path"], f"{self.case['case']}_debug.jpg")
+
             if self.args.streaming_type == StreamingType.AMD_LINK:
-                self.process = start_streaming(self.args.execution_type, streaming_type=self.args.streaming_type, script_path=self.script_path, socket=self.sock)
+                self.process = start_streaming(self.args.execution_type, streaming_type=self.args.streaming_type, script_path=self.script_path, socket=self.sock, debug_screen_path=debug_screen_path)
                 make_game_foreground(self.args.game_name, self.logger)
             else:
                 self.process = start_streaming(self.args.execution_type, streaming_type=self.args.streaming_type, script_path=self.script_path)

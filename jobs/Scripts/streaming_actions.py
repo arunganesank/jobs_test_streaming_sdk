@@ -9,6 +9,7 @@ import platform
 import win32clipboard
 from enum import Enum
 import pyautogui
+import pyscreenshot
 import utils
 
 if platform.system() == "Windows":
@@ -27,7 +28,7 @@ class StreamingType(Enum):
     WEB = 3
 
 
-def start_streaming(execution_type, streaming_type=StreamingType.SDK, script_path=None, socket=None):
+def start_streaming(execution_type, streaming_type=StreamingType.SDK, script_path=None, case=case, socket=None, debug_screen_path=None):
     main_logger.info("Start StreamingSDK {}".format(execution_type))
 
     if streaming_type == StreamingType.SDK:
@@ -36,10 +37,12 @@ def start_streaming(execution_type, streaming_type=StreamingType.SDK, script_pat
 
         return start_streaming_sdk(execution_type, script_path)
     elif streaming_type == StreamingType.AMD_LINK:
+        if not case:
+            raise ValueError("Case is required to launch AMD Link")
         if not socket:
             raise ValueError("Socket is required to launch AMD Link")
 
-        return start_streaming_amd_link(execution_type, socket)
+        return start_streaming_amd_link(execution_type, case, socket, debug_screen_path=debug_screen_path)
     else:
         raise ValueError(f"Unknown StreamingSDK type: {streaming_type}")
 
@@ -53,7 +56,51 @@ def start_streaming_sdk(execution_type, script_path):
     return process
 
 
-def start_streaming_amd_link(execution_type, socket):
+def set_dropdown_option(case, field_width, label_image_name, param_name):
+    label_coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", f"{label_image_name}.png"))
+    pyautogui.click(label_coords[0] + field_width, label_coords[1] + label_coords[3] / 2)
+    coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", f"resolution_{case['server_params'][param_name]}.png"))
+    utils.click_on_center_of(coords)
+
+
+def configure_boolean_option(case, field_width, label_image_name, param_name)
+    label_coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", f"{label_image_name}.png"))
+    region = (label_coords[0] + field_width, label_coords[1], field_width, label_coords[3])
+    try:
+        coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", f"enabled.png"), region=region)
+        value = True
+    except:
+        try:
+            coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", f"disabled.png"), region=region)
+            value = False
+        except:
+            raise Exception("Can't determine value of Accept All Connections option")
+
+    if value != case['server_params'][param_name]:
+        utils.click_on_center_of(coords)
+
+
+def set_adrenalin_params(case):
+    # calculate approximate width of option field as distance between AMD Link Server and Stream Resolution labels
+    amd_link_coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "amd_link_server.png"))
+    resolution_coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "stream_resolution.png"))
+
+    field_width = (resolution_coords[0] - amd_link_coords[0]) / 2
+
+    # select Resolution
+    set_dropdown_option(case, field_width, "stream_resolution", "resolution")
+
+    # select Video Encoding
+    set_dropdown_option(case, field_width, "video_encoding_type", "encoding_type")
+
+    # configure Accept All Connections option
+    set_dropdown_option(case, field_width, "accept_all_connections", "accept_all_connections")
+
+    # configure Use Encryption option
+    set_dropdown_option(case, field_width, "use_encryption", "use_encryption")
+
+
+def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=None):
     if execution_type == "server":
         try:
             pyautogui.hotkey("alt", "tab")
@@ -64,7 +111,7 @@ def start_streaming_amd_link(execution_type, socket):
             script_path = "C:\\JN\\Adrenalin.lnk"
             process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
 
-            # wait AMD Adrenaline window opening
+            # wait AMD Adrenalin window opening
             for i in range(10):
                 try:
                     utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "adrenalin_icon.png"))
@@ -72,7 +119,19 @@ def start_streaming_amd_link(execution_type, socket):
                 except:
                     sleep(1)
             else:
-                raise Exception("Adrenaline tool window wasn't found")
+                raise Exception("Adrenalin tool window wasn't found")
+
+            window_hwnd = None
+
+            for window in pyautogui.getAllWindows():
+                if "AMD Software: Adrenalin" in window.title:
+                    window_hwnd = window._hWnd
+                    break
+
+            if not window_hwnd:
+                raise Exception("Adrenalin tool window wasn't found")
+
+            win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
 
             try:
                 utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "home_active.png"))
@@ -83,11 +142,18 @@ def start_streaming_amd_link(execution_type, socket):
                 # AMD Link tab is already active
                 pass
 
+            try:
+                # open enable AMD Link if it's required
+                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "enable_amd_link.png"))
+                utils.click_on_center_of(coords)
+            except:
+                pass
+
             # receive game invite link
             coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "link_game_invite_server.png"), delay=1)
             utils.click_on_center_of(coords)
 
-            coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "full_access.png"), delay=1)
+            coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", f"{case['server_params']['streaming_mode']}.png"), delay=1)
             # first click - make full acess active, second click - select full access, third click - click on code to display copy button + one additional click (sometimes first click not work)
             for i in range(4):
                 utils.click_on_center_of(coords)
@@ -103,6 +169,14 @@ def start_streaming_amd_link(execution_type, socket):
             win32clipboard.OpenClipboard()
             invite_code = win32clipboard.GetClipboardData()
             win32clipboard.CloseClipboard()
+
+            set_adrenalin_params(case)
+
+            if debug_screen_path:
+                # save debug screen
+                screen = pyscreenshot.grab()
+                screen = screen.convert("RGB")
+                screen.save(debug_screen_path)
 
             socket.send(invite_code.encode("utf-8"))
         except Exception as e:

@@ -4,7 +4,7 @@
         "status": "active",
         "server_params": {
             "resolution": "720p",
-            "encoding_type": "h.264",
+            "encoding_type": "avc",
             "use_encryption": true,
             "accept_all_connections": false,
             "streaming_mode": "multi_play"
