@@ -233,7 +233,8 @@ def save_results(args, case, cases, execution_time = 0.0, test_case_status = "",
 
         test_case_report["message"] = test_case_report["message"] + list(error_messages)
 
-        test_case_report["keys"] = case["prepared_keys"]
+        if args.streaming_type != StreamingType.AMD_LINK:
+            test_case_report["keys"] = case["prepared_keys"]
 
         if test_case_report["test_status"] in ["passed", "observed", "error"]:
             test_case_report["group_timeout_exceeded"] = False

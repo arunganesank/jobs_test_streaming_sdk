@@ -110,7 +110,7 @@ def start_client_side_tests(args, case, process, last_log_line, audio_device_nam
                     actions = json.load(common_actions_file)[actions_key]
 
             # Replacing record_video command to record_audio
-            if "-microphone true" in case["server_keys"].lower():
+            if "server_keys" in case and "-microphone true" in case["server_keys"].lower():
                 for i in range(len(actions)):
                     if "record_video" in actions[i]:
                         if "-audiofile" in case["server_keys"].lower():
