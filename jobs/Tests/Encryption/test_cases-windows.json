@@ -8,7 +8,9 @@
         "start_first": "server",
         "max_clients": 1,
         "script_info": [
-            "Launch server and client using Simple Encryption",
+            "Default settings",
+            "Server: Simple Encryption",
+            "Client: Simple Encryption",
             "Expected result: Client side will be receiving image from Server in real time"
         ]
     },
@@ -21,7 +23,9 @@
         "start_first": "server",
         "max_clients": 1,
         "script_info": [
-            "Launch server and client using AES Encryption Passphrase",
+            "Default settings",
+            "Server: AES Encryption",
+            "Client: AES Encryption correct Passphrase",
             "Expected result: Client side will be receiving image from Server in real time"
         ]
     },
@@ -34,9 +38,10 @@
         "start_first": "server",
         "max_clients": 1,
         "expected_connection_problems": ["client"],
-        "ignore_encryption_check": true,
         "script_info": [
-            "Launch server and client using AES Encryption Wrong Passphrase",
+            "Default settings",
+            "Server: AES Encryption",
+            "Client: AES Encryption wrong Passphrase",
             "Expected result: Client side will not connect to Server"
         ]
     },
@@ -48,7 +53,9 @@
         "second_client_keys": "-Fullscreen true -Encrypt SIMPLE",
         "start_first": "server",
         "script_info": [
-            "Launch server with encryption and 2 clients both with encryption",
+            "Server: Simple Encryption",
+            "Client 1: Simple Encryption",
+            "Client 2: Simple Encryption",
             "Expected result: All Clients will be receiving image from Server in real time"
         ]
     },
@@ -61,7 +68,9 @@
         "start_first": "server",
         "expected_connection_problems": ["second_client"],
         "script_info": [
-            "Launch server with encryption and 2 clients (one with encryption and one without)",
+            "Server: Simple Encryption",
+            "Client 1: Simple Encryption",
+            "Client 2: without Encryption",
             "Expected result: Only the first Client will connect to server"
         ]
     },
@@ -74,7 +83,9 @@
         "start_first": "server",
         "expected_connection_problems": ["server", "client", "second_client"],
         "script_info": [
-            "Launch server with encryption and 2 clients both without encryption",
+            "Server: Simple Encryption",
+            "Client 1: without Encryption",
+            "Client 2: without Encryption",
             "Expected result: All Clients will not connect to Server"
         ]
     },
@@ -86,9 +97,10 @@
         "second_client_keys": "-Fullscreen true",
         "start_first": "server",
         "expected_connection_problems": ["client"],
-        "ignore_encryption_check": true,
         "script_info": [
-            "Launch server without encryption and 2 clients (one with encryption and one without)",
+            "Server: without Encryption",
+            "Client 1: Simple Encryption",
+            "Client 2: without Encryption",
             "Expected result: Only the second Client will connect to server"
         ]
     },
@@ -97,13 +109,13 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt AES -Pass \"test\" -Protocol udp",
         "client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
-        "second_client_keys": "-Fullscreen true -Encrypt AES -Pass \"fail\"",
+        "second_client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
         "start_first": "server",
-        "expected_connection_problems": ["second_client"],
-        "ignore_encryption_check": true,
         "script_info": [
-            "Launch server with encryption and 2 clients both with encryption (one with correct passphrase and one with wrong)",
-            "Expected result: Only the first Client will connect to server"
+            "Server: AES Encryption",
+            "Client 1: AES Encryption correct Passphrase",
+            "Client 2: AES Encryption correct Passphrase",
+            "Expected result: All Clients will connect to Server"
         ]
     },
     {
@@ -111,16 +123,33 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt AES -Pass \"test\" -Protocol udp",
         "client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
-        "second_client_keys": "-Fullscreen true -Encrypt SIMPLE",
+        "second_client_keys": "-Fullscreen true -Encrypt AES -Pass \"fail\"",
         "start_first": "server",
         "expected_connection_problems": ["second_client"],
         "script_info": [
-            "Launch server with encryption and 2 clients both with encryption (one with correct passphrase and one with Simple encryption)",
+            "Server: AES Encryption",
+            "Client 1: AES Encryption correct Passphrase",
+            "Client 2: AES Encryption wrong Passphrase",
             "Expected result: Only the first Client will connect to server"
         ]
     },
     {
         "case": "STR_ECR_010",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt AES -Pass \"test\" -Protocol udp",
+        "client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
+        "second_client_keys": "-Fullscreen true -Encrypt SIMPLE",
+        "start_first": "server",
+        "expected_connection_problems": ["second_client"],
+        "script_info": [
+            "Server: AES Encryption",
+            "Client 1: AES Encryption correct Passphrase",
+            "Client 2: Simple Encryption",
+            "Expected result: Only the first Client will connect to server"
+        ]
+    },
+    {
+        "case": "STR_ECR_011",
         "status": "active",
         "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Protocol udp",
         "client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
@@ -128,12 +157,14 @@
         "start_first": "server",
         "expected_connection_problems": ["server", "client", "second_client"],
         "script_info": [
-            "Launch server with encryption and 2 clients both with encryption (one with correct passphrase and one with Simple encryption)",
+            "Server: without Encryption",
+            "Client 1: AES Encryption correct Passphrase",
+            "Client 2: Simple Encryption",
             "Expected result: All Clients will not connect to Server"
         ]
     },
     {
-        "case": "STR_ECR_011",
+        "case": "STR_ECR_012",
         "status": "active",
         "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Encrypt SIMPLE -Protocol tcp",
         "client_keys": "-Fullscreen true -Encrypt SIMPLE",
@@ -141,20 +172,9 @@
         "start_first": "server",
         "max_clients": 1,
         "script_info": [
-            "Launch server and client using Simple Encryption",
-            "Expected result: Client side will be receiving image from Server in real time"
-        ]
-    },
-    {
-        "case": "STR_ECR_012",
-        "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Encrypt AES -Pass \"Test\" -Protocol tcp",
-        "client_keys": "-Fullscreen true -Encrypt AES -Pass \"Test\"",
-        "second_client_keys": "",
-        "start_first": "server",
-        "max_clients": 1,
-        "script_info": [
-            "Launch server and client using AES Encryption Passphrase",
+            "Default settings",
+            "Server: Simple Encryption",
+            "Client: Simple Encryption",
             "Expected result: Client side will be receiving image from Server in real time"
         ]
     },
@@ -162,27 +182,31 @@
         "case": "STR_ECR_013",
         "status": "active",
         "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Encrypt AES -Pass \"Test\" -Protocol tcp",
-        "client_keys": "-Fullscreen true -Encrypt AES -Pass \"NotTest\"",
+        "client_keys": "-Fullscreen true -Encrypt AES -Pass \"Test\"",
         "second_client_keys": "",
         "start_first": "server",
         "max_clients": 1,
-        "expected_connection_problems": ["client"],
-        "ignore_encryption_check": true,
         "script_info": [
-            "Launch server and client using AES Encryption Wrong Passphrase",
-            "Expected result: Client side will not connect to Server"
+            "Default settings",
+            "Server: AES Encryption",
+            "Client: AES Encryption correct Passphrase",
+            "Expected result: Client side will be receiving image from Server in real time"
         ]
     },
     {
         "case": "STR_ECR_014",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt SIMPLE -Protocol tcp",
-        "client_keys": "-Fullscreen true -Encrypt SIMPLE",
-        "second_client_keys": "-Fullscreen true -Encrypt SIMPLE",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Encrypt AES -Pass \"Test\" -Protocol tcp",
+        "client_keys": "-Fullscreen true -Encrypt AES -Pass \"NotTest\"",
+        "second_client_keys": "",
         "start_first": "server",
+        "max_clients": 1,
+        "expected_connection_problems": ["client"],
         "script_info": [
-            "Launch server with encryption and 2 clients both with encryption",
-            "Expected result: All Clients will be receiving image from Server in real time"
+            "Default settings",
+            "Server: AES Encryption",
+            "Client: AES Encryption wrong Passphrase",
+            "Expected result: Client side will not connect to Server"
         ]
     },
     {
@@ -190,16 +214,32 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt SIMPLE -Protocol tcp",
         "client_keys": "-Fullscreen true -Encrypt SIMPLE",
-        "second_client_keys": "-Fullscreen true",
+        "second_client_keys": "-Fullscreen true -Encrypt SIMPLE",
         "start_first": "server",
-        "expected_connection_problems": ["second_client"],
         "script_info": [
-            "Launch server with encryption and 2 clients (one with encryption and one without)",
-            "Expected result: Only the first Client will connect to server"
+            "Server: Simple Encryption",
+            "Client 1: Simple Encryption",
+            "Client 2: Simple Encryption",
+            "Expected result: All Clients will be receiving image from Server in real time"
         ]
     },
     {
         "case": "STR_ECR_016",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt SIMPLE -Protocol tcp",
+        "client_keys": "-Fullscreen true -Encrypt SIMPLE",
+        "second_client_keys": "-Fullscreen true",
+        "start_first": "server",
+        "expected_connection_problems": ["second_client"],
+        "script_info": [
+            "Server: Simple Encryption",
+            "Client 1: Simple Encryption",
+            "Client 2: without Encryption",
+            "Expected result: Only the first Client will connect to server"
+        ]
+    },
+    {
+        "case": "STR_ECR_017",
         "status": "active",
         "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt SIMPLE -Protocol tcp",
         "client_keys": "-Fullscreen true",
@@ -207,36 +247,25 @@
         "start_first": "server",
         "expected_connection_problems": ["server", "client", "second_client"],
         "script_info": [
-            "Launch server with encryption and 2 clients both without encryption",
+            "Server: Simple Encryption",
+            "Client 1: without Encryption",
+            "Client 2: without Encryption",
             "Expected result: All Clients will not connect to Server"
         ]
     },
     {
-        "case": "STR_ECR_017",
+        "case": "STR_ECR_018",
         "status": "active",
         "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Protocol tcp",
         "client_keys": "-Fullscreen true -Encrypt SIMPLE",
         "second_client_keys": "-Fullscreen true",
         "start_first": "server",
         "expected_connection_problems": ["client"],
-        "ignore_encryption_check": true,
         "script_info": [
-            "Launch server without encryption and 2 clients (one with encryption and one without)",
+            "Server: without Encryption",
+            "Client 1: Simple Encryption",
+            "Client 2: without Encryption",
             "Expected result: Only the second Client will connect to server"
-        ]
-    },
-    {
-        "case": "STR_ECR_018",
-        "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt AES -Pass \"test\" -Protocol tcp",
-        "client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
-        "second_client_keys": "-Fullscreen true -Encrypt AES -Pass \"fail\"",
-        "start_first": "server",
-        "expected_connection_problems": ["second_client"],
-        "ignore_encryption_check": true,
-        "script_info": [
-            "Launch server with encryption and 2 clients both with encryption (one with correct passphrase and one with wrong)",
-            "Expected result: Only the first Client will connect to server"
         ]
     },
     {
@@ -244,16 +273,47 @@
         "status": "active",
         "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt AES -Pass \"test\" -Protocol tcp",
         "client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
-        "second_client_keys": "-Fullscreen true -Encrypt SIMPLE",
+        "second_client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
         "start_first": "server",
-        "expected_connection_problems": ["second_client"],
         "script_info": [
-            "Launch server with encryption and 2 clients both with encryption (one with correct passphrase and one with Simple encryption)",
-            "Expected result: Only the first Client will connect to server"
+            "Server: AES Encryption",
+            "Client 1: AES Encryption correct Passphrase",
+            "Client 2: AES Encryption correct Passphrase",
+            "Expected result: All Clients will connect to Server"
         ]
     },
     {
         "case": "STR_ECR_020",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt AES -Pass \"test\" -Protocol tcp",
+        "client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
+        "second_client_keys": "-Fullscreen true -Encrypt AES -Pass \"fail\"",
+        "start_first": "server",
+        "expected_connection_problems": ["second_client"],
+        "script_info": [
+            "Server: AES Encryption",
+            "Client 1: AES Encryption correct Passphrase",
+            "Client 2: AES Encryption wrong Passphrase",
+            "Expected result: Only the first Client will connect to server"
+        ]
+    },
+    {
+        "case": "STR_ECR_021",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Encrypt AES -Pass \"test\" -Protocol tcp",
+        "client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
+        "second_client_keys": "-Fullscreen true -Encrypt SIMPLE",
+        "start_first": "server",
+        "expected_connection_problems": ["second_client"],
+        "script_info": [
+            "Server: AES Encryption",
+            "Client 1: AES Encryption correct Passphrase",
+            "Client 2: Simple Encryption",
+            "Expected result: Only the first Client will connect to server"
+        ]
+    },
+    {
+        "case": "STR_ECR_022",
         "status": "active",
         "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -MAXUSERS 2 -Protocol tcp",
         "client_keys": "-Fullscreen true -Encrypt AES -Pass \"test\"",
@@ -261,7 +321,9 @@
         "start_first": "server",
         "expected_connection_problems": ["server", "client", "second_client"],
         "script_info": [
-            "Launch server with encryption and 2 clients both with encryption (one with correct passphrase and one with Simple encryption)",
+            "Server: without Encryption",
+            "Client 1: AES Encryption correct Passphrase",
+            "Client 2: Simple Encryption",
             "Expected result: All Clients will not connect to Server"
         ]
     }
