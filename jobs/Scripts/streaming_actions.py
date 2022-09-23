@@ -28,7 +28,7 @@ class StreamingType(Enum):
     WEB = 3
 
 
-def start_streaming(execution_type, streaming_type=StreamingType.SDK, script_path=None, case=case, socket=None, debug_screen_path=None):
+def start_streaming(execution_type, streaming_type=StreamingType.SDK, script_path=None, case=None, socket=None, debug_screen_path=None):
     main_logger.info("Start StreamingSDK {}".format(execution_type))
 
     if streaming_type == StreamingType.SDK:
