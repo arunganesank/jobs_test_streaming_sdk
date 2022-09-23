@@ -381,7 +381,7 @@ def execute_tests(args):
                         if "start_first" in case and case["start_first"] == "server":
                             if process is None:
                                 main_logger.info("Start Streaming SDK server instance")
-                                process = start_streaming("server", server_script_path)
+                                process = start_streaming("server", script_path=server_script_path)
                                 sleep(5)
 
                         if client_closed:
@@ -394,7 +394,7 @@ def execute_tests(args):
                         # start server after client
                         if "start_first" not in case or case["start_first"] == "client":
                             main_logger.info("Start Streaming SDK server instance")
-                            process = start_streaming("server", server_script_path)
+                            process = start_streaming("server", script_path=server_script_path)
 
                     main_logger.info("Finish action execution\n\n\n")
 

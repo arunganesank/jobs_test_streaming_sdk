@@ -314,7 +314,7 @@ def execute_tests(args, current_conf):
             # TODO: extend max_clients param (consider all existing clients)
             if "-MAXUSERS 1" not in case["server_keys"] and not ("max_clients" in case and case["max_clients"] == 1):
                 if process is None:
-                    process = start_streaming("second_client", script_path)
+                    process = start_streaming("second_client", script_path=script_path)
 
             pyscreenshot.grab()
             pyautogui.click(x=400, y=800)

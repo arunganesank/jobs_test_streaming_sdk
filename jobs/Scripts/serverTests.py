@@ -76,7 +76,7 @@ MULTICONNECTION_ACTIONS_MAPPING = {
 
 # Server receives commands from client and executes them
 # Server doesn't decide to retry case or do next test case. Exception: fail on server side which generates abort on server side
-def start_server_side_tests(args, case, process, android_client_closed, script_path, last_log_line, current_try, error_messages):
+def start_server_side_tests(args, case, process, android_client_closed, last_log_line, current_try, error_messages, script_path=None):
     output_path = os.path.join(args.output, "Color")
 
     screen_path = os.path.join(output_path, case["case"])
@@ -295,7 +295,7 @@ def start_server_side_tests(args, case, process, android_client_closed, script_p
 
             json_content["message"] = json_content["message"] + list(error_messages)
 
-            analyze_logs(args.output, json_content, case)
+            analyze_logs(args.output, json_content, case, streaming_type=args.streaming_type)
 
             if args.test_group in MC_CONFIG["android_client"]:
                 analyze_logs(args.output, json_content, case, execution_type="android_client")

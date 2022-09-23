@@ -428,7 +428,7 @@ class StartStreaming(Action):
 
             if self.process is None:
                 should_collect_traces = (self.args.collect_traces == "BeforeTests")
-                self.process = start_streaming(self.args.execution_type, self.script_path, streaming_type=self.args.streaming_type, socket=self.sock)
+                self.process = start_streaming(self.args.execution_type, streaming_type=self.args.streaming_type, script_path=self.script_path, socket=self.sock)
 
                 if should_collect_traces:
                     collect_traces(self.archive_path, self.archive_name + "_client.zip")
@@ -439,7 +439,7 @@ class StartStreaming(Action):
             if "start_first" not in self.case or self.case["start_first"] != "server":
                 if self.process is None:
                     should_collect_traces = (self.args.collect_traces == "BeforeTests")
-                    self.process = start_streaming(self.args.execution_type, self.script_path, streaming_type=self.args.streaming_type)
+                    self.process = start_streaming(self.args.execution_type, streaming_type=self.args.streaming_type, script_path=self.script_path)
 
                     if should_collect_traces:
                         collect_traces(self.archive_path, self.archive_name + "_client.zip")
@@ -454,7 +454,7 @@ class StartStreaming(Action):
             if "start_first" in self.case and self.case["start_first"] == "server":
                 if self.process is None:
                     should_collect_traces = (self.args.collect_traces == "BeforeTests")
-                    self.process = start_streaming(self.args.execution_type, self.script_path, streaming_type=self.args.streaming_type)
+                    self.process = start_streaming(self.args.execution_type, streaming_type=self.args.streaming_typ, script_path=self.script_path)
 
                     if should_collect_traces:
                         collect_traces(self.archive_path, self.archive_name + "_client.zip")

@@ -52,7 +52,7 @@ ACTIONS_MAPPING = {
 # Client reads list of actions and executes them one by one.
 # It sends actions which must be executed on server to it.
 # Also client does screenshots and records video.
-def start_client_side_tests(args, case, process, script_path, last_log_line, audio_device_name, current_try, error_messages):
+def start_client_side_tests(args, case, process, last_log_line, audio_device_name, current_try, error_messages, script_path=None):
     output_path = os.path.join(args.output, "Color")
 
     screen_path = os.path.join(output_path, case["case"])
@@ -157,7 +157,7 @@ def start_client_side_tests(args, case, process, script_path, last_log_line, aud
                 params["command"] = command
                 params["arguments_line"] = arguments_line
 
-                # find necessary command and execute it
+                # find necessary command and execute itd
                 if command in ACTIONS_MAPPING:
                     command_object = ACTIONS_MAPPING[command](sock, params, instance_state, main_logger)
                     command_object.do_action()
@@ -203,7 +203,7 @@ def start_client_side_tests(args, case, process, script_path, last_log_line, aud
 
             json_content["message"] = json_content["message"] + list(error_messages)
 
-            analyze_logs(args.output, json_content, case, execution_type="windows_client")
+            analyze_logs(args.output, json_content, case, execution_type="windows_client", streaming_type=args.streaming_type)
 
             # execute iperf if it's necessary
             main_logger.info("Send iperf command")

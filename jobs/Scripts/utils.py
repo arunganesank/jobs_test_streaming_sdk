@@ -18,6 +18,7 @@ import platform
 from threading import Thread
 from PIL import Image
 from grayArtifacts import check_artifacts
+from streaming_actions import StreamingType
 
 if platform.system() == "Windows":
     import win32api
@@ -147,6 +148,10 @@ def close_android_app(case=None, multiconnection=False):
 
 
 def save_logs(args, case, last_log_line, current_try, is_multiconnection=False):
+    if args.streaming_type == StreamingType.AMD_LINK:
+        # TODO: AMD Link logs not supported yet
+        return None
+
     try:
         if not is_multiconnection:
             if hasattr(args, "execution_type"):

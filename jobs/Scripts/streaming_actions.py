@@ -27,10 +27,13 @@ class StreamingType(Enum):
     WEB = 3
 
 
-def start_streaming(execution_type, script_path, streaming_type=StreamingType.SDK, socket=None):
+def start_streaming(execution_type, streaming_type=StreamingType.SDK, script_path=None, socket=None):
     main_logger.info("Start StreamingSDK {}".format(execution_type))
 
     if streaming_type == StreamingType.SDK:
+        if not script_path:
+            raise ValueError("Script path is required to launch Streaming SDK")
+
         return start_streaming_sdk(execution_type, script_path)
     elif streaming_type == StreamingType.AMD_LINK:
         if not socket:
