@@ -16,7 +16,7 @@ from instance_state import ServerInstanceState
 from server_actions import *
 import android_actions
 from analyzeLogs import analyze_logs
-from streaming_actions import close_streaming
+from streaming_actions import close_streaming, StreamingType
 
 if platform.system() == "Windows":
     import pydirectinput
@@ -179,7 +179,8 @@ def start_server_side_tests(args, case, process, android_client_closed, last_log
             params["client_type"] = "android"
             params["messages"] = error_messages
             params["client_address"] = address[0]
-            params["transport_protocol"] = getTransportProtocol(case)
+            if args.streaming_type != StreamingType.AMD_LINK:
+                params["transport_protocol"] = getTransportProtocol(case)
             params["script_path"] = script_path
             params["process"] = process
             params["android_client_closed"] = android_client_closed

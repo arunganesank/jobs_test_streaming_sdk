@@ -12,7 +12,7 @@ from utils import *
 from subprocess import PIPE, STDOUT
 import json
 from analyzeLogs import analyze_logs
-from streaming_actions import close_streaming
+from streaming_actions import close_streaming, StreamingType
 
 sys.path.append(os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir)))
@@ -130,7 +130,8 @@ def start_client_side_tests(args, case, process, last_log_line, audio_device_nam
             params["game_name"] = game_name
             params["client_type"] = "win_client"
             params["messages"] = error_messages
-            params["transport_protocol"] = getTransportProtocol(case)
+            if args.streaming_type != StreamingType.AMD_LINK:
+                params["transport_protocol"] = getTransportProtocol(case)
             params["script_path"] = script_path
             params["process"] = process
             params["case_json_path"] = os.path.join(args.output, case["case"] + CASE_REPORT_SUFFIX)

@@ -139,7 +139,7 @@ def prepare_empty_reports(args, current_conf):
             test_case_report['test_case'] = case['case']
             test_case_report['render_device'] = get_gpu() if args.server_gpu_name == "none" else args.server_gpu_name
 
-            if case['status'] == 'skipped' and args.streaming_type != StreamingType.SDK:
+            if case['status'] == 'skipped' and args.streaming_type != StreamingType.AMD_LINK:
                 prepared_keys = prepare_keys(args, case)
 
                 if args.execution_type == "server":
