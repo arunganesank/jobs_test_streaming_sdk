@@ -59,7 +59,7 @@ def start_streaming_sdk(execution_type, script_path):
 def set_dropdown_option(case, field_width, label_image_name, param_name):
     label_coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", f"{label_image_name}.png"))
     pyautogui.click(label_coords[0] + field_width, label_coords[1] + label_coords[3] / 2)
-    coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", f"resolution_{case['server_params'][param_name]}.png"))
+    coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", f"{case['server_params'][param_name]}.png"))
     utils.click_on_center_of(coords)
 
 
