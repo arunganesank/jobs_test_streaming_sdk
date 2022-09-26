@@ -166,6 +166,12 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
             coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "close_invite_code_window.png"), delay=1)
             utils.click_on_center_of(coords)
 
+            try:
+                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming_button.png"), delay=1)
+                utils.click_on_center_of(coords)
+            except:
+                pass
+
             win32clipboard.OpenClipboard()
             invite_code = win32clipboard.GetClipboardData()
             win32clipboard.CloseClipboard()
@@ -324,6 +330,12 @@ def close_streaming_amd_link(execution_type, case, process, tool_path=None):
 
             script_path = "C:\\JN\\Adrenalin.lnk"
             process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
+
+            try:
+                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "stop_streaming_button.png"), delay=1)
+                utils.click_on_center_of(coords)
+            except:
+                pass
 
             # click on pc name and select disconnect
             coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "pc_icon.png"), delay=1)
