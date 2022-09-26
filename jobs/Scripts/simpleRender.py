@@ -139,18 +139,21 @@ def prepare_empty_reports(args, current_conf):
             test_case_report['test_case'] = case['case']
             test_case_report['render_device'] = get_gpu() if args.server_gpu_name == "none" else args.server_gpu_name
 
-            if case['status'] == 'skipped' and args.streaming_type != StreamingType.AMD_LINK:
-                prepared_keys = prepare_keys(args, case)
+            if case['status'] == 'skipped':
+                if args.streaming_type != StreamingType.AMD_LINK:
+                    prepared_keys = prepare_keys(args, case)
 
                 if args.execution_type == "server":
-                    keys_description = "Server keys: {}".format(prepared_keys)
                     test_case_report["script_info"] = []
-                    test_case_report["script_info"].append(keys_description)
+                    if args.streaming_type != StreamingType.AMD_LINK:
+                        keys_description = "Server keys: {}".format(prepared_keys)
+                        test_case_report["script_info"].append(keys_description)
 
                 elif args.execution_type == "client":
-                    keys_description = "Client keys: {}".format(prepared_keys)
                     test_case_report['script_info'] = case['script_info']
-                    test_case_report["script_info"].append(keys_description)
+                    if args.streaming_type != StreamingType.AMD_LINK:
+                        keys_description = "Client keys: {}".format(prepared_keys)
+                        test_case_report["script_info"].append(keys_description)
             else:
                 test_case_report['script_info'] = case['script_info']
                 
@@ -381,6 +384,9 @@ def execute_tests(args, current_conf):
                     with open(script_path, "w") as f:
                         f.write(execution_script)
                 else:
+                    if args.execution_type == "server":
+                        case["script_info"] = []
+
                     script_path = None
 
                 if args.execution_type == "server":
