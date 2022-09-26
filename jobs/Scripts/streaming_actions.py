@@ -249,13 +249,14 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
             except:
                 pass
 
-            try:
-                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming.png"), delay=1)
-                utils.click_on_center_of(coords)
-            except:
-                # Start Streaming button can be hovered
-                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming_2.png"), delay=1)
-                utils.click_on_center_of(coords)
+            if case['server_params']['streaming_mode'] == 'full_access':
+                try:
+                    coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming.png"), delay=1)
+                    utils.click_on_center_of(coords)
+                except:
+                    # Start Streaming button can be hovered
+                    coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming_2.png"), delay=1)
+                    utils.click_on_center_of(coords)
 
             sleep(5)
 
