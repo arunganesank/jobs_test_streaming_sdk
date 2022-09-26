@@ -94,10 +94,10 @@ def set_adrenalin_params(case):
     set_dropdown_option(case, field_width, "video_encoding_type", "encoding_type")
 
     # configure Accept All Connections option
-    set_dropdown_option(case, field_width, "accept_all_connections", "accept_all_connections")
+    configure_boolean_option(case, field_width, "accept_all_connections", "accept_all_connections")
 
     # configure Use Encryption option
-    set_dropdown_option(case, field_width, "use_encryption", "use_encryption")
+    configure_boolean_option(case, field_width, "use_encryption", "use_encryption")
 
 
 def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=None):
