@@ -271,7 +271,7 @@
     },
     {
         "case": "STR_MCWW_025",
-        "status": "skipped",
+        "status": "active",
         "server_keys": "-extStats true -MAXUSERS 2 -Protocol udp",
         "client_keys": "",
         "second_client_keys": "-fullscreen true",
@@ -552,7 +552,7 @@
     },
     {
         "case": "STR_MCWW_050",
-        "status": "skipped",
+        "status": "active",
         "server_keys": "-extStats true -MAXUSERS 2 -Protocol tcp",
         "client_keys": "",
         "second_client_keys": "-fullscreen true",
