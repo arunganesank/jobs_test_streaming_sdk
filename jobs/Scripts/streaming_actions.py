@@ -261,8 +261,11 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
             sleep(5)
 
             # apply full screen
-            coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "apply_full_screen.png"), delay=1)
-            utils.click_on_center_of(coords)
+            try:
+                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "apply_full_screen.png"), delay=1)
+                utils.click_on_center_of(coords)
+            except:
+                pass
 
             socket.send("done".encode("utf-8"))
         except Exception as e:
