@@ -73,7 +73,7 @@
     },
     {
         "case": "STR_LQS_009",
-        "status": "skipped",
+        "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 0 -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
         "script_info": [
@@ -82,7 +82,7 @@
     },
     {
         "case": "STR_LQS_010",
-        "status": "skipped",
+        "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 0 -RateControl cbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
         "script_info": [
@@ -92,7 +92,7 @@
     },
     {
         "case": "STR_LQS_011",
-        "status": "skipped",
+        "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 0 -RateControl lvbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
         "script_info": [
@@ -312,21 +312,21 @@
     },
     {
         "case": "STR_LQS_032",
-        "status": "skipped",
-        "server_keys": "-Resolution <resolution> -Framerate 60 -extStats true -AdjustResolution true -Protocol udp",
-        "client_keys": "-Fullscreen true",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -Framerate 60 -extStats true -Protocol udp",
+        "client_keys": "-Fullscreen true -ForceDisplayFrameRate true",
         "script_info": [
-            "Adjust Resolution true"
+            "Force Display Frame Rate"
         ]
     },
     {
         "case": "STR_LQS_033",
-        "status": "skipped",
-        "server_keys": "-Resolution <resolution> -Framerate 60 -extStats true -AdjustResolution true -AdjustFramerate true -AdjustBitrate true -Protocol udp",
-        "client_keys": "-Fullscreen true",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -Framerate 90 -extStats true -Protocol udp",
+        "client_keys": "-Fullscreen true -ForceDisplayFrameRate true",
         "script_info": [
-            "Adjust Resolution true",
-            "Adjust Framerate, Bitrate false"
+            "Server Framerate 90",
+            "Force Display Frame Rate"
         ]
     },
     {
@@ -413,7 +413,7 @@
     },
     {
         "case": "STR_LQS_043",
-        "status": "skipped",
+        "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 0 -extStats true -Protocol tcp",
         "client_keys": "-Fullscreen true",
         "script_info": [
@@ -422,7 +422,7 @@
     },
     {
         "case": "STR_LQS_044",
-        "status": "skipped",
+        "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 0 -RateControl cbr -extStats true -Protocol tcp",
         "client_keys": "-Fullscreen true",
         "script_info": [
@@ -432,7 +432,7 @@
     },
     {
         "case": "STR_LQS_045",
-        "status": "skipped",
+        "status": "active",
         "server_keys": "-Resolution <resolution> -Framerate 0 -RateControl lvbr -extStats true -Protocol tcp",
         "client_keys": "-Fullscreen true",
         "script_info": [
@@ -486,7 +486,7 @@
         "client_keys": "-Fullscreen true",
         "script_info": [
             "Framerate 60",
-            "CBR"
+            "LVBR"
         ]
     },
     {
@@ -652,29 +652,30 @@
     },
     {
         "case": "STR_LQS_066",
-        "status": "skipped",
-        "server_keys": "-Resolution <resolution> -Framerate 60 -extStats true -AdjustResolution true -Protocol tcp",
-        "client_keys": "-Fullscreen true",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -Framerate 60 -extStats true -Protocol tcp",
+        "client_keys": "-Fullscreen true -ForceDisplayFrameRate true",
         "script_info": [
-            "Adjust Resolution true"
+            "Force Display Frame Rate"
         ]
     },
     {
         "case": "STR_LQS_067",
-        "status": "skipped",
-        "server_keys": "-Resolution <resolution> -Framerate 60 -extStats true -AdjustResolution true -AdjustFramerate true -AdjustBitrate true -Protocol tcp",
-        "client_keys": "-Fullscreen true",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -Framerate 90 -extStats true -Protocol tcp",
+        "client_keys": "-Fullscreen true -ForceDisplayFrameRate true",
         "script_info": [
-            "Adjust Resolution true",
-            "Adjust Framerate, Bitrate false"
+            "Server Framerate 90",
+            "Force Display Frame Rate"
         ]
     },
     {
         "case": "STR_LQS_068",
         "status": "active",
-        "server_keys": "-Resolution <resolution> -extStats true -CapFPS true -Protocol tcp",
+        "server_keys": "-Resolution <resolution> -Framerate 100 -extStats true -CapFPS true -Protocol tcp",
         "client_keys": "-Fullscreen true",
         "script_info": [
+            "Server Framerate 100",
             "CapFPS true"
         ]
     }
