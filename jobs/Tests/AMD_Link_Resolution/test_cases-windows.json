@@ -61,7 +61,7 @@
     },
     {
         "case": "LNK_RN_005",
-        "status": "active",
+        "status": "skipped",
         "server_params": {
             "resolution": "2K",
             "encoding_type": "avc",
@@ -76,7 +76,7 @@
     },
     {
         "case": "LNK_RN_006",
-        "status": "active",
+        "status": "skipped",
         "server_params": {
             "resolution": "2K",
             "encoding_type": "hevc",
@@ -91,7 +91,7 @@
     },
     {
         "case": "LNK_RN_007",
-        "status": "active",
+        "status": "skipped",
         "server_params": {
             "resolution": "4K",
             "encoding_type": "avc",
@@ -106,7 +106,7 @@
     },
     {
         "case": "LNK_RN_008",
-        "status": "active",
+        "status": "skipped",
         "server_params": {
             "resolution": "4K",
             "encoding_type": "hevc",
