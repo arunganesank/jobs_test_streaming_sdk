@@ -63,14 +63,14 @@
         "case": "LNK_RN_005",
         "status": "active",
         "server_params": {
-            "resolution": "1440p",
+            "resolution": "2K",
             "encoding_type": "avc",
             "use_encryption": true,
             "accept_all_connections": false,
             "streaming_mode": "multi_play"
         },
         "script_info": [
-            "1440p",
+            "2K",
             "H.264"
         ]
     },
@@ -78,14 +78,44 @@
         "case": "LNK_RN_006",
         "status": "active",
         "server_params": {
-            "resolution": "1440p",
+            "resolution": "2K",
             "encoding_type": "hevc",
             "use_encryption": true,
             "accept_all_connections": false,
             "streaming_mode": "multi_play"
         },
         "script_info": [
-            "1440p",
+            "2K",
+            "H.265"
+        ]
+    },
+    {
+        "case": "LNK_RN_007",
+        "status": "active",
+        "server_params": {
+            "resolution": "4K",
+            "encoding_type": "avc",
+            "use_encryption": true,
+            "accept_all_connections": false,
+            "streaming_mode": "multi_play"
+        },
+        "script_info": [
+            "4K",
+            "H.264"
+        ]
+    },
+    {
+        "case": "LNK_RN_008",
+        "status": "active",
+        "server_params": {
+            "resolution": "4K",
+            "encoding_type": "hevc",
+            "use_encryption": true,
+            "accept_all_connections": false,
+            "streaming_mode": "multi_play"
+        },
+        "script_info": [
+            "4K",
             "H.265"
         ]
     }
