@@ -174,7 +174,7 @@
         "server_keys": "-Resolution <resolution> -Framerate 90 -RateControl lvbr -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
         "script_info": [
-            "Framerate 60",
+            "Framerate 90",
             "LVBR"
         ]
     },
@@ -486,7 +486,7 @@
         "client_keys": "-Fullscreen true",
         "script_info": [
             "Framerate 60",
-            "CBR"
+            "LVBR"
         ]
     },
     {
