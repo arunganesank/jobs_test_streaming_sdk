@@ -166,7 +166,9 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
             coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "close_invite_code_window.png"), delay=1)
             utils.click_on_center_of(coords)
 
-            sleep(3)
+            sleep(1)
+            pyautogui.moveTo(10, 10)
+            sleep(2)
 
             coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming_button.png"), delay=1)
             utils.click_on_center_of(coords)
