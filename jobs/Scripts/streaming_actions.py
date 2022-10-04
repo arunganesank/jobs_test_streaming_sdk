@@ -166,11 +166,10 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
             coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "close_invite_code_window.png"), delay=1)
             utils.click_on_center_of(coords)
 
-            try:
-                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming_button.png"), delay=1)
-                utils.click_on_center_of(coords)
-            except:
-                pass
+            sleep(3)
+
+            coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming_button.png"), delay=1)
+            utils.click_on_center_of(coords)
 
             win32clipboard.OpenClipboard()
             invite_code = win32clipboard.GetClipboardData()
