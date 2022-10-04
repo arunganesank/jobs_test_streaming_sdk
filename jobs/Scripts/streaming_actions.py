@@ -333,10 +333,12 @@ def close_streaming_amd_link(execution_type, case, process, tool_path=None):
             pyautogui.hotkey("alt", "tab")
             sleep(1)
             pyautogui.hotkey("win", "m")
-            sleep(5)
+            sleep(3)
 
             script_path = "C:\\JN\\Adrenalin.lnk"
             process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
+
+            sleep(3)
 
             try:
                 coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "stop_streaming_button.png"), delay=1)
