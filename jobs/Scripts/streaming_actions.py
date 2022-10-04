@@ -329,15 +329,13 @@ def close_streaming_amd_link(execution_type, case, process, tool_path=None):
         main_logger.info("Start closing") 
 
         if execution_type == "server":
-            pyautogui.hotkey("alt", "tab")
-            sleep(1)
-            pyautogui.hotkey("win", "m")
-            sleep(3)
-
-            script_path = "C:\\JN\\Adrenalin.lnk"
-            process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
-
-            sleep(3)
+            # sometimes game can't be minizimed during streaming. try to do it two times
+            for i in range(2)
+                pyautogui.hotkey("alt", "tab")
+                sleep(2)
+                script_path = "C:\\JN\\Adrenalin.lnk"
+                process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
+                sleep(2)
 
             try:
                 coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "stop_streaming_button.png"), delay=1)
