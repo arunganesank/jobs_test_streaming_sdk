@@ -332,7 +332,7 @@ def close_streaming_amd_link(execution_type, case, process, tool_path=None):
 
         if execution_type == "server":
             # sometimes game can't be minizimed during streaming. try to do it two times
-            for i in range(2)
+            for i in range(2):
                 pyautogui.hotkey("alt", "tab")
                 sleep(2)
                 script_path = "C:\\JN\\Adrenalin.lnk"
