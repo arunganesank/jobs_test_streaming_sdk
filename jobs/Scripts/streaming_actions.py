@@ -149,43 +149,60 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
             except:
                 pass
 
-            # receive game invite link
-            coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "link_game_invite_server.png"), delay=1)
-            utils.click_on_center_of(coords)
+            try:
+                utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "stop_streaming_button.png"), delay=1)
+                server_already_started = True
+            except:
+                server_already_started = False
 
-            coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", f"{case['server_params']['streaming_mode']}.png"), delay=1)
-            # first click - make full acess active, second click - select full access, third click - click on code to display copy button + one additional click (sometimes first click not work)
-            for i in range(4):
+            try:
+                utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "pc_icon.png"), delay=1)
+                client_already_started = True
+            except:
+                client_already_started = False
+
+            if client_already_started:
+                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming_button.png"), delay=1)
                 utils.click_on_center_of(coords)
+            else:
+                # receive game invite link
+                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "link_game_invite_server.png"), delay=1)
+                utils.click_on_center_of(coords)
+
+                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", f"{case['server_params']['streaming_mode']}.png"), delay=1)
+                # first click - make full acess active, second click - select full access, third click - click on code to display copy button + one additional click (sometimes first click not work)
+                for i in range(4):
+                    utils.click_on_center_of(coords)
+                    sleep(1)
+
+                # copy invite code and close window with it
+                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "copy_text.png"), delay=1)
+                utils.click_on_center_of(coords)
+
+                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "close_invite_code_window.png"), delay=1)
+                utils.click_on_center_of(coords)
+
                 sleep(1)
+                pyautogui.moveTo(10, 10)
+                sleep(2)
 
-            # copy invite code and close window with it
-            coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "copy_text.png"), delay=1)
-            utils.click_on_center_of(coords)
+                if not server_already_started:
+                    coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming_button.png"), delay=1)
+                    utils.click_on_center_of(coords)
 
-            coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "close_invite_code_window.png"), delay=1)
-            utils.click_on_center_of(coords)
+                    set_adrenalin_params(case)
 
-            sleep(1)
-            pyautogui.moveTo(10, 10)
-            sleep(2)
+                if debug_screen_path:
+                    # save debug screen
+                    screen = pyscreenshot.grab()
+                    screen = screen.convert("RGB")
+                    screen.save(debug_screen_path)
 
-            coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming_button.png"), delay=1)
-            utils.click_on_center_of(coords)
+                win32clipboard.OpenClipboard()
+                invite_code = win32clipboard.GetClipboardData()
+                win32clipboard.CloseClipboard()
 
-            win32clipboard.OpenClipboard()
-            invite_code = win32clipboard.GetClipboardData()
-            win32clipboard.CloseClipboard()
-
-            set_adrenalin_params(case)
-
-            if debug_screen_path:
-                # save debug screen
-                screen = pyscreenshot.grab()
-                screen = screen.convert("RGB")
-                screen.save(debug_screen_path)
-
-            socket.send(invite_code.encode("utf-8"))
+                socket.send(invite_code.encode("utf-8"))
         except Exception as e:
             socket.send("failed".encode("utf-8"))
             raise e
@@ -330,8 +347,36 @@ def close_streaming_amd_link(execution_type, case, process, tool_path=None):
         # close the current Streaming SDK process
         main_logger.info("Start closing") 
 
-        if execution_type == "client":
+        if execution_type == "server":
+            # wait closing on client
+            sleep(3)
+
+            pyautogui.hotkey("alt", "tab")
+            sleep(1)
+            pyautogui.hotkey("win", "m")
+            sleep(5)
+
+            script_path = "C:\\JN\\Adrenalin.lnk"
+            process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
+
+            window_hwnd = None
+
+            for window in pyautogui.getAllWindows():
+                if "AMD Software: Adrenalin" in window.title:
+                    window_hwnd = window._hWnd
+                    break
+
+            if not window_hwnd:
+                raise Exception("Adrenalin tool window wasn't found")
+
+            win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
+
+            coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "stop_streaming_button.png"), delay=1)
+            utils.click_on_center_of(coords)
+
+        elif execution_type == "client":
             crash_window = win32gui.FindWindow(None, "AMDLink.exe")
+            sleep(3)
 
         main_logger.info("Finish closing")
 
