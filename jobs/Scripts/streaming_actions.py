@@ -375,7 +375,7 @@ def close_streaming_amd_link(execution_type, case, process, tool_path=None):
             utils.click_on_center_of(coords)
 
         elif execution_type == "client":
-            crash_window = win32gui.FindWindow(None, "AMDLink.exe")
+            subprocess.call("taskkill /f /im AMDLink.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
             sleep(3)
 
         main_logger.info("Finish closing")
