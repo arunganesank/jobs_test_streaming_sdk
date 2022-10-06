@@ -330,48 +330,8 @@ def close_streaming_amd_link(execution_type, case, process, tool_path=None):
         # close the current Streaming SDK process
         main_logger.info("Start closing") 
 
-        if execution_type == "server":
-            pyautogui.hotkey("alt", "tab")
-            sleep(1)
-            pyautogui.hotkey("win", "m")
-            sleep(5)
-
-            script_path = "C:\\JN\\Adrenalin.lnk"
-            process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
-
-            window_hwnd = None
-
-            for window in pyautogui.getAllWindows():
-                if "AMD Software: Adrenalin" in window.title:
-                    window_hwnd = window._hWnd
-                    break
-
-            if not window_hwnd:
-                raise Exception("Adrenalin tool window wasn't found")
-
-            win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
-
-            try:
-                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "stop_streaming_button.png"), delay=1)
-                utils.click_on_center_of(coords)
-            except:
-                pass
-
-            # click on pc name and select disconnect
-            coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "pc_icon.png"), delay=1)
-            pyautogui.moveTo(coords[0] + coords[2] / 2, coords[1] + coords[3] / 2)
-
-            # activate pc icon
-            sleep(1)
-            pyautogui.click()
-            # sometimes right click doesn't open context menu, do it two times
-            sleep(1)
-            pyautogui.click(button="right")
-            sleep(1)
-            pyautogui.click(button="right")
-
-            coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "disconnect_button.png"), delay=1)
-            utils.click_on_center_of(coords)
+        if execution_type == "client":
+            crash_window = win32gui.FindWindow(None, "AMDLink.exe")
 
         main_logger.info("Finish closing")
 
