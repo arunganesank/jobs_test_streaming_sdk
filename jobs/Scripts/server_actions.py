@@ -652,18 +652,19 @@ class StartStreaming(MulticonnectionAction):
                 multiconnection_start_android(self.args.test_group)
                 sleep(5)
 
+        if self.args.streaming_type == StreamingType.AMD_LINK:
+            debug_screen_path = os.path.join(self.params["screen_path"], f"{self.case['case']}_debug.jpg")
+
+            self.process = start_streaming(self.args.execution_type, 
+                streaming_type=self.args.streaming_type, case=self.case, socket=self.sock, debug_screen_path=debug_screen_path)
+
+            make_game_foreground(self.args.game_name, self.logger)
+
         # start server
         if self.process is None:
             should_collect_traces = (self.args.collect_traces == "BeforeTests")
 
-            debug_screen_path = os.path.join(self.params["screen_path"], f"{self.case['case']}_debug.jpg")
-
-            if self.args.streaming_type == StreamingType.AMD_LINK:
-                self.process = start_streaming(self.args.execution_type, 
-                    streaming_type=self.args.streaming_type, case=self.case, socket=self.sock, debug_screen_path=debug_screen_path)
-
-                make_game_foreground(self.args.game_name, self.logger)
-            else:
+            if self.args.streaming_type != StreamingType.AMD_LINK:
                 self.process = start_streaming(self.args.execution_type, streaming_type=self.args.streaming_type, script_path=self.script_path)
 
             if self.args.test_group in mc_config["second_win_client"] or self.args.test_group in mc_config["android_client"]:
