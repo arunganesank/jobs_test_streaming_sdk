@@ -426,12 +426,11 @@ class StartStreaming(Action):
         if self.args.streaming_type == StreamingType.AMD_LINK:
             self.sock.send(self.action.encode("utf-8"))
 
-            if self.process is None:
-                should_collect_traces = (self.args.collect_traces == "BeforeTests")
-                self.process = start_streaming(self.args.execution_type, streaming_type=self.args.streaming_type, case=self.case, socket=self.sock)
+            should_collect_traces = (self.args.collect_traces == "BeforeTests")
+            self.process = start_streaming(self.args.execution_type, streaming_type=self.args.streaming_type, case=self.case, socket=self.sock)
 
-                if should_collect_traces:
-                    collect_traces(self.archive_path, self.archive_name + "_client.zip")
+            if should_collect_traces:
+                collect_traces(self.archive_path, self.archive_name + "_client.zip")
 
             self.wait_server_answer(analyze_answer = True, abort_if_fail = True)
         else:

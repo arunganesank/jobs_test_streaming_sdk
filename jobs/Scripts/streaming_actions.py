@@ -102,6 +102,8 @@ def set_adrenalin_params(case):
 
 def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=None):
     if execution_type == "server":
+        client_already_started = False
+
         try:
             pyautogui.hotkey("alt", "tab")
             sleep(1)
@@ -164,9 +166,14 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
             if client_already_started:
                 coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming_button.png"), delay=1)
                 utils.click_on_center_of(coords)
+
+                socket.send("restart".encode("utf-8"))
             else:
                 # receive game invite link
                 coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "link_game_invite_server.png"), delay=1)
+                utils.click_on_center_of(coords)
+                sleep(1)
+                # sometimes first click not work
                 utils.click_on_center_of(coords)
 
                 coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", f"{case['server_params']['streaming_mode']}.png"), delay=1)
@@ -174,6 +181,15 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
                 for i in range(4):
                     utils.click_on_center_of(coords)
                     sleep(1)
+
+                for i in range(40):
+                    try:
+                        utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", f"{case['server_params']['streaming_mode']}_fresh_link.png"))
+                        break
+                    except:
+                        sleep(1)
+                else:
+                    raise Exception("Fresh invitation code wasn't detected")
 
                 # copy invite code and close window with it
                 coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "copy_text.png"), delay=1)
@@ -234,49 +250,50 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
             script_path = "C:\\JN\\AMDLink.lnk"
             process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
 
-            # wait AMD Link window opening
-            for i in range(10):
-                try:
-                    utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "amd_link_icon.png"))
-                    break
-                except:
-                    sleep(1)
-            else:
-                raise Exception("AMD Link tool window wasn't found")
-
-            # connect to server
-            coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "connect_to_pc.png"), delay=1)
-            utils.click_on_center_of(coords)
-
-            coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "link_game_invite_client.png"), delay=1)
-            utils.click_on_center_of(coords)
-
-            # type invite code and press submit button
-            sleep(1)
-            pyautogui.write(invite_code)
-
-            coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "submit_connect.png"), delay=1)
-            utils.click_on_center_of(coords)
-
-            sleep(1)
-
-            try:
-                # skip optimizations and start streaming
-                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "skip_optimization.png"), delay=1)
+            if invite_code != "restart":
+                # wait AMD Link window opening
+                for i in range(10):
+                    try:
+                        utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "amd_link_icon.png"))
+                        break
+                    except:
+                        sleep(1)
+                else:
+                    raise Exception("AMD Link tool window wasn't found")
+                
+                # connect to server
+                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "connect_to_pc.png"), delay=1)
                 utils.click_on_center_of(coords)
-            except:
-                pass
 
-            if case['server_params']['streaming_mode'] == 'full_access':
+                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "link_game_invite_client.png"), delay=1)
+                utils.click_on_center_of(coords)
+
+                # type invite code and press submit button
+                sleep(1)
+                pyautogui.write(invite_code)
+
+                coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "submit_connect.png"), delay=1)
+                utils.click_on_center_of(coords)
+
+                sleep(1)
+
                 try:
-                    coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming.png"), delay=1)
+                    # skip optimizations and start streaming
+                    coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "skip_optimization.png"), delay=1)
                     utils.click_on_center_of(coords)
                 except:
-                    # Start Streaming button can be hovered
-                    coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming_2.png"), delay=1)
-                    utils.click_on_center_of(coords)
+                    pass
 
-            sleep(5)
+                if case['server_params']['streaming_mode'] == 'full_access':
+                    try:
+                        coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming.png"), delay=1)
+                        utils.click_on_center_of(coords)
+                    except:
+                        # Start Streaming button can be hovered
+                        coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "start_streaming_2.png"), delay=1)
+                        utils.click_on_center_of(coords)
+
+                sleep(5)
 
             # apply full screen
             try:
@@ -370,6 +387,10 @@ def close_streaming_amd_link(execution_type, case, process, tool_path=None):
                 raise Exception("Adrenalin tool window wasn't found")
 
             win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
+
+            # make a click on Adrenalin tool
+            coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "adrenalin_icon.png"), delay=1)
+            utils.click_on_center_of(coords)
 
             coords = utils.locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "AMDLink", "stop_streaming_button.png"), delay=1)
             utils.click_on_center_of(coords)

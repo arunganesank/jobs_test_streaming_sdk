@@ -73,7 +73,6 @@
             "accept_all_connections": false,
             "streaming_mode": "multi_play"
         },
-        "keep_server": true,
         "script_info": [
             "Keep server, restart client (try #5)",
             "Default Settings"
@@ -153,7 +152,6 @@
             "accept_all_connections": false,
             "streaming_mode": "multi_play"
         },
-        "keep_client": true,
         "script_info": [
             "Keep client, restart server (try #5)",
             "Default Settings"
