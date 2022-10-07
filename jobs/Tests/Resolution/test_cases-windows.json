@@ -11,10 +11,10 @@
     {
         "case": "STR_RN_002",
         "status": "active",
-        "server_keys": "-Resolution 1920,1080 -extStats true -Framerate 60 -Protocol udp",
+        "server_keys": "-Resolution 1920,1200 -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
         "script_info": [
-            "2K"
+            "WUXGA"
         ]
     },
     {
@@ -23,13 +23,13 @@
         "server_keys": "-Resolution 1280,720 -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
         "script_info": [
-            "2K"
+            "HD"
         ]
     },
     {
         "case": "STR_RN_004",
         "status": "active",
-        "server_keys": "-Resolution 1920,1200 -extStats true -Framerate 60 -Protocol udp",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen false",
         "script_info": [
             "Fullscreen disabled"
@@ -38,9 +38,8 @@
     {
         "case": "STR_RN_005",
         "status": "active",
-        "server_keys": "-Resolution 1920,810 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "udp",
+        "server_keys": "-Resolution 1920,810 -extStats true -Framerate 60 -Protocol udp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "64:27 resolution"
         ]
@@ -48,9 +47,8 @@
     {
         "case": "STR_RN_006",
         "status": "active",
-        "server_keys": "-Resolution 1280,768 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "udp",
+        "server_keys": "-Resolution 1280,768 -extStats true -Framerate 60 -Protocol udp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "5:3 resolution"
         ]
@@ -58,9 +56,8 @@
     {
         "case": "STR_RN_007",
         "status": "active",
-        "server_keys": "-Resolution 1440,960 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "udp",
+        "server_keys": "-Resolution 1440,960 -extStats true -Framerate 60 -Protocol udp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "3:2 resolution"
         ]
@@ -68,9 +65,8 @@
     {
         "case": "STR_RN_008",
         "status": "active",
-        "server_keys": "-Resolution 1600,1200 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "udp",
+        "server_keys": "-Resolution 1600,1200 -extStats true -Framerate 60 -Protocol udp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "4:3 resolution"
         ]
@@ -78,9 +74,8 @@
     {
         "case": "STR_RN_009",
         "status": "active",
-        "server_keys": "-Resolution 1280,1024 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "udp",
+        "server_keys": "-Resolution 1280,1024 -extStats true -Framerate 60 -Protocol udp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "5:4 resolution"
         ]
@@ -88,9 +83,8 @@
     {
         "case": "STR_RN_010",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 2048,1080 -extStats true -Framerate 60",
+        "server_keys": "-Codec h.264 -Resolution 2048,1080 -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "2K",
             "AVC"
@@ -99,20 +93,18 @@
     {
         "case": "STR_RN_011",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1920,1080 -extStats true -Framerate 60",
+        "server_keys": "-Codec h.264 -Resolution 1920,1200 -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
-            "FullHD",
+            "WUXGA",
             "AVC"
         ]
     },
     {
         "case": "STR_RN_012",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1280,720 -extStats true -Framerate 60",
+        "server_keys": "-Codec h.264 -Resolution 1280,720 -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "udp",
         "script_info": [
             "HD",
             "AVC"
@@ -121,9 +113,8 @@
     {
         "case": "STR_RN_013",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1920,1200 -extStats true -Framerate 60",
+        "server_keys": "-Codec h.264 -Resolution <resolution> -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen false",
-        "transport_protocol": "udp",
         "script_info": [
             "Fullscreen disabled",
             "AVC"
@@ -132,9 +123,8 @@
     {
         "case": "STR_RN_014",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1920,810 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "udp",
+        "server_keys": "-Codec h.264 -Resolution 1920,810 -extStats true -Framerate 60 -Protocol udp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "64:27 resolution",
             "AVC"
@@ -143,9 +133,8 @@
     {
         "case": "STR_RN_015",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1280,768 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "udp",
+        "server_keys": "-Codec h.264 -Resolution 1280,768 -extStats true -Framerate 60 -Protocol udp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "5:3 resolution",
             "AVC"
@@ -154,9 +143,8 @@
     {
         "case": "STR_RN_016",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1440,960 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "udp",
+        "server_keys": "-Codec h.264 -Resolution 1440,960 -extStats true -Framerate 60 -Protocol udp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "3:2 resolution",
             "AVC"
@@ -165,9 +153,8 @@
     {
         "case": "STR_RN_017",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1600,1200 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "udp",
+        "server_keys": "-Codec h.264 -Resolution 1600,1200 -extStats true -Framerate 60 -Protocol udp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "4:3 resolution",
             "AVC"
@@ -176,9 +163,8 @@
     {
         "case": "STR_RN_018",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1280,1024 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "udp",
+        "server_keys": "-Codec h.264 -Resolution 1280,1024 -extStats true -Framerate 60 -Protocol udp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "5:4 resolution",
             "AVC"
@@ -187,9 +173,8 @@
     {
         "case": "STR_RN_019",
         "status": "active",
-        "server_keys": "-Resolution 2048,1080 -extStats true -Framerate 60",
+        "server_keys": "-Resolution 2048,1080 -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "2K"
         ]
@@ -197,10 +182,10 @@
     {
         "case": "STR_RN_020",
         "status": "active",
-        "server_keys": "-Resolution 1920,1080 -extStats true -Framerate 60 -Protocol tcp",
+        "server_keys": "-Resolution 1920,1200 -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true",
         "script_info": [
-            "FullHD"
+            "WUXGA"
         ]
     },
     {
@@ -215,7 +200,7 @@
     {
         "case": "STR_RN_022",
         "status": "active",
-        "server_keys": "-Resolution 1920,1200 -extStats true -Framerate 60 -Protocol tcp",
+        "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen false",
         "script_info": [
             "Fullscreen disabled"
@@ -224,9 +209,8 @@
     {
         "case": "STR_RN_023",
         "status": "active",
-        "server_keys": "-Resolution 1920,810 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "tcp",
+        "server_keys": "-Resolution 1920,810 -extStats true -Framerate 60 -Protocol tcp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "64:27 resolution"
         ]
@@ -234,9 +218,8 @@
     {
         "case": "STR_RN_024",
         "status": "active",
-        "server_keys": "-Resolution 1280,768 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "tcp",
+        "server_keys": "-Resolution 1280,768 -extStats true -Framerate 60 -Protocol tcp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "5:3 resolution"
         ]
@@ -244,9 +227,8 @@
     {
         "case": "STR_RN_025",
         "status": "active",
-        "server_keys": "-Resolution 1440,960 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "tcp",
+        "server_keys": "-Resolution 1440,960 -extStats true -Framerate 60 -Protocol tcp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "3:2 resolution"
         ]
@@ -254,9 +236,8 @@
     {
         "case": "STR_RN_026",
         "status": "active",
-        "server_keys": "-Resolution 1600,1200 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "tcp",
+        "server_keys": "-Resolution 1600,1200 -extStats true -Framerate 60 -Protocol tcp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "4:3 resolution"
         ]
@@ -264,9 +245,8 @@
     {
         "case": "STR_RN_027",
         "status": "active",
-        "server_keys": "-Resolution 1280,1024 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "tcp",
+        "server_keys": "-Resolution 1280,1024 -extStats true -Framerate 60 -Protocol tcp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "5:4 resolution"
         ]
@@ -274,9 +254,8 @@
     {
         "case": "STR_RN_028",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 2048,1080 -extStats true -Framerate 60",
+        "server_keys": "-Codec h.264 -Resolution 2048,1080 -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "2K",
             "AVC"
@@ -285,20 +264,18 @@
     {
         "case": "STR_RN_029",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1920,1080 -extStats true -Framerate 60",
+        "server_keys": "-Codec h.264 -Resolution 1920,1200 -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
-            "FullHD",
+            "WUXGA",
             "AVC"
         ]
     },
     {
         "case": "STR_RN_030",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1280,720 -extStats true -Framerate 60",
+        "server_keys": "-Codec h.264 -Resolution 1280,720 -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true",
-        "transport_protocol": "tcp",
         "script_info": [
             "HD",
             "AVC"
@@ -307,9 +284,8 @@
     {
         "case": "STR_RN_031",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1920,1200 -extStats true -Framerate 60",
+        "server_keys": "-Codec h.264 -Resolution <resolution> -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen false",
-        "transport_protocol": "tcp",
         "script_info": [
             "Fullscreen disabled",
             "AVC"
@@ -318,9 +294,8 @@
     {
         "case": "STR_RN_032",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1920,810 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "tcp",
+        "server_keys": "-Codec h.264 -Resolution 1920,810 -extStats true -Framerate 60 -Protocol tcp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "64:27 resolution",
             "AVC"
@@ -329,9 +304,8 @@
     {
         "case": "STR_RN_033",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1280,768 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "tcp",
+        "server_keys": "-Codec h.264 -Resolution 1280,768 -extStats true -Framerate 60 -Protocol tcp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "5:3 resolution",
             "AVC"
@@ -340,9 +314,8 @@
     {
         "case": "STR_RN_034",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1440,960 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "tcp",
+        "server_keys": "-Codec h.264 -Resolution 1440,960 -extStats true -Framerate 60 -Protocol tcp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "3:2 resolution",
             "AVC"
@@ -351,9 +324,8 @@
     {
         "case": "STR_RN_035",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1600,1200 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "tcp",
+        "server_keys": "-Codec h.264 -Resolution 1600,1200 -extStats true -Framerate 60 -Protocol tcp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "4:3 resolution",
             "AVC"
@@ -362,9 +334,8 @@
     {
         "case": "STR_RN_036",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1280,1024 -extStats true -Framerate 60",
-        "client_keys": "-Fullscreen false",
-        "transport_protocol": "tcp",
+        "server_keys": "-Codec h.264 -Resolution 1280,1024 -extStats true -Framerate 60 -Protocol tcp",
+        "client_keys": "-Fullscreen true",
         "script_info": [
             "5:4 resolution",
             "AVC"
