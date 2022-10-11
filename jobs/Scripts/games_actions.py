@@ -1,39 +1,25 @@
 from time import sleep
 import psutil
 import os
-from glob import glob
-import zipfile
 import subprocess
 from subprocess import PIPE, STDOUT
-import shlex
 import sys
 import traceback
-from shutil import copyfile
-from datetime import datetime
 import pyautogui
-import pyshark
 import json
-import multiprocessing
 import platform
-from threading import Thread
 from PIL import Image
-from grayArtifacts import check_artifacts
-from streaming_actions import StreamingType
 from elements import *
 
 if platform.system() == "Windows":
     import win32api
     import win32gui
-    import win32con
     import pydirectinput
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
 sys.path.append(ROOT_PATH)
 from jobs_launcher.core.config import main_logger
-
-
-GRAY_ARTIFACTS_LOCK = multiprocessing.Lock()
 
 
 def close_game(game_name):
