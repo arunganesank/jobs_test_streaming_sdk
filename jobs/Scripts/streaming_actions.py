@@ -11,7 +11,7 @@ from enum import Enum
 import pyautogui
 import pyscreenshot
 import utils
-from streaming_actions import locate_and_click, locate_on_screen, click_on_element
+from games_actions import locate_and_click, locate_on_screen, click_on_element
 from elements import AMDLinkElementLocation
 
 if platform.system() == "Windows":
