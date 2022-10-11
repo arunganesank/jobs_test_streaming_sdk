@@ -131,39 +131,6 @@ def make_window_foreground(window, logger):
                 logger.error("Traceback: {}".format(traceback.format_exc()))
 
 
-def make_game_foreground(game_name, logger):
-    base_path = os.path.realpath(os.path.join(os.path.dirname(__file__), "..", "Elements", "Icons"))
-
-    if "heaven" in game_name.lower():
-        icon_path = os.path.join(base_path, "Heaven.png")
-    elif "valley" in game_name.lower():
-        icon_path = os.path.join(base_path, "Valley.png")
-    elif "valorant" in game_name.lower():
-        icon_path = os.path.join(base_path, "Valorant.png")
-    elif "lol" in game_name.lower():
-        icon_path = os.path.join(base_path, "LoL.png")
-    elif "dota2" in game_name.lower():
-        icon_path = os.path.join(base_path, "Dota2.png")
-    elif "csgo" in game_name.lower():
-        icon_path = os.path.join(base_path, "CSGO.png")
-    elif "empty" in game_name.lower():
-        icon_path = os.path.join(base_path, "LatencyTool.png")
-    else:
-        logger.error(f"Unknown game: {game_name}")
-        return
-
-    # sometimes first click on app can be ignored
-    for i in range(2):
-        try:
-            game_icon_coords = locate_on_screen(icon_path)
-            game_icon_center = pyautogui.center(game_icon_coords)
-            pyautogui.click(game_icon_center[0], game_icon_center[1])
-            sleep(4)
-        except:
-            logger.info(f"Icon wasn't detected. Skip making game foreground (try #{i})")
-            break
-
-
 # press some sequence of keys on server
 class PressKeysServer(Action):
     def parse(self):
@@ -394,9 +361,7 @@ class DoTestActions(Action):
 
     def execute(self):
         try:
-            if self.game_name == "borderlands3":
-                pass
-            elif self.game_name == "valorant":
+            if self.game_name == "valorant":
                 if self.stage == 0:
                     sleep(1)
                     pydirectinput.keyDown("space")
@@ -414,19 +379,6 @@ class DoTestActions(Action):
 
                 if self.stage > 2:
                     self.stage = 0        
-            elif self.game_name == "apexlegends":
-                pydirectinput.keyDown("a")
-                pydirectinput.keyDown("space")
-                sleep(0.5)
-                pydirectinput.keyUp("a")
-                pydirectinput.keyUp("space")
-
-                pydirectinput.keyDown("d")
-                pydirectinput.keyDown("space")
-                sleep(0.5)
-                pydirectinput.keyUp("d")
-                pydirectinput.keyUp("space")
-                pydirectinput.click(button="right")
             elif self.game_name == "lol":
                 if platform.system() == "Windows":
                     edge_x = win32api.GetSystemMetrics(0)
@@ -445,27 +397,17 @@ class DoTestActions(Action):
 
                 if self.stage == 0:
                     pydirectinput.press("e")
-                    sleep(0.1)
-                    pydirectinput.press("e")
-                    sleep(0.1)
+                    sleep(0.3)
+                    pydirectinput.press("w")
+                    sleep(0.3)
                     pydirectinput.press("r")
-                    sleep(0.1)
-                    pydirectinput.press("r")
-                    sleep(1.5)
+                    sleep(0.3)
                 elif self.stage == 1:
-                    pyautogui.moveTo(edge_x - 230, edge_y - 60)
-                    sleep(0.1)
-                    pyautogui.click()
-                    sleep(0.1)
-                    pyautogui.moveTo(center_x, center_y)
+                    pyautogui.moveTo(center_x + 230, center_y + 60)
                     sleep(0.1)
                     pyautogui.click(button="right")
                     sleep(1.5)
                 elif self.stage == 2:
-                    pyautogui.moveTo(edge_x - 250, edge_y - 20)
-                    sleep(0.1)
-                    pyautogui.click()
-                    sleep(0.1)
                     pyautogui.moveTo(center_x, center_y)
                     sleep(0.1)
                     pyautogui.click(button="right")

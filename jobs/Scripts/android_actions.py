@@ -303,37 +303,6 @@ def make_window_foreground(window, logger):
                 logger.error("Traceback: {}".format(traceback.format_exc()))
 
 
-def make_game_foreground(game_name, logger):
-    base_path = os.path.realpath(os.path.join(os.path.dirname(__file__), "..", "Elements", "Icons"))
-
-    if "heaven" in game_name.lower():
-        icon_path = os.path.join(base_path, "Heaven.png")
-    elif "valley" in game_name.lower():
-        icon_path = os.path.join(base_path, "Valley.png")
-    elif "valorant" in game_name.lower():
-        icon_path = os.path.join(base_path, "Valorant.png")
-    elif "lol" in game_name.lower():
-        icon_path = os.path.join(base_path, "LoL.png")
-    elif "dota2" in game_name.lower():
-        icon_path = os.path.join(base_path, "Dota2.png")
-    elif "csgo" in game_name.lower():
-        icon_path = os.path.join(base_path, "CSGO.png")
-    else:
-        logger.error(f"Unknown game: {game_name}")
-        return
-
-    # sometimes first click on app can be ignored
-    for i in range(2):
-        try:
-            game_icon_coords = locate_on_screen(icon_path)
-            game_icon_center = pyautogui.center(game_icon_coords)
-            pyautogui.click(game_icon_center[0], game_icon_center[1])
-            sleep(4)
-        except:
-            logger.info(f"Icon wasn't detected. Skip making game foreground (try #{i})")
-            break
-
-
 # Do click 
 class Click(Action):
     def execute(self):
@@ -617,22 +586,7 @@ class StartActions(Action):
 
 def do_test_actions(game_name, logger):
     try:
-        if game_name == "apexlegends":
-            for i in range(30):
-                pydirectinput.press("q")
-                pydirectinput.keyDown("a")
-                pydirectinput.keyDown("space")
-                sleep(0.5)
-                pydirectinput.keyUp("a")
-                pydirectinput.keyUp("space")
-
-                pydirectinput.press("q")
-                pydirectinput.keyDown("d")
-                pydirectinput.keyDown("space")
-                sleep(0.5)
-                pydirectinput.keyUp("d")
-                pydirectinput.keyUp("space")
-        elif game_name == "valorant":
+        if game_name == "valorant":
             for i in range(10):
                 pyautogui.keyDown("space")
                 sleep(0.1)
@@ -662,27 +616,17 @@ def do_test_actions(game_name, logger):
 
             for i in range(5):
                 pydirectinput.press("e")
-                sleep(0.1)
-                pydirectinput.press("e")
-                sleep(0.1)
-
+                sleep(0.3)
+                pydirectinput.press("w")
+                sleep(0.3)
                 pydirectinput.press("r")
-                sleep(0.1)
-                pydirectinput.press("r")
-                sleep(1.5)
+                sleep(0.3)
 
-                pyautogui.moveTo(edge_x - 230, edge_y - 60)
-                sleep(0.1)
-                pyautogui.click()
-                sleep(0.1)
-                pyautogui.moveTo(center_x, center_y)
+                pyautogui.moveTo(center_x + 230, center_y + 60)
                 sleep(0.1)
                 pyautogui.click(button="right")
                 sleep(1.5)
-                pyautogui.moveTo(edge_x - 250, edge_y - 20)
-                sleep(0.1)
-                pyautogui.click()
-                sleep(0.1)
+
                 pyautogui.moveTo(center_x, center_y)
                 sleep(0.1)
                 pyautogui.click(button="right")
