@@ -8,6 +8,7 @@ from threading import Thread
 from utils import *
 from actions import *
 from streaming_actions import start_streaming, StreamingType
+import games_actions
 
 if platform.system() == "Windows":
     from pyffmpeg import FFmpeg
@@ -268,24 +269,7 @@ class PressKeys(Action):
         self.keys_string = parsed_arguments[0]
 
     def execute(self):
-        keys = self.keys_string.split()
-
-        for i in range(len(keys)):
-            key = keys[i]
-
-            self.logger.info("Press: {}".format(key))
-            if platform.system() == "Windows":
-                pydirectinput.press(key)
-            else:
-                pyautogui.press(key)
-
-            # if it isn't the last key - make a delay
-            if i != len(keys) - 1:
-                # pressing of enter can require more long delay (e.g. opening of new tab/window)
-                if "enter" in key:
-                    sleep(2)
-                else:
-                    sleep(1)
+        games_actions.press_keys(self.keys_string)
 
 
 # [Client action] make sequence of screens with delay. It supports initial delay before the first test case
@@ -457,6 +441,17 @@ class StartStreaming(Action):
 
                     if should_collect_traces:
                         collect_traces(self.archive_path, self.archive_name + "_client.zip")
+
+
+# [Client + Server action] start benchmark/game if it isn't already opened
+# [Result] wait answer from server. Answer must be 'done'
+class OpenGame(Action):
+    def parse(self):
+        self.action = self.params["action_line"]
+
+    def execute(self):
+        self.sock.send(self.action.encode("utf-8"))
+        self.wait_server_answer(analyze_answer = True, abort_if_fail = True)
 
 
 # [Client + Server action] start Latency tool on client and server

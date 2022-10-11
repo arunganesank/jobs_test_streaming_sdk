@@ -19,7 +19,7 @@ from threading import Thread
 from PIL import Image
 from grayArtifacts import check_artifacts
 from streaming_actions import StreamingType
-from elements import IconElementLocation
+from elements import *
 
 if platform.system() == "Windows":
     import win32api
@@ -187,7 +187,7 @@ def prepare_game(game_name, game_launcher):
     if game_name == "heavendx9" or game_name == "heavendx11" or game_name == "heavenopengl":
         sleep(6)
 
-        coords = locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "Heaven", "api_label.png"))
+        coords = locate_on_screen(HeavenElementLocation.API_LABEL)
         click_on_element(coords, x_offset=50)
 
         if game_name == "heavendx11":
@@ -197,13 +197,13 @@ def prepare_game(game_name, game_launcher):
         else:
             click_on_element(coords, x_offset=50, y_offset=45)
 
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "Heaven", "run_button.png"))
+        locate_and_click(ValleyElementLocation.RUN_BUTTON)
 
-        sleep(30)
+        sleep(20)
     if game_name == "valleydx9" or game_name == "valleydx11" or game_name == "valleyopengl":
         sleep(6)
 
-        coords = locate_on_screen(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "Valley", "api_label.png"))
+        coords = locate_on_screen(ValleyElementLocation.API_LABEL)
         click_on_element(coords, x_offset=50)
 
         if game_name == "heavendx11":
@@ -213,81 +213,109 @@ def prepare_game(game_name, game_launcher):
         else:
             click_on_element(coords, x_offset=50, y_offset=45)
 
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "Valley", "run_button.png"))
+        locate_and_click(ValleyElementLocation.RUN_BUTTON)
 
+        sleep(20)
+    elif self.game_name == "valorant":
+        sleep(60)
+        click("380", "edge_-225")
+        sleep(1)
+        click("360", "210")
+        sleep(60)
+
+        # do opening of lobby twice to avoid ads
+        click("center_0", "25")
+        sleep(3)
+
+        press_keys("esc")
+
+        click("center_0", "25")
+        sleep(3)
+
+        click("center_-300", "edge_-95")
+        sleep(3)
+
+        click("center_0", "center_225")
         sleep(30)
+
+        click("center_-260", "center_-55")
+        sleep(2)
+        click("center_0", "center_110")
     elif game_name == "lol":
         # TODO: check find Play button and click on it
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "LoL", "play_button.png"), tries=5, delay=15)
+        sleep(90)
+        click("center_-15", "center_-160", self.logger)
         sleep(1)
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "LoL", "training.png"))
+        locate_and_click(LoLElementLocation.PLAY_BUTTON, tries=4, delay=15)
         sleep(1)
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "LoL", "practice_tool.png"))
+        locate_and_click(LoLElementLocation.TRAINING)
         sleep(1)
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "LoL", "confirm_button.png"))
+        locate_and_click(LoLElementLocation.PRACTICE_TOOL)
         sleep(1)
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "LoL", "start_game_active.png"))
+        locate_and_click(LoLElementLocation.CONFIRM_BUTTON)
         sleep(1)
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "LoL", "malphite_icon.png"))
+        locate_and_click(LoLElementLocation.START_GAME_ACTIVE)
         sleep(1)
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "LoL", "lock_in_button.png"))
+        locate_and_click(LoLElementLocation.MALPHITE_ICON)
+        sleep(1)
+        locate_and_click(LoLElementLocation.LOCK_IN_BUTTON)
         sleep(45)
-        click("center_0", "center_0", self.logger)
-        press_keys("shift+x ctrl+shift+i shift+y:17 ctrl+e ctrl+r", self.logger)
+        click("center_0", "center_0")
+        press_keys("shift+x ctrl+shift+i shift+y:17 ctrl+e ctrl+r")
     elif game_name == "dota2dx11" or game_name == "dota2vulkan":
         sleep(30)
-        click("center_0", "center_0", self.logger)
-        press_keys("esc", self.logger)
+        click("center_0", "center_0")
+        press_keys("esc")
         sleep(5)
-        press_keys("esc", self.logger)
+        press_keys("esc")
         sleep(1)
 
         # click on arcade to disable lighting from Dota2 logo
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "Dota2", "arcade.png"))
+        locate_and_click(Dota2ElementLocation.ARCADE, scale=True)
         sleep(1)
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "Dota2", "settings_button.png"))
+        locate_and_click(Dota2ElementLocation.SETTINGS_BUTTON, scale=True)
         sleep(1)
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "Dota2", "video_tab.png"))
+        locate_and_click(Dota2ElementLocation.VIDEO_TAB, scale=True)
         sleep(1)
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "Dota2", "render_api_selection.png"))
+        locate_and_click(Dota2ElementLocation.RENDER_API_SELECTION, scale=True)
         sleep(1)
         if game_name == "dota2dx11":
-            locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "Dota2", "render_api_dx11_option.png"))
+            locate_and_click(Dota2ElementLocation.RENDER_API_DX11_OPTION, scale=True)
         else:
-            locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "Dota2", "render_api_vulkan_option.png"))
+            locate_and_click(Dota2ElementLocation.RENDER_API_VULKAN_OPTION, scale=True)
         sleep(1)
-        press_keys("esc", self.logger)
+        press_keys("esc")
         sleep(3)
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "Dota2", "exit_button.png"))
+        locate_and_click(Dota2ElementLocation.EXIT_BUTTON, scale=True)
         sleep(1)
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "Dota2", "yes_button.png"))
+        locate_and_click(Dota2ElementLocation.YES_BUTTON, scale=True)
         sleep(1)
 
         psutil.Popen(game_launcher, stdout=PIPE, stderr=PIPE, shell=True)
-        sleep(30)
-        press_keys("esc", self.logger)
+        sleep(15)
+        press_keys("esc")
         sleep(5)
-        press_keys("esc", self.logger)
+        press_keys("esc")
         sleep(1)
 
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "Dota2", "arcade.png"))
+        locate_and_click(Dota2ElementLocation.ARCADE, scale=True)
         sleep(1)
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "Dota2", "heroes.png"))
+        locate_and_click(Dota2ElementLocation.HEROES, scale=True)
         sleep(1)
         pyautogui.typewrite("sand king")
-        press_keys("enter", self.logger)
+        press_keys("enter")
         sleep(1)
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "Dota2", "demo_hero.png"))
+        locate_and_click(Dota2ElementLocation.DEMO_HERO, scale=True)
         sleep(15)
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "Dota2", "free_spells.png"))
+        locate_and_click(Dota2ElementLocation.FREE_SPELLS, scale=True)
         sleep(1)
-        locate_and_click(os.path.join(os.path.dirname(__file__), "..", "Elements", "Games", "Dota2", "lvl_max.png"))
+        locate_and_click(Dota2ElementLocation.LVL_MAX, scale=True)
         sleep(1)
     elif game_name == "csgo":
         sleep(30)
-        press_keys("esc", self.logger)
+        press_keys("esc")
         sleep(3)
-        press_keys("esc", self.logger)
+        press_keys("esc")
         sleep(3)
         click("center_-919", "center_-394", self.logger)
         sleep(1)
@@ -300,8 +328,8 @@ def prepare_game(game_name, game_launcher):
         click("center_700", "center_492", self.logger)
         sleep(1)
         click("center_142", "center_112", self.logger)
-        sleep(40)
-        press_keys("w_3", self.logger)
+        sleep(20)
+        press_keys("w_3")
 
         # enter commands to csgo console
         commands = [

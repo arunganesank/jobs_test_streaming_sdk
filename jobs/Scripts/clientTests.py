@@ -43,7 +43,8 @@ ACTIONS_MAPPING = {
     "record_metrics": RecordMetrics,
     "record_audio": RecordMicrophone,
     "start_streaming": StartStreaming,
-    "start_latency_tool": StartLatencyTool
+    "start_latency_tool": StartLatencyTool,
+    "open_game": OpenGame
 }
 
 

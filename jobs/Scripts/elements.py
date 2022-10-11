@@ -77,17 +77,6 @@ class ValleyElementLocation(GameElementLocation):
     RUN_BUTTON = ValleyElementLocation("run_button")
 
 
-class ValorantElementLocation(GameElementLocation):
-    def __init__(self, element_name):
-        super().__init__("Valorant", element_name)
-
-    BREACH_ICON = ValorantElementLocation("breach_icon")
-    ENTER_RANGE = ValorantElementLocation("enter_range")
-    PLAY_BREACH = ValorantElementLocation("play_breach")
-    PLAY_BUTTON = ValorantElementLocation("play_button")
-    PRACTICE_BUTTON = ValorantElementLocation("practice_button")
-
-
 class IconElementLocation(ElementLocation):
     def __init__(self, game_name, element_name):
         super().__init__("Icons", element_name)

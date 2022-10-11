@@ -12,6 +12,7 @@ import platform
 from utils import *
 from actions import *
 from streaming_actions import StreamingType, start_streaming
+import games_actions
 
 if platform.system() == "Windows":
     import win32gui
@@ -19,7 +20,6 @@ if platform.system() == "Windows":
     from pyffmpeg import FFmpeg
     import pydirectinput
 
-csgoFirstExec = True
 pyautogui.FAILSAFE = False
 MC_CONFIG = get_mc_config()
 
@@ -35,6 +35,81 @@ class ExecuteCMD(Action):
         process = psutil.Popen(self.cmd_command, stdout=PIPE, stderr=PIPE, shell=True)
         self.processes[self.cmd_command] = process
         self.logger.info("Executed: {}".format(self.cmd_command))
+
+        return True
+
+
+# open some game if it doesn't launched (e.g. open game/benchmark)
+class OpenGame(Action):
+    def parse(self):
+        games_launchers = {
+            "heavendx9": "C:\\JN\\Heaven Benchmark 4.0.lnk",
+            "heavendx11": "C:\\JN\\Heaven Benchmark 4.0.lnk",
+            "heavenopengl": "C:\\JN\\Heaven Benchmark 4.0.lnk",
+            "valleydx9": "C:\\JN\\Valley Benchmark 1.0.lnk",
+            "valleydx11": "C:\\JN\\Valley Benchmark 1.0.lnk",
+            "valleyopengl": "C:\\JN\\Valley Benchmark 1.0.lnk",
+            "valorant": "C:\\JN\\VALORANT.exe - Shortcut.lnk",
+            "lol": "C:\\JN\\League of Legends.lnk",
+            "dota2dx11": "C:\\JN\\dota2.exe.lnk",
+            "dota2vulkan": "C:\\JN\\dota2.exe.lnk",
+            "csgo": "C:\\JN\\csgo.exe.url",
+            "empty": None
+        }
+
+        games_windows = {
+            "heavendx9": ["Unigine Heaven Benchmark 4.0 Basic (Direct3D9)", "Heaven.exe"],
+            "heavendx11": ["Unigine Heaven Benchmark 4.0 Basic (Direct3D11)", "Heaven.exe"],
+            "heavenopengl": ["Unigine Heaven Benchmark 4.0 Basic (OpenGL)", "Heaven.exe"],
+            "valleydx9": ["Unigine Valley Benchmark 1.0 Basic (Direct3D9)", "Valley.exe"],
+            "valleydx11": ["Unigine Valley Benchmark 1.0 Basic (Direct3D11)", "Valley.exe"],
+            "valleyopengl": ["Unigine Valley Benchmark 1.0 Basic (OpenGL)", "Valley.exe"],
+            "valorant": ["VALORANT  ", "VALORANT-Win64-Shipping.exe"],
+            "lol": ["League of Legends (TM) Client", "League of Legends.exe"],
+            "dota2dx11": ["Dota 2", "dota2.exe"],
+            "dota2vulkan": ["Dota 2", "dota2.exe"],
+            "csgo": ["Counter-Strike: Global Offensive - Direct3D 9", "csgo.exe"],
+            "empty": [None, None]
+        }
+
+        self.game_name = self.params["game_name"]
+        self.game_launcher = games_launchers[self.game_name]
+        self.game_window = games_windows[self.game_name][0]
+        self.game_process_name = games_windows[self.game_name][1]
+
+    @Action.server_action_decorator
+    def execute(self):
+        if self.game_launcher is None or self.game_window is None or self.game_process_name is None:
+            return
+
+        game_launched = True
+
+        window = win32gui.FindWindow(None, self.game_window)
+
+        if window is not None and window != 0:
+            self.logger.info("Window {} was succesfully found".format(self.game_window))
+
+            make_game_foreground(self.game_name, self.logger)
+        else:
+            self.logger.error("Window {} wasn't found at all".format(self.game_window))
+            game_launched = False
+
+        for process in psutil.process_iter():
+            if self.game_process_name in process.name():
+                self.logger.info("Process {} was succesfully found".format(self.game_process_name))
+                break
+        else:
+            self.logger.info("Process {} wasn't found at all".format(self.game_process_name))
+            game_launched = False
+
+        if not game_launched:
+            if self.game_name == "lol":
+                sleep(240)
+
+            psutil.Popen(self.game_launcher, stdout=PIPE, stderr=PIPE, shell=True)
+            self.logger.info("Executed: {}".format(self.game_launcher))
+
+            games_actions.prepare_game(self.game_name, self.game_launcher)
 
         return True
 
@@ -92,6 +167,7 @@ class CheckWindow(Action):
         return result
 
 
+
 def close_processes(processes, logger):
     result = True
 
@@ -139,76 +215,7 @@ class PressKeysServer(Action):
 
     @Action.server_action_decorator
     def execute(self):
-        keys = self.keys_string.split()
-
-        # press keys one by one
-        # possible formats
-        # * space - press space
-        # * space_10 - press space down for 10 seconds
-        # * space+shift - press space and shift
-        # * space+shift:10 - press space and shift 10 times
-        for i in range(len(keys)):
-            key = keys[i]
-
-            duration = 0
-
-            if "_" in key:
-                parts = key.split("_")
-                key = parts[0]
-                duration = int(parts[1])
-
-            self.logger.info("Press: {}. Duration: {}".format(key, duration))
-
-            if duration == 0:
-                times = 1
-
-                if ":" in key:
-                    parts = key.split(":")
-                    key = parts[0]
-                    times = int(parts[1])
-
-                keys_to_press = key.split("+")
-
-                for i in range(times):
-                    for key_to_press in keys_to_press:
-                        if platform.system() == "Windows":
-                            pydirectinput.keyDown(key_to_press)
-                        else:
-                            pyautogui.keyDown(key_to_press)
-
-                    sleep(0.1)
-
-                    for key_to_press in keys_to_press:
-                        if platform.system() == "Windows":
-                            pydirectinput.keyUp(key_to_press)
-                        else:
-                            pyautogui.keyUp(key_to_press)
-
-                    if i != times - 1:
-                        sleep(0.5)
-            else:
-                keys_to_press = key.split("+")
-
-                for key_to_press in keys_to_press:
-                    if platform.system() == "Windows":
-                        pydirectinput.keyDown(key_to_press)
-                    else:
-                        pyautogui.keyDown(key_to_press)
-
-                sleep(duration)
-
-                for key_to_press in keys_to_press:
-                    if platform.system() == "Windows":
-                        pydirectinput.keyUp(key_to_press)
-                    else:
-                        pyautogui.keyUp(key_to_press)
-
-            # if it isn't the last key - make a delay
-            if i != len(keys) - 1:
-                if "enter" in key:
-                    sleep(1.5)
-                else:
-                    sleep(0.2)
+        games_actions.press_keys(self.keys_string)
 
         return True
 
@@ -295,37 +302,9 @@ class ClickServer(Action):
 
     @Action.server_action_decorator
     def execute(self):
-        if platform.system() == "Windows":
-            edge_x = win32api.GetSystemMetrics(0)
-            edge_y = win32api.GetSystemMetrics(1)
-        else:
-            process = subprocess.Popen("xdpyinfo | awk '/dimensions/{print $2}'", stdout=PIPE, shell=True)
-            stdout, stderr = process.communicate()
-            edge_x, edge_y = stdout.decode("utf-8").strip().split("x")
-            edge_x = int(edge_x)
-            edge_y = int(edge_y)
-
-        if "center_" in self.x_description:
-            x = edge_x / 2 + int(self.x_description.replace("center_", ""))
-        elif "edge_" in self.x_description:
-            x = edge_x + int(self.x_description.replace("edge_", ""))
-        else:
-            x = int(self.x_description)
-
-        if "center_" in self.y_description:
-            y = edge_y / 2 + int(self.y_description.replace("center_", ""))
-        elif "edge_" in self.y_description:
-            y = edge_y + int(self.y_description.replace("edge_", ""))
-        else:
-            y = int(self.y_description)
-
-        self.logger.info("Click at x = {}, y = {}".format(x, y))
-
-        pyautogui.moveTo(x, y)
-        sleep(self.delay)
-        pyautogui.click()
-
+        games_actions.click(self.x_description, self.y_description, self.delay)
         return True
+
 
 class RecordMicrophone(Action):
     def parse(self):
@@ -422,25 +401,6 @@ class DoTestActions(Action):
                 sleep(1)
                 pydirectinput.press("w")
             elif self.game_name == "csgo":
-                global csgoFirstExec
-                if csgoFirstExec:
-                    csgoFirstExec = False
-                    commands = [
-                        "`",
-                        "sv_cheats 1",
-                        "give weapon_deagle",
-                        "give weapon_molotov",
-                        "sv_infinite_ammo 1",
-                        "`"
-                    ]
-                    for command in commands:
-                        if command != "`":
-                            keyboard.write(command)
-                        else:
-                            pydirectinput.press("`")
-                        sleep(0.15)
-                        pydirectinput.press("enter")
-
                 pydirectinput.press("4")
                 sleep(1)
                 pyautogui.click()

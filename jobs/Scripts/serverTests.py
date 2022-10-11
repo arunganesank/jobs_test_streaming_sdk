@@ -51,7 +51,8 @@ ACTIONS_MAPPING = {
     "record_metrics": RecordMetrics,
     "record_audio": RecordMicrophone,
     "recovery_clumsy": RecoveryClumsy,
-    "start_latency_tool": StartLatencyTool
+    "start_latency_tool": StartLatencyTool,
+    "open_game": OpenGame
 }
 
 

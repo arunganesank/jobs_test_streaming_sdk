@@ -12,7 +12,7 @@ import pyautogui
 import pyscreenshot
 import utils
 from streaming_actions import locate_and_click, locate_on_screen, click_on_element
-from elements import *
+from elements import AMDLinkElementLocation
 
 if platform.system() == "Windows":
     import win32gui
