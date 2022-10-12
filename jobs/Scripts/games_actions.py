@@ -303,6 +303,7 @@ def prepare_game(game_name, game_launcher):
         press_keys("esc")
         sleep(3)
         locate_and_click(CSGOElements.PLAY_BUTTON.build_path(), scale=True)
+        pyautogui.moveTo(1, 1)
         sleep(1)
         locate_and_click(CSGOElements.MODE_SELECTION.build_path(), scale=True)
         sleep(1)
