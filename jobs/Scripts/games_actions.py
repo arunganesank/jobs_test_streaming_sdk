@@ -190,7 +190,7 @@ def prepare_game(game_name, game_launcher):
         locate_and_click(ValleyElements.RUN_BUTTON.build_path())
 
         sleep(20)
-    elif self.game_name == "valorant":
+    elif game_name == "valorant":
         sleep(60)
         click("380", "edge_-225")
         sleep(1)
@@ -218,7 +218,7 @@ def prepare_game(game_name, game_launcher):
     elif game_name == "lol":
         # TODO: check find Play button and click on it
         sleep(90)
-        click("center_-15", "center_-160", self.logger)
+        click("center_-15", "center_-160")
         sleep(1)
         locate_and_click(LoLElements.PLAY_BUTTON.build_path(), tries=4, delay=15)
         sleep(1)
