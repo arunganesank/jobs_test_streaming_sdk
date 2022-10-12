@@ -21,12 +21,12 @@ class CSGOElementLocation(GameElementLocation):
 
 
 class CSGOElements:
-    PLAY_BUTTON = LoLElementLocation("play_button")
-    MODE_SELECTION = LoLElementLocation("mode_selection")
-    WORKSHOP_MAPS = LoLElementLocation("workshop_maps")
-    TRAINING_MAP = LoLElementLocation("training_map")
+    PLAY_BUTTON = CSGOElementLocation("play_button")
+    MODE_SELECTION = CSGOElementLocation("mode_selection")
+    WORKSHOP_MAPS = CSGOElementLocation("workshop_maps")
+    TRAINING_MAP = CSGOElementLocation("training_map")
     SELECT_MAP_BUTTON = CSGOElementLocation("select_map_button")
-    GO_BUTTON = LoLElementLocation("go_button")
+    GO_BUTTON = CSGOElementLocation("go_button")
 
 
 class Dota2ElementLocation(GameElementLocation):
