@@ -73,7 +73,7 @@ class OpenGame(Action):
         if window is not None and window != 0:
             self.logger.info("Window {} was succesfully found".format(self.game_window))
 
-            games_actions.make_game_foreground(self.game_name, self.logger)
+            games_actions.make_game_foreground(self.game_name)
         else:
             self.logger.error("Window {} wasn't found at all".format(self.game_window))
             game_launched = False
@@ -260,7 +260,7 @@ class RecordVideo(MulticonnectionAction):
                 self.logger.info("Recovery Streaming SDK work - close clumsy")
                 close_clumsy()
                 sleep(2)
-                games_actions.make_game_foreground(self.game_name, self.logger)
+                games_actions.make_game_foreground(self.game_name)
 
             self.logger.info("Start to record video")
             execute_adb_command("adb shell screenrecord --time-limit={} /sdcard/video.mp4".format(self.duration))
