@@ -89,7 +89,7 @@ class OpenGame(Action):
         if window is not None and window != 0:
             self.logger.info("Window {} was succesfully found".format(self.game_window))
 
-            make_game_foreground(self.game_name, self.logger)
+            games_actions.make_game_foreground(self.game_name, self.logger)
         else:
             self.logger.error("Window {} wasn't found at all".format(self.game_window))
             game_launched = False
@@ -137,7 +137,7 @@ class CheckWindow(Action):
                     self.logger.info("Window {} was succesfully found".format(self.window_name))
 
                     if self.is_game:
-                        make_game_foreground(self.game_name, self.logger)
+                        games_actions.make_game_foreground(self.game_name, self.logger)
                 else:
                     self.logger.error("Window {} wasn't found at all".format(self.window_name))
                     return False
@@ -560,7 +560,7 @@ class StartStreaming(MulticonnectionAction):
             self.process = start_streaming(self.args.execution_type, 
                 streaming_type=self.args.streaming_type, case=self.case, socket=self.sock, debug_screen_path=debug_screen_path)
 
-            make_game_foreground(self.args.game_name, self.logger)
+            games_actions.make_game_foreground(self.args.game_name, self.logger)
 
         # start server
         if self.process is None:
@@ -605,7 +605,7 @@ class RecoveryClumsy(Action):
             self.logger.info("Recovery Streaming SDK work - close clumsy")
             close_clumsy()
             sleep(2)
-            make_game_foreground(self.game_name, self.logger)
+            games_actions.make_game_foreground(self.game_name, self.logger)
 
 
 # Start Latency tool

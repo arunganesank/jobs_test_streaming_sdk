@@ -116,7 +116,7 @@ def locate_on_screen(template, scale=False, tries=3, delay=0, **kwargs):
             kwargs["confidence"] = 0.95
 
     while not coords and tries > 0 and kwargs["confidence"] > 0:
-        with Image.open(os.path.abspath(os.path.join(os.path.dirname(__file__), template))) as img:
+        with Image.open(template) as img:
             if scale:
                 scaling_try = 0
                 # Examples
@@ -173,7 +173,7 @@ def prepare_game(game_name, game_launcher):
     if game_name == "heavendx9" or game_name == "heavendx11" or game_name == "heavenopengl":
         sleep(6)
 
-        coords = locate_on_screen(HeavenElementLocation.API_LABEL)
+        coords = locate_on_screen(HeavenElements.API_LABEL.build_path())
         click_on_element(coords, x_offset=50)
 
         if game_name == "heavendx11":
@@ -183,13 +183,13 @@ def prepare_game(game_name, game_launcher):
         else:
             click_on_element(coords, x_offset=50, y_offset=45)
 
-        locate_and_click(ValleyElementLocation.RUN_BUTTON)
+        locate_and_click(HeavenElements.RUN_BUTTON.build_path())
 
         sleep(20)
     if game_name == "valleydx9" or game_name == "valleydx11" or game_name == "valleyopengl":
         sleep(6)
 
-        coords = locate_on_screen(ValleyElementLocation.API_LABEL)
+        coords = locate_on_screen(ValleyElements.API_LABEL.build_path())
         click_on_element(coords, x_offset=50)
 
         if game_name == "heavendx11":
@@ -199,7 +199,7 @@ def prepare_game(game_name, game_launcher):
         else:
             click_on_element(coords, x_offset=50, y_offset=45)
 
-        locate_and_click(ValleyElementLocation.RUN_BUTTON)
+        locate_and_click(ValleyElements.RUN_BUTTON.build_path())
 
         sleep(20)
     elif self.game_name == "valorant":
@@ -232,19 +232,19 @@ def prepare_game(game_name, game_launcher):
         sleep(90)
         click("center_-15", "center_-160", self.logger)
         sleep(1)
-        locate_and_click(LoLElementLocation.PLAY_BUTTON, tries=4, delay=15)
+        locate_and_click(LoLElements.PLAY_BUTTON.build_path(), tries=4, delay=15)
         sleep(1)
-        locate_and_click(LoLElementLocation.TRAINING)
+        locate_and_click(LoLElements.TRAINING.build_path())
         sleep(1)
-        locate_and_click(LoLElementLocation.PRACTICE_TOOL)
+        locate_and_click(LoLElements.PRACTICE_TOOL.build_path())
         sleep(1)
-        locate_and_click(LoLElementLocation.CONFIRM_BUTTON)
+        locate_and_click(LoLElements.CONFIRM_BUTTON.build_path())
         sleep(1)
-        locate_and_click(LoLElementLocation.START_GAME_ACTIVE)
+        locate_and_click(LoLElements.START_GAME_ACTIVE.build_path())
         sleep(1)
-        locate_and_click(LoLElementLocation.MALPHITE_ICON)
+        locate_and_click(LoLElements.MALPHITE_ICON.build_path())
         sleep(1)
-        locate_and_click(LoLElementLocation.LOCK_IN_BUTTON)
+        locate_and_click(LoLElements.LOCK_IN_BUTTON.build_path())
         sleep(45)
         click("center_0", "center_0")
         press_keys("shift+x ctrl+shift+i shift+y:17 ctrl+e ctrl+r")
@@ -257,24 +257,24 @@ def prepare_game(game_name, game_launcher):
         sleep(1)
 
         # click on arcade to disable lighting from Dota2 logo
-        locate_and_click(Dota2ElementLocation.ARCADE, scale=True)
+        locate_and_click(Dota2Elements.ARCADE.build_path(), scale=True)
         sleep(1)
-        locate_and_click(Dota2ElementLocation.SETTINGS_BUTTON, scale=True)
+        locate_and_click(Dota2Elements.SETTINGS_BUTTON.build_path(), scale=True)
         sleep(1)
-        locate_and_click(Dota2ElementLocation.VIDEO_TAB, scale=True)
+        locate_and_click(Dota2Elements.VIDEO_TAB.build_path(), scale=True)
         sleep(1)
-        locate_and_click(Dota2ElementLocation.RENDER_API_SELECTION, scale=True)
+        locate_and_click(Dota2Elements.RENDER_API_SELECTION.build_path(), scale=True)
         sleep(1)
         if game_name == "dota2dx11":
-            locate_and_click(Dota2ElementLocation.RENDER_API_DX11_OPTION, scale=True)
+            locate_and_click(Dota2Elements.RENDER_API_DX11_OPTION.build_path(), scale=True)
         else:
-            locate_and_click(Dota2ElementLocation.RENDER_API_VULKAN_OPTION, scale=True)
+            locate_and_click(Dota2Elements.RENDER_API_VULKAN_OPTION.build_path(), scale=True)
         sleep(1)
         press_keys("esc")
         sleep(3)
-        locate_and_click(Dota2ElementLocation.EXIT_BUTTON, scale=True)
+        locate_and_click(Dota2Elements.EXIT_BUTTON.build_path(), scale=True)
         sleep(1)
-        locate_and_click(Dota2ElementLocation.YES_BUTTON, scale=True)
+        locate_and_click(Dota2Elements.YES_BUTTON.build_path(), scale=True)
         sleep(1)
 
         psutil.Popen(game_launcher, stdout=PIPE, stderr=PIPE, shell=True)
@@ -284,18 +284,18 @@ def prepare_game(game_name, game_launcher):
         press_keys("esc")
         sleep(1)
 
-        locate_and_click(Dota2ElementLocation.ARCADE, scale=True)
+        locate_and_click(Dota2Elements.ARCADE.build_path(), scale=True)
         sleep(1)
-        locate_and_click(Dota2ElementLocation.HEROES, scale=True)
+        locate_and_click(Dota2Elements.HEROES.build_path(), scale=True)
         sleep(1)
         pyautogui.typewrite("sand king")
         press_keys("enter")
         sleep(1)
-        locate_and_click(Dota2ElementLocation.DEMO_HERO, scale=True)
+        locate_and_click(Dota2Elements.DEMO_HERO.build_path(), scale=True)
         sleep(15)
-        locate_and_click(Dota2ElementLocation.FREE_SPELLS, scale=True)
+        locate_and_click(Dota2Elements.FREE_SPELLS.build_path(), scale=True)
         sleep(1)
-        locate_and_click(Dota2ElementLocation.LVL_MAX, scale=True)
+        locate_and_click(Dota2Elements.LVL_MAX.build_path(), scale=True)
         sleep(1)
     elif game_name == "csgo":
         sleep(30)
@@ -303,17 +303,17 @@ def prepare_game(game_name, game_launcher):
         sleep(3)
         press_keys("esc")
         sleep(3)
-        click("center_-919", "center_-394", self.logger)
+        locate_and_click(CSGOElements.PLAY_BUTTON.build_path(), scale=True)
         sleep(1)
-        click("center_-710", "center_-406", self.logger)
+        locate_and_click(CSGOElements.MODE_SELECTION.build_path(), scale=True)
         sleep(1)
-        click("center_-718", "center_-223", self.logger)
+        locate_and_click(CSGOElements.WORKSHOP_MAPS.build_path(), scale=True)
         sleep(1)
-        click("center_-4", "center_-86", self.logger)
+        locate_and_click(CSGOElements.TRAINING_MAP.build_path(), scale=True)
         sleep(1)
-        click("center_700", "center_492", self.logger)
+        #click("center_700", "center_492", self.logger)
         sleep(1)
-        click("center_142", "center_112", self.logger)
+        locate_and_click(CSGOElements.GO_BUTTON.build_path(), scale=True)
         sleep(20)
         press_keys("w_3")
 
@@ -429,17 +429,17 @@ def click(x_description, y_description, delay = 0.2):
 
 def make_game_foreground(game_name):
     if "heaven" in game_name.lower():
-        icon_path = IconElementLocation.HEAVEN.build_path()
+        icon_path = IconElements.HEAVEN.build_path()
     elif "valley" in game_name.lower():
-        icon_path = IconElementLocation.VALLEY.build_path()
+        icon_path = IconElements.VALLEY.build_path()
     elif "valorant" in game_name.lower():
-        icon_path = IconElementLocation.VALORANT.build_path()
+        icon_path = IconElements.VALORANT.build_path()
     elif "lol" in game_name.lower():
-        icon_path = IconElementLocation.LOL.build_path()
+        icon_path = IconElements.LOL.build_path()
     elif "dota2" in game_name.lower():
-        icon_path = IconElementLocation.DOTA2.build_path()
+        icon_path = IconElements.DOTA2.build_path()
     elif "csgo" in game_name.lower():
-        icon_path = IconElementLocation.CSGO.build_path()
+        icon_path = IconElements.CSGO.build_path()
     else:
         main_logger.error(f"Unknown game: {game_name}")
         return

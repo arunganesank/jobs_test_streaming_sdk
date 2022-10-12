@@ -19,6 +19,8 @@ class CSGOElementLocation(GameElementLocation):
     def __init__(self, element_name):
         super().__init__("CSGO", element_name)
 
+
+class CSGOElements:
     CONFIRM_BUTTON = CSGOElementLocation("confirm_button")
     LOCK_IN_BUTTON = CSGOElementLocation("lock_in_button")
     MALPHITE_ICON = CSGOElementLocation("malphite_icon")
@@ -33,6 +35,8 @@ class Dota2ElementLocation(GameElementLocation):
     def __init__(self, element_name):
         super().__init__("Dota2", element_name)
 
+
+class Dota2Elements:
     ARCADE = GameElementLocation("arcade")
     DEMO_HERO = GameElementLocation("demo_hero")
     EXIT_BUTTON = GameElementLocation("exit_button")
@@ -51,6 +55,9 @@ class HeavenElementLocation(GameElementLocation):
     def __init__(self, element_name):
         super().__init__("Heaven", element_name)
 
+
+
+class HeavenElements:
     API_LABEL = HeavenElementLocation("api_label")
     RUN_BUTTON = HeavenElementLocation("run_button")
 
@@ -59,20 +66,21 @@ class LoLElementLocation(GameElementLocation):
     def __init__(self, element_name):
         super().__init__("LoL", element_name)
 
-    CONFIRM_BUTTON = LoLElementLocation("confirm_button")
-    LOCK_IN_BUTTON = LoLElementLocation("lock_in_button")
-    MALPHITE_ICON = LoLElementLocation("malphite_icon")
+
+class LoLElements:
     PLAY_BUTTON = LoLElementLocation("play_button")
-    PRACTICE_TOOL = LoLElementLocation("practice_tool")
-    START_GAME = LoLElementLocation("start_game")
-    START_GAME_ACTIVE = LoLElementLocation("start_game_active")
-    TRAINING_BUTTON = LoLElementLocation("training_button")
+    MODE_SELECTION = LoLElementLocation("mode_selection")
+    WORKSHOP_MAPS = LoLElementLocation("workshop_maps")
+    TRAINING_MAP = LoLElementLocation("training_map")
+    GO_BUTTON = LoLElementLocation("go_button")
 
 
 class ValleyElementLocation(GameElementLocation):
     def __init__(self, element_name):
         super().__init__("Valley", element_name)
 
+
+class ValleyElements:
     API_LABEL = ValleyElementLocation("api_label")
     RUN_BUTTON = ValleyElementLocation("run_button")
 
@@ -81,6 +89,8 @@ class IconElementLocation(ElementLocation):
     def __init__(self, game_name, element_name):
         super().__init__("Icons", element_name)
 
+
+class IconElements:
     CSGO = IconElementLocation("CSGO")
     DOTA2 = IconElementLocation("Dota2")
     HEAVEN = IconElementLocation("Heaven")
@@ -94,6 +104,8 @@ class AMDLinkElementLocation(ElementLocation):
     def __init__(self, game_name, element_name):
         super().__init__("AMDLink", element_name)
 
+
+class AMDLinkElements:
     RESOLUTION_2K = ValorantElementLocation("2k")
     RESOLUTION_4K = ValorantElementLocation("4k")
     RESOLUTION_480P = ValorantElementLocation("480p")
