@@ -146,24 +146,24 @@ class AMDLinkElements:
     VIDEO_ENCODING_TYPE = AMDLinkElementLocation("video_encoding_type")
 
     DROPDOWN_OPTIONS_LABELS = {
-        "stream_resolution": AMDLinkElementLocation.STREAM_RESOLUTION,
-        "video_encoding_type": AMDLinkElementLocation.VIDEO_ENCODING_TYPE,
-        "amd_link_server": AMDLinkElementLocation.AMD_LINK_SERVER,
-        "accept_all_connections": AMDLinkElementLocation.ACCEPT_ALL_CONNECTIONS,
-        "use_encryption": AMDLinkElementLocation.USE_ENCRYPTION
+        "stream_resolution": STREAM_RESOLUTION,
+        "video_encoding_type": VIDEO_ENCODING_TYPE,
+        "amd_link_server": AMD_LINK_SERVER,
+        "accept_all_connections": ACCEPT_ALL_CONNECTIONS,
+        "use_encryption": USE_ENCRYPTION
     }
 
     DROPDOWN_OPTIONS_VALUES = {
         "stream_resolution": {
-            "2k": AMDLinkElementLocation.RESOLUTION_2K,
-            "4k": AMDLinkElementLocation.RESOLUTION_4K,
-            "480p": AMDLinkElementLocation.RESOLUTION_480P,
-            "720p": AMDLinkElementLocation.RESOLUTION_720P,
-            "1080p": AMDLinkElementLocation.RESOLUTION_1080P
+            "2k": RESOLUTION_2K,
+            "4k": RESOLUTION_4K,
+            "480p": RESOLUTION_480P,
+            "720p": RESOLUTION_720P,
+            "1080p": RESOLUTION_1080P
         },
 
         "video_encoding_type": {
-            "avc": AMDLinkElementLocation.AVC,
-            "hevc": AMDLinkElementLocation.HEVC
+            "avc": AVC,
+            "hevc": HEVC
         }
     }
