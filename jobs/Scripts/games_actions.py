@@ -164,12 +164,16 @@ def prepare_game(game_name, game_launcher):
         coords = locate_on_screen(HeavenElements.API_LABEL.build_path())
         click_on_element(coords, x_offset=50)
 
+        sleep(0.5)
+
         if game_name == "heavendx11":
             click_on_element(coords, x_offset=50, y_offset=15)
         elif game_name == "heavendx9":
             click_on_element(coords, x_offset=50, y_offset=30)
         else:
             click_on_element(coords, x_offset=50, y_offset=45)
+
+        sleep(0.5)
 
         locate_and_click(HeavenElements.RUN_BUTTON.build_path())
 
@@ -180,12 +184,16 @@ def prepare_game(game_name, game_launcher):
         coords = locate_on_screen(ValleyElements.API_LABEL.build_path())
         click_on_element(coords, x_offset=50)
 
+        sleep(0.5)
+
         if game_name == "heavendx11":
             click_on_element(coords, x_offset=50, y_offset=15)
         elif game_name == "heavendx9":
             click_on_element(coords, x_offset=50, y_offset=30)
         else:
             click_on_element(coords, x_offset=50, y_offset=45)
+
+        sleep(0.5)
 
         locate_and_click(ValleyElements.RUN_BUTTON.build_path())
 
