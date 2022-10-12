@@ -311,7 +311,15 @@ def prepare_game(game_name, game_launcher):
         sleep(1)
         locate_and_click(CSGOElements.TRAINING_MAP.build_path(), scale=True)
         sleep(1)
-        #click("center_700", "center_492", self.logger)
+        # go button has dynamic background. try finding it few times
+        for i in range(3):
+            try:
+                locate_and_click(CSGOElements.SELECT_MAP_BUTTON.build_path(), scale=True)
+                break
+            except Exception as e:
+                main_logger.warning(f"Select map button wasn't found: {e}")
+        else:
+            raise Exception("Select map button wasn't found at all")
         sleep(1)
         locate_and_click(CSGOElements.GO_BUTTON.build_path(), scale=True)
         sleep(20)

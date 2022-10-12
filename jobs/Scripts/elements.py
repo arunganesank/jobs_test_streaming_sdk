@@ -21,14 +21,12 @@ class CSGOElementLocation(GameElementLocation):
 
 
 class CSGOElements:
-    CONFIRM_BUTTON = CSGOElementLocation("confirm_button")
-    LOCK_IN_BUTTON = CSGOElementLocation("lock_in_button")
-    MALPHITE_ICON = CSGOElementLocation("malphite_icon")
-    PLAY_BUTTON = CSGOElementLocation("play_button")
-    PRACTICE_TOOL = CSGOElementLocation("practice_tool")
-    START_GAME = CSGOElementLocation("start_game")
-    START_GAME_ACTIVE = CSGOElementLocation("start_game_active")
-    TRAINING_BUTTON = CSGOElementLocation("training_button")
+    PLAY_BUTTON = LoLElementLocation("play_button")
+    MODE_SELECTION = LoLElementLocation("mode_selection")
+    WORKSHOP_MAPS = LoLElementLocation("workshop_maps")
+    TRAINING_MAP = LoLElementLocation("training_map")
+    SELECT_MAP_BUTTON = CSGOElementLocation("select_map_button")
+    GO_BUTTON = LoLElementLocation("go_button")
 
 
 class Dota2ElementLocation(GameElementLocation):
@@ -37,18 +35,18 @@ class Dota2ElementLocation(GameElementLocation):
 
 
 class Dota2Elements:
-    ARCADE = GameElementLocation("arcade")
-    DEMO_HERO = GameElementLocation("demo_hero")
-    EXIT_BUTTON = GameElementLocation("exit_button")
-    FREE_SPELLS = GameElementLocation("free_spells")
-    HEROES = GameElementLocation("heroes")
-    LVL_MAX = GameElementLocation("lvl_max")
-    RENDER_API_SELECTION = GameElementLocation("render_api_selection")
-    RENDER_API_DX11_OPTION = GameElementLocation("rendering_api_dx11_option")
-    RENDER_API_VULKAN_OPTION = GameElementLocation("rendering_api_vulkan_option")
-    SETTINGS_BUTTON = GameElementLocation("settings_button")
-    VIDEO_TAB = GameElementLocation("video_tab")
-    YES_BUTTON = GameElementLocation("yes_button")
+    ARCADE = Dota2ElementLocation("arcade")
+    DEMO_HERO = Dota2ElementLocation("demo_hero")
+    EXIT_BUTTON = Dota2ElementLocation("exit_button")
+    FREE_SPELLS = Dota2ElementLocation("free_spells")
+    HEROES = Dota2ElementLocation("heroes")
+    LVL_MAX = Dota2ElementLocation("lvl_max")
+    RENDER_API_SELECTION = Dota2ElementLocation("render_api_selection")
+    RENDER_API_DX11_OPTION = Dota2ElementLocation("rendering_api_dx11_option")
+    RENDER_API_VULKAN_OPTION = Dota2ElementLocation("rendering_api_vulkan_option")
+    SETTINGS_BUTTON = Dota2ElementLocation("settings_button")
+    VIDEO_TAB = Dota2ElementLocation("video_tab")
+    YES_BUTTON = Dota2ElementLocation("yes_button")
 
 
 class HeavenElementLocation(GameElementLocation):
@@ -68,11 +66,14 @@ class LoLElementLocation(GameElementLocation):
 
 
 class LoLElements:
+    CONFIRM_BUTTON = LoLElementLocation("confirm_button")
+    LOCK_IN_BUTTON = LoLElementLocation("lock_in_button")
+    MALPHITE_ICON = LoLElementLocation("malphite_icon")
     PLAY_BUTTON = LoLElementLocation("play_button")
-    MODE_SELECTION = LoLElementLocation("mode_selection")
-    WORKSHOP_MAPS = LoLElementLocation("workshop_maps")
-    TRAINING_MAP = LoLElementLocation("training_map")
-    GO_BUTTON = LoLElementLocation("go_button")
+    PRACTICE_TOOL = LoLElementLocation("practice_tool")
+    START_GAME = LoLElementLocation("start_game")
+    START_GAME_ACTIVE = LoLElementLocation("start_game_active")
+    TRAINING_BUTTON = LoLElementLocation("training_button")
 
 
 class ValleyElementLocation(GameElementLocation):
