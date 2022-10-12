@@ -87,7 +87,7 @@ class ValleyElements:
 
 
 class IconElementLocation(ElementLocation):
-    def __init__(self, game_name, element_name):
+    def __init__(self, element_name):
         super().__init__("Icons", element_name)
 
 
@@ -102,7 +102,7 @@ class IconElements:
 
 
 class AMDLinkElementLocation(ElementLocation):
-    def __init__(self, game_name, element_name):
+    def __init__(self, element_name):
         super().__init__("AMDLink", element_name)
 
 
