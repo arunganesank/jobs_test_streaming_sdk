@@ -186,9 +186,9 @@ def prepare_game(game_name, game_launcher):
 
         sleep(0.5)
 
-        if game_name == "heavendx11":
+        if game_name == "valleydx11":
             click_on_element(coords, x_offset=50, y_offset=15)
-        elif game_name == "heavendx9":
+        elif game_name == "valleydx9":
             click_on_element(coords, x_offset=50, y_offset=30)
         else:
             click_on_element(coords, x_offset=50, y_offset=45)
