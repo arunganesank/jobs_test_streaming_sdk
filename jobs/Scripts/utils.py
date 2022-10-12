@@ -572,3 +572,11 @@ def check_artifacts_and_save_status(artifact_path, json_path, logger, limit=1000
 
     checking_thread = Thread(target=do_check, args=())
     checking_thread.start()
+
+
+# Function return protocol type(tcp\udp) from server keys in case
+def getTransportProtocol(case):
+    current_protocol = "tcp"
+    if "-protocol udp" in case["server_keys"].lower():
+        current_protocol = "udp"
+    return current_protocol

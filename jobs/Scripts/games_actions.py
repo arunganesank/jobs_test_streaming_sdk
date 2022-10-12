@@ -150,14 +150,6 @@ def click_on_element(coords, x_offset=0, y_offset=0):
     main_logger.info("Click at x = {}, y = {}".format(x, y))
 
 
-# Function return protocol type(tcp\udp) from server keys in case
-def getTransportProtocol(case):
-    current_protocol = "tcp"
-    if "-protocol udp" in case["server_keys"].lower():
-        current_protocol = "udp"
-    return current_protocol
-
-
 def locate_and_click(template, scale=False, tries=3, delay=0, x_offset=0, y_offset=0, **kwargs):
     coords = locate_on_screen(template, scale=scale, tries=tries, delay=delay, **kwargs)
     x = coords[0] + coords[2] / 2 + x_offset
