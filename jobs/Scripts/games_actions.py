@@ -158,9 +158,6 @@ def locate_and_click(template, scale=False, tries=3, delay=0, x_offset=0, y_offs
 
 
 def prepare_game(game_name, game_launcher):
-    pyautogui.moveTo(1, 1)
-    pyautogui.hotkey("win", "m")
-
     if game_name == "heavendx9" or game_name == "heavendx11" or game_name == "heavenopengl":
         sleep(6)
 
