@@ -146,16 +146,15 @@ def locate_on_screen(template, scale=False, tries=3, delay=0, **kwargs):
 
 # do click on center with flexible offsets
 def click_on_element(coords, x_offset=0, y_offset=0):
-    pyautogui.click(coords[0] + coords[2] / 2 + x_offset, coords[1] + coords[3] / 2 + y_offset)
+    x = coords[0] + coords[2] / 2 + x_offset
+    y = coords[1] + coords[3] / 2 + y_offset
+    pyautogui.click(x, y)
     main_logger.info("Click at x = {}, y = {}".format(x, y))
 
 
 def locate_and_click(template, scale=False, tries=3, delay=0, x_offset=0, y_offset=0, **kwargs):
     coords = locate_on_screen(template, scale=scale, tries=tries, delay=delay, **kwargs)
-    x = coords[0] + coords[2] / 2 + x_offset
-    y = coords[1] + coords[3] / 2 + y_offset
-    main_logger.info("Click at x = {}, y = {}".format(x, y))
-    pyautogui.click(x, y)
+    click_on_element(coords, x_offset=x_offset, y_offset=y_offset)
 
 
 def prepare_game(game_name, game_launcher):
