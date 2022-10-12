@@ -130,6 +130,9 @@ def locate_on_screen(template, scale=False, tries=3, delay=0, **kwargs):
                         image = img.resize((int(img.width + img.width * scaling_try * 5 / 100), int(img.height + img.height * scaling_try * 5 / 100)))
                     else:
                         image = img.resize((int(img.width - img.width * scaling_try * 5 / 100), int(img.height - img.height * scaling_try * 5 / 100)))
+
+                    coords = pyautogui.locateOnScreen(image, **kwargs)
+
                     scaling_try += 1
             else:
                 coords = pyautogui.locateOnScreen(img, **kwargs)
@@ -313,6 +316,7 @@ def prepare_game(game_name, game_launcher):
                 locate_and_click(CSGOElements.SELECT_MAP_BUTTON.build_path(), scale=True)
                 break
             except Exception as e:
+                sleep(1)
                 main_logger.warning(f"Select map button wasn't found: {e}")
         else:
             raise Exception("Select map button wasn't found at all")
