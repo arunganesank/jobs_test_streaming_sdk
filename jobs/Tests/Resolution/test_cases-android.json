@@ -20,9 +20,8 @@
     {
        "case": "STR_ARN_003",
        "status": "active",
-       "server_keys": "-Resolution 2560,1440 -extStats true -Framerate 30",
+       "server_keys": "-Resolution 2560,1440 -extStats true -Framerate 30 -Protocol udp",
        "client_keys": "",
-       "transport_protocol": "udp",
        "script_info": [
            "QHD"
         ]
@@ -30,9 +29,8 @@
     {
        "case": "STR_ARN_004",
        "status": "active",
-       "server_keys": "-Resolution 2400,1080 -extStats true -Framerate 30",
+       "server_keys": "-Resolution 2400,1080 -extStats true -Framerate 30 -Protocol udp",
        "client_keys": "",
-       "transport_protocol": "udp",
        "script_info": [
            "20:9 resolution"
         ]
@@ -40,9 +38,8 @@
     {
         "case": "STR_ARN_005",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1920,1200 -extStats true -Framerate 30",
+        "server_keys": "-Codec h.264 -Resolution 1920,1200 -extStats true -Framerate 30 -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "WUXGA",
             "AVC"
@@ -51,9 +48,8 @@
     {
         "case": "STR_ARN_006",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1280,720 -extStats true -Framerate 30",
+        "server_keys": "-Codec h.264 -Resolution 1280,720 -extStats true -Framerate 30 -Protocol udp",
         "client_keys": "",
-        "transport_protocol": "udp",
         "script_info": [
             "HD",
             "AVC"
@@ -62,9 +58,8 @@
     {
        "case": "STR_ARN_007",
        "status": "active",
-       "server_keys": "-Codec h.264 -Resolution 2560,1440 -extStats true -Framerate 30",
+       "server_keys": "-Codec h.264 -Resolution 2560,1440 -extStats true -Framerate 30 -Protocol udp",
        "client_keys": "",
-       "transport_protocol": "udp",
        "script_info": [
            "QHD",
            "AVC"
@@ -73,9 +68,8 @@
     {
        "case": "STR_ARN_008",
        "status": "active",
-       "server_keys": "-Codec h.264 -Resolution 2400,1080 -extStats true -Framerate 30",
+       "server_keys": "-Codec h.264 -Resolution 2400,1080 -extStats true -Framerate 30 -Protocol udp",
        "client_keys": "",
-       "transport_protocol": "udp",
        "script_info": [
            "20:9 resolution",
            "AVC"
@@ -102,9 +96,8 @@
     {
        "case": "STR_ARN_011",
        "status": "active",
-       "server_keys": "-Resolution 2560,1440 -extStats true -Framerate 30",
+       "server_keys": "-Resolution 2560,1440 -extStats true -Framerate 30 -Protocol tcp",
        "client_keys": "",
-       "transport_protocol": "tcp",
        "script_info": [
            "QHD"
         ]
@@ -112,9 +105,8 @@
     {
        "case": "STR_ARN_012",
        "status": "active",
-       "server_keys": "-Resolution 2400,1080 -extStats true -Framerate 30",
+       "server_keys": "-Resolution 2400,1080 -extStats true -Framerate 30 -Protocol tcp",
        "client_keys": "",
-       "transport_protocol": "tcp",
        "script_info": [
            "20:9 resolution"
         ]
@@ -122,9 +114,8 @@
     {
         "case": "STR_ARN_013",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1920,1200 -extStats true -Framerate 30",
+        "server_keys": "-Codec h.264 -Resolution 1920,1200 -extStats true -Framerate 30 -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "WUXGA",
             "AVC"
@@ -133,9 +124,8 @@
     {
         "case": "STR_ARN_014",
         "status": "active",
-        "server_keys": "-Codec h.264 -Resolution 1280,720 -extStats true -Framerate 30",
+        "server_keys": "-Codec h.264 -Resolution 1280,720 -extStats true -Framerate 30 -Protocol tcp",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "script_info": [
             "HD",
             "AVC"
@@ -144,9 +134,8 @@
     {
        "case": "STR_ARN_015",
        "status": "active",
-       "server_keys": "-Codec h.264 -Resolution 2560,1440 -extStats true -Framerate 30",
+       "server_keys": "-Codec h.264 -Resolution 2560,1440 -extStats true -Framerate 30 -Protocol tcp",
        "client_keys": "",
-       "transport_protocol": "tcp",
        "script_info": [
            "QHD",
            "AVC"
@@ -155,9 +144,8 @@
     {
        "case": "STR_ARN_016",
        "status": "active",
-       "server_keys": "-Codec h.264 -Resolution 2400,1080 -extStats true -Framerate 30",
+       "server_keys": "-Codec h.264 -Resolution 2400,1080 -extStats true -Framerate 30 -Protocol tcp",
        "client_keys": "",
-       "transport_protocol": "tcp",
        "script_info": [
            "20:9 resolution",
            "AVC"
