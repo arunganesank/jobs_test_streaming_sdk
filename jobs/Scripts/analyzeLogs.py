@@ -9,6 +9,7 @@ import datetime
 from typing import Protocol
 import platform
 from utils import get_mc_config
+from streaming_actions import StreamingType
 
 sys.path.append(os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir)))
@@ -872,7 +873,11 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
     json_content["message"].extend(saved_errors)
 
 
-def analyze_logs(work_dir, json_content, case, execution_type="server"):
+def analyze_logs(work_dir, json_content, case, execution_type="server", streaming_type=StreamingType.SDK):
+    if streaming_type == StreamingType.AMD_LINK:
+        # TODO: AMD Link logs not supported yet
+        return
+
     try:
         log_key = '{}_log'.format(execution_type)
 

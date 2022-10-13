@@ -56,14 +56,16 @@ def format_script_info(script_info):
         result.append(server_keys)
         result.append("")
         result.append(client_keys)
-    else:
+    elif server_keys:
         result.append(server_keys)
 
     if second_client_keys:
         result.append("")
         result.append(second_client_keys)
 
-    result.append("")
+    if client_keys or server_keys or second_client_keys:
+        result.append("")
+
     result.extend(other_info)
 
     return result

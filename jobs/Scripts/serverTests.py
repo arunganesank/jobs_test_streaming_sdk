@@ -16,6 +16,7 @@ from instance_state import ServerInstanceState
 from server_actions import *
 import android_actions
 from analyzeLogs import analyze_logs
+from streaming_actions import close_streaming, StreamingType
 
 if platform.system() == "Windows":
     import pydirectinput
@@ -50,7 +51,8 @@ ACTIONS_MAPPING = {
     "record_metrics": RecordMetrics,
     "record_audio": RecordMicrophone,
     "recovery_clumsy": RecoveryClumsy,
-    "start_latency_tool": StartLatencyTool
+    "start_latency_tool": StartLatencyTool,
+    "open_game": OpenGame
 }
 
 
@@ -75,7 +77,7 @@ MULTICONNECTION_ACTIONS_MAPPING = {
 
 # Server receives commands from client and executes them
 # Server doesn't decide to retry case or do next test case. Exception: fail on server side which generates abort on server side
-def start_server_side_tests(args, case, process, android_client_closed, script_path, last_log_line, current_try, error_messages):
+def start_server_side_tests(args, case, process, android_client_closed, last_log_line, current_try, error_messages, script_path=None):
     output_path = os.path.join(args.output, "Color")
 
     screen_path = os.path.join(output_path, case["case"])
@@ -178,7 +180,8 @@ def start_server_side_tests(args, case, process, android_client_closed, script_p
             params["client_type"] = "android"
             params["messages"] = error_messages
             params["client_address"] = address[0]
-            params["transport_protocol"] = getTransportProtocol(case)
+            if args.streaming_type != StreamingType.AMD_LINK:
+                params["transport_protocol"] = getTransportProtocol(case)
             params["script_path"] = script_path
             params["process"] = process
             params["android_client_closed"] = android_client_closed
@@ -263,7 +266,7 @@ def start_server_side_tests(args, case, process, android_client_closed, script_p
 
             main_logger.info("Finish to wait new actions")
 
-            process = close_streaming_process(args.execution_type, case, process, tool_path=args.server_tool)
+            process = close_streaming(args.execution_type, case, process, tool_path=args.server_tool, streaming_type=args.streaming_type)
 
             if args.test_group in MC_CONFIG["second_win_client"]:
                 connection_sc.send("finish passed".encode("utf-8"))
@@ -294,7 +297,7 @@ def start_server_side_tests(args, case, process, android_client_closed, script_p
 
             json_content["message"] = json_content["message"] + list(error_messages)
 
-            analyze_logs(args.output, json_content, case)
+            analyze_logs(args.output, json_content, case, streaming_type=args.streaming_type)
 
             if args.test_group in MC_CONFIG["android_client"]:
                 analyze_logs(args.output, json_content, case, execution_type="android_client")

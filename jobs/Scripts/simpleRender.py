@@ -16,6 +16,7 @@ from threading import Thread
 import copy
 import traceback
 import time
+from streaming_actions import StreamingType, close_streaming
 
 if platform.system() == "Windows":
     from pyffmpeg import FFmpeg
@@ -139,17 +140,20 @@ def prepare_empty_reports(args, current_conf):
             test_case_report['render_device'] = get_gpu() if args.server_gpu_name == "none" else args.server_gpu_name
 
             if case['status'] == 'skipped':
-                prepared_keys = prepare_keys(args, case)
+                if args.streaming_type != StreamingType.AMD_LINK:
+                    prepared_keys = prepare_keys(args, case)
 
                 if args.execution_type == "server":
-                    keys_description = "Server keys: {}".format(prepared_keys)
                     test_case_report["script_info"] = []
-                    test_case_report["script_info"].append(keys_description)
+                    if args.streaming_type != StreamingType.AMD_LINK:
+                        keys_description = "Server keys: {}".format(prepared_keys)
+                        test_case_report["script_info"].append(keys_description)
 
                 elif args.execution_type == "client":
-                    keys_description = "Client keys: {}".format(prepared_keys)
                     test_case_report['script_info'] = case['script_info']
-                    test_case_report["script_info"].append(keys_description)
+                    if args.streaming_type != StreamingType.AMD_LINK:
+                        keys_description = "Client keys: {}".format(prepared_keys)
+                        test_case_report["script_info"].append(keys_description)
             else:
                 test_case_report['script_info'] = case['script_info']
                 
@@ -207,13 +211,15 @@ def save_results(args, case, cases, execution_time = 0.0, test_case_status = "",
 
         test_case_report["execution_time"] = execution_time
 
-        test_case_report["server_log"] = os.path.join("tool_logs", case["case"] + "_server.log")
-        test_case_report["client_log"] = os.path.join("tool_logs", case["case"] + "_client.log")
+        if args.execution_type == StreamingType.AMD_LINK:
+            # TODO: AMD Link logs not supported yet
+            test_case_report["server_log"] = os.path.join("tool_logs", case["case"] + "_server.log")
+            test_case_report["client_log"] = os.path.join("tool_logs", case["case"] + "_client.log")
 
         if args.test_group in MC_CONFIG["android_client"]:
             test_case_report["android_log"] = os.path.join("tool_logs", case["case"] + "_android.log")
 
-        latency_tool_log_path = os.path.join(args.output, "tool_logs", case["case"] + "_latency_{}".format(args.execution_type) + ".log")
+        latency_tool_log_path = os.path.join("tool_logs", case["case"] + "_latency_{}".format(args.execution_type) + ".log")
 
         if os.path.exists(latency_tool_log_path):
             latency_tool_log_key = "latency_tool_log_" + ("server" if args.execution_type == "server" else "client")
@@ -230,7 +236,8 @@ def save_results(args, case, cases, execution_time = 0.0, test_case_status = "",
 
         test_case_report["message"] = test_case_report["message"] + list(error_messages)
 
-        test_case_report["keys"] = case["prepared_keys"]
+        if args.streaming_type != StreamingType.AMD_LINK:
+            test_case_report["keys"] = case["prepared_keys"]
 
         if test_case_report["test_status"] in ["passed", "observed", "error"]:
             test_case_report["group_timeout_exceeded"] = False
@@ -303,7 +310,8 @@ def execute_tests(args, current_conf):
         case_start_time = time.time()
 
         # take tool keys based on type of the instance (server/client)
-        keys = case["server_keys"] if args.execution_type == "server" else case["client_keys"]
+        if args.streaming_type != StreamingType.AMD_LINK:
+           keys = case["server_keys"] if args.execution_type == "server" else case["client_keys"]
 
         current_try = 0
 
@@ -349,39 +357,45 @@ def execute_tests(args, current_conf):
                     main_logger.info("Network in settings.json ({}): {}".format(case["case"], settings_json_content["Headset"]["Network"]))
                     main_logger.info("Datagram size in settings.json ({}): {}".format(case["case"], settings_json_content["Headset"]["DatagramSize"]))
 
-                prepared_keys = prepare_keys(args, case)
+                if args.streaming_type != StreamingType.AMD_LINK:
+                    prepared_keys = prepare_keys(args, case)
 
-                if platform.system() == "Windows":
-                    execution_script = "{tool} {keys}".format(tool=tool_path, keys=prepared_keys)
+                    if platform.system() == "Windows":
+                        execution_script = "{tool} {keys}".format(tool=tool_path, keys=prepared_keys)
+                    else:
+                        execution_script = "sudo -E {tool} {keys}".format(tool=tool_path, keys=prepared_keys)
+
+                    case["prepared_keys"] = prepared_keys
+
+                    if args.execution_type == "server":
+                        keys_description = "Server keys: {}".format(prepared_keys)
+                        case["script_info"] = []
+                        case["script_info"].append(keys_description)
+
+                    elif args.execution_type == "client":
+                        keys_description = "Client keys: {}".format(prepared_keys)
+                        case["script_info"].append(keys_description)
+
+                    if platform.system() == "Windows":
+                        script_path = os.path.abspath(os.path.join(args.output, "{}.bat".format(case["case"])))
+                    else:
+                        script_path = os.path.abspath(os.path.join(args.output, "{}.sh".format(case["case"])))
+
+                    with open(script_path, "w") as f:
+                        f.write(execution_script)
                 else:
-                    execution_script = "sudo -E {tool} {keys}".format(tool=tool_path, keys=prepared_keys)
+                    if args.execution_type == "server":
+                        case["script_info"] = []
 
-                case["prepared_keys"] = prepared_keys
-
-                if args.execution_type == "server":
-                    keys_description = "Server keys: {}".format(prepared_keys)
-                    case["script_info"] = []
-                    case["script_info"].append(keys_description)
-
-                elif args.execution_type == "client":
-                    keys_description = "Client keys: {}".format(prepared_keys)
-                    case["script_info"].append(keys_description)
-
-                if platform.system() == "Windows":
-                    script_path = os.path.abspath(os.path.join(args.output, "{}.bat".format(case["case"])))
-                else:
-                    script_path = os.path.abspath(os.path.join(args.output, "{}.sh".format(case["case"])))
-
-                with open(script_path, "w") as f:
-                    f.write(execution_script)
+                    script_path = None
 
                 if args.execution_type == "server":
                     if platform.system() != "Windows":
                         os.system('chmod +x {}'.format(script_path))
 
-                    PROCESS, last_log_line, android_client_closed = start_server_side_tests(args, case, PROCESS, android_client_closed, script_path, last_log_line, current_try, error_messages)
+                    PROCESS, last_log_line, android_client_closed = start_server_side_tests(args, case, PROCESS, android_client_closed, last_log_line, current_try, error_messages, script_path=script_path)
                 else:
-                    PROCESS, last_log_line = start_client_side_tests(args, case, PROCESS, script_path, last_log_line, audio_device_name, current_try, error_messages)
+                    PROCESS, last_log_line = start_client_side_tests(args, case, PROCESS, last_log_line, audio_device_name, current_try, error_messages, script_path=script_path)
 
                 execution_time = time.time() - case_start_time
 
@@ -392,7 +406,7 @@ def execute_tests(args, current_conf):
 
                 break
             except Exception as e:
-                PROCESS = close_streaming_process(args.execution_type, case, PROCESS)
+                PROCESS = close_streaming(args.execution_type, case, PROCESS, streaming_type=args.streaming_type)
 
                 if (args.test_group in MC_CONFIG["android_client"]) and args.execution_type == "server":
                     # close Streaming SDK android app
@@ -440,6 +454,7 @@ def createArgsParser():
     parser.add_argument('--collect_traces', required=True)
     parser.add_argument('--screen_resolution', required=True)
     parser.add_argument('--track_used_memory', required=False, default=False)
+    parser.add_argument('--streaming_type', required=False, default="SDK")
 
     return parser
 
@@ -448,6 +463,7 @@ if __name__ == '__main__':
     main_logger.info('simpleRender start working...')
 
     args = createArgsParser().parse_args()
+    args.streaming_type = StreamingType[args.streaming_type]
 
     try:
         os.makedirs(args.output)

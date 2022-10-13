@@ -7,11 +7,12 @@ from subprocess import PIPE
 import traceback
 import pyautogui
 from threading import Thread
-from utils import parse_arguments, execute_adb_command, get_mc_config, close_clumsy, locateOnScreen
+from utils import parse_arguments, execute_adb_command, get_mc_config, close_clumsy
 from actions import *
 import base64
 import keyboard
 import platform
+import games_actions
 
 if platform.system() == "Windows":
     import win32gui
@@ -33,8 +34,6 @@ class OpenGame(Action):
             "valleydx9": "C:\\JN\\Valley Benchmark 1.0.lnk",
             "valleydx11": "C:\\JN\\Valley Benchmark 1.0.lnk",
             "valleyopengl": "C:\\JN\\Valley Benchmark 1.0.lnk",
-            "borderlands3": "C:\\JN\\Borderlands3.exe - Shortcut.lnk",
-            "apexlegends": "C:\\JN\\ApexLegends.exe - Shortcut.url",
             "valorant": "C:\\JN\\VALORANT.exe - Shortcut.lnk",
             "lol": "C:\\JN\\League of Legends.lnk",
             "dota2dx11": "C:\\JN\\dota2.exe.lnk",
@@ -50,8 +49,6 @@ class OpenGame(Action):
             "valleydx9": ["Unigine Valley Benchmark 1.0 Basic (Direct3D9)", "Valley.exe"],
             "valleydx11": ["Unigine Valley Benchmark 1.0 Basic (Direct3D11)", "Valley.exe"],
             "valleyopengl": ["Unigine Valley Benchmark 1.0 Basic (OpenGL)", "Valley.exe"],
-            "borderlands3": ["Borderlands® 3  ", "Borderlands3.exe"],
-            "apexlegends": ["Apex Legends", "r5apex.exe"],
             "valorant": ["VALORANT  ", "VALORANT-Win64-Shipping.exe"],
             "lol": ["League of Legends (TM) Client", "League of Legends.exe"],
             "dota2dx11": ["Dota 2", "dota2.exe"],
@@ -76,7 +73,7 @@ class OpenGame(Action):
         if window is not None and window != 0:
             self.logger.info("Window {} was succesfully found".format(self.game_window))
 
-            make_game_foreground(self.game_name, self.logger)
+            games_actions.make_game_foreground(self.game_name)
         else:
             self.logger.error("Window {} wasn't found at all".format(self.game_window))
             game_launched = False
@@ -96,187 +93,7 @@ class OpenGame(Action):
             psutil.Popen(self.game_launcher, stdout=PIPE, stderr=PIPE, shell=True)
             self.logger.info("Executed: {}".format(self.game_launcher))
 
-            if self.game_name == "heavendx9" or self.game_name == "heavendx11" or self.game_name == "heavenopengl":
-                sleep(6)
-                click("center_290", "center_-85", self.logger)
-                if self.game_name == "heavendx11":
-                    click("center_290", "center_-70", self.logger)
-                elif self.game_name == "heavendx9":
-                    click("center_290", "center_-55", self.logger)
-                else:
-                    click("center_290", "center_-40", self.logger)
-                click("center_280", "center_135", self.logger)
-                sleep(30)
-            if self.game_name == "valleydx9" or self.game_name == "valleydx11" or self.game_name == "valleyopengl":
-                sleep(6)
-                click("center_290", "center_-70", self.logger)
-                if self.game_name == "valleydx11":
-                    click("center_290", "center_-55", self.logger)
-                elif self.game_name == "valleydx9":
-                    click("center_290", "center_-40", self.logger)
-                else:
-                    click("center_290", "center_-25", self.logger)
-                click("center_280", "center_135", self.logger)
-                sleep(30)
-            elif self.game_name == "borderlands3":
-                sleep(150)
-            elif self.game_name == "apexlegends":
-                sleep(60)
-                click("center_0", "center_0", self.logger)
-                sleep(20)
-
-                # do opening of lobby twice to avoid ads
-                click("230", "920", self.logger)
-                sleep(3)
-                click("415", "130", self.logger)
-                sleep(3)
-                click("230", "1070", self.logger, delay=3)
-
-                press_keys("esc", self.logger)
-                sleep(1)
-
-                click("230", "920", self.logger)
-                sleep(3)
-                click("415", "130", self.logger)
-                sleep(3)
-                click("230", "1070", self.logger, delay=3)
-
-                sleep(90)
-                click("center_0", "center_0", self.logger)
-                press_keys("w+shift_15", self.logger)
-                press_keys("esc", self.logger)
-                sleep(1)
-                click("center_0", "center_155", self.logger)
-                sleep(2)
-                click("center_680", "center_-190", self.logger)
-                sleep(2)
-            elif self.game_name == "valorant":
-                sleep(60)
-                click("380", "edge_-225", self.logger)
-                sleep(1)
-                click("360", "210", self.logger)
-                sleep(60)
-
-                # do opening of lobby twice to avoid ads
-                click("center_0", "25", self.logger)
-                sleep(1)
-                click("center_0", "85", self.logger)
-                sleep(3)
-
-                press_keys("esc", self.logger)
-
-                click("center_0", "25", self.logger)
-                sleep(1)
-                click("center_0", "85", self.logger)
-                sleep(3)
-
-                click("center_-300", "edge_-95", self.logger)
-                sleep(1)
-                click("center_-300", "edge_-155", self.logger)
-                sleep(3)
-
-                click("center_0", "center_225", self.logger)
-                sleep(30)
-
-                click("center_-260", "center_-55", self.logger)
-                sleep(2)
-                click("center_0", "center_110", self.logger)
-                sleep
-            elif self.game_name == "lol":
-                sleep(90)
-                click("center_-15", "center_-160", self.logger)
-                sleep(1)
-                click("center_-520", "center_-340", self.logger)
-                sleep(1)
-                click("center_-390", "center_-280", self.logger)
-                sleep(1)
-                click("center_-15", "center_-160", self.logger)
-                sleep(1)
-                click("center_-110", "center_310", self.logger)
-                sleep(1)
-                click("center_-110", "center_310", self.logger)
-                sleep(1)
-                click("center_150", "center_-210", self.logger)
-                sleep(1)
-                click("center_0", "center_230", self.logger)
-                sleep(60)
-                click("center_0", "center_0", self.logger)
-                press_keys("shift+x ctrl+shift+i shift+y:17 ctrl+e ctrl+r", self.logger)
-            elif self.game_name == "dota2dx11" or self.game_name == "dota2vulkan":
-                sleep(30)
-                click("center_0", "center_0", self.logger)
-                press_keys("esc", self.logger)
-                sleep(10)
-
-                click("80", "30", self.logger)
-                sleep(1)
-                click("center_-240", "center_-435", self.logger)
-                sleep(1)
-                click("center_-605", "center_235", self.logger)
-                sleep(1)
-                if self.game_name == "dota2dx11":
-                    click("center_-605", "center_265", self.logger)
-                else:
-                    click("center_-605", "center_305", self.logger)
-                sleep(1)
-                press_keys("esc", self.logger)
-                sleep(3)
-                click("edge_-35", "35", self.logger)
-                sleep(1)
-                click("center_-115", "center_45", self.logger)
-                sleep(1)
-                psutil.Popen(self.game_launcher, stdout=PIPE, stderr=PIPE, shell=True)
-                self.logger.info("Executed: {}".format(self.game_launcher))
-                sleep(30)
-                press_keys("esc", self.logger)
-                sleep(10)
-
-                click("center_-510", "center_-570", self.logger)
-                sleep(1)
-                click("center_-300", "center_-215", self.logger)
-                sleep(1)
-                click("center_70", "center_-198", self.logger)
-                sleep(15)
-                click("edge_-160", "570", self.logger)
-                sleep(1)
-                click("edge_-80", "360", self.logger)
-                sleep(1)
-            elif self.game_name == "csgo":
-                sleep(30)
-                press_keys("esc", self.logger)
-                sleep(3)
-                press_keys("esc", self.logger)
-                sleep(3)
-                click("center_-919", "center_-394", self.logger)
-                sleep(1)
-                click("center_-710", "center_-406", self.logger)
-                sleep(1)
-                click("center_-718", "center_-223", self.logger)
-                sleep(1)
-                click("center_-4", "center_-86", self.logger)
-                sleep(1)
-                click("center_700", "center_492", self.logger)
-                sleep(1)
-                click("center_142", "center_112", self.logger)
-                sleep(40)
-                press_keys("w_3", self.logger)
-
-                # enter commands to csgo console
-                commands = [
-                    "`",
-                    "sv_cheats 1",
-                    "give weapon_deagle",
-                    "give weapon_molotov",
-                    "sv_infinite_ammo 1",
-                    "`"
-                ]
-                for command in commands:
-                    if command != "`":
-                        keyboard.write(command)
-                    else:
-                        pydirectinput.press("`")
-                    sleep(0.5)
-                    pydirectinput.press("enter")
+            games_actions.prepare_game(self.game_name, self.game_launcher)
 
 def make_window_foreground(window, logger):
     try:
@@ -303,37 +120,6 @@ def make_window_foreground(window, logger):
                 logger.error("Traceback: {}".format(traceback.format_exc()))
 
 
-def make_game_foreground(game_name, logger):
-    base_path = os.path.realpath(os.path.join(os.path.dirname(__file__), "..", "Icons"))
-
-    if "heaven" in game_name.lower():
-        icon_path = os.path.join(base_path, "Heaven.png")
-    elif "valley" in game_name.lower():
-        icon_path = os.path.join(base_path, "Valley.png")
-    elif "valorant" in game_name.lower():
-        icon_path = os.path.join(base_path, "Valorant.png")
-    elif "lol" in game_name.lower():
-        icon_path = os.path.join(base_path, "LoL.png")
-    elif "dota2" in game_name.lower():
-        icon_path = os.path.join(base_path, "Dota2.png")
-    elif "csgo" in game_name.lower():
-        icon_path = os.path.join(base_path, "CSGO.png")
-    else:
-        logger.error(f"Unknown game: {game_name}")
-        return
-
-    # sometimes first click on app can be ignored
-    for i in range(2):
-        try:
-            game_icon_coords = locateOnScreen(icon_path)
-            game_icon_center = pyautogui.center(game_icon_coords)
-            pyautogui.click(game_icon_center[0], game_icon_center[1])
-            sleep(4)
-        except:
-            logger.info(f"Icon wasn't detected. Skip making game foreground (try #{i})")
-            break
-
-
 # Do click 
 class Click(Action):
     def execute(self):
@@ -357,67 +143,7 @@ class PressKeys(Action):
         self.keys_string = parsed_arguments[0]
 
     def execute(self):
-        press_keys(self.keys_string, self.logger)
-
-
-def press_keys(keys_string, logger):
-    keys = keys_string.split()
-
-    # press keys one by one
-    # possible formats
-    # * space - press space
-    # * space_10 - press space down for 10 seconds
-    # * space+shift - press space and shift
-    # * space+shift:10 - press space and shift 10 times
-    for i in range(len(keys)):
-        key = keys[i]
-
-        duration = 0
-
-        if "_" in key:
-            parts = key.split("_")
-            key = parts[0]
-            duration = int(parts[1])
-
-        logger.info("Press: {}. Duration: {}".format(key, duration))
-
-        if duration == 0:
-            times = 1
-
-            if ":" in key:
-                parts = key.split(":")
-                key = parts[0]
-                times = int(parts[1])
-
-            keys_to_press = key.split("+")
-
-            for i in range(times):
-                for key_to_press in keys_to_press:
-                    pydirectinput.keyDown(key_to_press)
-
-                sleep(0.1)
-
-                for key_to_press in keys_to_press:
-                    pydirectinput.keyUp(key_to_press)
-
-                sleep(0.5)
-        else:
-            keys_to_press = key.split("+")
-
-            for key_to_press in keys_to_press:
-                pydirectinput.keyDown(key_to_press)
-
-            sleep(duration)
-
-            for key_to_press in keys_to_press:
-                pydirectinput.keyUp(key_to_press)
-
-        # if it isn't the last key - make a delay
-        if i != len(keys) - 1:
-            if "enter" in key:
-                sleep(2)
-            else:
-                sleep(1)
+        games_actions.press_keys(self.keys_string)
 
 
 # Do screenshot
@@ -534,7 +260,7 @@ class RecordVideo(MulticonnectionAction):
                 self.logger.info("Recovery Streaming SDK work - close clumsy")
                 close_clumsy()
                 sleep(2)
-                make_game_foreground(self.game_name, self.logger)
+                games_actions.make_game_foreground(self.game_name)
 
             self.logger.info("Start to record video")
             execute_adb_command("adb shell screenrecord --time-limit={} /sdcard/video.mp4".format(self.duration))
@@ -584,28 +310,6 @@ class RecordMicrophone(Action):
             self.logger.error("Traceback: {}".format(traceback.format_exc()))
 
 
-def click(x_description, y_description, logger, delay = 0.2):
-    if "center_" in x_description:
-        x = win32api.GetSystemMetrics(0) / 2 + int(x_description.replace("center_", ""))
-    elif "edge_" in x_description:
-        x = win32api.GetSystemMetrics(0) + int(x_description.replace("edge_", ""))
-    else:
-        x = int(x_description)
-
-    if "center_" in y_description:
-        y = win32api.GetSystemMetrics(1) / 2 + int(y_description.replace("center_", ""))
-    elif "edge_" in y_description:
-        y = win32api.GetSystemMetrics(1) + int(y_description.replace("edge_", ""))
-    else:
-        y = int(y_description)
-
-    logger.info("Click at x = {}, y = {}".format(x, y))
-
-    pyautogui.moveTo(x, y)
-    sleep(delay)
-    pyautogui.click()
-
-
 class StartActions(Action):
     def parse(self):
         self.game_name = self.params["game_name"]
@@ -617,22 +321,7 @@ class StartActions(Action):
 
 def do_test_actions(game_name, logger):
     try:
-        if game_name == "apexlegends":
-            for i in range(30):
-                pydirectinput.press("q")
-                pydirectinput.keyDown("a")
-                pydirectinput.keyDown("space")
-                sleep(0.5)
-                pydirectinput.keyUp("a")
-                pydirectinput.keyUp("space")
-
-                pydirectinput.press("q")
-                pydirectinput.keyDown("d")
-                pydirectinput.keyDown("space")
-                sleep(0.5)
-                pydirectinput.keyUp("d")
-                pydirectinput.keyUp("space")
-        elif game_name == "valorant":
+        if game_name == "valorant":
             for i in range(10):
                 pyautogui.keyDown("space")
                 sleep(0.1)
@@ -662,27 +351,17 @@ def do_test_actions(game_name, logger):
 
             for i in range(5):
                 pydirectinput.press("e")
-                sleep(0.1)
-                pydirectinput.press("e")
-                sleep(0.1)
-
+                sleep(0.3)
+                pydirectinput.press("w")
+                sleep(0.3)
                 pydirectinput.press("r")
-                sleep(0.1)
-                pydirectinput.press("r")
-                sleep(1.5)
+                sleep(0.3)
 
-                pyautogui.moveTo(edge_x - 230, edge_y - 60)
-                sleep(0.1)
-                pyautogui.click()
-                sleep(0.1)
-                pyautogui.moveTo(center_x, center_y)
+                pyautogui.moveTo(center_x + 230, center_y + 60)
                 sleep(0.1)
                 pyautogui.click(button="right")
                 sleep(1.5)
-                pyautogui.moveTo(edge_x - 250, edge_y - 20)
-                sleep(0.1)
-                pyautogui.click()
-                sleep(0.1)
+
                 pyautogui.moveTo(center_x, center_y)
                 sleep(0.1)
                 pyautogui.click(button="right")

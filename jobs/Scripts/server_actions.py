@@ -6,11 +6,12 @@ import psutil
 from subprocess import PIPE
 import traceback
 import pyautogui
-import keyboard
 from threading import Thread
+import platform
 from utils import *
 from actions import *
-import platform
+from streaming_actions import StreamingType, start_streaming
+import games_actions
 
 if platform.system() == "Windows":
     import win32gui
@@ -18,7 +19,6 @@ if platform.system() == "Windows":
     from pyffmpeg import FFmpeg
     import pydirectinput
 
-csgoFirstExec = True
 pyautogui.FAILSAFE = False
 MC_CONFIG = get_mc_config()
 
@@ -34,6 +34,106 @@ class ExecuteCMD(Action):
         process = psutil.Popen(self.cmd_command, stdout=PIPE, stderr=PIPE, shell=True)
         self.processes[self.cmd_command] = process
         self.logger.info("Executed: {}".format(self.cmd_command))
+
+        return True
+
+
+# open some game if it doesn't launched (e.g. open game/benchmark)
+class OpenGame(Action):
+    def parse(self):
+        games_launchers = {
+            "Windows": {
+                "heavendx9": "C:\\JN\\Heaven Benchmark 4.0.lnk",
+                "heavendx11": "C:\\JN\\Heaven Benchmark 4.0.lnk",
+                "heavenopengl": "C:\\JN\\Heaven Benchmark 4.0.lnk",
+                "valleydx9": "C:\\JN\\Valley Benchmark 1.0.lnk",
+                "valleydx11": "C:\\JN\\Valley Benchmark 1.0.lnk",
+                "valleyopengl": "C:\\JN\\Valley Benchmark 1.0.lnk",
+                "valorant": "C:\\JN\\VALORANT.exe - Shortcut.lnk",
+                "lol": "C:\\JN\\League of Legends.lnk",
+                "dota2dx11": "C:\\JN\\dota2.exe.lnk",
+                "dota2vulkan": "C:\\JN\\dota2.exe.lnk",
+                "csgo": "C:\\JN\\csgo.exe.url",
+                "empty": None
+            },
+            "Linux": {
+                "heavenopengl": "/scripts/launch_heaven",
+                "valleyopengl": "/scripts/launch_valley"
+            }
+        }
+
+        games_windows = {
+            "Windows": {
+                "heavendx9": ["Unigine Heaven Benchmark 4.0 Basic (Direct3D9)", "Heaven.exe"],
+                "heavendx11": ["Unigine Heaven Benchmark 4.0 Basic (Direct3D11)", "Heaven.exe"],
+                "heavenopengl": ["Unigine Heaven Benchmark 4.0 Basic (OpenGL)", "Heaven.exe"],
+                "valleydx9": ["Unigine Valley Benchmark 1.0 Basic (Direct3D9)", "Valley.exe"],
+                "valleydx11": ["Unigine Valley Benchmark 1.0 Basic (Direct3D11)", "Valley.exe"],
+                "valleyopengl": ["Unigine Valley Benchmark 1.0 Basic (OpenGL)", "Valley.exe"],
+                "valorant": ["VALORANT  ", "VALORANT-Win64-Shipping.exe"],
+                "lol": ["League of Legends (TM) Client", "League of Legends.exe"],
+                "dota2dx11": ["Dota 2", "dota2.exe"],
+                "dota2vulkan": ["Dota 2", "dota2.exe"],
+                "csgo": ["Counter-Strike: Global Offensive - Direct3D 9", "csgo.exe"],
+                "empty": [None, None]
+            },
+            "Linux": {
+                "heavenopengl": ["Unigine Heaven Benchmark 4.0 (Basic Edition)", "heaven_x64"],
+                "valleyopengl": ["Unigine Valley Benchmark (Basic Edition)", "valley_x64"]
+            }
+        }
+
+        self.game_name = self.params["game_name"]
+        self.game_launcher = games_launchers[platform.system()][self.game_name]
+        self.game_window = games_windows[platform.system()][self.game_name][0]
+        self.game_process_name = games_windows[platform.system()][self.game_name][1]
+
+    @Action.server_action_decorator
+    def execute(self):
+        if self.game_launcher is None or self.game_window is None or self.game_process_name is None:
+            return
+
+        game_launched = True
+
+        if platform.system() == "Windows":
+            window = win32gui.FindWindow(None, self.game_window)
+
+            if window is not None and window != 0:
+                self.logger.info("Window {} was succesfully found".format(self.game_window))
+
+                games_actions.make_game_foreground(self.game_name)
+            else:
+                self.logger.error("Window {} wasn't found at all".format(self.game_window))
+                game_launched = False
+        else:
+            process = subprocess.Popen("wmctrl -l", stdout=PIPE, shell=True)
+            stdout, stderr = process.communicate()
+            windows = [" ".join(x.split()[3::]) for x in stdout.decode("utf-8").strip().split("\n")]
+
+            for window in windows:
+                if window == self.game_window:
+                    self.logger.info("Window {} was succesfully found".format(self.game_window))
+                    break
+            else:
+                self.logger.error("Window {} wasn't found at all".format(self.game_window))
+                game_launched = False
+
+        for process in psutil.process_iter():
+            if self.game_process_name in process.name():
+                self.logger.info("Process {} was succesfully found".format(self.game_process_name))
+                break
+        else:
+            self.logger.info("Process {} wasn't found at all".format(self.game_process_name))
+            game_launched = False
+
+        if not game_launched:
+            if self.game_name == "lol":
+                sleep(240)
+
+            psutil.Popen(self.game_launcher, stdout=PIPE, stderr=PIPE, shell=True)
+            self.logger.info("Executed: {}".format(self.game_launcher))
+
+            games_actions.prepare_game(self.game_name, self.game_launcher)
 
         return True
 
@@ -61,7 +161,7 @@ class CheckWindow(Action):
                     self.logger.info("Window {} was succesfully found".format(self.window_name))
 
                     if self.is_game:
-                        make_game_foreground(self.game_name, self.logger)
+                        games_actions.make_game_foreground(self.game_name)
                 else:
                     self.logger.error("Window {} wasn't found at all".format(self.window_name))
                     return False
@@ -89,6 +189,7 @@ class CheckWindow(Action):
             result = False
 
         return result
+
 
 
 def close_processes(processes, logger):
@@ -130,39 +231,6 @@ def make_window_foreground(window, logger):
                 logger.error("Traceback: {}".format(traceback.format_exc()))
 
 
-def make_game_foreground(game_name, logger):
-    base_path = os.path.realpath(os.path.join(os.path.dirname(__file__), "..", "Icons"))
-
-    if "heaven" in game_name.lower():
-        icon_path = os.path.join(base_path, "Heaven.png")
-    elif "valley" in game_name.lower():
-        icon_path = os.path.join(base_path, "Valley.png")
-    elif "valorant" in game_name.lower():
-        icon_path = os.path.join(base_path, "Valorant.png")
-    elif "lol" in game_name.lower():
-        icon_path = os.path.join(base_path, "LoL.png")
-    elif "dota2" in game_name.lower():
-        icon_path = os.path.join(base_path, "Dota2.png")
-    elif "csgo" in game_name.lower():
-        icon_path = os.path.join(base_path, "CSGO.png")
-    elif "empty" in game_name.lower():
-        icon_path = os.path.join(base_path, "LatencyTool.png")
-    else:
-        logger.error(f"Unknown game: {game_name}")
-        return
-
-    # sometimes first click on app can be ignored
-    for i in range(2):
-        try:
-            game_icon_coords = locateOnScreen(icon_path)
-            game_icon_center = pyautogui.center(game_icon_coords)
-            pyautogui.click(game_icon_center[0], game_icon_center[1])
-            sleep(4)
-        except:
-            logger.info(f"Icon wasn't detected. Skip making game foreground (try #{i})")
-            break
-
-
 # press some sequence of keys on server
 class PressKeysServer(Action):
     def parse(self):
@@ -171,76 +239,7 @@ class PressKeysServer(Action):
 
     @Action.server_action_decorator
     def execute(self):
-        keys = self.keys_string.split()
-
-        # press keys one by one
-        # possible formats
-        # * space - press space
-        # * space_10 - press space down for 10 seconds
-        # * space+shift - press space and shift
-        # * space+shift:10 - press space and shift 10 times
-        for i in range(len(keys)):
-            key = keys[i]
-
-            duration = 0
-
-            if "_" in key:
-                parts = key.split("_")
-                key = parts[0]
-                duration = int(parts[1])
-
-            self.logger.info("Press: {}. Duration: {}".format(key, duration))
-
-            if duration == 0:
-                times = 1
-
-                if ":" in key:
-                    parts = key.split(":")
-                    key = parts[0]
-                    times = int(parts[1])
-
-                keys_to_press = key.split("+")
-
-                for i in range(times):
-                    for key_to_press in keys_to_press:
-                        if platform.system() == "Windows":
-                            pydirectinput.keyDown(key_to_press)
-                        else:
-                            pyautogui.keyDown(key_to_press)
-
-                    sleep(0.1)
-
-                    for key_to_press in keys_to_press:
-                        if platform.system() == "Windows":
-                            pydirectinput.keyUp(key_to_press)
-                        else:
-                            pyautogui.keyUp(key_to_press)
-
-                    if i != times - 1:
-                        sleep(0.5)
-            else:
-                keys_to_press = key.split("+")
-
-                for key_to_press in keys_to_press:
-                    if platform.system() == "Windows":
-                        pydirectinput.keyDown(key_to_press)
-                    else:
-                        pyautogui.keyDown(key_to_press)
-
-                sleep(duration)
-
-                for key_to_press in keys_to_press:
-                    if platform.system() == "Windows":
-                        pydirectinput.keyUp(key_to_press)
-                    else:
-                        pyautogui.keyUp(key_to_press)
-
-            # if it isn't the last key - make a delay
-            if i != len(keys) - 1:
-                if "enter" in key:
-                    sleep(1.5)
-                else:
-                    sleep(0.2)
+        games_actions.press_keys(self.keys_string)
 
         return True
 
@@ -327,37 +326,9 @@ class ClickServer(Action):
 
     @Action.server_action_decorator
     def execute(self):
-        if platform.system() == "Windows":
-            edge_x = win32api.GetSystemMetrics(0)
-            edge_y = win32api.GetSystemMetrics(1)
-        else:
-            process = subprocess.Popen("xdpyinfo | awk '/dimensions/{print $2}'", stdout=PIPE, shell=True)
-            stdout, stderr = process.communicate()
-            edge_x, edge_y = stdout.decode("utf-8").strip().split("x")
-            edge_x = int(edge_x)
-            edge_y = int(edge_y)
-
-        if "center_" in self.x_description:
-            x = edge_x / 2 + int(self.x_description.replace("center_", ""))
-        elif "edge_" in self.x_description:
-            x = edge_x + int(self.x_description.replace("edge_", ""))
-        else:
-            x = int(self.x_description)
-
-        if "center_" in self.y_description:
-            y = edge_y / 2 + int(self.y_description.replace("center_", ""))
-        elif "edge_" in self.y_description:
-            y = edge_y + int(self.y_description.replace("edge_", ""))
-        else:
-            y = int(self.y_description)
-
-        self.logger.info("Click at x = {}, y = {}".format(x, y))
-
-        pyautogui.moveTo(x, y)
-        sleep(self.delay)
-        pyautogui.click()
-
+        games_actions.click(self.x_description, self.y_description, self.delay)
         return True
+
 
 class RecordMicrophone(Action):
     def parse(self):
@@ -393,9 +364,7 @@ class DoTestActions(Action):
 
     def execute(self):
         try:
-            if self.game_name == "borderlands3":
-                pass
-            elif self.game_name == "valorant":
+            if self.game_name == "valorant":
                 if self.stage == 0:
                     sleep(1)
                     pydirectinput.keyDown("space")
@@ -413,19 +382,6 @@ class DoTestActions(Action):
 
                 if self.stage > 2:
                     self.stage = 0        
-            elif self.game_name == "apexlegends":
-                pydirectinput.keyDown("a")
-                pydirectinput.keyDown("space")
-                sleep(0.5)
-                pydirectinput.keyUp("a")
-                pydirectinput.keyUp("space")
-
-                pydirectinput.keyDown("d")
-                pydirectinput.keyDown("space")
-                sleep(0.5)
-                pydirectinput.keyUp("d")
-                pydirectinput.keyUp("space")
-                pydirectinput.click(button="right")
             elif self.game_name == "lol":
                 if platform.system() == "Windows":
                     edge_x = win32api.GetSystemMetrics(0)
@@ -444,27 +400,17 @@ class DoTestActions(Action):
 
                 if self.stage == 0:
                     pydirectinput.press("e")
-                    sleep(0.1)
-                    pydirectinput.press("e")
-                    sleep(0.1)
+                    sleep(0.3)
+                    pydirectinput.press("w")
+                    sleep(0.3)
                     pydirectinput.press("r")
-                    sleep(0.1)
-                    pydirectinput.press("r")
-                    sleep(1.5)
+                    sleep(0.3)
                 elif self.stage == 1:
-                    pyautogui.moveTo(edge_x - 230, edge_y - 60)
-                    sleep(0.1)
-                    pyautogui.click()
-                    sleep(0.1)
-                    pyautogui.moveTo(center_x, center_y)
+                    pyautogui.moveTo(center_x + 230, center_y + 60)
                     sleep(0.1)
                     pyautogui.click(button="right")
                     sleep(1.5)
                 elif self.stage == 2:
-                    pyautogui.moveTo(edge_x - 250, edge_y - 20)
-                    sleep(0.1)
-                    pyautogui.click()
-                    sleep(0.1)
                     pyautogui.moveTo(center_x, center_y)
                     sleep(0.1)
                     pyautogui.click(button="right")
@@ -479,25 +425,6 @@ class DoTestActions(Action):
                 sleep(1)
                 pydirectinput.press("w")
             elif self.game_name == "csgo":
-                global csgoFirstExec
-                if csgoFirstExec:
-                    csgoFirstExec = False
-                    commands = [
-                        "`",
-                        "sv_cheats 1",
-                        "give weapon_deagle",
-                        "give weapon_molotov",
-                        "sv_infinite_ammo 1",
-                        "`"
-                    ]
-                    for command in commands:
-                        if command != "`":
-                            keyboard.write(command)
-                        else:
-                            pydirectinput.press("`")
-                        sleep(0.15)
-                        pydirectinput.press("enter")
-
                 pydirectinput.press("4")
                 sleep(1)
                 pyautogui.click()
@@ -651,10 +578,20 @@ class StartStreaming(MulticonnectionAction):
                 multiconnection_start_android(self.args.test_group)
                 sleep(5)
 
+        if self.args.streaming_type == StreamingType.AMD_LINK:
+            debug_screen_path = os.path.join(self.params["screen_path"], f"{self.case['case']}_debug.jpg")
+
+            self.process = start_streaming(self.args.execution_type, 
+                streaming_type=self.args.streaming_type, case=self.case, socket=self.sock, debug_screen_path=debug_screen_path)
+
+            games_actions.make_game_foreground(self.args.game_name)
+
         # start server
         if self.process is None:
             should_collect_traces = (self.args.collect_traces == "BeforeTests")
-            self.process = start_streaming(self.args.execution_type, self.script_path)
+
+            if self.args.streaming_type != StreamingType.AMD_LINK:
+                self.process = start_streaming(self.args.execution_type, streaming_type=self.args.streaming_type, script_path=self.script_path)
 
             if self.args.test_group in mc_config["second_win_client"] or self.args.test_group in mc_config["android_client"]:
                 sleep(5)
@@ -692,7 +629,7 @@ class RecoveryClumsy(Action):
             self.logger.info("Recovery Streaming SDK work - close clumsy")
             close_clumsy()
             sleep(2)
-            make_game_foreground(self.game_name, self.logger)
+            games_actions.make_game_foreground(self.game_name)
 
 
 # Start Latency tool

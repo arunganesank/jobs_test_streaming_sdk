@@ -12,6 +12,7 @@ from utils import *
 from subprocess import PIPE, STDOUT
 import json
 from analyzeLogs import analyze_logs
+from streaming_actions import close_streaming, StreamingType
 
 sys.path.append(os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir)))
@@ -42,7 +43,8 @@ ACTIONS_MAPPING = {
     "record_metrics": RecordMetrics,
     "record_audio": RecordMicrophone,
     "start_streaming": StartStreaming,
-    "start_latency_tool": StartLatencyTool
+    "start_latency_tool": StartLatencyTool,
+    "open_game": OpenGame
 }
 
 
@@ -51,7 +53,7 @@ ACTIONS_MAPPING = {
 # Client reads list of actions and executes them one by one.
 # It sends actions which must be executed on server to it.
 # Also client does screenshots and records video.
-def start_client_side_tests(args, case, process, script_path, last_log_line, audio_device_name, current_try, error_messages):
+def start_client_side_tests(args, case, process, last_log_line, audio_device_name, current_try, error_messages, script_path=None):
     output_path = os.path.join(args.output, "Color")
 
     screen_path = os.path.join(output_path, case["case"])
@@ -109,7 +111,7 @@ def start_client_side_tests(args, case, process, script_path, last_log_line, aud
                     actions = json.load(common_actions_file)[actions_key]
 
             # Replacing record_video command to record_audio
-            if "-microphone true" in case["server_keys"].lower():
+            if "server_keys" in case and "-microphone true" in case["server_keys"].lower():
                 for i in range(len(actions)):
                     if "record_video" in actions[i]:
                         if "-audiofile" in case["server_keys"].lower():
@@ -129,7 +131,8 @@ def start_client_side_tests(args, case, process, script_path, last_log_line, aud
             params["game_name"] = game_name
             params["client_type"] = "win_client"
             params["messages"] = error_messages
-            params["transport_protocol"] = getTransportProtocol(case)
+            if args.streaming_type != StreamingType.AMD_LINK:
+                params["transport_protocol"] = getTransportProtocol(case)
             params["script_path"] = script_path
             params["process"] = process
             params["case_json_path"] = os.path.join(args.output, case["case"] + CASE_REPORT_SUFFIX)
@@ -156,7 +159,7 @@ def start_client_side_tests(args, case, process, script_path, last_log_line, aud
                 params["command"] = command
                 params["arguments_line"] = arguments_line
 
-                # find necessary command and execute it
+                # find necessary command and execute itd
                 if command in ACTIONS_MAPPING:
                     command_object = ACTIONS_MAPPING[command](sock, params, instance_state, main_logger)
                     command_object.do_action()
@@ -178,7 +181,7 @@ def start_client_side_tests(args, case, process, script_path, last_log_line, aud
             if "Latency" in args.test_group and args.game_name == "Empty":
                 close_latency_tool(args.execution_type)
 
-            process = close_streaming_process(args.execution_type, case, process)
+            process = close_streaming(args.execution_type, case, process, streaming_type=args.streaming_type)
             last_log_line = save_logs(args, case, last_log_line, current_try)
 
             if "Latency" in args.test_group and args.game_name == "Empty":
@@ -202,7 +205,7 @@ def start_client_side_tests(args, case, process, script_path, last_log_line, aud
 
             json_content["message"] = json_content["message"] + list(error_messages)
 
-            analyze_logs(args.output, json_content, case, execution_type="windows_client")
+            analyze_logs(args.output, json_content, case, execution_type="windows_client", streaming_type=args.streaming_type)
 
             # execute iperf if it's necessary
             main_logger.info("Send iperf command")

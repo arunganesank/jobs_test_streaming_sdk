@@ -17,6 +17,8 @@ from instance_state import SecondClientInstanceState
 from utils import *
 from mc_actions import *
 from analyzeLogs import analyze_logs
+from streaming_actions import StreamingType
+from streaming_actions import start_streaming, close_streaming
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
@@ -312,7 +314,9 @@ def execute_tests(args, current_conf):
             # TODO: extend max_clients param (consider all existing clients)
             if "-MAXUSERS 1" not in case["server_keys"] and not ("max_clients" in case and case["max_clients"] == 1):
                 if process is None:
-                    process = start_streaming("second_client", script_path)
+                    pyautogui.moveTo(1, 1)
+                    pyautogui.hotkey("win", "m")
+                    process = start_streaming("second_client", script_path=script_path)
 
             pyscreenshot.grab()
             pyautogui.click(x=400, y=800)
@@ -362,7 +366,7 @@ def execute_tests(args, current_conf):
                 status = "observed"
 
             if "-MAXUSERS 1" not in case["server_keys"] and not ("max_clients" in case and case["max_clients"] == 1):
-                process = close_streaming_process("second_client", case, process)
+                process = close_streaming("second_client", case, process)
                 last_log_line = save_logs(args, case, last_log_line, current_try, is_multiconnection=True)
 
                 with open(os.path.join(args.output, case["case"] + CASE_REPORT_SUFFIX), "r") as file:
@@ -389,7 +393,7 @@ def execute_tests(args, current_conf):
         except Exception as e:
             main_logger.error("Fatal error: {}".format(str(e)))
             main_logger.error("Traceback: {}".format(traceback.format_exc()))
-            process = close_streaming_process("second_client", case, process)
+            process = close_streaming("second_client", case, process)
             last_log_line = save_logs(args, case, last_log_line, current_try, is_multiconnection=True)
             execution_time = time() - case_start_time
             save_results(args, case, cases, execution_time = execution_time, test_case_status = "error", error_messages = [])

@@ -18,6 +18,7 @@ import platform
 from threading import Thread
 from PIL import Image
 from grayArtifacts import check_artifacts
+from streaming_actions import StreamingType
 
 if platform.system() == "Windows":
     import win32api
@@ -128,47 +129,6 @@ def should_case_be_closed(execution_type, case):
     return "keep_{}".format(execution_type) not in case or not case["keep_{}".format(execution_type)]
 
 
-def close_streaming_process(execution_type, case, process, tool_path=None):
-    try:
-        if should_case_be_closed(execution_type, case):
-            # close the current Streaming SDK process
-            main_logger.info("Start closing")
-
-            if platform.system() == "Windows":
-                if process is not None:
-                    close_process(process)
-
-                # additional try to kill Streaming SDK server/client (to be sure that all processes are closed)
-                subprocess.call("taskkill /f /im RemoteGameClient.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
-                subprocess.call("taskkill /f /im RemoteGameServer.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
-
-                if execution_type == "server":
-                    crash_window = win32gui.FindWindow(None, "RemoteGameServer.exe")
-                else:
-                    crash_window = win32gui.FindWindow(None, "RemoteGameClient.exe")
-
-                if crash_window:
-                    main_logger.info("Crash window was found. Closing it...")
-                    win32gui.PostMessage(crash_window, win32con.WM_CLOSE, 0, 0)
-            else:
-                if process is not None and tool_path is not None:
-                    os.system("sudo pkill -9 -f \"^{}\"".format(os.path.abspath(tool_path)))
- 
-            main_logger.info("Finish closing")
-
-            return None
-        else:
-            main_logger.info("Keep StreamingSDK instance")
-
-        return process
-
-    except Exception as e:
-        main_logger.error("Failed to close Streaming SDK process. Exception: {}".format(str(e)))
-        main_logger.error("Traceback: {}".format(traceback.format_exc()))
-
-        return None
-
-
 def close_android_app(case=None, multiconnection=False):
     try:
         key = "android" if multiconnection else "client"
@@ -188,6 +148,10 @@ def close_android_app(case=None, multiconnection=False):
 
 
 def save_logs(args, case, last_log_line, current_try, is_multiconnection=False):
+    if getattr(args, "streaming_type", None) and args.streaming_type == StreamingType.AMD_LINK:
+        # TODO: AMD Link logs not supported yet
+        return None
+
     try:
         if not is_multiconnection:
             if hasattr(args, "execution_type"):
@@ -358,20 +322,6 @@ def save_android_log(args, case, current_try, log_name_postfix="_client"):
         return None
 
 
-def start_streaming(execution_type, script_path):
-    main_logger.info("Start StreamingSDK {}".format(execution_type))
-
-    # start Streaming SDK process
-    if platform.system() == "Windows":
-        process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
-    else:
-        process = psutil.Popen(f"xterm -e {script_path}", stdout=PIPE, stderr=PIPE, shell=True)
-
-    main_logger.info("Start Streaming SDK")
-
-    return process
-
-
 def start_latency_tool(execution_type, tool_path):
     main_logger.info("Start Latency tool")
 
@@ -423,87 +373,6 @@ def collect_iperf_info(args, log_name_base):
         main_logger.error("Traceback: {}".format(traceback.format_exc()))
 
     os.chdir(current_dir)
-
-
-def close_game(game_name):
-    if platform.system() == "Windows":
-        edge_x = win32api.GetSystemMetrics(0)
-        edge_y = win32api.GetSystemMetrics(1)
-    else:
-        process = subprocess.Popen("xdpyinfo | awk '/dimensions/{print $2}'", stdout=PIPE, shell=True)
-        stdout, stderr = process.communicate()
-        edge_x, edge_y = stdout.decode("utf-8").strip().split("x")
-        edge_x = int(edge_x)
-        edge_y = int(edge_y)
-
-    center_x = edge_x / 2
-    center_y = edge_y / 2
-
-    if game_name == "lol":
-        pydirectinput.keyDown("esc")
-        sleep(0.1)
-        pydirectinput.keyUp("esc")
-
-        sleep(2)
-
-        pyautogui.moveTo(center_x - 360, center_y + 335)
-        sleep(0.2)
-        pyautogui.mouseDown()
-        sleep(0.2)
-        pyautogui.mouseUp()
-        sleep(0.2)
-        pyautogui.mouseDown()
-        sleep(0.2)
-        pyautogui.mouseUp()
-
-        sleep(1)
-
-        pyautogui.moveTo(center_x - 130, center_y - 50)
-        sleep(0.2)
-        pyautogui.mouseDown()
-        sleep(0.2)
-        pyautogui.mouseUp()
-
-        sleep(3)
-
-
-def close_game_process(game_name):
-    try:
-        games_processes = {
-            "heavendx9": ["browser_x86.exe", "Heaven.exe"],
-            "heavendx11": ["browser_x86.exe", "Heaven.exe"],
-            "heavenopengl": ["browser_x86.exe", "Heaven.exe"],
-            "valleydx9": ["browser_x86.exe", "Valley.exe"],
-            "valleydx11": ["browser_x86.exe", "Valley.exe"],
-            "valleyopengl": ["browser_x86.exe", "Valley.exe"],
-            "borderlands3": ["Borderlands3.exe"],
-            "apexlegends": ["r5apex.exe"],
-            "valorant": ["VALORANT-Win64-Shipping.exe"],
-            "lol": ["LeagueClient.exe", "League of Legends.exe"],
-            "csgo": ["csgo.exe"],
-            "dota2dx11": ["dota2.exe"],
-            "dota2vulkan": ["dota2.exe"],
-        }
-
-        if game_name in games_processes:
-            processes_names = games_processes[game_name]
-
-            for process in psutil.process_iter():
-                if process.name() in processes_names:
-                    process.kill()
-                    main_logger.info("Target game process found. Close it")
-
-    except Exception as e:
-        main_logger.error("Failed to close game process. Exception: {}".format(str(e)))
-        main_logger.error("Traceback: {}".format(traceback.format_exc()))
-
-
-def make_window_minimized(window):
-    try:
-        win32gui.ShowWindow(window, 2)
-    except Exception as e:
-        main_logger.error("Failed to make window minized: {}".format(str(e)))
-        main_logger.error("Traceback: {}".format(traceback.format_exc()))
 
 
 def execute_adb_command(command, return_output=False):
@@ -700,19 +569,6 @@ def check_artifacts_and_save_status(artifact_path, json_path, logger, limit=1000
     checking_thread = Thread(target=do_check, args=())
     checking_thread.start()
 
-
-def locateOnScreen(template, tries=3, **kwargs):
-    coords = None
-    if not "confidence" in kwargs:
-        kwargs["confidence"] = 0.95
-    while not coords and tries > 0 and kwargs["confidence"] > 0:
-        with Image.open(os.path.abspath(os.path.join(os.path.dirname(__file__), "templates", template))) as img:
-            coords = pyautogui.locateOnScreen(img, **kwargs)
-        tries -= 1
-        kwargs["confidence"] -= 0.07
-    if not coords:
-        raise Exception("No such element on screen")
-    return (coords[0], coords[1], coords[2], coords[3])
 
 # Function return protocol type(tcp\udp) from server keys in case
 def getTransportProtocol(case):

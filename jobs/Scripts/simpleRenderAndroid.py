@@ -18,6 +18,7 @@ import re
 from instance_state import AndroidInstanceState
 from android_actions import *
 from analyzeLogs import analyze_logs
+from streaming_actions import start_streaming, close_streaming
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
@@ -42,11 +43,6 @@ ACTIONS_MAPPING = {
     "start_actions": StartActions,
     "record_audio": RecordMicrophone
 }
-
-
-def hide_emulator(args):
-    window = win32gui.FindWindow(None, "Android Emulator - Pixel:5554")
-    make_window_minimized(window)
 
 
 def copy_test_cases(args):
@@ -380,7 +376,7 @@ def execute_tests(args):
                         if "start_first" in case and case["start_first"] == "server":
                             if process is None:
                                 main_logger.info("Start Streaming SDK server instance")
-                                process = start_streaming("server", server_script_path)
+                                process = start_streaming("server", script_path=server_script_path)
                                 sleep(5)
 
                         if client_closed:
@@ -393,7 +389,7 @@ def execute_tests(args):
                         # start server after client
                         if "start_first" not in case or case["start_first"] == "client":
                             main_logger.info("Start Streaming SDK server instance")
-                            process = start_streaming("server", server_script_path)
+                            process = start_streaming("server", script_path=server_script_path)
 
                     main_logger.info("Finish action execution\n\n\n")
 
@@ -415,7 +411,7 @@ def execute_tests(args):
                 # close Streaming SDK android app
                 client_closed = close_android_app(case)
                 # close Streaming SDK server instance
-                process = close_streaming_process("server", case, process)
+                process = close_streaming("server", case, process)
                 last_log_line_server = save_logs(args, case, last_log_line_server, current_try)
                 save_android_log(args, case, current_try)
 
@@ -503,7 +499,6 @@ if __name__ == '__main__':
         if not os.path.exists(os.path.join(args.output, "tool_logs")):
             os.makedirs(os.path.join(args.output, "tool_logs"))
 
-        hide_emulator(args)
         copy_test_cases(args)
         prepare_empty_reports(args)
         prepare_android_emulator(args)
