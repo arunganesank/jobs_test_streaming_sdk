@@ -58,14 +58,14 @@ def start_streaming_sdk(execution_type, script_path):
     return process
 
 
-def set_dropdown_option(case, field_width, label_image_name, param_name):
-    label_coords = locate_on_screen(AMDLinkElements.DROPDOWN_OPTIONS_LABELS[label_image_name].build_path())
+def set_dropdown_option(case, field_width, param_name):
+    label_coords = locate_on_screen(AMDLinkElements.DROPDOWN_OPTIONS_LABELS[param_name].build_path())
     pyautogui.click(label_coords[0] + field_width, label_coords[1] + label_coords[3] / 2)
-    locate_and_click(AMDLinkElements.DROPDOWN_OPTIONS_VALUES[label_image_name][param_name].build_path())
+    locate_and_click(AMDLinkElements.DROPDOWN_OPTIONS_VALUES[param_name][case["server_params"][param_name]].build_path())
 
 
-def configure_boolean_option(case, field_width, label_image_name, param_name):
-    label_coords = locate_on_screen(AMDLinkElements.DROPDOWN_OPTIONS_LABELS[label_image_name].build_path())
+def configure_boolean_option(case, field_width, param_name):
+    label_coords = locate_on_screen(AMDLinkElements.DROPDOWN_OPTIONS_LABELS[param_name].build_path())
     region = (int(label_coords[0] + field_width - 100), int(label_coords[1]), int(field_width), int(label_coords[3]))
     try:
         coords = locate_on_screen(AMDLinkElements.ENABLED.build_path(), region=region)
@@ -77,7 +77,7 @@ def configure_boolean_option(case, field_width, label_image_name, param_name):
         except:
             raise Exception("Can't determine boolean value")
 
-    if value != case['server_params'][param_name]:
+    if value != case["server_params"][param_name]:
         click_on_element(coords)
 
 
@@ -89,16 +89,16 @@ def set_adrenalin_params(case):
     field_width = (resolution_coords[0] - amd_link_coords[0]) / 2
 
     # select Resolution
-    set_dropdown_option(case, field_width, "resolution", "resolution")
+    set_dropdown_option(case, field_width, "resolution")
 
     # select Video Encoding
-    set_dropdown_option(case, field_width, "encoding_type", "encoding_type")
+    set_dropdown_option(case, field_width, "encoding_type")
 
     # configure Accept All Connections option
-    configure_boolean_option(case, field_width, "accept_all_connections", "accept_all_connections")
+    configure_boolean_option(case, field_width, "accept_all_connections")
 
     # configure Use Encryption option
-    configure_boolean_option(case, field_width, "use_encryption", "use_encryption")
+    configure_boolean_option(case, field_width, "use_encryption")
 
 
 def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=None):
@@ -163,8 +163,11 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
             except:
                 client_already_started = False
 
+            main_logger.info("Server is already started: {}".format(server_already_started))
+            main_logger.info("Client is already started: {}".format(client_already_started))
+
             if client_already_started:
-                locate_on_screen(AMDLinkElements.START_STREAMING_BUTTON.build_path(), delay=1)
+                locate_and_click(AMDLinkElements.START_STREAMING_BUTTON.build_path(), delay=1)
 
                 socket.send("restart".encode("utf-8"))
             else:
@@ -176,13 +179,13 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
                 click_on_element(coords)
 
                 if case["server_params"]["streaming_mode"] == "multi_play":
-                    coords = locate_on_screen(AMDLinkElements.MULTI_PLAY.build_path(), delay=1)
+                    link_coords = locate_on_screen(AMDLinkElements.MULTI_PLAY.build_path(), delay=1)
                 else:
-                    coords = locate_on_screen(AMDLinkElements.FULL_ACCESS.build_path(), delay=1)
+                    link_coords = locate_on_screen(AMDLinkElements.FULL_ACCESS.build_path(), delay=1)
 
-                # first click - make full acess active, second click - select full access, third click - click on code to display copy button + one additional click (sometimes first click not work)
-                for i in range(4):
-                    click_on_element(coords)
+                # sometimes click not work
+                for i in range(3):
+                    click_on_element(link_coords)
                     sleep(1)
 
                 for i in range(40):
@@ -196,6 +199,11 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
                         sleep(1)
                 else:
                     raise Exception("Fresh invitation code wasn't detected")
+
+                # sometimes click not work
+                for i in range(2):
+                    click_on_element(link_coords)
+                    sleep(1)
 
                 # copy invite code and close window with it
                 locate_and_click(AMDLinkElements.COPY_TEXT.build_path(), delay=1)
