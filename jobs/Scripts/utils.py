@@ -148,7 +148,7 @@ def close_android_app(case=None, multiconnection=False):
 
 
 def save_logs(args, case, last_log_line, current_try, is_multiconnection=False):
-    if args.streaming_type == StreamingType.AMD_LINK:
+    if getattr(args, "streaming_type", None) and args.streaming_type == StreamingType.AMD_LINK:
         # TODO: AMD Link logs not supported yet
         return None
 

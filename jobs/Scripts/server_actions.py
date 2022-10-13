@@ -6,7 +6,6 @@ import psutil
 from subprocess import PIPE
 import traceback
 import pyautogui
-import keyboard
 from threading import Thread
 import platform
 from utils import *
@@ -43,39 +42,51 @@ class ExecuteCMD(Action):
 class OpenGame(Action):
     def parse(self):
         games_launchers = {
-            "heavendx9": "C:\\JN\\Heaven Benchmark 4.0.lnk",
-            "heavendx11": "C:\\JN\\Heaven Benchmark 4.0.lnk",
-            "heavenopengl": "C:\\JN\\Heaven Benchmark 4.0.lnk",
-            "valleydx9": "C:\\JN\\Valley Benchmark 1.0.lnk",
-            "valleydx11": "C:\\JN\\Valley Benchmark 1.0.lnk",
-            "valleyopengl": "C:\\JN\\Valley Benchmark 1.0.lnk",
-            "valorant": "C:\\JN\\VALORANT.exe - Shortcut.lnk",
-            "lol": "C:\\JN\\League of Legends.lnk",
-            "dota2dx11": "C:\\JN\\dota2.exe.lnk",
-            "dota2vulkan": "C:\\JN\\dota2.exe.lnk",
-            "csgo": "C:\\JN\\csgo.exe.url",
-            "empty": None
+            "Windows": {
+                "heavendx9": "C:\\JN\\Heaven Benchmark 4.0.lnk",
+                "heavendx11": "C:\\JN\\Heaven Benchmark 4.0.lnk",
+                "heavenopengl": "C:\\JN\\Heaven Benchmark 4.0.lnk",
+                "valleydx9": "C:\\JN\\Valley Benchmark 1.0.lnk",
+                "valleydx11": "C:\\JN\\Valley Benchmark 1.0.lnk",
+                "valleyopengl": "C:\\JN\\Valley Benchmark 1.0.lnk",
+                "valorant": "C:\\JN\\VALORANT.exe - Shortcut.lnk",
+                "lol": "C:\\JN\\League of Legends.lnk",
+                "dota2dx11": "C:\\JN\\dota2.exe.lnk",
+                "dota2vulkan": "C:\\JN\\dota2.exe.lnk",
+                "csgo": "C:\\JN\\csgo.exe.url",
+                "empty": None
+            },
+            "Linux": {
+                "heavenopengl": "/scripts/launch_heaven",
+                "valleyopengl": "/scripts/launch_valley"
+            }
         }
 
         games_windows = {
-            "heavendx9": ["Unigine Heaven Benchmark 4.0 Basic (Direct3D9)", "Heaven.exe"],
-            "heavendx11": ["Unigine Heaven Benchmark 4.0 Basic (Direct3D11)", "Heaven.exe"],
-            "heavenopengl": ["Unigine Heaven Benchmark 4.0 Basic (OpenGL)", "Heaven.exe"],
-            "valleydx9": ["Unigine Valley Benchmark 1.0 Basic (Direct3D9)", "Valley.exe"],
-            "valleydx11": ["Unigine Valley Benchmark 1.0 Basic (Direct3D11)", "Valley.exe"],
-            "valleyopengl": ["Unigine Valley Benchmark 1.0 Basic (OpenGL)", "Valley.exe"],
-            "valorant": ["VALORANT  ", "VALORANT-Win64-Shipping.exe"],
-            "lol": ["League of Legends (TM) Client", "League of Legends.exe"],
-            "dota2dx11": ["Dota 2", "dota2.exe"],
-            "dota2vulkan": ["Dota 2", "dota2.exe"],
-            "csgo": ["Counter-Strike: Global Offensive - Direct3D 9", "csgo.exe"],
-            "empty": [None, None]
+            "Windows": {
+                "heavendx9": ["Unigine Heaven Benchmark 4.0 Basic (Direct3D9)", "Heaven.exe"],
+                "heavendx11": ["Unigine Heaven Benchmark 4.0 Basic (Direct3D11)", "Heaven.exe"],
+                "heavenopengl": ["Unigine Heaven Benchmark 4.0 Basic (OpenGL)", "Heaven.exe"],
+                "valleydx9": ["Unigine Valley Benchmark 1.0 Basic (Direct3D9)", "Valley.exe"],
+                "valleydx11": ["Unigine Valley Benchmark 1.0 Basic (Direct3D11)", "Valley.exe"],
+                "valleyopengl": ["Unigine Valley Benchmark 1.0 Basic (OpenGL)", "Valley.exe"],
+                "valorant": ["VALORANT  ", "VALORANT-Win64-Shipping.exe"],
+                "lol": ["League of Legends (TM) Client", "League of Legends.exe"],
+                "dota2dx11": ["Dota 2", "dota2.exe"],
+                "dota2vulkan": ["Dota 2", "dota2.exe"],
+                "csgo": ["Counter-Strike: Global Offensive - Direct3D 9", "csgo.exe"],
+                "empty": [None, None]
+            },
+            "Linux": {
+                "heavenopengl": ["Unigine Heaven Benchmark 4.0 (Basic Edition)", "heaven_x64"],
+                "valleyopengl": ["Unigine Valley Benchmark (Basic Edition)", "valley_x64"]
+            }
         }
 
         self.game_name = self.params["game_name"]
-        self.game_launcher = games_launchers[self.game_name]
-        self.game_window = games_windows[self.game_name][0]
-        self.game_process_name = games_windows[self.game_name][1]
+        self.game_launcher = games_launchers[platform.system()][self.game_name]
+        self.game_window = games_windows[platform.system()][self.game_name][0]
+        self.game_process_name = games_windows[platform.system()][self.game_name][1]
 
     @Action.server_action_decorator
     def execute(self):
@@ -84,15 +95,28 @@ class OpenGame(Action):
 
         game_launched = True
 
-        window = win32gui.FindWindow(None, self.game_window)
+        if platform.system() == "Windows":
+            window = win32gui.FindWindow(None, self.game_window)
 
-        if window is not None and window != 0:
-            self.logger.info("Window {} was succesfully found".format(self.game_window))
+            if window is not None and window != 0:
+                self.logger.info("Window {} was succesfully found".format(self.game_window))
 
-            games_actions.make_game_foreground(self.game_name)
+                games_actions.make_game_foreground(self.game_name)
+            else:
+                self.logger.error("Window {} wasn't found at all".format(self.game_window))
+                game_launched = False
         else:
-            self.logger.error("Window {} wasn't found at all".format(self.game_window))
-            game_launched = False
+            process = subprocess.Popen("wmctrl -l", stdout=PIPE, shell=True)
+            stdout, stderr = process.communicate()
+            windows = [" ".join(x.split()[3::]) for x in stdout.decode("utf-8").strip().split("\n")]
+
+            for window in windows:
+                if window == self.game_window:
+                    self.logger.info("Window {} was succesfully found".format(self.game_window))
+                    break
+            else:
+                self.logger.error("Window {} wasn't found at all".format(self.game_window))
+                game_launched = False
 
         for process in psutil.process_iter():
             if self.game_process_name in process.name():

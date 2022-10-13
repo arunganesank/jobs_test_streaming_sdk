@@ -45,11 +45,6 @@ ACTIONS_MAPPING = {
 }
 
 
-def hide_emulator(args):
-    window = win32gui.FindWindow(None, "Android Emulator - Pixel:5554")
-    make_window_minimized(window)
-
-
 def copy_test_cases(args):
     try:
         copyfile(os.path.realpath(os.path.join(os.path.dirname(
@@ -504,7 +499,6 @@ if __name__ == '__main__':
         if not os.path.exists(os.path.join(args.output, "tool_logs")):
             os.makedirs(os.path.join(args.output, "tool_logs"))
 
-        hide_emulator(args)
         copy_test_cases(args)
         prepare_empty_reports(args)
         prepare_android_emulator(args)

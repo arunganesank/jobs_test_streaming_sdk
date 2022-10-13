@@ -441,7 +441,7 @@ class StartStreaming(Action):
                     should_collect_traces = (self.args.collect_traces == "BeforeTests")
                     pyautogui.moveTo(1, 1)
                     pyautogui.hotkey("win", "m")
-                    self.process = start_streaming(self.args.execution_type, streaming_type=self.args.streaming_typ, script_path=self.script_path)
+                    self.process = start_streaming(self.args.execution_type, streaming_type=self.args.streaming_type, script_path=self.script_path)
 
                     if should_collect_traces:
                         collect_traces(self.archive_path, self.archive_name + "_client.zip")

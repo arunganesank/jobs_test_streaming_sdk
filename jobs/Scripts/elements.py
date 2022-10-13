@@ -58,6 +58,7 @@ class HeavenElementLocation(GameElementLocation):
 class HeavenElements:
     API_LABEL = HeavenElementLocation("api_label")
     RUN_BUTTON = HeavenElementLocation("run_button")
+    RUN_BUTTON_UBUNTU = HeavenElementLocation("run_button_ubuntu")
 
 
 class LoLElementLocation(GameElementLocation):
@@ -84,6 +85,7 @@ class ValleyElementLocation(GameElementLocation):
 class ValleyElements:
     API_LABEL = ValleyElementLocation("api_label")
     RUN_BUTTON = ValleyElementLocation("run_button")
+    RUN_BUTTON_UBUNTU = ValleyElementLocation("run_button_ubuntu")
 
 
 class IconElementLocation(ElementLocation):
@@ -146,15 +148,14 @@ class AMDLinkElements:
     VIDEO_ENCODING_TYPE = AMDLinkElementLocation("video_encoding_type")
 
     DROPDOWN_OPTIONS_LABELS = {
-        "stream_resolution": STREAM_RESOLUTION,
-        "video_encoding_type": VIDEO_ENCODING_TYPE,
-        "amd_link_server": AMD_LINK_SERVER,
+        "resolution": STREAM_RESOLUTION,
+        "encoding_type": VIDEO_ENCODING_TYPE,
         "accept_all_connections": ACCEPT_ALL_CONNECTIONS,
         "use_encryption": USE_ENCRYPTION
     }
 
     DROPDOWN_OPTIONS_VALUES = {
-        "stream_resolution": {
+        "resolution": {
             "2k": RESOLUTION_2K,
             "4k": RESOLUTION_4K,
             "480p": RESOLUTION_480P,
@@ -162,7 +163,7 @@ class AMDLinkElements:
             "1080p": RESOLUTION_1080P
         },
 
-        "video_encoding_type": {
+        "encoding_type": {
             "avc": AVC,
             "hevc": HEVC
         }

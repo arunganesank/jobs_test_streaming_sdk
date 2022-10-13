@@ -9,6 +9,7 @@ import pyautogui
 import json
 import platform
 from PIL import Image
+import keyboard
 from elements import *
 
 if platform.system() == "Windows":
@@ -123,7 +124,7 @@ def locate_on_screen(template, scale=False, tries=3, delay=0, **kwargs):
                 # scale up 10 times -> 2560 * 150% = 3840;  (4k 16:9)
                 # scale up 12 times -> 2560 * 160% = 4096 (4k 16:10)
                 # scale down 5 times -> 2560 * 75% = 1920 (full hd 16:9 or full hd 19:10)
-                max_scaling_tries = 12 if scale_up else 5
+                max_scaling_tries = 14 if scale_up else 7
                 while not coords and max_scaling_tries > scaling_try:
                     # change size with step in 5% of width and height
                     if scale_up:
@@ -151,7 +152,9 @@ def locate_on_screen(template, scale=False, tries=3, delay=0, **kwargs):
 def click_on_element(coords, x_offset=0, y_offset=0):
     x = coords[0] + coords[2] / 2 + x_offset
     y = coords[1] + coords[3] / 2 + y_offset
-    pyautogui.click(x, y)
+    pyautogui.moveTo(x, y)
+    sleep(0.3)
+    pyautogui.click()
     main_logger.info("Click at x = {}, y = {}".format(x, y))
 
 
@@ -164,41 +167,47 @@ def prepare_game(game_name, game_launcher):
     if game_name == "heavendx9" or game_name == "heavendx11" or game_name == "heavenopengl":
         sleep(6)
 
-        coords = locate_on_screen(HeavenElements.API_LABEL.build_path())
-        click_on_element(coords, x_offset=50)
+        if platform.system() == "Windows":
+            coords = locate_on_screen(HeavenElements.API_LABEL.build_path())
+            click_on_element(coords, x_offset=50)
 
-        sleep(0.5)
+            sleep(0.5)
 
-        if game_name == "heavendx11":
-            click_on_element(coords, x_offset=50, y_offset=15)
-        elif game_name == "heavendx9":
-            click_on_element(coords, x_offset=50, y_offset=30)
+            if game_name == "heavendx11":
+                click_on_element(coords, x_offset=50, y_offset=15)
+            elif game_name == "heavendx9":
+                click_on_element(coords, x_offset=50, y_offset=30)
+            else:
+                click_on_element(coords, x_offset=50, y_offset=45)
+
+            sleep(0.5)
+
+            locate_and_click(HeavenElements.RUN_BUTTON.build_path())
         else:
-            click_on_element(coords, x_offset=50, y_offset=45)
-
-        sleep(0.5)
-
-        locate_and_click(HeavenElements.RUN_BUTTON.build_path())
+            locate_and_click(HeavenElements.RUN_BUTTON_UBUNTU.build_path())
 
         sleep(20)
     if game_name == "valleydx9" or game_name == "valleydx11" or game_name == "valleyopengl":
         sleep(6)
 
-        coords = locate_on_screen(ValleyElements.API_LABEL.build_path())
-        click_on_element(coords, x_offset=50)
+        if platform.system() == "Windows":
+            coords = locate_on_screen(ValleyElements.API_LABEL.build_path())
+            click_on_element(coords, x_offset=50)
 
-        sleep(0.5)
+            sleep(0.5)
 
-        if game_name == "valleydx11":
-            click_on_element(coords, x_offset=50, y_offset=15)
-        elif game_name == "valleydx9":
-            click_on_element(coords, x_offset=50, y_offset=30)
+            if game_name == "valleydx11":
+                click_on_element(coords, x_offset=50, y_offset=15)
+            elif game_name == "valleydx9":
+                click_on_element(coords, x_offset=50, y_offset=30)
+            else:
+                click_on_element(coords, x_offset=50, y_offset=45)
+
+            sleep(0.5)
+
+            locate_and_click(ValleyElements.RUN_BUTTON.build_path())
         else:
-            click_on_element(coords, x_offset=50, y_offset=45)
-
-        sleep(0.5)
-
-        locate_and_click(ValleyElements.RUN_BUTTON.build_path())
+            locate_and_click(ValleyElements.RUN_BUTTON_UBUNTU.build_path())
 
         sleep(20)
     elif game_name == "valorant":
@@ -233,7 +242,7 @@ def prepare_game(game_name, game_launcher):
         sleep(1)
         locate_and_click(LoLElements.PLAY_BUTTON.build_path(), tries=4, delay=15)
         sleep(1)
-        locate_and_click(LoLElements.TRAINING.build_path())
+        locate_and_click(LoLElements.TRAINING_BUTTON.build_path())
         sleep(1)
         locate_and_click(LoLElements.PRACTICE_TOOL.build_path())
         sleep(1)
@@ -287,7 +296,8 @@ def prepare_game(game_name, game_launcher):
         sleep(1)
         locate_and_click(Dota2Elements.HEROES.build_path(), scale=True)
         sleep(1)
-        pyautogui.typewrite("sand king")
+        pyautogui.typewrite("sand king", interval=0.15)
+        sleep(0.5)
         press_keys("enter")
         sleep(1)
         locate_and_click(Dota2Elements.DEMO_HERO.build_path(), scale=True)
@@ -303,6 +313,7 @@ def prepare_game(game_name, game_launcher):
         press_keys("esc")
         sleep(3)
         locate_and_click(CSGOElements.PLAY_BUTTON.build_path(), scale=True)
+        sleep(1)
         pyautogui.moveTo(1, 1)
         sleep(1)
         locate_and_click(CSGOElements.MODE_SELECTION.build_path(), scale=True)
@@ -323,7 +334,7 @@ def prepare_game(game_name, game_launcher):
             raise Exception("Select map button wasn't found at all")
         sleep(1)
         locate_and_click(CSGOElements.GO_BUTTON.build_path(), scale=True)
-        sleep(20)
+        sleep(40)
         press_keys("w_3")
 
         # enter commands to csgo console
@@ -377,24 +388,36 @@ def press_keys(keys_string):
 
             for i in range(times):
                 for key_to_press in keys_to_press:
-                    pydirectinput.keyDown(key_to_press)
+                    if platform.system() == "Windows":
+                        pydirectinput.keyDown(key_to_press)
+                    else:
+                        pyautogui.keyDown(key_to_press)
 
                 sleep(0.1)
 
                 for key_to_press in keys_to_press:
-                    pydirectinput.keyUp(key_to_press)
+                    if platform.system() == "Windows":
+                        pydirectinput.keyUp(key_to_press)
+                    else:
+                        pyautogui.keyUp(key_to_press)
 
                 sleep(0.5)
         else:
             keys_to_press = key.split("+")
 
             for key_to_press in keys_to_press:
-                pydirectinput.keyDown(key_to_press)
+                if platform.system() == "Windows":
+                    pydirectinput.keyDown(key_to_press)
+                else:
+                    pyautogui.keyDown(key_to_press)
 
             sleep(duration)
 
             for key_to_press in keys_to_press:
-                pydirectinput.keyUp(key_to_press)
+                if platform.system() == "Windows":
+                    pydirectinput.keyUp(key_to_press)
+                else:
+                    pyautogui.keyUp(key_to_press)
 
         # if it isn't the last key - make a delay
         if i != len(keys) - 1:

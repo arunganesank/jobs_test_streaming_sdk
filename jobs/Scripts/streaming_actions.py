@@ -6,7 +6,6 @@ from subprocess import PIPE
 import sys
 import traceback
 import platform
-import win32clipboard
 from enum import Enum
 import pyautogui
 import pyscreenshot
@@ -17,6 +16,7 @@ from elements import AMDLinkElements
 if platform.system() == "Windows":
     import win32gui
     import win32con
+    import win32clipboard
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
@@ -61,7 +61,7 @@ def start_streaming_sdk(execution_type, script_path):
 def set_dropdown_option(case, field_width, label_image_name, param_name):
     label_coords = locate_on_screen(AMDLinkElements.DROPDOWN_OPTIONS_LABELS[label_image_name].build_path())
     pyautogui.click(label_coords[0] + field_width, label_coords[1] + label_coords[3] / 2)
-    locate_and_click(AMDLinkElements.DROPDOWN_OPTIONS_VALUES[label_image_name][param_name].build_path(), main_logger)
+    locate_and_click(AMDLinkElements.DROPDOWN_OPTIONS_VALUES[label_image_name][param_name].build_path())
 
 
 def configure_boolean_option(case, field_width, label_image_name, param_name):
@@ -78,7 +78,7 @@ def configure_boolean_option(case, field_width, label_image_name, param_name):
             raise Exception("Can't determine boolean value")
 
     if value != case['server_params'][param_name]:
-        click_on_element(coords, main_logger)
+        click_on_element(coords)
 
 
 def set_adrenalin_params(case):
@@ -89,10 +89,10 @@ def set_adrenalin_params(case):
     field_width = (resolution_coords[0] - amd_link_coords[0]) / 2
 
     # select Resolution
-    set_dropdown_option(case, field_width, "stream_resolution", "resolution")
+    set_dropdown_option(case, field_width, "resolution", "resolution")
 
     # select Video Encoding
-    set_dropdown_option(case, field_width, "video_encoding_type", "encoding_type")
+    set_dropdown_option(case, field_width, "encoding_type", "encoding_type")
 
     # configure Accept All Connections option
     configure_boolean_option(case, field_width, "accept_all_connections", "accept_all_connections")
@@ -170,10 +170,10 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
             else:
                 # receive game invite link
                 coords = locate_on_screen(AMDLinkElements.LINK_GAME_INVITE_SERVER.build_path(), delay=1)
-                click_on_element(coords, main_logger)
+                click_on_element(coords)
                 sleep(1)
                 # sometimes first click not work
-                click_on_element(coords, main_logger)
+                click_on_element(coords)
 
                 if case["server_params"]["streaming_mode"] == "multi_play":
                     coords = locate_on_screen(AMDLinkElements.MULTI_PLAY.build_path(), delay=1)
@@ -182,7 +182,7 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
 
                 # first click - make full acess active, second click - select full access, third click - click on code to display copy button + one additional click (sometimes first click not work)
                 for i in range(4):
-                    click_on_element(coords, main_logger)
+                    click_on_element(coords)
                     sleep(1)
 
                 for i in range(40):
@@ -198,16 +198,16 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
                     raise Exception("Fresh invitation code wasn't detected")
 
                 # copy invite code and close window with it
-                locate_and_click(AMDLinkElements.COPY_TEXT.build_path(), main_logger, delay=1)
+                locate_and_click(AMDLinkElements.COPY_TEXT.build_path(), delay=1)
 
-                locate_and_click(AMDLinkElements.CLOSE_INVITE_CODE_WINDOW.build_path(), main_logger, delay=1)
+                locate_and_click(AMDLinkElements.CLOSE_INVITE_CODE_WINDOW.build_path(), delay=1)
 
                 sleep(1)
                 pyautogui.moveTo(10, 10)
                 sleep(2)
 
                 if not server_already_started:
-                    locate_and_click(AMDLinkElements.START_STREAMING_BUTTON.build_path(), main_logger, delay=1)
+                    locate_and_click(AMDLinkElements.START_STREAMING_BUTTON.build_path(), delay=1)
 
                     set_adrenalin_params(case)
 
@@ -265,36 +265,36 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
                     raise Exception("AMD Link tool window wasn't found")
                 
                 # connect to server
-                locate_and_click(AMDLinkElements.CONNECT_TO_PC.build_path(), main_logger, delay=1)
+                locate_and_click(AMDLinkElements.CONNECT_TO_PC.build_path(), delay=1)
 
-                locate_and_click(AMDLinkElements.LINK_GAME_INVITE_CLIENT.build_path(), main_logger, delay=1)
+                locate_and_click(AMDLinkElements.LINK_GAME_INVITE_CLIENT.build_path(), delay=1)
 
                 # type invite code and press submit button
                 sleep(1)
                 pyautogui.write(invite_code)
 
-                locate_and_click(AMDLinkElements.SUBMIT_CONNECT.build_path(), main_logger, delay=1)
+                locate_and_click(AMDLinkElements.SUBMIT_CONNECT.build_path(), delay=1)
 
                 sleep(1)
 
                 try:
                     # skip optimizations and start streaming
-                    locate_and_click(AMDLinkElements.SKIP_OPTIMIZATION.build_path(), main_logger, delay=1)
+                    locate_and_click(AMDLinkElements.SKIP_OPTIMIZATION.build_path(), delay=1)
                 except:
                     pass
 
                 if case['server_params']['streaming_mode'] == 'full_access':
                     try:
-                        locate_and_click(AMDLinkElements.START_STREAMING.build_path(), main_logger, delay=1)
+                        locate_and_click(AMDLinkElements.START_STREAMING.build_path(), delay=1)
                     except:
                         # Start Streaming button can be hovered
-                        locate_and_click(AMDLinkElements.START_STREAMING_2.build_path(), main_logger, delay=1)
+                        locate_and_click(AMDLinkElements.START_STREAMING_2.build_path(), delay=1)
 
                 sleep(5)
 
             # apply full screen
             try:
-                locate_and_click(AMDLinkElements.APPLY_FULL_SCREEN.build_path(), main_logger, delay=1)
+                locate_and_click(AMDLinkElements.APPLY_FULL_SCREEN.build_path(), delay=1)
             except:
                 pass
 
@@ -309,9 +309,9 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
 def close_streaming(execution_type, case, process, tool_path=None, streaming_type=StreamingType.SDK):
     try:
         if streaming_type == StreamingType.SDK:
-            return close_streaming_sdk(execution_type, case, process, tool_path=None)
+            return close_streaming_sdk(execution_type, case, process, tool_path=tool_path)
         elif streaming_type == StreamingType.AMD_LINK:
-            return close_streaming_amd_link(execution_type, case, process, tool_path=None)
+            return close_streaming_amd_link(execution_type, case, process)
         else:
             raise ValueError(f"Unknown StreamingSDK type: {streaming_type}")
     except Exception as e:
@@ -355,7 +355,7 @@ def close_streaming_sdk(execution_type, case, process, tool_path=None):
     return process
 
 
-def close_streaming_amd_link(execution_type, case, process, tool_path=None):
+def close_streaming_amd_link(execution_type, case, process):
     if utils.should_case_be_closed(execution_type, case):
         # close the current Streaming SDK process
         main_logger.info("Start closing") 
@@ -385,9 +385,9 @@ def close_streaming_amd_link(execution_type, case, process, tool_path=None):
             win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
 
             # make a click on Adrenalin tool
-            locate_and_click(AMDLinkElements.ADRENALIN_ICON.build_path(), main_logger, delay=1)
+            locate_and_click(AMDLinkElements.ADRENALIN_ICON.build_path(), delay=1)
 
-            locate_and_click(AMDLinkElements.STOP_STREAMING_BUTTON.build_path(), main_logger, delay=1)
+            locate_and_click(AMDLinkElements.STOP_STREAMING_BUTTON.build_path(), delay=1)
 
         elif execution_type == "client":
             subprocess.call("taskkill /f /im AMDLink.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
