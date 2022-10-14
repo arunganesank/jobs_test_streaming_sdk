@@ -208,6 +208,15 @@ def parse_block_line(line, saved_values):
         gpu_temp = float(line.split('Temp:')[1].replace('C', '').strip())
         saved_values['gpu_temp'].append(gpu_temp)
 
+    elif 'Server Cpu Stats' in line:
+        # Line example:
+        # 2022-10-08 02:21:06.237      BD0 [RemoteGamePipeline]    Info: Server Cpu Stats: CLK: 0 Mhz, Temp: 0 C
+        if 'cpu_temp' not in saved_values:
+            saved_values['cpu_temp'] = []
+
+        cpu_temp = float(line.split('Temp:')[1].replace('C', '').strip())
+        saved_values['cpu_temp'].append(cpu_temp)
+
 
 def parse_line(line, saved_values):
     if 'Bitrate: ' in line:
@@ -688,6 +697,19 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
             if max_temp > 100:
                 json_content["message"].append("Hardware problem: GPU temperature is too high: {}".format(max_temp))
 
+        # rule №14: if GPU or CPU temp < 1 -> warning
+        if 'gpu_temp' in saved_values:
+            for value in saved_values['gpu_temp']:
+                if value < 1:
+                    json_content["message"].append("Something wrong with GPU temperaturem, caught 0 value")
+                    break
+        
+        if 'cpu_temp' in saved_values:
+            for value in saved_values['cpu_temp']:
+                if value < 1:
+                    json_content["message"].append("Something wrong with CPU temperaturem, caught 0 value")
+                    break
+
         #rules for Config & ConfigOverwrite (CN/CRN)
         #where Config = C, ConfirReswrite = CR, N - case number
         #C1-C9, C23-C31 - skipped
@@ -900,6 +922,7 @@ def analyze_logs(work_dir, json_content, case, execution_type="server", streamin
 
                 with open(log_path, 'r') as log_file:
                     log = log_file.readlines()
+                    saved_blocks = []
                     for line in log:
                         if 'DEBUG ME!!! Client connection terminated' in line:
                             connection_terminated = True
@@ -912,15 +935,19 @@ def analyze_logs(work_dir, json_content, case, execution_type="server", streamin
 
                         parse_line(line, saved_values)
 
-                        # rule №0 - skip six first blocks of output with latency (it can contains abnormal data due to starting of Streaming SDK)
-                        if block_number > 6:
-                            if not end_of_block:
-                                parse_block_line(line, saved_values)
-                            elif line.strip():
-                                #parse_error(line, saved_errors)
-                                pass
+                        # rule №0.1 - skip six first blocks of output with latency (it can contains abnormal data due to starting of Streaming SDK)
+                        # rule №0.2 - if we have six blocks at all or less, we will work with existing (with adding Warning)
+                        if block_number > 0:
+                            if block_number > 6:
+                                if not end_of_block:
+                                    parse_block_line(line, saved_values)
+                                elif line.strip():
+                                    #parse_error(line, saved_errors)
+                                    pass
+                            else:
+                                saved_blocks.append(line)
 
-                        if 'Server Gpu Stats' in line:
+                        if 'Server Cpu Stats' in line:
                             end_of_block = True
 
                         if 'Encode Resolution:' in line:
@@ -929,6 +956,11 @@ def analyze_logs(work_dir, json_content, case, execution_type="server", streamin
                             # Encode Resolution: 1920x1080@75fps
                             # Replace 'x' by ','
                             saved_values['encode_resolution'].append(line.split("Encode Resolution:")[1].split("@")[0].replace("x", ",").strip())
+
+                    if block_number < 6:
+                        json_content["message"].append("Warning! Metrics were calculated with less than 7 blocks")
+                        for line in saved_blocks:
+                            parse_block_line(line, saved_values)
 
                     update_status(json_content, case, saved_values, saved_errors, framerate, execution_type)
 
