@@ -73,9 +73,9 @@ def format_script_info(script_info):
 
 def message_remove_on_status(source_list, case_test_status, remove_test_status, message):
     if case_test_status == remove_test_status:
-        for item in source_list:
-            if item == message:
-                source_list.remove(item)
+        return [value for value in source_list if value != message]
+    else:
+        return source_list
 
 
 if __name__ == '__main__':
@@ -121,6 +121,9 @@ if __name__ == '__main__':
 
                         if "message" in source_case:
                             target_file_content[i]["message"] += source_case["message"]
+
+                        target_file_content[i]["message"] = message_remove_on_status(target_file_content[i]["message"], 
+                            target_file_content[i]["test_status"], "error", "Warning! Metrics were calculated with less than 6 blocks")
 
                         target_file_content[i]["script_info"].extend(source_case["script_info"])
 
@@ -170,7 +173,8 @@ if __name__ == '__main__':
                         if "message" in source_case:
                             target_file_content[i]["message"] += source_case["message"]
 
-                        message_remove_on_status(target_file_content[i]["message"], target_file_content[i]["test_status"], "error", "Warning! Metrics were calculated with less than 7 blocks")
+                        target_file_content[i]["message"] = message_remove_on_status(target_file_content[i]["message"], 
+                            target_file_content[i]["test_status"], "error", "Warning! Metrics were calculated with less than 6 blocks")
 
                         target_file_content[i]["script_info"].extend(source_case["script_info"])
 
@@ -237,6 +241,9 @@ if __name__ == '__main__':
                             if "message" in source_case:
                                 target_group_data["render_results"][i]["message"] += source_case["message"]
 
+                            target_group_data["render_results"][i]["message"] = message_remove_on_status(target_group_data["render_results"][i]["message"], 
+                                target_group_data["render_results"][i]["test_status"], "error", "Warning! Metrics were calculated with less than 6 blocks")
+
                             target_group_data["render_results"][i]["script_info"].extend(source_case["script_info"])
 
                             target_group_data["render_results"][i]["script_info"] = format_script_info(target_group_data["render_results"][i]["script_info"])
@@ -291,7 +298,8 @@ if __name__ == '__main__':
                             if "message" in source_case:
                                 target_group_data["render_results"][i]["message"] += source_case["message"]
 
-                            message_remove_on_status(target_file_content[i]["message"], target_file_content[i]["test_status"], "error", "Warning! Metrics were calculated with less than 7 blocks")
+                            target_group_data["render_results"][i]["message"] = message_remove_on_status(target_group_data["render_results"][i]["message"], 
+                                target_group_data["render_results"][i]["test_status"], "error", "Warning! Metrics were calculated with less than 6 blocks")
 
                             target_group_data["render_results"][i]["script_info"].extend(source_case["script_info"])
 
