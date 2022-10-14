@@ -19,6 +19,7 @@ from instance_state import AndroidInstanceState
 from android_actions import *
 from analyzeLogs import analyze_logs
 from streaming_actions import start_streaming, close_streaming
+from games_actions import close_game, close_game_process
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
