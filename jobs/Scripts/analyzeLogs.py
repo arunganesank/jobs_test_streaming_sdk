@@ -938,7 +938,7 @@ def analyze_logs(work_dir, json_content, case, execution_type="server", streamin
                         # rule №0.1 - skip six first blocks of output with latency (it can contains abnormal data due to starting of Streaming SDK)
                         # rule №0.2 - if we have six blocks at all or less, we will work with existing (with adding Warning)
                         if block_number > 0:
-                            if block_number > 6:
+                            if block_number > 8:
                                 if not end_of_block:
                                     parse_block_line(line, saved_values)
                                 elif line.strip():
@@ -957,7 +957,7 @@ def analyze_logs(work_dir, json_content, case, execution_type="server", streamin
                             # Replace 'x' by ','
                             saved_values['encode_resolution'].append(line.split("Encode Resolution:")[1].split("@")[0].replace("x", ",").strip())
 
-                    if block_number < 6:
+                    if block_number < 8:
                         json_content["message"].append("Warning! Metrics were calculated with less than 7 blocks")
                         for line in saved_blocks:
                             parse_block_line(line, saved_values)
