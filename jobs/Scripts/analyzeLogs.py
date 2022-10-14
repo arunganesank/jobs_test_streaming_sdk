@@ -701,13 +701,13 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
         if 'gpu_temp' in saved_values:
             for value in saved_values['gpu_temp']:
                 if value < 1:
-                    json_content["message"].append("Something wrong with GPU temperaturem, caught 0 value")
+                    json_content["message"].append("Something wrong with GPU temperature, caught 0 value")
                     break
         
         if 'cpu_temp' in saved_values:
             for value in saved_values['cpu_temp']:
                 if value < 1:
-                    json_content["message"].append("Something wrong with CPU temperaturem, caught 0 value")
+                    json_content["message"].append("Something wrong with CPU temperature, caught 0 value")
                     break
 
         #rules for Config & ConfigOverwrite (CN/CRN)
