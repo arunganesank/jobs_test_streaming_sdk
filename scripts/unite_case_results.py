@@ -170,7 +170,7 @@ if __name__ == '__main__':
                         if "message" in source_case:
                             target_file_content[i]["message"] += source_case["message"]
 
-                        message_remove_on_status(target_file_content[i]["message"], target_file_content[i]["test_status"], "error", "Warning! Metrics were calculated with less than 7 blocks.")
+                        message_remove_on_status(target_file_content[i]["message"], target_file_content[i]["test_status"], "error", "Warning! Metrics were calculated with less than 7 blocks")
 
                         target_file_content[i]["script_info"].extend(source_case["script_info"])
 
@@ -291,7 +291,7 @@ if __name__ == '__main__':
                             if "message" in source_case:
                                 target_group_data["render_results"][i]["message"] += source_case["message"]
 
-                            message_remove_on_status(target_file_content[i]["message"], target_file_content[i]["test_status"], "error", "Warning! Metrics were calculated with less than 7 blocks.")
+                            message_remove_on_status(target_file_content[i]["message"], target_file_content[i]["test_status"], "error", "Warning! Metrics were calculated with less than 7 blocks")
 
                             target_group_data["render_results"][i]["script_info"].extend(source_case["script_info"])
 
