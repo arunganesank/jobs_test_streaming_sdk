@@ -14,6 +14,7 @@ import re
 import platform
 from instance_state import ServerInstanceState
 from server_actions import *
+from games_actions import close_game, close_game_process
 import android_actions
 from analyzeLogs import analyze_logs
 from streaming_actions import close_streaming, StreamingType
