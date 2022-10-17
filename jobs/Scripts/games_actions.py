@@ -257,10 +257,7 @@ def prepare_game(game_name, game_launcher):
         click("center_0", "center_0")
         press_keys("shift+x ctrl+shift+i shift+y:17 ctrl+e ctrl+r")
     elif game_name == "dota2dx11" or game_name == "dota2vulkan":
-        sleep(30)
-        click("center_0", "center_0")
-        press_keys("esc")
-        sleep(5)
+        sleep(60)
         press_keys("esc")
         sleep(1)
 
@@ -286,9 +283,7 @@ def prepare_game(game_name, game_launcher):
         sleep(1)
 
         psutil.Popen(game_launcher, stdout=PIPE, stderr=PIPE, shell=True)
-        sleep(15)
-        press_keys("esc")
-        sleep(5)
+        sleep(60)
         press_keys("esc")
         sleep(1)
 
