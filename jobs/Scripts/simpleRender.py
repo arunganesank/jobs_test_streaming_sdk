@@ -95,9 +95,13 @@ def copy_test_cases(args):
         exit(-1)
 
 
+# TODO: remove calculate_status func
 def calculate_status(status_in_json, execution_status):
     test_statuses = (status_in_json, execution_status)
-    statuses = ("skipped", "error", "observed", "failed", "passed")
+    statuses = ("skipped", "error", "failed", "passed")
+
+    if execution_status == "observed":
+        return "observed"
 
     for status in statuses:
         if status in test_statuses:

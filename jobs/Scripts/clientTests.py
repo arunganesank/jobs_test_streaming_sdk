@@ -197,8 +197,8 @@ def start_client_side_tests(args, case, process, last_log_line, audio_device_nam
 
             # check that encryption is valid
             if json_content["test_status"] == "observed":
-                json_content["test_status"] = "observed"
-            else contains_encryption_errors(error_messages):
+                pass
+            elif contains_encryption_errors(error_messages):
                 json_content["test_status"] = "error"
             else:
                 json_content["test_status"] = "passed"
