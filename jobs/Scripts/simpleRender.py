@@ -95,9 +95,13 @@ def copy_test_cases(args):
         exit(-1)
 
 
+# TODO: remove calculate_status func
 def calculate_status(status_in_json, execution_status):
     test_statuses = (status_in_json, execution_status)
-    statuses = ("skipped", "error", "failed", "observed", "passed")
+    statuses = ("skipped", "error", "failed", "passed")
+
+    if execution_status == "observed":
+        return "observed"
 
     for status in statuses:
         if status in test_statuses:
@@ -416,7 +420,12 @@ def execute_tests(args, current_conf):
                 last_log_line = save_logs(args, case, last_log_line, current_try)
 
                 execution_time = time.time() - case_start_time
-                save_results(args, case, cases, execution_time = execution_time, test_case_status = "failed", error_messages = error_messages)
+
+                if case["status"] == "observed":
+                    save_results(args, case, cases, execution_time = execution_time, test_case_status = "observed", error_messages = error_messages)
+                else:
+                    save_results(args, case, cases, execution_time = execution_time, test_case_status = "failed", error_messages = error_messages)
+
                 main_logger.error("Failed to execute test case (try #{}): {}".format(current_try, str(e)))
                 main_logger.error("Traceback: {}".format(traceback.format_exc()))
             finally:

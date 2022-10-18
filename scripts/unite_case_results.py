@@ -24,7 +24,7 @@ KEYS_TO_COPY = [
 
 def get_test_status(test_status_one, test_status_two):
     test_statuses = (test_status_one, test_status_two)
-    statuses = ("skipped", "error", "failed", "passed")
+    statuses = ("skipped", "observed", "error", "failed", "passed")
 
     for status in statuses:
         if status in test_statuses:

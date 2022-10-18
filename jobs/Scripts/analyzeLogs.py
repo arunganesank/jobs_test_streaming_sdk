@@ -305,17 +305,20 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
     if not (json_content["test_group"] in MC_CONFIG["second_win_client"] or json_content["test_group"] in MC_CONFIG["android_client"]):
         if "client_latencies" not in saved_values or "server_latencies" not in saved_values:
             if "expected_connection_problems" not in case or "client" not in case["expected_connection_problems"]:
-                json_content["test_status"] = "error"
+                if json_content["test_status"] != "observed":
+                    json_content["test_status"] = "error"
                 json_content["message"].append("Application problem: Client could not connect")
                 should_analyze_metrics = False
         elif max(saved_values["client_latencies"]) == 0 or max(saved_values["server_latencies"]) == 0:
             if "expected_connection_problems" not in case or "client" not in case["expected_connection_problems"]:
-                json_content["test_status"] = "error"
+                if json_content["test_status"] != "observed":
+                    json_content["test_status"] = "error"
                 json_content["message"].append("Application problem: Client could not connect")
                 should_analyze_metrics = False
         else:
             if "expected_connection_problems" in case and "client" in case["expected_connection_problems"]:
-                json_content["test_status"] = "error"
+                if json_content["test_status"] != "observed":
+                    json_content["test_status"] = "error"
                 json_content["message"].append("Client has connected, but it wasn't expected")
                 should_analyze_metrics = False
 
@@ -341,7 +344,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
                                 formatted_encoder_values = "[{}, {}, {}]".format(round(bad_encoder_values[0], 2), round(bad_encoder_values[1], 2), round(bad_encoder_values[2], 2))
 
                                 json_content["message"].append("Application problem: At least 3 encoder values in sucession are equal to or bigger than framerate. Encoder {}. Framerate: {}".format(formatted_encoder_values, framerate))
-                                if json_content["test_status"] != "error":
+                                if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                                     json_content["test_status"] = "failed"
 
                                     break
@@ -367,7 +370,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
                         formatted_encoder_values = "[{}, {}, {}]".format(round(bad_encoder_values[0], 2), round(bad_encoder_values[1], 2), round(bad_encoder_values[2], 2))
 
                         json_content["message"].append("Application problem: At least 3 encoder values in sucession are much bigger than average encoder value. Encoder {}. Avrg encoder: {}".format(formatted_encoder_values, formatted_avrg_encoder_values))
-                        if json_content["test_status"] != "error":
+                        if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                             json_content["test_status"] = "failed"
 
                         break
@@ -411,7 +414,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
                                 bad_value_first_time = time
                             elif (datetime.datetime.strptime(time, '%Y-%m-%d %H:%M:%S') - datetime.datetime.strptime(bad_value_first_time, '%Y-%m-%d %H:%M:%S')).total_seconds() > 10 and not_null_tx_rate:
                                 json_content["message"].append("Application problem: TX Rate is much less than framerate. Framerate: {}. TX rate: {} fps".format(framerate, bad_tx_rate))
-                                if json_content["test_status"] != "error":
+                                if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                                     json_content["test_status"] = "failed"
 
                                 break
@@ -455,7 +458,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
                 if invalid_blocks_number >= 3:
                     json_content["message"].append("Application problem: high decoder value ({}-{}-{})".format(saved_values['queue_decoder_values'][i - 2], saved_values['queue_decoder_values'][i - 1], saved_values['queue_decoder_values'][i]))
 
-                    if json_content["test_status"] != "error":
+                    if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                         json_content["test_status"] = "failed"
 
                     break
@@ -474,7 +477,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
 
             if bad_client_latency and bad_decoder_value:
                 json_content["message"].append("Application problem: client latency is less than decoder value. Client  {}. Decoder  {}".format(bad_client_latency, bad_decoder_value))
-                if json_content["test_status"] != "error":
+                if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                     json_content["test_status"] = "failed"
 
         # rule №4.2: server latency <= encoder -> issue with app
@@ -491,7 +494,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
 
             if bad_server_latency and bad_encoder_value:
                 json_content["message"].append("Application problem: server latency is less than encoder value. Server  {}. Encoder  {}".format(bad_server_latency, bad_encoder_value))
-                if json_content["test_status"] != "error":
+                if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                     json_content["test_status"] = "failed"
 
         # rule is temporary disabled
@@ -509,7 +512,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
 
             if bad_desync_value:
                 json_content["message"].append("Application problem: Absolute value of A/V desync is more than 50 ms. A/V desync: {} ms".format(bad_desync_value))
-                if json_content["test_status"] != "error":
+                if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                     json_content["test_status"] = "failed"
 
         # rule №6.1: (sum of video bitrate - sum of average bandwidth tx) / video bitrate > 0.25 or 3.0 -> issue with app
@@ -533,7 +536,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
                     json_content["message"].append("Application problem: Too high Bandwidth AVG. AVG total bandwidth for case: {}. AVG total bitrate for case: {}. Difference: {}%".format(round(average_bandwidth_tx_sum, 2), round(video_bitrate, 2), round(difference * 100, 2)))
 
                     if get_codec(case["prepared_keys"]) != 'h.265':
-                        if json_content["test_status"] != "error":
+                        if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                             json_content["test_status"] = "failed"
 
             average_bandwidth_tx_sum = 0
@@ -548,7 +551,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
                     if not get_qos_status(case["prepared_keys"]):
                         json_content["message"].append("Application problem: QoS is false, but bitrate changed from {} to {}".format(previous_video_bitrate, saved_values['video_bitrate'][i]))
 
-                        if json_content["test_status"] != "error":
+                        if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                             json_content["test_status"] = "failed"
 
                     if block_number >= 5:
@@ -574,7 +577,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
             if has_different_values:
                 json_content["message"].append("Application problem: QoS is false, but some bitrate values are different")
 
-                if json_content["test_status"] != "error":
+                if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                     json_content["test_status"] = "failed"
 
         # rule №7: number of abnormal network latency values is bigger than 10% of total values -> issue with app
@@ -626,7 +629,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
 
                 if invalid_count >= 5:
                     json_content["message"].append("Application problem: VIDEO_OP_CODE_FORCE_IDR detected")
-                    if json_content["test_status"] != "error":
+                    if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                         json_content["test_status"] = "failed"
                     break
 
@@ -634,7 +637,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
         if 'acquire_surface' in saved_values and saved_values['acquire_surface'] >= 5:
             json_content["message"].append("Application problem: AcquireSurface detected")
 
-            if json_content["test_status"] != "error":
+            if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                 json_content["test_status"] = "failed"
 
         # rule №10: -resolution X,Y != Encode Resolution -> failed
@@ -644,7 +647,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
                 if not ((saved_values['encode_resolution'][i-1] == saved_values['encode_resolution'][i]) and (saved_values['encode_resolution'][i] == flag_resolution)):
                     if case["case"].find('STR_CFG') == -1:
                         json_content["message"].append("Application problem: Encode Resolution in Flags doesn't match to Encode Resolution from logs. Resolution from Flags: {}, from logs {}".format(flag_resolution, saved_values['encode_resolution'][i]))
-                        if json_content["test_status"] != "error": 
+                        if json_content["test_status"] != "error" and json_content["test_status"] != "observed": 
                             json_content["test_status"] = "failed"
                     break
 
@@ -683,7 +686,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
 
                 if max_avg_latency != 0:
                     json_content["message"].append("Application problem: too high Average Latency {}".format(max_avg_latency))
-                    if json_content["test_status"] != "error":
+                    if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                         json_content["test_status"] = "failed"
 
         # rule №13: if GPU temp > 100 -> warning
@@ -728,7 +731,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
             for i in range(1, len(saved_values['encode_resolution'])):
                 if not ((saved_values['encode_resolution'][i-1] == saved_values['encode_resolution'][i]) and (saved_values['encode_resolution'][i] == json_resolution)):
                     json_content["message"].append("Config problem: Encode Resolution in JSON doesn't match to Encode Resolution from logs. Resolution from JSON: {}, from logs {}".format(json_resolution, saved_values['encode_resolution'][i]))
-                    if json_content["test_status"] != "error":
+                    if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                             json_content["test_status"] = "failed"
                     break
 
@@ -747,7 +750,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
 
                 if json_maxframerate + 10 <= max_tx_rate:
                     json_content["message"].append("Config problem: too high TX Rate {}".format(max_tx_rate))
-                    if json_content["test_status"] != "error":
+                    if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                         json_content["test_status"] = "failed"
 
         #rule C13, C35: MinFrameRate - 10 >= TX Rate -> failed
@@ -763,7 +766,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
 
                 if json_maxframerate - 10 >= min_tx_rate:
                     json_content["message"].append("Config problem: too low TX Rate {}".format(min_tx_rate))
-                    if json_content["test_status"] != "error":
+                    if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                         json_content["test_status"] = "failed"
 
         #rule C14, C36: VideoBitrate != Bitrate from logs -> failed
@@ -777,7 +780,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
 
             if flag:
                 json_content["message"].append("Config problem: Bitrate in JSON doesn't match to Bitrate from logs. Bitrate from JSON: {}, from logs {}".format(json_bitrate_int, saved_values['bitrate']))
-                if json_content["test_status"] != "error":
+                if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                     json_content["test_status"] = "failed"
 
         #rule C15, C37: VideoCodec != Codec from logs -> failed
@@ -788,7 +791,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
         
             if value != json_codec:
                 json_content["message"].append("Config problem: Codec in JSON doesn't match to Codec from logs. Codec from JSON: {}, from logs {}".format(json_codec, value))
-                if json_content["test_status"] != "error":
+                if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                     json_content["test_status"] = "failed"
 
         #rule C16, C38: Cheching that just started
@@ -805,7 +808,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
 
             if value > json_datagram:
                 json_content["message"].append("Config problem: DatagramSize in JSON fewer than datagram size from logs. Datagram size from JSON: {}, from logs {}".format(json_datagram, value))
-                if json_content["test_status"] != "error":
+                if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                     json_content["test_status"] = "failed"
         
         #rule C22, C44: skipped
@@ -827,7 +830,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
 
             if flag:
                 json_content["message"].append("Config problem: Bitrate in flags doesn't match to Bitrate from logs. Bitrate from flags: {}, from logs {}".format(int_flags_bitrate, saved_values['bitrate']))
-                if json_content["test_status"] != "error":
+                if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                     json_content["test_status"] = "failed"
 
         #rule CR5, CR16: PROTOCOL from flags != protocol from logs -> failed
@@ -836,7 +839,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
 
             if server_protocol != saved_values['protocol'][0]:
                 json_content["message"].append("Config problem: Protocol in flags doesn't match to Protocol from logs. Protocol from flags: {}, from logs {}".format(server_protocol, saved_values['protocol'][0]))
-                if json_content["test_status"] != "error":
+                if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                     json_content["test_status"] = "failed"
 
         #rule CR6, CR17: can't be catched now
@@ -856,7 +859,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
 
                 if flags_minframerate - 10 >= min_tx_rate:
                     json_content["message"].append("Config problem: too low TX Rate {}".format(min_tx_rate))
-                    if json_content["test_status"] != "error":
+                    if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                         json_content["test_status"] = "failed"
 
         #rule CR9, CR20: Checking that just connected
@@ -874,7 +877,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
             value = saved_values['codec'][len(saved_values['codec']) - 1].strip()
             if value != flags_codec:
                 json_content["message"].append("Config problem: Codec in flags doesn't match to Codec from logs. Codec from flags: {}, from logs {}".format(flags_codec, value))
-                if json_content["test_status"] != "error":
+                if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                     json_content["test_status"] = "failed"
 
         #rule CR11, CR22: can't be catched now
@@ -886,7 +889,7 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
                     if value == 0:
                         json_content["message"].append("Application problem: some audio bandwidth value is zero")
 
-                        if json_content["test_status"] != "error":
+                        if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                             json_content["test_status"] = "failed"
 
                         break
@@ -993,13 +996,15 @@ def analyze_logs(work_dir, json_content, case, execution_type="server", streamin
                             main_logger.warning("Android client could not connect")
                             if "expected_connection_problems" not in case or "android_client" not in case["expected_connection_problems"]:
                                 json_content["message"].append("Android client could not connect")
-                                json_content["test_status"] = "error"
+                                if json_content["test_status"] != "observed":
+                                    json_content["test_status"] = "error"
 
                             break
                     else:
                         if "expected_connection_problems" in case and "android_client" in case["expected_connection_problems"]:
                             json_content["message"].append("Android client has connected, but it wasn't expected")
-                            json_content["test_status"] = "error"
+                            if json_content["test_status"] != "observed":
+                                json_content["test_status"] = "error"
 
                     main_logger.warning("Number of lines with connection problem: {}".format(number_of_problems))
 
@@ -1036,23 +1041,27 @@ def analyze_logs(work_dir, json_content, case, execution_type="server", streamin
                             if "expected_connection_problems" not in case or "client" not in case["expected_connection_problems"]:
                                 main_logger.warning("First windows client client could not connect")
                                 json_content["message"].append("First windows client could not connect")
-                                json_content["test_status"] = "error"
+                                if json_content["test_status"] != "observed":
+                                    json_content["test_status"] = "error"
                         else:
                             if "expected_connection_problems" not in case or "second_client" not in case["expected_connection_problems"]:
                                 main_logger.warning("Second windows client client could not connect")
                                 json_content["message"].append("Second windows client could not connect")
-                                json_content["test_status"] = "error"
+                                if json_content["test_status"] != "observed":
+                                    json_content["test_status"] = "error"
                     else:
                         if execution_type == "windows_client":
                             if "expected_connection_problems" in case and "client" in case["expected_connection_problems"]:
                                 main_logger.warning("First windows client client could not connect")
                                 json_content["message"].append("First windows client has connected, but it wasn't expected")
-                                json_content["test_status"] = "error"
+                                if json_content["test_status"] != "observed":
+                                    json_content["test_status"] = "error"
                         else:
                             if "expected_connection_problems" in case and "second_client" in case["expected_connection_problems"]:
                                 main_logger.warning("Second windows client client could not connect")
                                 json_content["message"].append("Second windows client has connected, but it wasn't expected")
-                                json_content["test_status"] = "error"
+                                if json_content["test_status"] != "observed":
+                                    json_content["test_status"] = "error"
 
         else:
             main_logger.info("Test case skipped: {}".format(json_content["test_case"]))
@@ -1071,12 +1080,13 @@ def analyze_logs(work_dir, json_content, case, execution_type="server", streamin
             # latency rule №0 - min_latency == 1000 -> error
             if latency_test_min == 1000:
                 json_content["message"].append("Latency test was crushed or not launched at all, min latency 1000")
-                json_content["test_status"] = "error"
+                if json_content["test_status"] != "observed":
+                    json_content["test_status"] = "error"
 
             # latency rule №1 - accuracy < 95% -> fail
             if latency_test_accuracy < 95:
                 json_content["message"].append("Too low accuracy, {}%".format(latency_test_accuracy))
-                if json_content["test_status"] != "error":
+                if json_content["test_status"] != "error" and json_content["test_status"] != "observed":
                     json_content["test_status"] = "failed" 
             
     except Exception as e:

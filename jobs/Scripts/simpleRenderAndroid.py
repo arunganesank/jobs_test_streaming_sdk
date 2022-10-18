@@ -404,7 +404,12 @@ def execute_tests(args):
                 break
             except Exception as e:
                 execution_time = time.time() - case_start_time
-                save_results(args, case, cases, execution_time = execution_time, test_case_status = "failed", error_messages = error_messages)
+
+                if case["status"] == "observed":
+                    save_results(args, case, cases, execution_time = execution_time, test_case_status = "observed", error_messages = error_messages)
+                else:
+                    save_results(args, case, cases, execution_time = execution_time, test_case_status = "failed", error_messages = error_messages)
+
                 close_game_process(args.game_name.lower())
                 main_logger.error("Failed to execute test case (try #{}): {}".format(current_try, str(e)))
                 main_logger.error("Traceback: {}".format(traceback.format_exc()))

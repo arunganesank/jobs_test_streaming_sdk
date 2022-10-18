@@ -196,10 +196,10 @@ def start_client_side_tests(args, case, process, last_log_line, audio_device_nam
                 analyze_latency_tool_logs(json_content, latency_log_path)
 
             # check that encryption is valid
-            if contains_encryption_errors(error_messages):
+            if json_content["test_status"] == "observed":
+                pass
+            elif contains_encryption_errors(error_messages):
                 json_content["test_status"] = "error"
-            elif json_content["test_status"] == "observed":
-                json_content["test_status"] = "observed"
             else:
                 json_content["test_status"] = "passed"
 
