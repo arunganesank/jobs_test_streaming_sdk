@@ -305,17 +305,20 @@ def update_status(json_content, case, saved_values, saved_errors, framerate, exe
     if not (json_content["test_group"] in MC_CONFIG["second_win_client"] or json_content["test_group"] in MC_CONFIG["android_client"]):
         if "client_latencies" not in saved_values or "server_latencies" not in saved_values:
             if "expected_connection_problems" not in case or "client" not in case["expected_connection_problems"]:
-                json_content["test_status"] = "error"
+                if json_content["test_status"] != "observed":
+                    json_content["test_status"] = "error"
                 json_content["message"].append("Application problem: Client could not connect")
                 should_analyze_metrics = False
         elif max(saved_values["client_latencies"]) == 0 or max(saved_values["server_latencies"]) == 0:
             if "expected_connection_problems" not in case or "client" not in case["expected_connection_problems"]:
-                json_content["test_status"] = "error"
+                if json_content["test_status"] != "observed":
+                    json_content["test_status"] = "error"
                 json_content["message"].append("Application problem: Client could not connect")
                 should_analyze_metrics = False
         else:
             if "expected_connection_problems" in case and "client" in case["expected_connection_problems"]:
-                json_content["test_status"] = "error"
+                if json_content["test_status"] != "observed":
+                    json_content["test_status"] = "error"
                 json_content["message"].append("Client has connected, but it wasn't expected")
                 should_analyze_metrics = False
 
@@ -993,13 +996,15 @@ def analyze_logs(work_dir, json_content, case, execution_type="server", streamin
                             main_logger.warning("Android client could not connect")
                             if "expected_connection_problems" not in case or "android_client" not in case["expected_connection_problems"]:
                                 json_content["message"].append("Android client could not connect")
-                                json_content["test_status"] = "error"
+                                if json_content["test_status"] != "observed":
+                                    json_content["test_status"] = "error"
 
                             break
                     else:
                         if "expected_connection_problems" in case and "android_client" in case["expected_connection_problems"]:
                             json_content["message"].append("Android client has connected, but it wasn't expected")
-                            json_content["test_status"] = "error"
+                            if json_content["test_status"] != "observed":
+                                json_content["test_status"] = "error"
 
                     main_logger.warning("Number of lines with connection problem: {}".format(number_of_problems))
 
@@ -1036,23 +1041,27 @@ def analyze_logs(work_dir, json_content, case, execution_type="server", streamin
                             if "expected_connection_problems" not in case or "client" not in case["expected_connection_problems"]:
                                 main_logger.warning("First windows client client could not connect")
                                 json_content["message"].append("First windows client could not connect")
-                                json_content["test_status"] = "error"
+                                if json_content["test_status"] != "observed":
+                                    json_content["test_status"] = "error"
                         else:
                             if "expected_connection_problems" not in case or "second_client" not in case["expected_connection_problems"]:
                                 main_logger.warning("Second windows client client could not connect")
                                 json_content["message"].append("Second windows client could not connect")
-                                json_content["test_status"] = "error"
+                                if json_content["test_status"] != "observed":
+                                    json_content["test_status"] = "error"
                     else:
                         if execution_type == "windows_client":
                             if "expected_connection_problems" in case and "client" in case["expected_connection_problems"]:
                                 main_logger.warning("First windows client client could not connect")
                                 json_content["message"].append("First windows client has connected, but it wasn't expected")
-                                json_content["test_status"] = "error"
+                                if json_content["test_status"] != "observed":
+                                    json_content["test_status"] = "error"
                         else:
                             if "expected_connection_problems" in case and "second_client" in case["expected_connection_problems"]:
                                 main_logger.warning("Second windows client client could not connect")
                                 json_content["message"].append("Second windows client has connected, but it wasn't expected")
-                                json_content["test_status"] = "error"
+                                if json_content["test_status"] != "observed":
+                                    json_content["test_status"] = "error"
 
         else:
             main_logger.info("Test case skipped: {}".format(json_content["test_case"]))
@@ -1071,7 +1080,8 @@ def analyze_logs(work_dir, json_content, case, execution_type="server", streamin
             # latency rule №0 - min_latency == 1000 -> error
             if latency_test_min == 1000:
                 json_content["message"].append("Latency test was crushed or not launched at all, min latency 1000")
-                json_content["test_status"] = "error"
+                if json_content["test_status"] != "observed":
+                    json_content["test_status"] = "error"
 
             # latency rule №1 - accuracy < 95% -> fail
             if latency_test_accuracy < 95:
