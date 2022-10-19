@@ -186,7 +186,7 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
                 # sometimes click not work
                 for i in range(3):
                     click_on_element(link_coords)
-                    sleep(1)
+                    sleep(0.5)
 
                 for i in range(40):
                     try:
@@ -201,9 +201,9 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
                     raise Exception("Fresh invitation code wasn't detected")
 
                 # sometimes click not work
-                for i in range(2):
-                    click_on_element(link_coords)
-                    sleep(1)
+                click_on_element(link_coords)
+                sleep(0.5)
+                click_on_element(link_coords)
 
                 # copy invite code and close window with it
                 locate_and_click(AMDLinkElements.COPY_TEXT.build_path(), delay=1)
