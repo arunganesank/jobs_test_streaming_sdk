@@ -218,7 +218,7 @@ def parse_block_line(line, saved_values):
         saved_values['cpu_temp'].append(cpu_temp)
 
 
-def parse_line(line, saved_values):
+def parse_line(line, saved_values, block_number):
     if 'Bitrate: ' in line:
         if 'bitrate' not in saved_values:
             saved_values['bitrate'] = set()
@@ -266,9 +266,11 @@ def parse_line(line, saved_values):
         saved_values['codec'].append(codec_type)
 
     elif 'AcquireSurface()' in line:
-        if 'acquire_surface' not in saved_values:
-            saved_values['acquire_surface'] = 0
-        saved_values['acquire_surface'] += 1
+        # track Acquire Surface only when Streaming SDK started to work normally
+        if block_number >= 7:
+            if 'acquire_surface' not in saved_values:
+                saved_values['acquire_surface'] = 0
+            saved_values['acquire_surface'] += 1
 
     elif '[WVRServerSession]' in line and 'size of Tx:' in line:
         if 'datagram_size' not in saved_values:
@@ -936,7 +938,7 @@ def analyze_logs(work_dir, json_content, case, execution_type="server", streamin
                             block_number += 1
                             connection_terminated = False
 
-                        parse_line(line, saved_values)
+                        parse_line(line, saved_values, block_number)
 
                         # rule №0.1 - skip six first blocks of output with latency (it can contains abnormal data due to starting of Streaming SDK)
                         # rule №0.2 - if we have six blocks at all or less, we will work with existing (with adding Warning)
