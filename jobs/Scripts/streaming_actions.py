@@ -285,6 +285,13 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
 
                 sleep(1)
 
+                # check that submit button was clicked
+                try:
+                    locate_on_screen(AMDLinkElements.SUBMIT_CONNECT.build_path(), delay=1)
+                    raise Exception("Submit button wasn't clicked. Invite code could be invalid or outdated")
+                except:
+                    pass
+
                 try:
                     # skip optimizations and start streaming
                     locate_and_click(AMDLinkElements.SKIP_OPTIMIZATION.build_path(), delay=1)
