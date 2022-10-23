@@ -11,7 +11,7 @@
     },
     {
         "case": "STR_CFR_012",
-        "status": "skipped",
+        "status": "observed",
         "server_keys": "-extStats true -SLICES 500 -Protocol tcp",
         "client_keys": "",
         "script_info": [
@@ -71,7 +71,7 @@
     },
     {
         "case": "STR_CFR_018",
-        "status": "skipped",
+        "status": "observed",
         "server_keys": "-extStats true -Offline false -Protocol tcp",
         "client_keys": "",
         "script_info": [
@@ -111,7 +111,7 @@
     },
     {
         "case": "STR_CFR_002",
-        "status": "skipped",
+        "status": "observed",
         "server_keys": "-extStats true -SLICES 500 -Protocol udp",
         "client_keys": "",
         "script_info": [
@@ -171,7 +171,7 @@
     },
     {
         "case": "STR_CFR_008",
-        "status": "skipped",
+        "status": "observed",
         "server_keys": "-extStats true -Offline false -Protocol udp",
         "client_keys": "",
         "script_info": [
