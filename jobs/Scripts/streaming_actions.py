@@ -281,6 +281,10 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
 
                 locate_and_click(AMDLinkElements.LINK_GAME_INVITE_CLIENT.build_path(), delay=1)
 
+                # focus AMD Link window
+                sleep(1)
+                locate_and_click(AMDLinkElements.SUBMIT_CONNECT_DISABLED.build_path(), delay=1)
+
                 # type invite code and press submit button
                 sleep(1)
                 pyautogui.write(invite_code)

@@ -144,6 +144,7 @@ class AMDLinkElements:
     STOP_STREAMING_BUTTON = AMDLinkElementLocation("stop_streaming_button")
     STREAM_RESOLUTION = AMDLinkElementLocation("stream_resolution")
     SUBMIT_CONNECT = AMDLinkElementLocation("submit_connect")
+    SUBMIT_CONNECT_DISABLED = AMDLinkElementLocation("submit_connect_disabled")
     USE_ENCRYPTION = AMDLinkElementLocation("use_encryption")
     VIDEO_ENCODING_TYPE = AMDLinkElementLocation("video_encoding_type")
 
