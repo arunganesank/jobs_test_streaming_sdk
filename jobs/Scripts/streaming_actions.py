@@ -229,6 +229,8 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
                 invite_code = win32clipboard.GetClipboardData()
                 win32clipboard.CloseClipboard()
 
+                main_logger.info(f"Sending invite code: {invite_code}")
+
                 socket.send(invite_code.encode("utf-8"))
         except Exception as e:
             socket.send("failed".encode("utf-8"))
@@ -248,6 +250,8 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
     else:
         # wait invite code
         invite_code = socket.recv(1024).decode("utf-8")
+
+        main_logger.info(f"Received invite code: {invite_code}")
 
         if invite_code == "failed":
            raise Exception("Failed to receive invite code on server side") 
