@@ -291,11 +291,11 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
 
                 locate_and_click(AMDLinkElements.SUBMIT_CONNECT.build_path(), delay=1)
 
-                sleep(1)
+                sleep(3)
 
                 # check that submit button was clicked
                 try:
-                    locate_on_screen(AMDLinkElements.SUBMIT_CONNECT.build_path(), delay=1)
+                    locate_on_screen(AMDLinkElements.SUBMIT_CONNECT.build_path())
                     submit_button_found = True
                 except:
                     submit_button_found = False
