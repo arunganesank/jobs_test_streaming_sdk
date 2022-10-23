@@ -10,7 +10,7 @@
    },
    {
        "case": "STR_ACT_002",
-       "status": "skipped",
+       "status": "observed",
        "server_keys": "-Resolution <resolution> -Convert Vulkan -extStats true -Framerate 30 -Protocol udp",
        "client_keys": "",
        "script_info": [
@@ -28,7 +28,7 @@
    },
    {
        "case": "STR_ACT_004",
-       "status": "skipped",
+       "status": "observed",
        "server_keys": "-Resolution <resolution> -Convert Vulkan -extStats true -Framerate 30 -Protocol tcp",
        "client_keys": "",
        "script_info": [
