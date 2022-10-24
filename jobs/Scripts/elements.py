@@ -101,6 +101,7 @@ class IconElements:
     LOL = IconElementLocation("LoL")
     VALLEY = IconElementLocation("Valley")
     VALORANT = IconElementLocation("Valorant")
+    ADRENALIN_ICON = IconElementLocation("Adrenalin")
 
 
 class AMDLinkElementLocation(ElementLocation):
