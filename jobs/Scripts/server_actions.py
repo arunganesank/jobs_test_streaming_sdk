@@ -130,8 +130,9 @@ class OpenGame(Action):
             if self.game_name == "lol":
                 sleep(240)
 
-            pyautogui.hotkey("win", "m")
-            sleep(0.5)
+            if platform.system() == "Windows":
+                pyautogui.hotkey("win", "m")
+                sleep(0.5)
 
             psutil.Popen(self.game_launcher, stdout=PIPE, stderr=PIPE, shell=True)
             self.logger.info("Executed: {}".format(self.game_launcher))
