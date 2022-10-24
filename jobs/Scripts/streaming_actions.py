@@ -134,7 +134,7 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
             if not window_hwnd:
                 raise Exception("Adrenalin tool window wasn't found")
 
-            win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
+            make_window_foreground(window_hwnd)
 
             try:
                 locate_on_screen(AMDLinkElements.HOME_ACTIVE.build_path())
@@ -415,7 +415,7 @@ def close_streaming_amd_link(execution_type, case, process):
             if not window_hwnd:
                 raise Exception("Adrenalin tool window wasn't found")
 
-            win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
+            make_window_foreground(window_hwnd)
 
             # make a click on Adrenalin tool
             locate_and_click(AMDLinkElements.ADRENALIN_ICON.build_path(), delay=1)
@@ -433,3 +433,28 @@ def close_streaming_amd_link(execution_type, case, process):
         main_logger.info("Keep StreamingSDK instance")
 
     return process
+
+
+def make_window_foreground(window):
+    try:
+        win32gui.ShowWindow(window, 1)
+        win32gui.SetForegroundWindow(window)
+    except Exception as e:
+        main_logger.error("Failed to make window foreground (SW_SHOWNNORMAL): {}".format(str(e)))
+        main_logger.error("Traceback: {}".format(traceback.format_exc()))
+        main_logger.info("Try to make window foreground with SW_SHOWNOACTIVATE value")
+
+        try:
+            win32gui.ShowWindow(window, 4)
+            win32gui.SetForegroundWindow(window)
+        except Exception as e1:
+            main_logger.error("Failed to make window foreground (SW_SHOWNOACTIVATE): {}".format(str(e1)))
+            main_logger.error("Traceback: {}".format(traceback.format_exc()))
+            main_logger.info("Try to make window foreground with SW_SHOW value")
+
+            try:
+                win32gui.ShowWindow(window, 5)
+                win32gui.SetForegroundWindow(window)
+            except Exception as e1:
+                main_logger.error("Failed to make window foreground (SW_SHOW): {}".format(str(e2)))
+                main_logger.error("Traceback: {}".format(traceback.format_exc()))
