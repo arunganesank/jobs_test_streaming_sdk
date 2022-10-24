@@ -258,6 +258,8 @@ def prepare_game(game_name, game_launcher):
         locate_and_click(LoLElements.LOCK_IN_BUTTON.build_path())
         sleep(45)
         click("center_0", "center_0")
+        sleep(1)
+        click("center_10", "center_10")
         press_keys("shift+x ctrl+shift+i shift+y:17 ctrl+e ctrl+r")
     elif game_name == "dota2dx11" or game_name == "dota2vulkan":
         sleep(60)
