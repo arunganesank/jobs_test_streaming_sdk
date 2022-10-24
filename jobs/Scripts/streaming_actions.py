@@ -134,7 +134,10 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
             if not window_hwnd:
                 raise Exception("Adrenalin tool window wasn't found")
 
+            pyautogui.hotkey("win", "m")
+            sleep(1)
             locate_and_click(IconElements.ADRENALIN_ICON.build_path())
+            sleep(1)
             win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
 
             try:
@@ -403,20 +406,8 @@ def close_streaming_amd_link(execution_type, case, process):
             pyautogui.hotkey("win", "m")
             sleep(5)
 
-            script_path = "C:\\JN\\Adrenalin.lnk"
-            process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
-
-            window_hwnd = None
-
-            for window in pyautogui.getAllWindows():
-                if "AMD Software: Adrenalin" in window.title:
-                    window_hwnd = window._hWnd
-                    break
-
-            if not window_hwnd:
-                raise Exception("Adrenalin tool window wasn't found")
-
             locate_and_click(IconElements.ADRENALIN_ICON.build_path())
+            sleep(1)
             win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
 
             # make a click on Adrenalin tool
