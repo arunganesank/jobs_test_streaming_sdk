@@ -11,7 +11,7 @@ import pyautogui
 import pyscreenshot
 import utils
 from games_actions import locate_and_click, locate_on_screen, click_on_element
-from elements import AMDLinkElements
+from elements import AMDLinkElements, IconElements
 
 if platform.system() == "Windows":
     import win32gui
@@ -134,7 +134,7 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
             if not window_hwnd:
                 raise Exception("Adrenalin tool window wasn't found")
 
-            locate_and_click(AMDLinkElements.IconElements.ADRENALIN_ICON.build_path())
+            locate_and_click(IconElements.ADRENALIN_ICON.build_path())
             win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
 
             try:
@@ -416,7 +416,7 @@ def close_streaming_amd_link(execution_type, case, process):
             if not window_hwnd:
                 raise Exception("Adrenalin tool window wasn't found")
 
-            locate_and_click(AMDLinkElements.IconElements.ADRENALIN_ICON.build_path())
+            locate_and_click(IconElements.ADRENALIN_ICON.build_path())
             win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
 
             # make a click on Adrenalin tool
