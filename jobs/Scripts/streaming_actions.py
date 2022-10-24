@@ -30,7 +30,7 @@ class StreamingType(Enum):
     WEB = 3
 
 
-def start_streaming(execution_type, streaming_type=StreamingType.SDK, script_path=None, case=None, socket=None, debug_screen_path=None):
+def start_streaming(execution_type, streaming_type=StreamingType.SDK, script_path=None, case=None, socket=None, debug_screen_path=None, game_name=None):
     main_logger.info("Start StreamingSDK {}".format(execution_type))
 
     if streaming_type == StreamingType.SDK:
@@ -43,8 +43,10 @@ def start_streaming(execution_type, streaming_type=StreamingType.SDK, script_pat
             raise ValueError("Case is required to launch AMD Link")
         if not socket:
             raise ValueError("Socket is required to launch AMD Link")
+        if not game_name and execution_type == "server":
+            raise ValueError("Game name is required to launch AMD Link")
 
-        return start_streaming_amd_link(execution_type, case, socket, debug_screen_path=debug_screen_path)
+        return start_streaming_amd_link(execution_type, case, socket, debug_screen_path=debug_screen_path, game_name=None)
     else:
         raise ValueError(f"Unknown StreamingSDK type: {streaming_type}")
 
@@ -101,7 +103,7 @@ def set_adrenalin_params(case):
     configure_boolean_option(case, field_width, "use_encryption")
 
 
-def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=None):
+def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=None, game_name=None):
     if execution_type == "server":
         client_already_started = False
 
@@ -134,10 +136,12 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
             if not window_hwnd:
                 raise Exception("Adrenalin tool window wasn't found")
 
-            pyautogui.hotkey("win", "m")
-            sleep(1)
-            locate_and_click(IconElements.ADRENALIN_ICON.build_path())
-            sleep(1)
+            if game_name == "LoL":
+                pyautogui.hotkey("win", "m")
+                sleep(1)
+                locate_and_click(IconElements.ADRENALIN_ICON.build_path())
+                sleep(1)
+
             win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
 
             try:
@@ -343,12 +347,12 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
     return process
 
 
-def close_streaming(execution_type, case, process, tool_path=None, streaming_type=StreamingType.SDK):
+def close_streaming(execution_type, case, process, tool_path=None, streaming_type=StreamingType.SDK, game_name=None):
     try:
         if streaming_type == StreamingType.SDK:
             return close_streaming_sdk(execution_type, case, process, tool_path=tool_path)
         elif streaming_type == StreamingType.AMD_LINK:
-            return close_streaming_amd_link(execution_type, case, process)
+            return close_streaming_amd_link(execution_type, case, process, game_name=game_name)
         else:
             raise ValueError(f"Unknown StreamingSDK type: {streaming_type}")
     except Exception as e:
@@ -392,7 +396,7 @@ def close_streaming_sdk(execution_type, case, process, tool_path=None):
     return process
 
 
-def close_streaming_amd_link(execution_type, case, process):
+def close_streaming_amd_link(execution_type, case, process, game_name=None):
     if utils.should_case_be_closed(execution_type, case):
         # close the current Streaming SDK process
         main_logger.info("Start closing") 
@@ -406,8 +410,12 @@ def close_streaming_amd_link(execution_type, case, process):
             pyautogui.hotkey("win", "m")
             sleep(5)
 
-            locate_and_click(IconElements.ADRENALIN_ICON.build_path())
-            sleep(1)
+            if game_name and game_name == "LoL":
+                locate_and_click(IconElements.ADRENALIN_ICON.build_path())
+                sleep(1)
+            else:
+                script_path = "C:\\JN\\Adrenalin.lnk"
+                process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
 
             window_hwnd = None
 
@@ -418,7 +426,7 @@ def close_streaming_amd_link(execution_type, case, process):
 
             if not window_hwnd:
                 raise Exception("Adrenalin tool window wasn't found")
-            
+
             win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
 
             # make a click on Adrenalin tool
