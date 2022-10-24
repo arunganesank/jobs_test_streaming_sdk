@@ -293,7 +293,10 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
                 # sometimes click not work
                 locate_and_click(AMDLinkElements.SUBMIT_CONNECT.build_path(), delay=1)
                 sleep(1)
-                locate_and_click(AMDLinkElements.SUBMIT_CONNECT.build_path(), delay=1)
+                try:
+                    locate_and_click(AMDLinkElements.SUBMIT_CONNECT.build_path())
+                except:
+                    pass
 
                 sleep(2)
 
