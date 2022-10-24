@@ -135,6 +135,7 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
                 raise Exception("Adrenalin tool window wasn't found")
 
             make_window_foreground(window_hwnd)
+            win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
 
             try:
                 locate_on_screen(AMDLinkElements.HOME_ACTIVE.build_path())
@@ -416,6 +417,7 @@ def close_streaming_amd_link(execution_type, case, process):
                 raise Exception("Adrenalin tool window wasn't found")
 
             make_window_foreground(window_hwnd)
+            win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
 
             # make a click on Adrenalin tool
             locate_and_click(AMDLinkElements.ADRENALIN_ICON.build_path(), delay=1)
