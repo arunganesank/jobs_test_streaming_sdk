@@ -162,7 +162,12 @@ def prepare_empty_reports(args, current_conf):
                 test_case_report['script_info'] = case['script_info']
                 
             test_case_report['test_group'] = args.test_group
-            test_case_report['tool'] = 'StreamingSDK'
+
+            if args.streaming_type == StreamingType.AMD_LINK:
+                test_case_report['tool'] = 'AMDLink'
+            else:
+                test_case_report['tool'] = 'StreamingSDK'
+
             test_case_report['render_time'] = 0.0
             test_case_report['execution_time'] = 0.0
             test_case_report['execution_type'] = args.execution_type
@@ -215,7 +220,7 @@ def save_results(args, case, cases, execution_time = 0.0, test_case_status = "",
 
         test_case_report["execution_time"] = execution_time
 
-        if args.execution_type != StreamingType.AMD_LINK:
+        if args.streaming_type != StreamingType.AMD_LINK:
             # TODO: AMD Link logs not supported yet
             test_case_report["server_log"] = os.path.join("tool_logs", case["case"] + "_server.log")
             test_case_report["client_log"] = os.path.join("tool_logs", case["case"] + "_client.log")
@@ -330,9 +335,14 @@ def execute_tests(args, current_conf):
                 if args.execution_type == "server":
                     # copy settings.json to update transport protocol using by server instance
                     if platform.system() == "Windows":
-                        settings_json_path = os.path.join(os.getenv("APPDATA"), "..", "Local", "AMD", "RemoteGameServer", "settings", "settings.json")
+                        base_folder = os.path.join(os.getenv("APPDATA"), "..", "Local", "AMD", "RemoteGameServer", "settings")
+                        settings_json_path = os.path.join(base_folder, "settings.json")
                     else:
-                        settings_json_path = "/home/{}/.AMD/cl.cacheRemoteGameServer/settings/settings.json".format(os.getenv("USER"))
+                        base_folder = f"/home/{os.getenv('USER')}/.AMD/cl.cacheRemoteGameServer/settings"
+                        settings_json_path = os.path.join(base_folder, "settings.json")
+
+                    if not os.path.exists(base_folder):
+                        os.makedirs(base_folder)
 
                     copyfile(
                         os.path.realpath(
@@ -410,7 +420,7 @@ def execute_tests(args, current_conf):
 
                 break
             except Exception as e:
-                PROCESS = close_streaming(args.execution_type, case, PROCESS, streaming_type=args.streaming_type)
+                PROCESS = close_streaming(args.execution_type, case, PROCESS, streaming_type=args.streaming_type, game_name=args.game_name)
 
                 if (args.test_group in MC_CONFIG["android_client"]) and args.execution_type == "server":
                     # close Streaming SDK android app

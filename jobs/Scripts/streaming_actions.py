@@ -30,7 +30,7 @@ class StreamingType(Enum):
     WEB = 3
 
 
-def start_streaming(execution_type, streaming_type=StreamingType.SDK, script_path=None, case=None, socket=None, debug_screen_path=None):
+def start_streaming(execution_type, streaming_type=StreamingType.SDK, script_path=None, case=None, socket=None, debug_screen_path=None, game_name=None):
     main_logger.info("Start StreamingSDK {}".format(execution_type))
 
     if streaming_type == StreamingType.SDK:
@@ -43,8 +43,10 @@ def start_streaming(execution_type, streaming_type=StreamingType.SDK, script_pat
             raise ValueError("Case is required to launch AMD Link")
         if not socket:
             raise ValueError("Socket is required to launch AMD Link")
+        if not game_name and execution_type == "server":
+            raise ValueError("Game name is required to launch AMD Link")
 
-        return start_streaming_amd_link(execution_type, case, socket, debug_screen_path=debug_screen_path)
+        return start_streaming_amd_link(execution_type, case, socket, debug_screen_path=debug_screen_path, game_name=None)
     else:
         raise ValueError(f"Unknown StreamingSDK type: {streaming_type}")
 
@@ -101,7 +103,7 @@ def set_adrenalin_params(case):
     configure_boolean_option(case, field_width, "use_encryption")
 
 
-def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=None):
+def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=None, game_name=None):
     if execution_type == "server":
         client_already_started = False
 
@@ -137,16 +139,20 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
             win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
 
             try:
-                locate_on_screen(AMDLinkElements.HOME_ACTIVE.build_path())
-                # open AMD Link tab
-                coords = locate_on_screen(AMDLinkElements.AMD_LINK_STATUS.build_path())
-                pyautogui.click(coords[0] + coords[2] - 5, coords[1] + coords[3] - 5)
+                locate_on_screen(AMDLinkElements.AMD_LINK_ACTIVE.build_path())
             except:
-                # AMD Link tab is already active
-                pass
+                # AMD Link tab isn't opened
+                try:
+                    locate_and_click(AMDLinkElements.HOME_INACTIVE.build_path())
+                except:
+                    pass
+
+                # open AMD Link tab if it's required
+                coords = locate_on_screen(AMDLinkElements.AMD_LINK_STATUS.build_path(), delay=1)
+                pyautogui.click(coords[0] + coords[2] - 15, coords[1] + coords[3] - 15)
 
             try:
-                # open enable AMD Link if it's required
+                # enable AMD Link if it's required
                 locate_on_screen(AMDLinkElements.ENABLE_AMD_LINK.build_path())
             except:
                 pass
@@ -186,7 +192,7 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
                 # sometimes click not work
                 for i in range(3):
                     click_on_element(link_coords)
-                    sleep(1)
+                    sleep(0.5)
 
                 for i in range(40):
                     try:
@@ -201,9 +207,9 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
                     raise Exception("Fresh invitation code wasn't detected")
 
                 # sometimes click not work
-                for i in range(2):
-                    click_on_element(link_coords)
-                    sleep(1)
+                click_on_element(link_coords)
+                sleep(0.5)
+                click_on_element(link_coords)
 
                 # copy invite code and close window with it
                 locate_and_click(AMDLinkElements.COPY_TEXT.build_path(), delay=1)
@@ -229,6 +235,8 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
                 invite_code = win32clipboard.GetClipboardData()
                 win32clipboard.CloseClipboard()
 
+                main_logger.info(f"Sending invite code: {invite_code}")
+
                 socket.send(invite_code.encode("utf-8"))
         except Exception as e:
             socket.send("failed".encode("utf-8"))
@@ -248,6 +256,8 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
     else:
         # wait invite code
         invite_code = socket.recv(1024).decode("utf-8")
+
+        main_logger.info(f"Received invite code: {invite_code}")
 
         if invite_code == "failed":
            raise Exception("Failed to receive invite code on server side") 
@@ -277,13 +287,34 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
 
                 locate_and_click(AMDLinkElements.LINK_GAME_INVITE_CLIENT.build_path(), delay=1)
 
+                # focus AMD Link window
+                sleep(0.5)
+                locate_and_click(AMDLinkElements.SUBMIT_CONNECT_DISABLED.build_path(), delay=1)
+
                 # type invite code and press submit button
-                sleep(1)
+                sleep(0.5)
                 pyautogui.write(invite_code)
-
-                locate_and_click(AMDLinkElements.SUBMIT_CONNECT.build_path(), delay=1)
-
                 sleep(1)
+
+                # sometimes click not work
+                locate_and_click(AMDLinkElements.SUBMIT_CONNECT.build_path(), delay=1)
+                sleep(1)
+                try:
+                    locate_and_click(AMDLinkElements.SUBMIT_CONNECT.build_path())
+                except:
+                    pass
+
+                sleep(2)
+
+                # check that submit button was clicked
+                try:
+                    locate_on_screen(AMDLinkElements.SUBMIT_CONNECT.build_path())
+                    submit_button_found = True
+                except:
+                    submit_button_found = False
+
+                if submit_button_found:
+                    raise Exception("Submit button wasn't clicked. Invite code could be invalid / outdated or connection could't be established")
 
                 try:
                     # skip optimizations and start streaming
@@ -314,12 +345,12 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
     return process
 
 
-def close_streaming(execution_type, case, process, tool_path=None, streaming_type=StreamingType.SDK):
+def close_streaming(execution_type, case, process, tool_path=None, streaming_type=StreamingType.SDK, game_name=None):
     try:
         if streaming_type == StreamingType.SDK:
             return close_streaming_sdk(execution_type, case, process, tool_path=tool_path)
         elif streaming_type == StreamingType.AMD_LINK:
-            return close_streaming_amd_link(execution_type, case, process)
+            return close_streaming_amd_link(execution_type, case, process, game_name=game_name)
         else:
             raise ValueError(f"Unknown StreamingSDK type: {streaming_type}")
     except Exception as e:
@@ -363,7 +394,7 @@ def close_streaming_sdk(execution_type, case, process, tool_path=None):
     return process
 
 
-def close_streaming_amd_link(execution_type, case, process):
+def close_streaming_amd_link(execution_type, case, process, game_name=None):
     if utils.should_case_be_closed(execution_type, case):
         # close the current Streaming SDK process
         main_logger.info("Start closing") 
@@ -375,10 +406,20 @@ def close_streaming_amd_link(execution_type, case, process):
             pyautogui.hotkey("alt", "tab")
             sleep(1)
             pyautogui.hotkey("win", "m")
-            sleep(5)
+            sleep(1)
 
             script_path = "C:\\JN\\Adrenalin.lnk"
             process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
+
+            # wait AMD Adrenalin window opening
+            for i in range(10):
+                try:
+                    locate_on_screen(AMDLinkElements.ADRENALIN_ICON.build_path())
+                    break
+                except:
+                    sleep(1)
+            else:
+                raise Exception("Adrenalin tool window wasn't found")
 
             window_hwnd = None
 

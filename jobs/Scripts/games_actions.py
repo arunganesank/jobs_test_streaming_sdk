@@ -240,7 +240,10 @@ def prepare_game(game_name, game_launcher):
         sleep(90)
         click("center_-15", "center_-160")
         sleep(1)
-        locate_and_click(LoLElements.PLAY_BUTTON.build_path(), tries=4, delay=15)
+        coords = locate_on_screen(LoLElements.PLAY_BUTTON.build_path(), tries=4, delay=15)
+        click_on_element(coords)
+        sleep(0.5)
+        click_on_element(coords)
         sleep(1)
         locate_and_click(LoLElements.TRAINING_BUTTON.build_path())
         sleep(1)
@@ -255,6 +258,8 @@ def prepare_game(game_name, game_launcher):
         locate_and_click(LoLElements.LOCK_IN_BUTTON.build_path())
         sleep(45)
         click("center_0", "center_0")
+        sleep(1)
+        click("center_10", "center_10")
         press_keys("shift+x ctrl+shift+i shift+y:17 ctrl+e ctrl+r")
     elif game_name == "dota2dx11" or game_name == "dota2vulkan":
         sleep(60)
@@ -476,6 +481,8 @@ def make_game_foreground(game_name):
         try:
             locate_and_click(icon_path)
             sleep(4)
+
+            pyautogui.click(500, 500)
         except:
             main_logger.info(f"Icon wasn't detected. Skip making game foreground (try #{i})")
             break

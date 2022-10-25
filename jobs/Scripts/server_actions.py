@@ -130,6 +130,10 @@ class OpenGame(Action):
             if self.game_name == "lol":
                 sleep(240)
 
+                if platform.system() == "Windows":
+                    pyautogui.hotkey("win", "m")
+                    sleep(0.5)
+
             psutil.Popen(self.game_launcher, stdout=PIPE, stderr=PIPE, shell=True)
             self.logger.info("Executed: {}".format(self.game_launcher))
 
@@ -582,7 +586,7 @@ class StartStreaming(MulticonnectionAction):
             debug_screen_path = os.path.join(self.params["screen_path"], f"{self.case['case']}_debug.jpg")
 
             self.process = start_streaming(self.args.execution_type, 
-                streaming_type=self.args.streaming_type, case=self.case, socket=self.sock, debug_screen_path=debug_screen_path)
+                streaming_type=self.args.streaming_type, case=self.case, socket=self.sock, debug_screen_path=debug_screen_path, game_name=self.args.game_name)
 
             games_actions.make_game_foreground(self.args.game_name)
 

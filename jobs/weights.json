@@ -80,6 +80,31 @@
         {
             "suite_name": "HDR",
             "value": 2
-        }       
+        },
+
+        {
+            "suite_name": "AMD_Link_Codecs",
+            "value": 1
+        },
+        {
+            "suite_name": "AMD_Link_Connection",
+            "value": 10
+        },
+        {
+            "suite_name": "AMD_Link_Encrypt",
+            "value": 2
+        },
+        {
+            "suite_name": "AMD_Link_Resolution",
+            "value": 4
+        },
+        {
+            "suite_name": "AMD_Link_Smoke",
+            "value": 1
+        },
+        {
+            "suite_name": "AMD_Link_Streaming_Mode",
+            "value": 1
+        }    
     ]
 }

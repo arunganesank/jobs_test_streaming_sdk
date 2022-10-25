@@ -101,6 +101,7 @@ class IconElements:
     LOL = IconElementLocation("LoL")
     VALLEY = IconElementLocation("Valley")
     VALORANT = IconElementLocation("Valorant")
+    ADRENALIN_ICON = IconElementLocation("Adrenalin")
 
 
 class AMDLinkElementLocation(ElementLocation):
@@ -132,6 +133,8 @@ class AMDLinkElements:
     FULL_ACCESS_FRESH_LINK = AMDLinkElementLocation("full_access_fresh_link")
     HEVC = AMDLinkElementLocation("hevc")
     HOME_ACTIVE = AMDLinkElementLocation("home_active")
+    HOME_INACTIVE = AMDLinkElementLocation("home_inactive")
+    AMD_LINK_ACTIVE = AMDLinkElementLocation("amd_link_active")
     LINK_GAME_INVITE_CLIENT = AMDLinkElementLocation("link_game_invite_client")
     LINK_GAME_INVITE_SERVER = AMDLinkElementLocation("link_game_invite_server")
     MULTI_PLAY = AMDLinkElementLocation("multi_play")
@@ -144,6 +147,7 @@ class AMDLinkElements:
     STOP_STREAMING_BUTTON = AMDLinkElementLocation("stop_streaming_button")
     STREAM_RESOLUTION = AMDLinkElementLocation("stream_resolution")
     SUBMIT_CONNECT = AMDLinkElementLocation("submit_connect")
+    SUBMIT_CONNECT_DISABLED = AMDLinkElementLocation("submit_connect_disabled")
     USE_ENCRYPTION = AMDLinkElementLocation("use_encryption")
     VIDEO_ENCODING_TYPE = AMDLinkElementLocation("video_encoding_type")
 
