@@ -402,10 +402,20 @@ def close_streaming_amd_link(execution_type, case, process, game_name=None):
             pyautogui.hotkey("alt", "tab")
             sleep(1)
             pyautogui.hotkey("win", "m")
-            sleep(5)
+            sleep(1)
 
             script_path = "C:\\JN\\Adrenalin.lnk"
             process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
+
+            # wait AMD Adrenalin window opening
+            for i in range(10):
+                try:
+                    locate_on_screen(AMDLinkElements.ADRENALIN_ICON.build_path())
+                    break
+                except:
+                    sleep(1)
+            else:
+                raise Exception("Adrenalin tool window wasn't found")
 
             window_hwnd = None
 
