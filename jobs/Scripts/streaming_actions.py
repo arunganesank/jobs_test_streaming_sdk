@@ -139,16 +139,20 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
             win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
 
             try:
-                locate_on_screen(AMDLinkElements.HOME_ACTIVE.build_path())
-                # open AMD Link tab
+                locate_on_screen(AMDLinkElements.AMD_LINK_ACTIVE.build_path())
+            except:
+                # AMD Link tab isn't opened
+                try:
+                    locate_and_click(AMDLinkElements.HOME_INACTIVE.build_path())
+                except:
+                    pass
+
+                # open AMD Link tab if it's required
                 coords = locate_on_screen(AMDLinkElements.AMD_LINK_STATUS.build_path())
                 pyautogui.click(coords[0] + coords[2] - 5, coords[1] + coords[3] - 5)
-            except:
-                # AMD Link tab is already active
-                pass
 
             try:
-                # open enable AMD Link if it's required
+                # enable AMD Link if it's required
                 locate_on_screen(AMDLinkElements.ENABLE_AMD_LINK.build_path())
             except:
                 pass

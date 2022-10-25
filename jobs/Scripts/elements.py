@@ -133,6 +133,8 @@ class AMDLinkElements:
     FULL_ACCESS_FRESH_LINK = AMDLinkElementLocation("full_access_fresh_link")
     HEVC = AMDLinkElementLocation("hevc")
     HOME_ACTIVE = AMDLinkElementLocation("home_active")
+    HOME_INACTIVE = AMDLinkElementLocation("home_inactive")
+    AMD_LINK_ACTIVE = AMDLinkElementLocation("amd_link_active")
     LINK_GAME_INVITE_CLIENT = AMDLinkElementLocation("link_game_invite_client")
     LINK_GAME_INVITE_SERVER = AMDLinkElementLocation("link_game_invite_server")
     MULTI_PLAY = AMDLinkElementLocation("multi_play")
