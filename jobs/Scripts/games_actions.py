@@ -482,8 +482,7 @@ def make_game_foreground(game_name):
             locate_and_click(icon_path)
             sleep(4)
 
-            if "dota2" in game_name.lower():
-                pyautogui.click(500, 500)
+            pyautogui.click(500, 500)
         except:
             main_logger.info(f"Icon wasn't detected. Skip making game foreground (try #{i})")
             break
