@@ -162,7 +162,12 @@ def prepare_empty_reports(args, current_conf):
                 test_case_report['script_info'] = case['script_info']
                 
             test_case_report['test_group'] = args.test_group
-            test_case_report['tool'] = 'StreamingSDK'
+
+            if 'AMD_LINK' in args.test_group:
+                test_case_report['tool'] = 'AMDLink'
+            else:
+                test_case_report['tool'] = 'StreamingSDK'
+
             test_case_report['render_time'] = 0.0
             test_case_report['execution_time'] = 0.0
             test_case_report['execution_type'] = args.execution_type
