@@ -342,7 +342,7 @@ def execute_tests(args, current_conf):
                         settings_json_path = os.path.join(base_folder, "settings.json")
 
                     if not os.path.exists(base_folder):
-                        os.mkdir(base_folder)
+                        os.makedirs(base_folder)
 
                     copyfile(
                         os.path.realpath(
