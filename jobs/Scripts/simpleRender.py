@@ -335,9 +335,14 @@ def execute_tests(args, current_conf):
                 if args.execution_type == "server":
                     # copy settings.json to update transport protocol using by server instance
                     if platform.system() == "Windows":
-                        settings_json_path = os.path.join(os.getenv("APPDATA"), "..", "Local", "AMD", "RemoteGameServer", "settings", "settings.json")
+                        base_folder = os.path.join(os.getenv("APPDATA"), "..", "Local", "AMD", "RemoteGameServer", "settings")
+                        settings_json_path = os.path.join(base_folder, "settings.json")
                     else:
-                        settings_json_path = "/home/{}/.AMD/cl.cacheRemoteGameServer/settings/settings.json".format(os.getenv("USER"))
+                        base_folder = f"/home/{os.getenv('USER')}/.AMD/cl.cacheRemoteGameServer/settings"
+                        settings_json_path = os.path.join(base_folder, "settings.json")
+
+                    if not os.path.exists(base_folder):
+                        os.mkdir(base_folder)
 
                     copyfile(
                         os.path.realpath(
