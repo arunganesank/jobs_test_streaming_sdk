@@ -149,7 +149,7 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
 
                 # open AMD Link tab if it's required
                 coords = locate_on_screen(AMDLinkElements.AMD_LINK_STATUS.build_path())
-                pyautogui.click(coords[0] + coords[2] - 5, coords[1] + coords[3] - 5)
+                pyautogui.click(coords[0] + coords[2] - 15, coords[1] + coords[3] - 15)
 
             try:
                 # enable AMD Link if it's required
