@@ -163,7 +163,7 @@ def prepare_empty_reports(args, current_conf):
                 
             test_case_report['test_group'] = args.test_group
 
-            if 'AMD_LINK' in args.test_group:
+            if args.streaming_type == StreamingType.AMD_LINK:
                 test_case_report['tool'] = 'AMDLink'
             else:
                 test_case_report['tool'] = 'StreamingSDK'
@@ -220,7 +220,7 @@ def save_results(args, case, cases, execution_time = 0.0, test_case_status = "",
 
         test_case_report["execution_time"] = execution_time
 
-        if args.execution_type != StreamingType.AMD_LINK:
+        if args.streaming_type != StreamingType.AMD_LINK:
             # TODO: AMD Link logs not supported yet
             test_case_report["server_log"] = os.path.join("tool_logs", case["case"] + "_server.log")
             test_case_report["client_log"] = os.path.join("tool_logs", case["case"] + "_client.log")
