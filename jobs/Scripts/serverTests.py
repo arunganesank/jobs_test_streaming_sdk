@@ -182,7 +182,7 @@ def start_server_side_tests(args, case, process, android_client_closed, last_log
             params["messages"] = error_messages
             params["client_address"] = address[0]
             if args.streaming_type != StreamingType.AMD_LINK:
-                params["transport_protocol"] = getTransportProtocol(case)
+                params["transport_protocol"] = getTransportProtocol(args, case)
             params["script_path"] = script_path
             params["process"] = process
             params["android_client_closed"] = android_client_closed
@@ -267,7 +267,7 @@ def start_server_side_tests(args, case, process, android_client_closed, last_log
 
             main_logger.info("Finish to wait new actions")
 
-            process = close_streaming(args.execution_type, case, process, tool_path=args.server_tool, streaming_type=args.streaming_type)
+            process = close_streaming(args, case, process, tool_path=args.server_tool)
 
             if args.test_group in MC_CONFIG["second_win_client"]:
                 connection_sc.send("finish passed".encode("utf-8"))

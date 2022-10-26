@@ -105,7 +105,7 @@ def prepare_keys(args, case):
 
     return "{keys} -connectionurl {transport_protocol}://{ip_address}:1235".format(
         keys=keys,
-        transport_protocol = getTransportProtocol(case),
+        transport_protocol = getTransportProtocol(args, case),
         ip_address=args.ip_address
     )
 
@@ -143,7 +143,7 @@ def prepare_empty_reports(args, current_conf):
             test_case_report['tool'] = 'StreamingSDK'
             test_case_report['render_time'] = 0.0
             test_case_report['execution_time'] = 0.0
-            test_case_report['transport_protocol'] = getTransportProtocol(case).upper()
+            test_case_report['transport_protocol'] = getTransportProtocol(args, case).upper()
             test_case_report['tool_path'] = args.tool
             test_case_report['date_time'] = datetime.now().strftime(
                 '%m/%d/%Y %H:%M:%S')
@@ -274,7 +274,9 @@ def execute_tests(args, current_conf):
                 error_messages = []
 
             prepared_keys = prepare_keys(args, case)
-            execution_script = "{tool} {keys}".format(tool=tool_path, keys=prepared_keys)
+            tool_name = get_tool_name(args)
+
+            execution_script = f"{os.path.join(tool_path, tool_name)} {prepared_keys}"
 
             case["prepared_keys"] = prepared_keys
 
@@ -305,7 +307,7 @@ def execute_tests(args, current_conf):
             params["case"] = case
             params["client_type"] = "second_client"
             params["audio_device_name"] = audio_device_name
-            params["transport_protocol"] = getTransportProtocol(case)
+            params["transport_protocol"] = getTransportProtocol(args, case)
             params["messages"] = error_messages
             params["case_json_path"] = os.path.join(args.output, case["case"] + CASE_REPORT_SUFFIX)
 
@@ -316,7 +318,7 @@ def execute_tests(args, current_conf):
                 if process is None:
                     pyautogui.moveTo(1, 1)
                     pyautogui.hotkey("win", "m")
-                    process = start_streaming("second_client", script_path=script_path)
+                    process = start_streaming(args, case, script_path=script_path)
 
             pyscreenshot.grab()
             pyautogui.click(x=400, y=800)
@@ -366,7 +368,7 @@ def execute_tests(args, current_conf):
                 status = "observed"
 
             if "-MAXUSERS 1" not in case["server_keys"] and not ("max_clients" in case and case["max_clients"] == 1):
-                process = close_streaming("second_client", case, process)
+                process = close_streaming(args, case, process)
                 last_log_line = save_logs(args, case, last_log_line, current_try, is_multiconnection=True)
 
                 with open(os.path.join(args.output, case["case"] + CASE_REPORT_SUFFIX), "r") as file:
@@ -430,6 +432,7 @@ if __name__ == '__main__':
     main_logger.info('Main script start working...')
 
     args = createArgsParser().parse_args()
+    args.execution_type = "second_client"
 
     try:
         os.makedirs(args.output)

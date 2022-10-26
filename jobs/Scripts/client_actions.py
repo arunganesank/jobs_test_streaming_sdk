@@ -411,7 +411,7 @@ class StartStreaming(Action):
             self.sock.send(self.action.encode("utf-8"))
 
             should_collect_traces = (self.args.collect_traces == "BeforeTests")
-            self.process = start_streaming(self.args.execution_type, streaming_type=self.args.streaming_type, case=self.case, socket=self.sock)
+            self.process = start_streaming(self.args, self.case, socket=self.sock)
 
             if should_collect_traces:
                 collect_traces(self.archive_path, self.archive_name + "_client.zip")
@@ -424,7 +424,7 @@ class StartStreaming(Action):
                     should_collect_traces = (self.args.collect_traces == "BeforeTests")
                     pyautogui.moveTo(1, 1)
                     pyautogui.hotkey("win", "m")
-                    self.process = start_streaming(self.args.execution_type, streaming_type=self.args.streaming_type, script_path=self.script_path)
+                    self.process = start_streaming(self.args, self.case, script_path=self.script_path, socket=self.sock)
 
                     if should_collect_traces:
                         collect_traces(self.archive_path, self.archive_name + "_client.zip")
@@ -441,7 +441,7 @@ class StartStreaming(Action):
                     should_collect_traces = (self.args.collect_traces == "BeforeTests")
                     pyautogui.moveTo(1, 1)
                     pyautogui.hotkey("win", "m")
-                    self.process = start_streaming(self.args.execution_type, streaming_type=self.args.streaming_type, script_path=self.script_path)
+                    self.process = start_streaming(self.args, self.case, script_path=self.script_path, socket=self.sock)
 
                     if should_collect_traces:
                         collect_traces(self.archive_path, self.archive_name + "_client.zip")
@@ -464,7 +464,7 @@ class StartLatencyTool(Action):
         self.action = self.params["action_line"]
         self.args = self.params["args"]
         self.case = self.params["case"]
-        self.tool_path = os.path.join(os.path.split(self.args.server_tool)[0], "LatencyTestClient.exe")
+        self.tool_path = os.path.join(self.args.server_tool, "LatencyTestClient.exe")
         self.test_group = self.params["args"].test_group
 
     def execute(self):

@@ -132,7 +132,7 @@ def start_client_side_tests(args, case, process, last_log_line, audio_device_nam
             params["client_type"] = "win_client"
             params["messages"] = error_messages
             if args.streaming_type != StreamingType.AMD_LINK:
-                params["transport_protocol"] = getTransportProtocol(case)
+                params["transport_protocol"] = getTransportProtocol(args, case)
             params["script_path"] = script_path
             params["process"] = process
             params["case_json_path"] = os.path.join(args.output, case["case"] + CASE_REPORT_SUFFIX)
@@ -181,7 +181,7 @@ def start_client_side_tests(args, case, process, last_log_line, audio_device_nam
             if "Latency" in args.test_group and args.game_name == "Empty":
                 close_latency_tool(args.execution_type)
 
-            process = close_streaming(args.execution_type, case, process, streaming_type=args.streaming_type)
+            process = close_streaming(args, case, process)
             last_log_line = save_logs(args, case, last_log_line, current_try)
 
             if "Latency" in args.test_group and args.game_name == "Empty":
