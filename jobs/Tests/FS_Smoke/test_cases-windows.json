@@ -2,21 +2,11 @@
     {
         "case": "FS_SM_001",
         "status": "active",
-        "server_keys": "",
+        "server_keys": "-extStats true",
         "client_keys": "",
-        "transport_protocol": "udp",
         "full_samples_settings": {
-            "Video": {
-                "Capture method": "AMD",
-                "Enable QoS": true,
-                "Bitrate adjustment period [Seconds]": "3",
-                "Encoder resolution": ["2560", "1440"]
-            },
-            "Audio": {
-                "Compression Bitrate [kbps]": "100"
-            },
             "Network": {
-                "Network interface [IP]": "*"
+                "Network protocol": "UDP"
             }
         },
         "script_info": [
@@ -26,21 +16,11 @@
     {
         "case": "FS_SM_002",
         "status": "active",
-        "server_keys": "",
+        "server_keys": "-extStats true",
         "client_keys": "",
-        "transport_protocol": "tcp",
         "full_samples_settings": {
-            "Video": {
-                "Capture method": "AMD",
-                "Enable QoS": true,
-                "Bitrate adjustment period [Seconds]": "3",
-                "Encoder resolution": ["2560", "1440"]
-            },
-            "Audio": {
-                "Compression Bitrate [kbps]": "100"
-            },
             "Network": {
-                "Network interface [IP]": "*"
+                "Network protocol": "TCP"
             }
         },
         "script_info": [

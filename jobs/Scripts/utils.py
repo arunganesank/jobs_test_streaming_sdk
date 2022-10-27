@@ -198,6 +198,8 @@ def save_logs(args, case, last_log_line, current_try, is_multiconnection=False):
         if first_log_line_index != 0:
             lines = lines[first_log_line_index:]
 
+        lines = [line for line in lines if (b"DiscoverServers() start Disabled" not in line and b"DiscoverServers() ends result=false" not in line)]
+
         logs = b"\n".join(lines)
 
         with open(log_destination_path, "ab") as file:
@@ -575,17 +577,17 @@ def check_artifacts_and_save_status(artifact_path, json_path, logger, limit=1000
 
 # Function return protocol type(tcp\udp) from server keys in case (in case of Streaming SDK) or from transport_protocol key (in case of Full Samples)
 def getTransportProtocol(args, case):
-    if args.execution_type == StreamingType.SDK:
+    if args.streaming_type == StreamingType.SDK:
         current_protocol = "tcp"
         if "-protocol udp" in case["server_keys"].lower():
             current_protocol = "udp"
         return current_protocol
-    elif args.execution_type == StreamingType.FULL_SAMPLES:
-        return case["transport_protocol"]
+    elif args.streaming_type == StreamingType.FULL_SAMPLES:
+        return case["full_samples_settings"]["Network"]["Network protocol"].lower()
 
 
 def get_tool_name(args):
-    if args.execution_type == StreamingType.SDK:
+    if args.streaming_type == StreamingType.SDK:
         if args.execution_type == "server":
             if platform.system() == "Windows":
                 return "RemoteGameServer.exe"
@@ -593,7 +595,7 @@ def get_tool_name(args):
                 return "RemoteGameServer"
         else:
             return "RemoteGameClient.exe"
-    elif args.execution_type == StreamingType.FULL_SAMPLES:
+    elif args.streaming_type == StreamingType.FULL_SAMPLES:
         if args.execution_type == "server":
             return "FullGameServer.exe"
         else:

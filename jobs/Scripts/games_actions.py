@@ -104,7 +104,7 @@ def make_window_minimized(window):
         main_logger.error("Traceback: {}".format(traceback.format_exc()))
 
 
-def locate_on_screen(template, scale=False, tries=3, delay=0, **kwargs):
+def locate_on_screen(template, scale=False, tries=3, delay=0, step=0.07, **kwargs):
     coords = None
     if not "confidence" in kwargs:
         if scale:
@@ -139,7 +139,7 @@ def locate_on_screen(template, scale=False, tries=3, delay=0, **kwargs):
                 coords = pyautogui.locateOnScreen(img, **kwargs)
 
         tries -= 1
-        kwargs["confidence"] -= 0.07
+        kwargs["confidence"] -= step
 
         if not coords and delay:
             sleep(delay)

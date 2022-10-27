@@ -35,7 +35,7 @@ class StreamingType(Enum):
 
 
 def start_streaming(args, case, script_path=None, socket=None, debug_screen_path=None):
-    main_logger.info("Start StreamingSDK {}".format(execution_type))
+    main_logger.info("Start StreamingSDK {}".format(args.execution_type))
 
     if args.streaming_type == StreamingType.SDK:
         if not script_path:
@@ -55,7 +55,7 @@ def start_streaming(args, case, script_path=None, socket=None, debug_screen_path
 
         return start_full_samples(args, case, script_path, socket)
     else:
-        raise ValueError(f"Unknown StreamingSDK type: {streaming_type}")
+        raise ValueError(f"Unknown StreamingSDK type: {args.streaming_type}")
 
 
 def start_streaming_sdk(args, case, script_path):
@@ -354,7 +354,7 @@ def start_streaming_amd_link(args, case, socket, debug_screen_path=None):
 
 def start_full_samples(args, case, script_path, socket):
     if platform.system() == "Windows":
-        process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
+        process = psutil.Popen(script_path)
 
         if args.execution_type == "server":
             try:
@@ -367,16 +367,23 @@ def start_full_samples(args, case, script_path, socket):
                 for tab, options in case["full_samples_settings"].items():
                     utils.find_by_xpath(FSServerLocators.TAB_TEMPLATE.replace("<tab_name>", tab), driver).click()
 
+                    sleep(1)
+
                     # There are four possible types of options: boolean, select, input and double input (e.g. encoder resolution)
 
                     for option_name, option_value in options.items():
+                        main_logger.error(f"Set {option_name} option ({tab} tab)")
+
                         if isinstance(option_value, bool):
+                            main_logger.info("Set the option value in a flag")
                             element = utils.find_by_xpath(FSServerLocators.BOOLEAN_OPTION_TEMPLATE.replace("<option_name>", option_name), driver)
 
                             if option_value != element.is_selected():
                                 element.click()
+
                         elif isinstance(option_value, str):
                             is_input = False
+
                             try:
                                 element = utils.find_by_xpath(FSServerLocators.SELECT_OPTION_TEMPLATE.replace("<option_name>", option_name), driver)
                             except:
@@ -384,11 +391,14 @@ def start_full_samples(args, case, script_path, socket):
                                 is_input = True
 
                             if is_input:
-                                Select(element).select_by_value(option_value)
-                            else:
+                                main_logger.info("Set the option value in an input")
                                 element.clear()
                                 element.send_keys(option_value)
+                            else:
+                                main_logger.info("Set the option value in a select")
+                                Select(element).select_by_value(option_value)
                         elif isinstance(option_value, list):
+                            main_logger.info("Set the option value in two inputs")
                             first_element = utils.find_by_xpath(FSServerLocators.INPUT_OPTION_TEMPLATE_FIRST.replace("<option_name>", option_name), driver)
                             second_element = utils.find_by_xpath(FSServerLocators.INPUT_OPTION_TEMPLATE_SECOND.replace("<option_name>", option_name), driver)
 
@@ -403,6 +413,10 @@ def start_full_samples(args, case, script_path, socket):
                 utils.find_by_xpath(FSServerLocators.APPLY_BUTTON, driver).click()
 
                 socket.send("done".encode("utf-8"))
+
+                sleep(3)
+
+                driver.close()
             except Exception as e:
                 socket.send("failed".encode("utf-8"))
                 raise e
@@ -411,6 +425,8 @@ def start_full_samples(args, case, script_path, socket):
 
             if server_answer != "done":
                raise Exception("Failed to open Full Samples on server side") 
+
+            sleep(3)
 
             # wait Full Samples window opening
             for window in pyautogui.getAllWindows():
@@ -423,41 +439,40 @@ def start_full_samples(args, case, script_path, socket):
 
             win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
 
-            coords = locate_on_screen(FSElements.CONNECT_TO.build_path(),  delay=1)
-            pyautogui.click(coords[0] + coords[2] + 35, coords[1] + coords[3] / 2)
-            time.sleep(0.2)
-            pyautogui.click()
+            coords = locate_on_screen(FSElements.CONNECT_TO.build_path(), tries=7, delay=1, step=0.02)
 
-            if case["transport_protocol"] == "udp":
+            pyautogui.click(coords[0] + coords[2] + 35, coords[1] + coords[3] / 2)
+
+            if utils.getTransportProtocol(args, case) == "udp":
                 pyautogui.moveTo(coords[0] + coords[2] + 35, coords[1] + coords[3] / 2 + 25)
             else:
                 pyautogui.moveTo(coords[0] + coords[2] + 35, coords[1] + coords[3] / 2 + 45)
 
-            time.sleep(0.2)
+            sleep(0.1)
             pyautogui.click()
-            time.sleep(0.2)
+            sleep(0.1)
 
             pyautogui.press("tab")
-            time.sleep(0.2)
+            sleep(0.1)
             pyautogui.press("backspace", presses=30)
-            time.sleep(0.2)
+            sleep(0.1)
             pyautogui.typewrite(args.ip_address)
 
-            time.sleep(0.2)
+            sleep(0.1)
 
             pyautogui.press("tab")
-            time.sleep(0.2)
+            sleep(0.1)
             pyautogui.press("backspace", presses=30)
-            time.sleep(0.2)
+            sleep(0.1)
             pyautogui.typewrite("1235")
 
-            time.sleep(0.2)
+            sleep(0.1)
 
             if "client_password" in case:
                 pyautogui.press("tab")
-                time.sleep(0.2)
+                sleep(0.1)
                 pyautogui.press("backspace", presses=30)
-                time.sleep(0.2)
+                sleep(0.1)
                 pyautogui.typewrite(case["client_password"])
 
             locate_and_click(FSElements.CONNECT.build_path())
@@ -467,14 +482,14 @@ def start_full_samples(args, case, script_path, socket):
 
 def close_streaming(args, case, process, tool_path=None):
     try:
-        if streaming_type == StreamingType.SDK:
+        if args.streaming_type == StreamingType.SDK:
             return close_streaming_sdk(args, case, process, tool_path=tool_path)
-        elif streaming_type == StreamingType.AMD_LINK:
+        elif args.streaming_type == StreamingType.AMD_LINK:
             return close_streaming_amd_link(args, case, process)
-        elif streaming_type == StreamingType.FULL_SAMPLES:
+        elif args.streaming_type == StreamingType.FULL_SAMPLES:
             return close_full_samples(args, case, process)
         else:
-            raise ValueError(f"Unknown StreamingSDK type: {streaming_type}")
+            raise ValueError(f"Unknown StreamingSDK type: {args.streaming_type}")
     except Exception as e:
         main_logger.error("Failed to close Streaming SDK process. Exception: {}".format(str(e)))
         main_logger.error("Traceback: {}".format(traceback.format_exc()))

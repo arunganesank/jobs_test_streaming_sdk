@@ -301,28 +301,29 @@ def parse_error(line, saved_errors):
         saved_errors.append(error_message)
 
 
-def update_status(json_content, case, saved_values, saved_errors, framerate, execution_type):
+def update_status(json_content, case, saved_values, saved_errors, framerate, execution_type, streaming_type):
     should_analyze_metrics = True
 
-    if not (json_content["test_group"] in MC_CONFIG["second_win_client"] or json_content["test_group"] in MC_CONFIG["android_client"]):
-        if "client_latencies" not in saved_values or "server_latencies" not in saved_values:
-            if "expected_connection_problems" not in case or "client" not in case["expected_connection_problems"]:
-                if json_content["test_status"] != "observed":
-                    json_content["test_status"] = "error"
-                json_content["message"].append("Application problem: Client could not connect")
-                should_analyze_metrics = False
-        elif max(saved_values["client_latencies"]) == 0 or max(saved_values["server_latencies"]) == 0:
-            if "expected_connection_problems" not in case or "client" not in case["expected_connection_problems"]:
-                if json_content["test_status"] != "observed":
-                    json_content["test_status"] = "error"
-                json_content["message"].append("Application problem: Client could not connect")
-                should_analyze_metrics = False
-        else:
-            if "expected_connection_problems" in case and "client" in case["expected_connection_problems"]:
-                if json_content["test_status"] != "observed":
-                    json_content["test_status"] = "error"
-                json_content["message"].append("Client has connected, but it wasn't expected")
-                should_analyze_metrics = False
+    if streaming_type == StreamingType.SDK:
+        if not (json_content["test_group"] in MC_CONFIG["second_win_client"] or json_content["test_group"] in MC_CONFIG["android_client"]):
+            if "client_latencies" not in saved_values or "server_latencies" not in saved_values:
+                if "expected_connection_problems" not in case or "client" not in case["expected_connection_problems"]:
+                    if json_content["test_status"] != "observed":
+                        json_content["test_status"] = "error"
+                    json_content["message"].append("Application problem: Client could not connect")
+                    should_analyze_metrics = False
+            elif max(saved_values["client_latencies"]) == 0 or max(saved_values["server_latencies"]) == 0:
+                if "expected_connection_problems" not in case or "client" not in case["expected_connection_problems"]:
+                    if json_content["test_status"] != "observed":
+                        json_content["test_status"] = "error"
+                    json_content["message"].append("Application problem: Client could not connect")
+                    should_analyze_metrics = False
+            else:
+                if "expected_connection_problems" in case and "client" in case["expected_connection_problems"]:
+                    if json_content["test_status"] != "observed":
+                        json_content["test_status"] = "error"
+                    json_content["message"].append("Client has connected, but it wasn't expected")
+                    should_analyze_metrics = False
 
     if should_analyze_metrics:
         if 'encoder_values' in saved_values:
@@ -967,7 +968,7 @@ def analyze_logs(work_dir, json_content, case, execution_type="server", streamin
                         for line in saved_blocks:
                             parse_block_line(line, saved_values)
 
-                    update_status(json_content, case, saved_values, saved_errors, framerate, execution_type)
+                    update_status(json_content, case, saved_values, saved_errors, framerate, execution_type, streaming_type)
 
             #if connection_terminated:
             #    json_content["message"].append("Application problem: Client connection terminated")

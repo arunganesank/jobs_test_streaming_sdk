@@ -604,6 +604,9 @@ class StartStreaming(MulticonnectionAction):
             elif "start_first" in self.case and self.case["start_first"] == "server":
                 sleep(5)
 
+            if self.args.streaming_type == StreamingType.FULL_SAMPLES:
+                games_actions.make_game_foreground(self.args.game_name)
+
         # TODO: make single parameter to configure launching order
         # start android client after server or default behaviour
         if "android_start" not in self.case or self.case["android_start"] == "after_server":

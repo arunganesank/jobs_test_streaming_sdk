@@ -180,5 +180,5 @@ class FSElementLocation(ElementLocation):
 
 
 class FSElements:
-    CONNECT = AMDLinkElementLocation("connect")
-    CONNECT_TO = AMDLinkElementLocation("connect_to")
+    CONNECT = FSElementLocation("connect")
+    CONNECT_TO = FSElementLocation("connect_to")

@@ -276,7 +276,9 @@ def execute_tests(args, current_conf):
             prepared_keys = prepare_keys(args, case)
             tool_name = get_tool_name(args)
 
-            execution_script = f"{os.path.join(tool_path, tool_name)} {prepared_keys}"
+            target_path = os.path.join(tool_path, tool_name)
+
+            execution_script = f"{target_path} {prepared_keys}"
 
             case["prepared_keys"] = prepared_keys
 

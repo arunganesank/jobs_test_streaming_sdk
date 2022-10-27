@@ -116,7 +116,7 @@ def prepare_keys(args, case):
         # place the current screen resolution in keys of the server instance
         return keys.replace("<resolution>", args.screen_resolution.replace("x", ","))
     else:
-        if arts.streaming_type == StreamingType.SDK:
+        if args.streaming_type == StreamingType.SDK:
             return "{keys} -connectionurl {transport_protocol}://{ip_address}:1235".format(
                 keys=keys,
                 transport_protocol = getTransportProtocol(args, case),
@@ -342,7 +342,8 @@ def execute_tests(args, current_conf):
                         base_folder = os.path.join(os.getenv("APPDATA"), "..", "Local", "AMD", "RemoteGameServer", "settings")
                         settings_json_path = os.path.join(base_folder, "settings.json")
                     else:
-                        base_folder = f"/home/{os.getenv('USER')}/.AMD/cl.cacheRemoteGameServer/settings"
+                        username = os.getenv('USER')
+                        base_folder = f"/home/{username}/.AMD/cl.cacheRemoteGameServer/settings"
                         settings_json_path = os.path.join(base_folder, "settings.json")
 
                     if not os.path.exists(base_folder):
@@ -378,11 +379,12 @@ def execute_tests(args, current_conf):
                 if args.streaming_type != StreamingType.AMD_LINK:
                     prepared_keys = prepare_keys(args, case)
                     tool_name = get_tool_name(args)
+                    target_path = os.path.join(tool_path, tool_name)
 
                     if platform.system() == "Windows":
-                        execution_script = f"{os.path.join(tool_path, tool_name)} {prepared_keys}"
+                        execution_script = f"start cmd /k \"{target_path} {prepared_keys} & exit 0\""
                     else:
-                        execution_script = f"sudo -E {os.path.join(tool_path, tool_name)} {prepared_keys}"
+                        execution_script = f"sudo -E {target_path} {prepared_keys}"
 
                     case["prepared_keys"] = prepared_keys
 
