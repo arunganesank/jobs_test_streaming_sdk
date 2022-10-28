@@ -1039,32 +1039,33 @@ def analyze_logs(work_dir, json_content, case, execution_type="server", streamin
 
                     main_logger.warning("Found {} metrics lines".format(number_of_metrics_lines))
 
-                    if number_of_metrics_lines < 5 or client_latencies_sum == 0:
-                        if execution_type == "windows_client":
-                            if "expected_connection_problems" not in case or "client" not in case["expected_connection_problems"]:
-                                main_logger.warning("First windows client client could not connect")
-                                json_content["message"].append("First windows client could not connect")
-                                if json_content["test_status"] != "observed":
-                                    json_content["test_status"] = "error"
+                    if streaming_type == StreamingType.SDK:
+                        if number_of_metrics_lines < 5 or client_latencies_sum == 0:
+                            if execution_type == "windows_client":
+                                if "expected_connection_problems" not in case or "client" not in case["expected_connection_problems"]:
+                                    main_logger.warning("First windows client client could not connect")
+                                    json_content["message"].append("First windows client could not connect")
+                                    if json_content["test_status"] != "observed":
+                                        json_content["test_status"] = "error"
+                            else:
+                                if "expected_connection_problems" not in case or "second_client" not in case["expected_connection_problems"]:
+                                    main_logger.warning("Second windows client client could not connect")
+                                    json_content["message"].append("Second windows client could not connect")
+                                    if json_content["test_status"] != "observed":
+                                        json_content["test_status"] = "error"
                         else:
-                            if "expected_connection_problems" not in case or "second_client" not in case["expected_connection_problems"]:
-                                main_logger.warning("Second windows client client could not connect")
-                                json_content["message"].append("Second windows client could not connect")
-                                if json_content["test_status"] != "observed":
-                                    json_content["test_status"] = "error"
-                    else:
-                        if execution_type == "windows_client":
-                            if "expected_connection_problems" in case and "client" in case["expected_connection_problems"]:
-                                main_logger.warning("First windows client client could not connect")
-                                json_content["message"].append("First windows client has connected, but it wasn't expected")
-                                if json_content["test_status"] != "observed":
-                                    json_content["test_status"] = "error"
-                        else:
-                            if "expected_connection_problems" in case and "second_client" in case["expected_connection_problems"]:
-                                main_logger.warning("Second windows client client could not connect")
-                                json_content["message"].append("Second windows client has connected, but it wasn't expected")
-                                if json_content["test_status"] != "observed":
-                                    json_content["test_status"] = "error"
+                            if execution_type == "windows_client":
+                                if "expected_connection_problems" in case and "client" in case["expected_connection_problems"]:
+                                    main_logger.warning("First windows client client could not connect")
+                                    json_content["message"].append("First windows client has connected, but it wasn't expected")
+                                    if json_content["test_status"] != "observed":
+                                        json_content["test_status"] = "error"
+                            else:
+                                if "expected_connection_problems" in case and "second_client" in case["expected_connection_problems"]:
+                                    main_logger.warning("Second windows client client could not connect")
+                                    json_content["message"].append("Second windows client has connected, but it wasn't expected")
+                                    if json_content["test_status"] != "observed":
+                                        json_content["test_status"] = "error"
 
         else:
             main_logger.info("Test case skipped: {}".format(json_content["test_case"]))
