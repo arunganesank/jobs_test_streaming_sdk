@@ -27,6 +27,7 @@ if platform.system() == "Windows":
     import pydirectinput
     from selenium.webdriver.common.by import By
     from selenium.webdriver.support.wait import WebDriverWait
+    from selenium.common.exceptions import TimeoutException
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))

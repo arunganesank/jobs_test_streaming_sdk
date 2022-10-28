@@ -418,8 +418,11 @@ class StartStreaming(Action):
 
             self.wait_server_answer(analyze_answer = True, abort_if_fail = True)
         else:
-            # start client before server (default case for Streaming SDK)
-            if ("start_first" not in self.case and self.args.streaming_type == StreamingType.SDK) or ("start_first" in self.case and self.case["start_first"] != "server"):
+            if self.args.streaming_type == StreamingType.FULL_SAMPLES:
+                self.sock.send(self.action.encode("utf-8"))
+
+            # start client before server (default case)
+            if "start_first" not in self.case or self.case["start_first"] != "server":
                 if self.process is None:
                     should_collect_traces = (self.args.collect_traces == "BeforeTests")
                     pyautogui.moveTo(1, 1)
@@ -431,12 +434,13 @@ class StartStreaming(Action):
                     elif "start_first" in self.case and self.case["start_first"] == "client":
                         sleep(5)
 
-            self.sock.send(self.action.encode("utf-8"))
+            if self.args.streaming_type == StreamingType.SDK:
+                self.sock.send(self.action.encode("utf-8"))
 
             self.wait_server_answer(analyze_answer = True, abort_if_fail = True)
 
-            # start server before client (default case for Full Samples)
-            if ("start_first" not in self.case and self.args.streaming_type == StreamingType.FULL_SAMPLES) or ("start_first" in self.case and self.case["start_first"] == "server"):
+            # start server before client
+            if "start_first" not in self.case or self.case["start_first"] == "server":
                 if self.process is None:
                     should_collect_traces = (self.args.collect_traces == "BeforeTests")
                     pyautogui.moveTo(1, 1)

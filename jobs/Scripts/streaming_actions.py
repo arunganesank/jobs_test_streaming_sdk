@@ -12,6 +12,7 @@ import pyscreenshot
 from selenium import webdriver
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.chrome.service import Service
+from threading import Thread
 import utils
 from games_actions import locate_and_click, locate_on_screen, click_on_element
 from elements import AMDLinkElements, FSElements
@@ -362,12 +363,13 @@ def start_full_samples(args, case, script_path, socket):
                 chrome_options = webdriver.ChromeOptions()
                 chrome_options.add_argument("--start-maximized")
                 driver = webdriver.Chrome(service=service, options=chrome_options)
+                sleep(3)
                 driver.get("http://localhost")
 
                 for tab, options in case["full_samples_settings"].items():
                     utils.find_by_xpath(FSServerLocators.TAB_TEMPLATE.replace("<tab_name>", tab), driver).click()
 
-                    sleep(1)
+                    sleep(0.5)
 
                     # There are four possible types of options: boolean, select, input and double input (e.g. encoder resolution)
 
@@ -414,19 +416,18 @@ def start_full_samples(args, case, script_path, socket):
 
                 socket.send("done".encode("utf-8"))
 
-                sleep(3)
-
-                driver.close()
+                driver_closing_thread = Thread(target=driver.close, args=())
+                driver_closing_thread.start()
             except Exception as e:
                 socket.send("failed".encode("utf-8"))
                 raise e
         else:
+            sleep(3)
+
             server_answer = socket.recv(1024).decode("utf-8")
 
             if server_answer != "done":
                raise Exception("Failed to open Full Samples on server side") 
-
-            sleep(3)
 
             # wait Full Samples window opening
             for window in pyautogui.getAllWindows():

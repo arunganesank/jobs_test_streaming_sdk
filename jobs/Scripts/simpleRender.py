@@ -168,6 +168,8 @@ def prepare_empty_reports(args, current_conf):
 
             if args.streaming_type == StreamingType.AMD_LINK:
                 test_case_report['tool'] = 'AMDLink'
+            elif args.streaming_type == StreamingType.FULL_SAMPLES:
+                test_case_report['tool'] = 'Full Samples'
             else:
                 test_case_report['tool'] = 'StreamingSDK'
 
@@ -382,7 +384,10 @@ def execute_tests(args, current_conf):
                     target_path = os.path.join(tool_path, tool_name)
 
                     if platform.system() == "Windows":
-                        execution_script = f"start cmd /k \"{target_path} {prepared_keys} & exit 0\""
+                        if args.execution_type == "client" and args.streaming_type == StreamingType.FULL_SAMPLES:
+                            execution_script = f"start cmd /k \"{target_path} {prepared_keys} & exit 0\""
+                        else:
+                            execution_script = f"{target_path} {prepared_keys}"
                     else:
                         execution_script = f"sudo -E {target_path} {prepared_keys}"
 
