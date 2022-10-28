@@ -577,13 +577,11 @@ def check_artifacts_and_save_status(artifact_path, json_path, logger, limit=1000
 
 # Function return protocol type(tcp\udp) from server keys in case (in case of Streaming SDK) or from transport_protocol key (in case of Full Samples)
 def getTransportProtocol(args, case):
-    if args.streaming_type == StreamingType.SDK:
+    if args.streaming_type == StreamingType.SDK or args.streaming_type == StreamingType.FULL_SAMPLES:
         current_protocol = "tcp"
         if "-protocol udp" in case["server_keys"].lower():
             current_protocol = "udp"
         return current_protocol
-    elif args.streaming_type == StreamingType.FULL_SAMPLES:
-        return case["full_samples_settings"]["Network"]["Network protocol"].lower()
 
 
 def get_tool_name(args):
