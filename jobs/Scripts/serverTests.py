@@ -267,7 +267,7 @@ def start_server_side_tests(args, case, process, android_client_closed, last_log
 
             main_logger.info("Finish to wait new actions")
 
-            process = close_streaming(args.execution_type, case, process, tool_path=args.server_tool, streaming_type=args.streaming_type)
+            process = close_streaming(args.execution_type, case, process, tool_path=args.server_tool, streaming_type=args.streaming_type, game_name=args.game_name)
 
             if args.test_group in MC_CONFIG["second_win_client"]:
                 connection_sc.send("finish passed".encode("utf-8"))

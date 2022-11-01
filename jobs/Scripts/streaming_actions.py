@@ -10,7 +10,7 @@ from enum import Enum
 import pyautogui
 import pyscreenshot
 import utils
-from games_actions import locate_and_click, locate_on_screen, click_on_element
+from games_actions import locate_and_click, locate_on_screen, click_on_element, get_game_window_name
 from elements import AMDLinkElements
 
 if platform.system() == "Windows":
@@ -43,10 +43,10 @@ def start_streaming(execution_type, streaming_type=StreamingType.SDK, script_pat
             raise ValueError("Case is required to launch AMD Link")
         if not socket:
             raise ValueError("Socket is required to launch AMD Link")
-        if not game_name and execution_type == "server":
+        if not game_name:
             raise ValueError("Game name is required to launch AMD Link")
 
-        return start_streaming_amd_link(execution_type, case, socket, debug_screen_path=debug_screen_path, game_name=None)
+        return start_streaming_amd_link(execution_type, case, socket, game_name, debug_screen_path=debug_screen_path)
     else:
         raise ValueError(f"Unknown StreamingSDK type: {streaming_type}")
 
@@ -103,12 +103,13 @@ def set_adrenalin_params(case):
     configure_boolean_option(case, field_width, "use_encryption")
 
 
-def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=None, game_name=None):
+def start_streaming_amd_link(execution_type, case, socket, game_name, debug_screen_path=None):
     if execution_type == "server":
         client_already_started = False
 
         try:
-            pyautogui.hotkey("alt", "tab")
+            window = win32gui.FindWindow(None, get_game_window_name(game_name))
+            utils.hide_window(get_game_window_name(window))
             sleep(1)
             pyautogui.hotkey("win", "m")
             sleep(1)
@@ -136,7 +137,7 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
             if not window_hwnd:
                 raise Exception("Adrenalin tool window wasn't found")
 
-            win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
+            utils.make_window_active(window_hwnd)
 
             try:
                 locate_on_screen(AMDLinkElements.AMD_LINK_ACTIVE.build_path())
@@ -238,6 +239,8 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
                 main_logger.info(f"Sending invite code: {invite_code}")
 
                 socket.send(invite_code.encode("utf-8"))
+
+            utils.hide_window(window_hwnd)
         except Exception as e:
             socket.send("failed".encode("utf-8"))
             raise e
@@ -263,8 +266,6 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
            raise Exception("Failed to receive invite code on server side") 
 
         try:
-            pyautogui.hotkey("alt", "tab")
-            sleep(1)
             pyautogui.hotkey("win", "m")
             sleep(1)
 
@@ -281,6 +282,18 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
                         sleep(1)
                 else:
                     raise Exception("AMD Link tool window wasn't found")
+
+                window_hwnd = None
+
+                for window in pyautogui.getAllWindows():
+                    if "AMD Link" in window.title:
+                        window_hwnd = window._hWnd
+                        break
+
+                if not window_hwnd:
+                    raise Exception("Adrenalin tool window wasn't found")
+
+                utils.make_window_active(window_hwnd)
                 
                 # connect to server
                 locate_and_click(AMDLinkElements.CONNECT_TO_PC.build_path(), delay=1)
@@ -350,7 +363,10 @@ def close_streaming(execution_type, case, process, tool_path=None, streaming_typ
         if streaming_type == StreamingType.SDK:
             return close_streaming_sdk(execution_type, case, process, tool_path=tool_path)
         elif streaming_type == StreamingType.AMD_LINK:
-            return close_streaming_amd_link(execution_type, case, process, game_name=game_name)
+            if not game_name:
+                raise ValueError("Game name is required to close AMD Link")
+
+            return close_streaming_amd_link(execution_type, case, process, game_name)
         else:
             raise ValueError(f"Unknown StreamingSDK type: {streaming_type}")
     except Exception as e:
@@ -394,7 +410,7 @@ def close_streaming_sdk(execution_type, case, process, tool_path=None):
     return process
 
 
-def close_streaming_amd_link(execution_type, case, process, game_name=None):
+def close_streaming_amd_link(execution_type, case, process, game_name):
     if utils.should_case_be_closed(execution_type, case):
         # close the current Streaming SDK process
         main_logger.info("Start closing") 
@@ -403,7 +419,8 @@ def close_streaming_amd_link(execution_type, case, process, game_name=None):
             # wait closing on client
             sleep(3)
 
-            pyautogui.hotkey("alt", "tab")
+            window = win32gui.FindWindow(None, get_game_window_name(game_name))
+            utils.hide_window(get_game_window_name(window))
             sleep(1)
             pyautogui.hotkey("win", "m")
             sleep(1)
@@ -431,12 +448,14 @@ def close_streaming_amd_link(execution_type, case, process, game_name=None):
             if not window_hwnd:
                 raise Exception("Adrenalin tool window wasn't found")
 
-            win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
+            utils.make_window_active(window_hwnd)
 
             # make a click on Adrenalin tool
             locate_and_click(AMDLinkElements.ADRENALIN_ICON.build_path(), delay=1)
 
             locate_and_click(AMDLinkElements.STOP_STREAMING_BUTTON.build_path(), delay=1)
+
+            utils.hide_window(window_hwnd)
 
         elif execution_type == "client":
             subprocess.call("taskkill /f /im AMDLink.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)

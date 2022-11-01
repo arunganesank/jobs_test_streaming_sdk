@@ -405,13 +405,15 @@ class StartStreaming(Action):
         self.archive_name = self.params["case"]["case"]
         self.script_path = self.params["script_path"]
         self.process = self.params["process"]
+        self.game_name = self.params["game_name"]
 
     def execute(self):
         if self.args.streaming_type == StreamingType.AMD_LINK:
             self.sock.send(self.action.encode("utf-8"))
 
             should_collect_traces = (self.args.collect_traces == "BeforeTests")
-            self.process = start_streaming(self.args.execution_type, streaming_type=self.args.streaming_type, case=self.case, socket=self.sock)
+            self.process = start_streaming(self.args.execution_type, streaming_type=self.args.streaming_type, case=self.case, 
+                socket=self.sock, game_name=self.args.game_name)
 
             if should_collect_traces:
                 collect_traces(self.archive_path, self.archive_name + "_client.zip")
