@@ -579,8 +579,12 @@ def getTransportProtocol(case):
 
 
 def make_window_active(window):
+    win32gui.ShowWindow(window, 9)
+
+
+def make_window_maximized(window):
     win32gui.ShowWindow(window, 3)
 
 
 def hide_window(window):
-    win32gui.ShowWindow(window, 11)
+    win32gui.ShowWindow(window, 6)

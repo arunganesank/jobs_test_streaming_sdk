@@ -109,7 +109,7 @@ def start_streaming_amd_link(execution_type, case, socket, game_name, debug_scre
 
         try:
             window = win32gui.FindWindow(None, get_game_window_name(game_name))
-            utils.hide_window(get_game_window_name(window))
+            utils.hide_window(window)
             sleep(1)
             pyautogui.hotkey("win", "m")
             sleep(1)
@@ -137,7 +137,7 @@ def start_streaming_amd_link(execution_type, case, socket, game_name, debug_scre
             if not window_hwnd:
                 raise Exception("Adrenalin tool window wasn't found")
 
-            utils.make_window_active(window_hwnd)
+            utils.make_window_maximized(window_hwnd)
 
             try:
                 locate_on_screen(AMDLinkElements.AMD_LINK_ACTIVE.build_path())
@@ -207,13 +207,17 @@ def start_streaming_amd_link(execution_type, case, socket, game_name, debug_scre
                 else:
                     raise Exception("Fresh invitation code wasn't detected")
 
-                # sometimes click not work
+                
                 click_on_element(link_coords)
                 sleep(0.5)
-                click_on_element(link_coords)
-
                 # copy invite code and close window with it
-                locate_and_click(AMDLinkElements.COPY_TEXT.build_path(), delay=1)
+                try:
+                    locate_and_click(AMDLinkElements.COPY_TEXT.build_path(), delay=1)
+                except:
+                    # sometimes click not work
+                    click_on_element(link_coords)
+                    sleep(0.5)
+                    locate_and_click(AMDLinkElements.COPY_TEXT.build_path(), delay=1)
 
                 locate_and_click(AMDLinkElements.CLOSE_INVITE_CODE_WINDOW.build_path(), delay=1)
 
@@ -225,6 +229,12 @@ def start_streaming_amd_link(execution_type, case, socket, game_name, debug_scre
                     locate_and_click(AMDLinkElements.START_STREAMING_BUTTON.build_path(), delay=1)
 
                     set_adrenalin_params(case)
+
+                    # sometimes Start Streaming button click is ignored. Do it again
+                    try:
+                        locate_and_click(AMDLinkElements.START_STREAMING_BUTTON.build_path())
+                    except:
+                        pass
 
                 if debug_screen_path:
                     # save debug screen
@@ -243,6 +253,13 @@ def start_streaming_amd_link(execution_type, case, socket, game_name, debug_scre
             utils.hide_window(window_hwnd)
         except Exception as e:
             socket.send("failed".encode("utf-8"))
+
+            if debug_screen_path:
+                # save debug screen
+                screen = pyscreenshot.grab()
+                screen = screen.convert("RGB")
+                screen.save(debug_screen_path)
+
             raise e
 
         # wait answer from client
@@ -293,7 +310,7 @@ def start_streaming_amd_link(execution_type, case, socket, game_name, debug_scre
                 if not window_hwnd:
                     raise Exception("Adrenalin tool window wasn't found")
 
-                utils.make_window_active(window_hwnd)
+                utils.make_window_maximized(window_hwnd)
                 
                 # connect to server
                 locate_and_click(AMDLinkElements.CONNECT_TO_PC.build_path(), delay=1)
@@ -339,8 +356,16 @@ def start_streaming_amd_link(execution_type, case, socket, game_name, debug_scre
                     try:
                         locate_and_click(AMDLinkElements.START_STREAMING.build_path(), delay=1)
                     except:
-                        # Start Streaming button can be hovered
-                        locate_and_click(AMDLinkElements.START_STREAMING_2.build_path(), delay=1)
+                        try:
+                            # Start Streaming button can be hovered
+                            locate_and_click(AMDLinkElements.START_STREAMING_2.build_path(), delay=1)
+                        except:
+                            try:
+                                # Sometimes it's necesary to click on lobby icon
+                                locate_and_click(AMDLinkElements.LOBBY_ICON.build_path(), delay=1)
+                            except:
+                                # Lobby icon can be hovered
+                                locate_and_click(AMDLinkElements.LOBBY_ICON_2.build_path(), delay=1)
 
                 sleep(5)
 
@@ -420,7 +445,7 @@ def close_streaming_amd_link(execution_type, case, process, game_name):
             sleep(3)
 
             window = win32gui.FindWindow(None, get_game_window_name(game_name))
-            utils.hide_window(get_game_window_name(window))
+            utils.hide_window(window)
             sleep(1)
             pyautogui.hotkey("win", "m")
             sleep(1)
@@ -448,14 +473,16 @@ def close_streaming_amd_link(execution_type, case, process, game_name):
             if not window_hwnd:
                 raise Exception("Adrenalin tool window wasn't found")
 
-            utils.make_window_active(window_hwnd)
+            utils.make_window_maximized(window_hwnd)
 
             # make a click on Adrenalin tool
             locate_and_click(AMDLinkElements.ADRENALIN_ICON.build_path(), delay=1)
 
-            locate_and_click(AMDLinkElements.STOP_STREAMING_BUTTON.build_path(), delay=1)
-
-            utils.hide_window(window_hwnd)
+            # stop Streaming SDK server if it isn't done automatically
+            try:
+                locate_and_click(AMDLinkElements.STOP_STREAMING_BUTTON.build_path(), delay=1)
+            except:
+                pass
 
         elif execution_type == "client":
             subprocess.call("taskkill /f /im AMDLink.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)

@@ -28,9 +28,9 @@ MC_CONFIG = get_mc_config()
 class OpenGame(Action):
     def parse(self):
         self.game_name = self.params["game_name"]
-        self.game_launcher = games_actions.get_game_launcher_path[self.game_name]
-        self.game_window = games_actions.get_game_window_name[self.game_name][0]
-        self.game_process_name = games_actions.get_game_process_name[self.game_name][1]
+        self.game_launcher = games_actions.get_game_launcher_path(self.game_name)
+        self.game_window = games_actions.get_game_window_name(self.game_name)
+        self.game_process_name = games_actions.get_game_process_name(self.game_name)
 
     def execute(self):
         if self.game_launcher is None or self.game_window is None or self.game_process_name is None:
@@ -43,7 +43,7 @@ class OpenGame(Action):
         if window is not None and window != 0:
             self.logger.info("Window {} was succesfully found".format(self.game_window))
 
-            games_actions.make_window_active(window)
+            make_window_active(window)
         else:
             self.logger.error("Window {} wasn't found at all".format(self.game_window))
             game_launched = False
@@ -210,8 +210,8 @@ class RecordVideo(MulticonnectionAction):
                 self.logger.info("Recovery Streaming SDK work - close clumsy")
                 close_clumsy()
                 sleep(2)
-                window = win32gui.FindWindow(games_actions.get_game_window_name(self.game_name))
-                games_actions.make_window_active(window)
+                window = win32gui.FindWindow(None, games_actions.get_game_window_name(self.game_name))
+                make_window_active(window)
 
             self.logger.info("Start to record video")
             execute_adb_command("adb shell screenrecord --time-limit={} /sdcard/video.mp4".format(self.duration))

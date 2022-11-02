@@ -42,9 +42,10 @@ class ExecuteCMD(Action):
 class OpenGame(Action):
     def parse(self):
         self.game_name = self.params["game_name"]
-        self.game_launcher = games_actions.get_game_launcher_path[self.game_name]
-        self.game_window = games_actions.get_game_window_name[self.game_name][0]
-        self.game_process_name = games_actions.get_game_process_name[self.game_name][1]
+        self.args = self.params["args"]
+        self.game_launcher = games_actions.get_game_launcher_path(self.game_name)
+        self.game_window = games_actions.get_game_window_name(self.game_name)
+        self.game_process_name = games_actions.get_game_process_name(self.game_name)
 
     @Action.server_action_decorator
     def execute(self):
@@ -59,7 +60,8 @@ class OpenGame(Action):
             if window is not None and window != 0:
                 self.logger.info("Window {} was succesfully found".format(self.game_window))
 
-                games_actions.make_window_active(window)
+                if self.args.streaming_type != StreamingType.AMD_LINK:
+                    make_window_active(window)
             else:
                 self.logger.error("Window {} wasn't found at all".format(self.game_window))
                 game_launched = False
@@ -95,7 +97,17 @@ class OpenGame(Action):
             psutil.Popen(self.game_launcher, stdout=PIPE, stderr=PIPE, shell=True)
             self.logger.info("Executed: {}".format(self.game_launcher))
 
-            games_actions.prepare_game(self.game_name, self.game_launcher)
+            # Run DX9 benchmarks in window mode in case of AMD Link autotests or in case of traces collection
+            if self.game_name == "heavendx9" or self.game_name == "valleydx9":
+                if self.args.streaming_type == StreamingType.AMD_LINK or self.args.collect_traces != "False":
+                    fullscreen = False
+                else:
+                    fullscreen = True
+            else:
+                fullscreen = True
+
+            self.logger.info(f"Run in fullscreen: {fullscreen}")
+            games_actions.prepare_game(self.game_name, self.game_launcher, fullscreen=fullscreen)
 
         return True
 
@@ -519,8 +531,8 @@ class StartStreaming(MulticonnectionAction):
             self.process = start_streaming(self.args.execution_type, 
                 streaming_type=self.args.streaming_type, case=self.case, socket=self.sock, debug_screen_path=debug_screen_path, game_name=self.args.game_name)
 
-            window = win32gui.FindWindow(games_actions.get_game_window_name(self.game_name))
-            games_actions.make_window_active(window)
+            window = win32gui.FindWindow(None, games_actions.get_game_window_name(self.game_name))
+            make_window_active(window)
 
         # start server
         if self.process is None:
@@ -565,8 +577,8 @@ class RecoveryClumsy(Action):
             self.logger.info("Recovery Streaming SDK work - close clumsy")
             close_clumsy()
             sleep(2)
-            window = win32gui.FindWindow(games_actions.get_game_window_name(self.game_name))
-            games_actions.make_window_active(window)
+            window = win32gui.FindWindow(None, games_actions.get_game_window_name(self.game_name))
+            make_window_active(window)
 
 
 # Start Latency tool

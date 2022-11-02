@@ -155,7 +155,7 @@ def locate_and_click(template, scale=False, tries=3, delay=0, x_offset=0, y_offs
     click_on_element(coords, x_offset=x_offset, y_offset=y_offset)
 
 
-def prepare_game(game_name, game_launcher):
+def prepare_game(game_name, game_launcher, fullscreen=True):
     if game_name == "heavendx9" or game_name == "heavendx11" or game_name == "heavenopengl":
         sleep(6)
 
@@ -171,6 +171,19 @@ def prepare_game(game_name, game_launcher):
                 click_on_element(coords, x_offset=50, y_offset=30)
             else:
                 click_on_element(coords, x_offset=50, y_offset=45)
+
+            sleep(0.5)
+
+            if fullscreen:
+                try:
+                    locate_and_click(HeavenElements.WINDOWED.build_path(), tries=1)
+                except:
+                    pass
+            else:
+                try:
+                    locate_and_click(HeavenElements.FULL_SCREEN.build_path(), tries=1)
+                except:
+                    pass
 
             sleep(0.5)
 
@@ -194,6 +207,19 @@ def prepare_game(game_name, game_launcher):
                 click_on_element(coords, x_offset=50, y_offset=30)
             else:
                 click_on_element(coords, x_offset=50, y_offset=45)
+
+            sleep(0.5)
+
+            if fullscreen:
+                try:
+                    locate_and_click(ValleyElements.WINDOWED.build_path(), tries=1)
+                except:
+                    pass
+            else:
+                try:
+                    locate_and_click(ValleyElements.FULL_SCREEN.build_path(), tries=1)
+                except:
+                    pass
 
             sleep(0.5)
 
@@ -474,9 +500,9 @@ def get_game_window_name(game_name):
     }
 
     if platform.system() == "Windows":
-        return games_windows["Windows"][game_name]
+        return games_windows["Windows"][game_name.lower()]
     else:
-        return games_windows["Linux"][game_name]
+        return games_windows["Linux"][game_name.lower()]
 
 
 def get_game_process_name(game_name):
@@ -502,9 +528,9 @@ def get_game_process_name(game_name):
     }
 
     if platform.system() == "Windows":
-        return games_windows["Windows"][game_name]
+        return games_windows["Windows"][game_name.lower()]
     else:
-        return games_windows["Linux"][game_name]
+        return games_windows["Linux"][game_name.lower()]
 
 
 def get_game_launcher_path(game_name):
@@ -530,6 +556,6 @@ def get_game_launcher_path(game_name):
     }
 
     if platform.system() == "Windows":
-        return games_launchers["Windows"][game_name]
+        return games_launchers["Windows"][game_name.lower()]
     else:
-        return games_launchers["Linux"][game_name]
+        return games_launchers["Linux"][game_name.lower()]
