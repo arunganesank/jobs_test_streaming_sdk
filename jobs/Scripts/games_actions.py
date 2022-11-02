@@ -96,14 +96,6 @@ def close_game_process(game_name):
         main_logger.error("Traceback: {}".format(traceback.format_exc()))
 
 
-def make_window_minimized(window):
-    try:
-        win32gui.ShowWindow(window, 2)
-    except Exception as e:
-        main_logger.error("Failed to make window minized: {}".format(str(e)))
-        main_logger.error("Traceback: {}".format(traceback.format_exc()))
-
-
 def locate_on_screen(template, scale=False, tries=3, delay=0, **kwargs):
     coords = None
     if not "confidence" in kwargs:
@@ -163,7 +155,7 @@ def locate_and_click(template, scale=False, tries=3, delay=0, x_offset=0, y_offs
     click_on_element(coords, x_offset=x_offset, y_offset=y_offset)
 
 
-def prepare_game(game_name, game_launcher):
+def prepare_game(game_name, game_launcher, fullscreen=True):
     if game_name == "heavendx9" or game_name == "heavendx11" or game_name == "heavenopengl":
         sleep(6)
 
@@ -179,6 +171,19 @@ def prepare_game(game_name, game_launcher):
                 click_on_element(coords, x_offset=50, y_offset=30)
             else:
                 click_on_element(coords, x_offset=50, y_offset=45)
+
+            sleep(0.5)
+
+            if fullscreen:
+                try:
+                    locate_and_click(HeavenElements.WINDOWED.build_path(), tries=1)
+                except:
+                    pass
+            else:
+                try:
+                    locate_and_click(HeavenElements.FULL_SCREEN.build_path(), tries=1)
+                except:
+                    pass
 
             sleep(0.5)
 
@@ -202,6 +207,19 @@ def prepare_game(game_name, game_launcher):
                 click_on_element(coords, x_offset=50, y_offset=30)
             else:
                 click_on_element(coords, x_offset=50, y_offset=45)
+
+            sleep(0.5)
+
+            if fullscreen:
+                try:
+                    locate_and_click(ValleyElements.WINDOWED.build_path(), tries=1)
+                except:
+                    pass
+            else:
+                try:
+                    locate_and_click(ValleyElements.FULL_SCREEN.build_path(), tries=1)
+                except:
+                    pass
 
             sleep(0.5)
 
@@ -459,30 +477,85 @@ def click(x_description, y_description, delay = 0.2):
     pyautogui.click()
 
 
-def make_game_foreground(game_name):
-    if "heaven" in game_name.lower():
-        icon_path = IconElements.HEAVEN.build_path()
-    elif "valley" in game_name.lower():
-        icon_path = IconElements.VALLEY.build_path()
-    elif "valorant" in game_name.lower():
-        icon_path = IconElements.VALORANT.build_path()
-    elif "lol" in game_name.lower():
-        icon_path = IconElements.LOL.build_path()
-    elif "dota2" in game_name.lower():
-        icon_path = IconElements.DOTA2.build_path()
-    elif "csgo" in game_name.lower():
-        icon_path = IconElements.CSGO.build_path()
+def get_game_window_name(game_name):
+    games_windows = {
+        "Windows": {
+            "heavendx9": "Unigine Heaven Benchmark 4.0 Basic (Direct3D9)",
+            "heavendx11": "Unigine Heaven Benchmark 4.0 Basic (Direct3D11)",
+            "heavenopengl": "Unigine Heaven Benchmark 4.0 Basic (OpenGL)",
+            "valleydx9": "Unigine Valley Benchmark 1.0 Basic (Direct3D9)",
+            "valleydx11": "Unigine Valley Benchmark 1.0 Basic (Direct3D11)",
+            "valleyopengl": "Unigine Valley Benchmark 1.0 Basic (OpenGL)",
+            "valorant": "VALORANT  ",
+            "lol": "League of Legends (TM) Client",
+            "dota2dx11": "Dota 2",
+            "dota2vulkan": "Dota 2",
+            "csgo": "Counter-Strike: Global Offensive - Direct3D 9",
+            "empty": None
+        },
+        "Linux": {
+            "heavenopengl": "Unigine Heaven Benchmark 4.0 (Basic Edition)",
+            "valleyopengl": "Unigine Valley Benchmark (Basic Edition)"
+        }
+    }
+
+    if platform.system() == "Windows":
+        return games_windows["Windows"][game_name.lower()]
     else:
-        main_logger.error(f"Unknown game: {game_name}")
-        return
+        return games_windows["Linux"][game_name.lower()]
 
-    # sometimes first click on app can be ignored
-    for i in range(2):
-        try:
-            locate_and_click(icon_path)
-            sleep(4)
 
-            pyautogui.click(500, 500)
-        except:
-            main_logger.info(f"Icon wasn't detected. Skip making game foreground (try #{i})")
-            break
+def get_game_process_name(game_name):
+    games_windows = {
+        "Windows": {
+            "heavendx9": "Heaven.exe",
+            "heavendx11": "Heaven.exe",
+            "heavenopengl": "Heaven.exe",
+            "valleydx9": "Valley.exe",
+            "valleydx11": "Valley.exe",
+            "valleyopengl": "Valley.exe",
+            "valorant": "VALORANT-Win64-Shipping.exe",
+            "lol": "League of Legends.exe",
+            "dota2dx11": "dota2.exe",
+            "dota2vulkan": "dota2.exe",
+            "csgo": "csgo.exe",
+            "empty": None
+        },
+        "Linux": {
+            "heavenopengl": "heaven_x64",
+            "valleyopengl": "valley_x64"
+        }
+    }
+
+    if platform.system() == "Windows":
+        return games_windows["Windows"][game_name.lower()]
+    else:
+        return games_windows["Linux"][game_name.lower()]
+
+
+def get_game_launcher_path(game_name):
+    games_launchers = {
+        "Windows": {
+            "heavendx9": "C:\\JN\\Heaven Benchmark 4.0.lnk",
+            "heavendx11": "C:\\JN\\Heaven Benchmark 4.0.lnk",
+            "heavenopengl": "C:\\JN\\Heaven Benchmark 4.0.lnk",
+            "valleydx9": "C:\\JN\\Valley Benchmark 1.0.lnk",
+            "valleydx11": "C:\\JN\\Valley Benchmark 1.0.lnk",
+            "valleyopengl": "C:\\JN\\Valley Benchmark 1.0.lnk",
+            "valorant": "C:\\JN\\VALORANT.exe - Shortcut.lnk",
+            "lol": "C:\\JN\\League of Legends.lnk",
+            "dota2dx11": "C:\\JN\\dota2.exe.lnk",
+            "dota2vulkan": "C:\\JN\\dota2.exe.lnk",
+            "csgo": "C:\\JN\\csgo.exe.url",
+            "empty": None
+        },
+        "Linux": {
+            "heavenopengl": "/scripts/launch_heaven",
+            "valleyopengl": "/scripts/launch_valley"
+        }
+    }
+
+    if platform.system() == "Windows":
+        return games_launchers["Windows"][game_name.lower()]
+    else:
+        return games_launchers["Linux"][game_name.lower()]

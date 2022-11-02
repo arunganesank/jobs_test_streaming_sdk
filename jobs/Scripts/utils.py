@@ -576,3 +576,15 @@ def getTransportProtocol(case):
     if "-protocol udp" in case["server_keys"].lower():
         current_protocol = "udp"
     return current_protocol
+
+
+def make_window_active(window):
+    win32gui.ShowWindow(window, 9)
+
+
+def make_window_maximized(window):
+    win32gui.ShowWindow(window, 3)
+
+
+def hide_window(window):
+    win32gui.ShowWindow(window, 6)
