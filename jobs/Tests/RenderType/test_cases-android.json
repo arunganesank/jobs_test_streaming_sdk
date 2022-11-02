@@ -1,7 +1,7 @@
 [
     {
         "case": "STR_ART_001",
-        "status": "skipped",
+        "status": "observed",
         "server_keys": "-extStats true -Framerate 30 -Resolution <resolution> -Render OpenGL -Protocol udp",
         "client_keys": "",
         "script_info": [
@@ -10,7 +10,7 @@
     },
     {
         "case": "STR_ART_002",
-        "status": "skipped",
+        "status": "observed",
         "server_keys": "-extStats true -Framerate 30 -Resolution <resolution> -Render Vulkan -Protocol udp",
         "client_keys": "",
         "script_info": [
@@ -19,7 +19,7 @@
     },
     {
         "case": "STR_ART_003",
-        "status": "skipped",
+        "status": "observed",
         "server_keys": "-extStats true -Framerate 30 -Resolution <resolution> -Render OpenGL -Protocol tcp",
         "client_keys": "",
         "script_info": [
@@ -28,7 +28,7 @@
     },
     {
         "case": "STR_ART_004",
-        "status": "skipped",
+        "status": "observed",
         "server_keys": "-extStats true -Framerate 30 -Resolution <resolution> -Render Vulkan -Protocol tcp",
         "client_keys": "",
         "script_info": [

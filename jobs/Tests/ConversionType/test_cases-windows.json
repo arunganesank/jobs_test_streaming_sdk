@@ -10,7 +10,7 @@
    },
    {
        "case": "STR_CT_002",
-       "status": "skipped",
+       "status": "observed",
        "server_keys": "-Resolution <resolution> -Convert Vulkan -extStats true -Framerate 60 -Protocol udp",
        "client_keys": "-Fullscreen true",
        "script_info": [
@@ -28,7 +28,7 @@
    },
    {
        "case": "STR_CT_004",
-       "status": "skipped",
+       "status": "observed",
        "server_keys": "-Resolution <resolution> -Convert Vulkan -extStats true -Framerate 60 -Protocol tcp",
        "client_keys": "-Fullscreen true",
        "script_info": [
