@@ -12,6 +12,7 @@ import pyscreenshot
 import utils
 from games_actions import locate_and_click, locate_on_screen, click_on_element
 from elements import AMDLinkElements
+import signal
 
 if platform.system() == "Windows":
     import win32gui
@@ -348,7 +349,7 @@ def start_streaming_amd_link(execution_type, case, socket, debug_screen_path=Non
 def close_streaming(execution_type, case, process, tool_path=None, streaming_type=StreamingType.SDK, game_name=None):
     try:
         if streaming_type == StreamingType.SDK:
-            return close_streaming_sdk(execution_type, case, process, tool_path=tool_path)
+            return close_streaming_sdk(execution_type, case, process)
         elif streaming_type == StreamingType.AMD_LINK:
             return close_streaming_amd_link(execution_type, case, process, game_name=game_name)
         else:
@@ -360,18 +361,27 @@ def close_streaming(execution_type, case, process, tool_path=None, streaming_typ
         return None
 
 
-def close_streaming_sdk(execution_type, case, process, tool_path=None):
+def close_streaming_sdk(execution_type, case, process):
     if utils.should_case_be_closed(execution_type, case):
         # close the current Streaming SDK process
         main_logger.info("Start closing")
 
         if platform.system() == "Windows":
-            if process is not None:
-                utils.close_process(process)
+            if execution_type != "server":
+                for window in pyautogui.getAllWindows():
+                    if "RemoteGameClient" in window.title:
+                        streaming_window = window._hWnd
+                        break
 
-            # additional try to kill Streaming SDK server/client (to be sure that all processes are closed)
-            subprocess.call("taskkill /f /im RemoteGameClient.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
-            subprocess.call("taskkill /f /im RemoteGameServer.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
+                win32gui.PostMessage(streaming_window, win32con.WM_CLOSE, 0, 0)
+            else:
+                try:
+                    os.kill(processID, signal.CTRL_C_EVENT)
+                except:
+                    pass
+
+                sleep(0.5)
+
 
             if execution_type == "server":
                 crash_window = win32gui.FindWindow(None, "RemoteGameServer.exe")
@@ -382,8 +392,12 @@ def close_streaming_sdk(execution_type, case, process, tool_path=None):
                 main_logger.info("Crash window was found. Closing it...")
                 win32gui.PostMessage(crash_window, win32con.WM_CLOSE, 0, 0)
         else:
-            if process is not None and tool_path is not None:
-                os.system("sudo pkill -9 -f \"^{}\"".format(os.path.abspath(tool_path)))
+            try:
+                os.kill(processID, signal.CTRL_C_EVENT)
+            except:
+                pass
+
+            sleep(0.5)
 
         main_logger.info("Finish closing")
 
@@ -439,7 +453,12 @@ def close_streaming_amd_link(execution_type, case, process, game_name=None):
             locate_and_click(AMDLinkElements.STOP_STREAMING_BUTTON.build_path(), delay=1)
 
         elif execution_type == "client":
-            subprocess.call("taskkill /f /im AMDLink.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
+            for window in pyautogui.getAllWindows():
+                if "AMD Link" in window.title:
+                    amd_link_window = window._hWnd
+                    break
+
+            win32gui.PostMessage(amd_link_window, win32con.WM_CLOSE, 0, 0)
             sleep(3)
 
         main_logger.info("Finish closing")
