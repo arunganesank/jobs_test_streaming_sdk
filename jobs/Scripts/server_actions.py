@@ -168,7 +168,7 @@ def close_processes(processes, logger):
 
     for process_name in processes:
         try:
-            close_process(processes[process_name])
+            terminate_process(processes[process_name])
         except Exception as e:
             logger.error("Failed to close process: {}".format(str(e)))
             logger.error("Traceback: {}".format(traceback.format_exc()))

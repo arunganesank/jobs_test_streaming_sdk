@@ -12,6 +12,7 @@ import pyscreenshot
 import utils
 from games_actions import locate_and_click, locate_on_screen, click_on_element, get_game_window_name
 from elements import AMDLinkElements
+import signal
 
 if platform.system() == "Windows":
     import win32gui
@@ -386,7 +387,7 @@ def start_streaming_amd_link(execution_type, case, socket, game_name, debug_scre
 def close_streaming(execution_type, case, process, tool_path=None, streaming_type=StreamingType.SDK, game_name=None):
     try:
         if streaming_type == StreamingType.SDK:
-            return close_streaming_sdk(execution_type, case, process, tool_path=tool_path)
+            return close_streaming_sdk(execution_type, case, process)
         elif streaming_type == StreamingType.AMD_LINK:
             if not game_name:
                 raise ValueError("Game name is required to close AMD Link")
@@ -401,18 +402,22 @@ def close_streaming(execution_type, case, process, tool_path=None, streaming_typ
         return None
 
 
-def close_streaming_sdk(execution_type, case, process, tool_path=None):
+def close_streaming_sdk(execution_type, case, process):
     if utils.should_case_be_closed(execution_type, case):
         # close the current Streaming SDK process
         main_logger.info("Start closing")
 
         if platform.system() == "Windows":
-            if process is not None:
-                utils.close_process(process)
+            if execution_type != "server":
+                for window in pyautogui.getAllWindows():
+                    if "RemoteGameClient" in window.title:
+                        streaming_window = window._hWnd
+                        break
 
-            # additional try to kill Streaming SDK server/client (to be sure that all processes are closed)
-            subprocess.call("taskkill /f /im RemoteGameClient.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
-            subprocess.call("taskkill /f /im RemoteGameServer.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
+                win32gui.PostMessage(streaming_window, win32con.WM_CLOSE, 0, 0)
+            else:
+                close_streaming_server_process(process)
+
 
             if execution_type == "server":
                 crash_window = win32gui.FindWindow(None, "RemoteGameServer.exe")
@@ -423,8 +428,7 @@ def close_streaming_sdk(execution_type, case, process, tool_path=None):
                 main_logger.info("Crash window was found. Closing it...")
                 win32gui.PostMessage(crash_window, win32con.WM_CLOSE, 0, 0)
         else:
-            if process is not None and tool_path is not None:
-                os.system("sudo pkill -9 -f \"^{}\"".format(os.path.abspath(tool_path)))
+            close_streaming_server_process(process)
 
         main_logger.info("Finish closing")
 
@@ -485,7 +489,12 @@ def close_streaming_amd_link(execution_type, case, process, game_name):
                 pass
 
         elif execution_type == "client":
-            subprocess.call("taskkill /f /im AMDLink.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
+            for window in pyautogui.getAllWindows():
+                if "AMD Link" in window.title:
+                    amd_link_window = window._hWnd
+                    break
+
+            win32gui.PostMessage(amd_link_window, win32con.WM_CLOSE, 0, 0)
             sleep(3)
 
         main_logger.info("Finish closing")
@@ -495,3 +504,31 @@ def close_streaming_amd_link(execution_type, case, process, game_name):
         main_logger.info("Keep StreamingSDK instance")
 
     return process
+
+
+def close_streaming_server_process(process):
+    stop_signal = signal.SIGINT
+
+    child_processes = []
+
+    try:
+        child_processes = process.children()
+    except psutil.NoSuchProcess:
+        pass
+
+    # StreamingSDK server is a child process
+    for ch in child_processes:
+        try:
+            main_logger.info(ch.pid)
+            main_logger.info(ch.name())
+            os.kill(ch.pid, stop_signal)
+        except:
+            pass
+
+    # main process is necesary to close only on Ubuntu (to close xterm window)
+    try:
+        main_logger.info(process.pid)
+        main_logger.info(process.name())
+        os.kill(process.pid, stop_signal)
+    except:
+        pass

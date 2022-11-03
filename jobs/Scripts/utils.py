@@ -19,6 +19,7 @@ from threading import Thread
 from PIL import Image
 from grayArtifacts import check_artifacts
 from streaming_actions import StreamingType
+import signal
 
 if platform.system() == "Windows":
     import win32api
@@ -47,7 +48,7 @@ def is_case_skipped(case, render_platform):
     return sum([render_platform & set(x) == set(x) for x in case.get('skip_on', '')])
 
 
-def close_process(process):
+def terminate_process(process):
     child_processes = []
 
     try:
