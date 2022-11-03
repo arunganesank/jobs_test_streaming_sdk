@@ -375,12 +375,7 @@ def close_streaming_sdk(execution_type, case, process):
 
                 win32gui.PostMessage(streaming_window, win32con.WM_CLOSE, 0, 0)
             else:
-                try:
-                    os.kill(processID, signal.CTRL_C_EVENT)
-                except:
-                    pass
-
-                sleep(0.5)
+                utils.close_process(process)
 
 
             if execution_type == "server":
@@ -392,12 +387,7 @@ def close_streaming_sdk(execution_type, case, process):
                 main_logger.info("Crash window was found. Closing it...")
                 win32gui.PostMessage(crash_window, win32con.WM_CLOSE, 0, 0)
         else:
-            try:
-                os.kill(processID, signal.CTRL_C_EVENT)
-            except:
-                pass
-
-            sleep(0.5)
+            utils.close_process(process)
 
         main_logger.info("Finish closing")
 
