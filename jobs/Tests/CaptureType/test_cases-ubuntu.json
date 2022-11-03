@@ -1,7 +1,7 @@
 [
     {
         "case": "STR_LCP_001",
-        "status": "active",
+        "status": "observed",
         "server_keys": "-Resolution <resolution> -Capture dd -extStats true -Framerate 60 -Protocol udp",
         "client_keys": "-Fullscreen true",
         "script_info": [
@@ -19,7 +19,7 @@
     },
     {
         "case": "STR_LCP_003",
-        "status": "active",
+        "status": "observed",
         "server_keys": "-Resolution <resolution> -Capture dd -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true",
         "script_info": [
