@@ -59,6 +59,8 @@ class HeavenElements:
     API_LABEL = HeavenElementLocation("api_label")
     RUN_BUTTON = HeavenElementLocation("run_button")
     RUN_BUTTON_UBUNTU = HeavenElementLocation("run_button_ubuntu")
+    FULL_SCREEN = HeavenElementLocation("full_screen")
+    WINDOWED = HeavenElementLocation("windowed")
 
 
 class LoLElementLocation(GameElementLocation):
@@ -86,6 +88,8 @@ class ValleyElements:
     API_LABEL = ValleyElementLocation("api_label")
     RUN_BUTTON = ValleyElementLocation("run_button")
     RUN_BUTTON_UBUNTU = ValleyElementLocation("run_button_ubuntu")
+    FULL_SCREEN = ValleyElementLocation("full_screen")
+    WINDOWED = ValleyElementLocation("windowed")
 
 
 class IconElementLocation(ElementLocation):
@@ -150,6 +154,8 @@ class AMDLinkElements:
     SUBMIT_CONNECT_DISABLED = AMDLinkElementLocation("submit_connect_disabled")
     USE_ENCRYPTION = AMDLinkElementLocation("use_encryption")
     VIDEO_ENCODING_TYPE = AMDLinkElementLocation("video_encoding_type")
+    LOBBY_ICON = AMDLinkElementLocation("lobby_icon")
+    LOBBY_ICON_2 = AMDLinkElementLocation("lobby_icon_2")
 
     DROPDOWN_OPTIONS_LABELS = {
         "resolution": STREAM_RESOLUTION,

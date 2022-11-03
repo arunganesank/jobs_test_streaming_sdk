@@ -7,7 +7,7 @@ from subprocess import PIPE
 import traceback
 import pyautogui
 from threading import Thread
-from utils import parse_arguments, execute_adb_command, get_mc_config, close_clumsy
+from utils import parse_arguments, execute_adb_command, get_mc_config, close_clumsy, make_window_active
 from actions import *
 import base64
 import keyboard
@@ -27,40 +27,10 @@ MC_CONFIG = get_mc_config()
 # open some game if it doesn't launched (e.g. open game/benchmark)
 class OpenGame(Action):
     def parse(self):
-        games_launchers = {
-            "heavendx9": "C:\\JN\\Heaven Benchmark 4.0.lnk",
-            "heavendx11": "C:\\JN\\Heaven Benchmark 4.0.lnk",
-            "heavenopengl": "C:\\JN\\Heaven Benchmark 4.0.lnk",
-            "valleydx9": "C:\\JN\\Valley Benchmark 1.0.lnk",
-            "valleydx11": "C:\\JN\\Valley Benchmark 1.0.lnk",
-            "valleyopengl": "C:\\JN\\Valley Benchmark 1.0.lnk",
-            "valorant": "C:\\JN\\VALORANT.exe - Shortcut.lnk",
-            "lol": "C:\\JN\\League of Legends.lnk",
-            "dota2dx11": "C:\\JN\\dota2.exe.lnk",
-            "dota2vulkan": "C:\\JN\\dota2.exe.lnk",
-            "csgo": "C:\\JN\\csgo.exe.url",
-            "empty": None
-        }
-
-        games_windows = {
-            "heavendx9": ["Unigine Heaven Benchmark 4.0 Basic (Direct3D9)", "Heaven.exe"],
-            "heavendx11": ["Unigine Heaven Benchmark 4.0 Basic (Direct3D11)", "Heaven.exe"],
-            "heavenopengl": ["Unigine Heaven Benchmark 4.0 Basic (OpenGL)", "Heaven.exe"],
-            "valleydx9": ["Unigine Valley Benchmark 1.0 Basic (Direct3D9)", "Valley.exe"],
-            "valleydx11": ["Unigine Valley Benchmark 1.0 Basic (Direct3D11)", "Valley.exe"],
-            "valleyopengl": ["Unigine Valley Benchmark 1.0 Basic (OpenGL)", "Valley.exe"],
-            "valorant": ["VALORANT  ", "VALORANT-Win64-Shipping.exe"],
-            "lol": ["League of Legends (TM) Client", "League of Legends.exe"],
-            "dota2dx11": ["Dota 2", "dota2.exe"],
-            "dota2vulkan": ["Dota 2", "dota2.exe"],
-            "csgo": ["Counter-Strike: Global Offensive - Direct3D 9", "csgo.exe"],
-            "empty": [None, None]
-        }
-
         self.game_name = self.params["game_name"]
-        self.game_launcher = games_launchers[self.game_name]
-        self.game_window = games_windows[self.game_name][0]
-        self.game_process_name = games_windows[self.game_name][1]
+        self.game_launcher = games_actions.get_game_launcher_path(self.game_name)
+        self.game_window = games_actions.get_game_window_name(self.game_name)
+        self.game_process_name = games_actions.get_game_process_name(self.game_name)
 
     def execute(self):
         if self.game_launcher is None or self.game_window is None or self.game_process_name is None:
@@ -73,7 +43,7 @@ class OpenGame(Action):
         if window is not None and window != 0:
             self.logger.info("Window {} was succesfully found".format(self.game_window))
 
-            games_actions.make_game_foreground(self.game_name)
+            make_window_active(window)
         else:
             self.logger.error("Window {} wasn't found at all".format(self.game_window))
             game_launched = False
@@ -90,38 +60,14 @@ class OpenGame(Action):
             if self.game_name == "lol":
                 sleep(240)
 
-                if platform.system() == "Windows":
-                    pyautogui.hotkey("win", "m")
-                    sleep(0.5)
+            if platform.system() == "Windows":
+                pyautogui.hotkey("win", "m")
+                sleep(0.5)
 
             psutil.Popen(self.game_launcher, stdout=PIPE, stderr=PIPE, shell=True)
             self.logger.info("Executed: {}".format(self.game_launcher))
 
             games_actions.prepare_game(self.game_name, self.game_launcher)
-
-def make_window_foreground(window, logger):
-    try:
-        win32gui.ShowWindow(window, 1)
-        win32gui.SetForegroundWindow(window)
-    except Exception as e:
-        logger.error("Failed to make window foreground (SW_SHOWNNORMAL): {}".format(str(e)))
-        logger.error("Traceback: {}".format(traceback.format_exc()))
-        logger.info("Try to make window foreground with SW_SHOWNOACTIVATE value")
-
-        try:
-            win32gui.ShowWindow(window, 4)
-            win32gui.SetForegroundWindow(window)
-        except Exception as e1:
-            logger.error("Failed to make window foreground (SW_SHOWNOACTIVATE): {}".format(str(e1)))
-            logger.error("Traceback: {}".format(traceback.format_exc()))
-            logger.info("Try to make window foreground with SW_SHOW value")
-
-            try:
-                win32gui.ShowWindow(window, 5)
-                win32gui.SetForegroundWindow(window)
-            except Exception as e1:
-                logger.error("Failed to make window foreground (SW_SHOW): {}".format(str(e2)))
-                logger.error("Traceback: {}".format(traceback.format_exc()))
 
 
 # Do click 
@@ -264,7 +210,8 @@ class RecordVideo(MulticonnectionAction):
                 self.logger.info("Recovery Streaming SDK work - close clumsy")
                 close_clumsy()
                 sleep(2)
-                games_actions.make_game_foreground(self.game_name)
+                window = win32gui.FindWindow(None, games_actions.get_game_window_name(self.game_name))
+                make_window_active(window)
 
             self.logger.info("Start to record video")
             execute_adb_command("adb shell screenrecord --time-limit={} /sdcard/video.mp4".format(self.duration))

@@ -173,7 +173,7 @@ def start_client_side_tests(args, case, process, last_log_line, audio_device_nam
 
                 main_logger.info("Finish action execution\n\n\n")
 
-            process = close_streaming(args.execution_type, case, process, streaming_type=args.streaming_type)
+            process = close_streaming(args.execution_type, case, process, streaming_type=args.streaming_type, game_name=args.game_name)
 
             # say server to start next case
             main_logger.info("Send NextCase command")
@@ -182,6 +182,7 @@ def start_client_side_tests(args, case, process, last_log_line, audio_device_nam
 
             if "Latency" in args.test_group and args.game_name == "Empty":
                 close_latency_tool(args.execution_type)
+
             last_log_line = save_logs(args, case, last_log_line, current_try)
 
             if "Latency" in args.test_group and args.game_name == "Empty":
