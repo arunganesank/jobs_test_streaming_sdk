@@ -416,7 +416,7 @@ def close_streaming_sdk(execution_type, case, process):
 
                 win32gui.PostMessage(streaming_window, win32con.WM_CLOSE, 0, 0)
             else:
-                utils.close_process(process)
+                close_streaming_server_process(process)
 
 
             if execution_type == "server":
@@ -428,7 +428,7 @@ def close_streaming_sdk(execution_type, case, process):
                 main_logger.info("Crash window was found. Closing it...")
                 win32gui.PostMessage(crash_window, win32con.WM_CLOSE, 0, 0)
         else:
-            utils.close_process(process)
+            close_streaming_server_process(process)
 
         main_logger.info("Finish closing")
 
@@ -504,3 +504,31 @@ def close_streaming_amd_link(execution_type, case, process, game_name):
         main_logger.info("Keep StreamingSDK instance")
 
     return process
+
+
+def close_streaming_server_process(process):
+    stop_signal = signal.SIGINT
+
+    child_processes = []
+
+    try:
+        child_processes = process.children()
+    except psutil.NoSuchProcess:
+        pass
+
+    # StreamingSDK server is a child process
+    for ch in child_processes:
+        try:
+            main_logger.info(ch.pid)
+            main_logger.info(ch.name())
+            os.kill(ch.pid, stop_signal)
+        except:
+            pass
+
+    # main process is necesary to close only on Ubuntu (to close xterm window)
+    try:
+        main_logger.info(process.pid)
+        main_logger.info(process.name())
+        os.kill(process.pid, stop_signal)
+    except:
+        pass

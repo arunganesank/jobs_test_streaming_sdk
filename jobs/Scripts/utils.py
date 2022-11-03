@@ -76,31 +76,6 @@ def terminate_process(process):
         pass
 
 
-def close_process(process):
-    if platform.system() == "Windows":
-        stop_signal = signal.CTRL_C_EVENT
-    else:
-        stop_signal = signal.SIGINT
-
-    child_processes = []
-
-    try:
-        child_processes = process.children()
-    except psutil.NoSuchProcess:
-        pass
-
-    for ch in child_processes:
-        try:
-            os.kill(ch.pid, stop_signal)
-        except:
-            pass
-
-    try:
-        os.kill(process.pid, stop_signal)
-    except:
-        pass
-
-
 def collect_traces(archive_path, archive_name):
     if platform.system() == "Windows":
         gpuview_path = os.getenv("GPUVIEW_PATH")
