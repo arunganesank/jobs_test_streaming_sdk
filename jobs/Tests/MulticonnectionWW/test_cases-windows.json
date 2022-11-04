@@ -256,7 +256,8 @@
         "keep_second_client": true,
         "script_info": [
             "Keep clients, restart server (try #1)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_MCWW_024",
@@ -267,7 +268,8 @@
         "start_first": "server",
         "script_info": [
             "Keep clients, restart server (try #2)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_MCWW_025",
@@ -537,7 +539,8 @@
         "keep_second_client": true,
         "script_info": [
             "Keep clients, restart server (try #1)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_MCWW_049",
@@ -548,7 +551,8 @@
         "start_first": "server",
         "script_info": [
             "Keep clients, restart server (try #2)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_MCWW_050",
