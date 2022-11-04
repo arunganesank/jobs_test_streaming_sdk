@@ -154,7 +154,9 @@ def parse_block_line(line, saved_values):
         queue_decoder_value = float(line.split('Decoder:')[1].split(',')[0])
         saved_values['queue_decoder_values'].append(queue_decoder_value)
 
-    elif 'A/V desync' in line:
+    #elif 'A/V desync' in line:
+    # FIXME: temporary disabled
+    if False:
         # Line example:
         # 2021-07-07 13:43:23.081      A60 [RemoteGamePipeline]    Info: A/V desync:  1.29 ms, video bitrate: 20.00 Mbps
         if 'desync_values' not in saved_values:
