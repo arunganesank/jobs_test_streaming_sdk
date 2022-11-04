@@ -180,7 +180,8 @@
         "keep_android": true,
         "script_info": [
             "Keep desktop and android, restart server (try #1)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_MCWA_020",
@@ -189,7 +190,8 @@
         "client_keys": "-Fullscreen true",
         "script_info": [
             "Keep desktop and android, restart server (try #2)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_MCWA_021",
@@ -372,7 +374,8 @@
         "keep_android": true,
         "script_info": [
             "Keep desktop and android, restart server (try #1)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_MCWA_040",
@@ -381,6 +384,7 @@
         "client_keys": "-Fullscreen true",
         "script_info": [
             "Keep desktop and android, restart server (try #2)"
-        ]
+        ],
+        "case_delay": 15
     }
 ]

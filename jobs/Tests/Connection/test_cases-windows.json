@@ -27,7 +27,8 @@
         "keep_server": true,
         "script_info": [
             "Keep server, restart client (try #1)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_004",
@@ -37,7 +38,8 @@
         "keep_server": true,
         "script_info": [
             "Keep server, restart client (try #2)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_005",
@@ -47,7 +49,8 @@
         "keep_server": true,
         "script_info": [
             "Keep server, restart client (try #3)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_006",
@@ -57,7 +60,8 @@
         "keep_server": true,
         "script_info": [
             "Keep server, restart client (try #4)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_007",
@@ -66,7 +70,8 @@
         "client_keys": "-Fullscreen true",
         "script_info": [
             "Keep server, restart client (try #5)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_008",
@@ -76,7 +81,8 @@
         "keep_client": true,
         "script_info": [
             "Keep client, restart server (try #1)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_009",
@@ -86,7 +92,8 @@
         "keep_client": true,
         "script_info": [
             "Keep client, restart server (try #2)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_010",
@@ -96,7 +103,8 @@
         "keep_client": true,
         "script_info": [
             "Keep client, restart server (try #3)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_011",
@@ -106,7 +114,8 @@
         "keep_client": true,
         "script_info": [
             "Keep client, restart server (try #4)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_012",
@@ -115,7 +124,8 @@
         "client_keys": "-Fullscreen true",
         "script_info": [
             "Keep client, restart server (try #5)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_013",
@@ -145,7 +155,8 @@
         "keep_server": true,
         "script_info": [
             "Keep server, restart client (try #1)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_016",
@@ -155,7 +166,8 @@
         "keep_server": true,
         "script_info": [
             "Keep server, restart client (try #2)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_017",
@@ -165,7 +177,8 @@
         "keep_server": true,
         "script_info": [
             "Keep server, restart client (try #3)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_018",
@@ -175,7 +188,8 @@
         "keep_server": true,
         "script_info": [
             "Keep server, restart client (try #4)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_019",
@@ -184,7 +198,8 @@
         "client_keys": "-Fullscreen true",
         "script_info": [
             "Keep server, restart client (try #5)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_020",
@@ -194,7 +209,8 @@
         "keep_client": true,
         "script_info": [
             "Keep client, restart server (try #1)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_021",
@@ -204,7 +220,8 @@
         "keep_client": true,
         "script_info": [
             "Keep client, restart server (try #2)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_022",
@@ -214,7 +231,8 @@
         "keep_client": true,
         "script_info": [
             "Keep client, restart server (try #3)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_023",
@@ -224,7 +242,8 @@
         "keep_client": true,
         "script_info": [
             "Keep client, restart server (try #4)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_CON_024",
@@ -233,6 +252,7 @@
         "client_keys": "-Fullscreen true",
         "script_info": [
             "Keep client, restart server (try #5)"
-        ]
+        ],
+        "case_delay": 15
     }
 ]

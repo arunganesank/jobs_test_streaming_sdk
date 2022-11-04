@@ -145,7 +145,8 @@
         "keep_android": true,
         "script_info": [
             "Keep clients, restart server (try #1)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_MCWWA_013",
@@ -156,7 +157,8 @@
         "start_first": "server",
         "script_info": [
             "Keep clients, restart server (try #2)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_MCWWA_014",
@@ -304,7 +306,8 @@
         "keep_android": true,
         "script_info": [
             "Keep clients, restart server (try #1)"
-        ]
+        ],
+        "case_delay": 15
     },
     {
         "case": "STR_MCWWA_026",
@@ -315,6 +318,7 @@
         "start_first": "server",
         "script_info": [
             "Keep clients, restart server (try #2)"
-        ]
+        ],
+        "case_delay": 15
     }
 ]
