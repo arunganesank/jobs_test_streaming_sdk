@@ -140,7 +140,7 @@ def prepare_empty_reports(args):
             test_case_report['execution_time'] = 0.0
             test_case_report['keys'] = case['server_keys']
             test_case_report['server_tool_path'] = args.server_tool
-            test_case_report["transport_protocol"] = getTransportProtocol(case).upper()
+            test_case_report["transport_protocol"] = getTransportProtocol(args, case).upper()
             test_case_report['client_tool_path'] = args.client_tool
             test_case_report['date_time'] = datetime.now().strftime(
                 '%m/%d/%Y %H:%M:%S')
@@ -293,8 +293,10 @@ def execute_tests(args):
                 main_logger.info("Datagram size in settings.json ({}): {}".format(case["case"], settings_json_content["Headset"]["DatagramSize"]))
 
                 prepared_keys = prepare_keys(args, case)
+                tool_name = get_tool_name(args)
+                target_path = os.path.join(tool_path, tool_name)
 
-                server_execution_script = "{tool} {keys}".format(tool=args.server_tool, keys=prepared_keys)
+                server_execution_script = f"{target_path} {prepared_keys}"
 
                 server_script_path = os.path.join(args.output, "{}.bat".format(case["case"]))
        
@@ -377,7 +379,7 @@ def execute_tests(args):
                         if "start_first" in case and case["start_first"] == "server":
                             if process is None:
                                 main_logger.info("Start Streaming SDK server instance")
-                                process = start_streaming("server", script_path=server_script_path)
+                                process = start_streaming(args, case, script_path=server_script_path)
                                 sleep(5)
 
                         if client_closed:
@@ -390,7 +392,7 @@ def execute_tests(args):
                         # start server after client
                         if "start_first" not in case or case["start_first"] == "client":
                             main_logger.info("Start Streaming SDK server instance")
-                            process = start_streaming("server", script_path=server_script_path)
+                            process = start_streaming(args, case, script_path=server_script_path)
 
                     main_logger.info("Finish action execution\n\n\n")
 
@@ -417,7 +419,7 @@ def execute_tests(args):
                 # close Streaming SDK android app
                 client_closed = close_android_app(case)
                 # close Streaming SDK server instance
-                process = close_streaming("server", case, process)
+                process = close_streaming(args, case, process)
                 last_log_line_server = save_logs(args, case, last_log_line_server, current_try)
                 save_android_log(args, case, current_try)
 
@@ -496,6 +498,7 @@ if __name__ == '__main__':
     main_logger.info('simpleRender start working...')
 
     args = createArgsParser().parse_args()
+    args.execution_type = "server"
 
     try:
         os.makedirs(args.output)

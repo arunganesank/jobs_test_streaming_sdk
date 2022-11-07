@@ -96,7 +96,7 @@ def close_game_process(game_name):
         main_logger.error("Traceback: {}".format(traceback.format_exc()))
 
 
-def locate_on_screen(template, scale=False, tries=3, delay=0, **kwargs):
+def locate_on_screen(template, scale=False, tries=3, delay=0, step=0.07, **kwargs):
     coords = None
     if not "confidence" in kwargs:
         if scale:
@@ -131,7 +131,7 @@ def locate_on_screen(template, scale=False, tries=3, delay=0, **kwargs):
                 coords = pyautogui.locateOnScreen(img, **kwargs)
 
         tries -= 1
-        kwargs["confidence"] -= 0.07
+        kwargs["confidence"] -= step
 
         if not coords and delay:
             sleep(delay)
@@ -191,6 +191,8 @@ def prepare_game(game_name, game_launcher, fullscreen=True):
         else:
             locate_and_click(HeavenElements.RUN_BUTTON_UBUNTU.build_path())
 
+        subprocess.call("taskkill /f /im browser_x86.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
+
         sleep(20)
     if game_name == "valleydx9" or game_name == "valleydx11" or game_name == "valleyopengl":
         sleep(6)
@@ -226,6 +228,8 @@ def prepare_game(game_name, game_launcher, fullscreen=True):
             locate_and_click(ValleyElements.RUN_BUTTON.build_path())
         else:
             locate_and_click(ValleyElements.RUN_BUTTON_UBUNTU.build_path())
+
+        subprocess.call("taskkill /f /im browser_x86.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
 
         sleep(20)
     elif game_name == "valorant":

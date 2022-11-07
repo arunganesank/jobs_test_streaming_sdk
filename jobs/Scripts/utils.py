@@ -26,6 +26,9 @@ if platform.system() == "Windows":
     import win32gui
     import win32con
     import pydirectinput
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support.wait import WebDriverWait
+    from selenium.common.exceptions import TimeoutException
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
@@ -165,7 +168,8 @@ def save_logs(args, case, last_log_line, current_try, is_multiconnection=False):
             execution_type = "second_client"
             tool_path = args.tool
 
-        tool_path = os.path.abspath(tool_path)
+        tool_name = get_tool_name(args)
+        tool_path = os.path.abspath(os.path.join(tool_path, tool_name))
 
         log_source_path = tool_path + ".log"
         log_destination_path = os.path.join(args.output, "tool_logs", case["case"] + "_{}".format(execution_type) + ".log")
@@ -196,6 +200,8 @@ def save_logs(args, case, last_log_line, current_try, is_multiconnection=False):
         if first_log_line_index != 0:
             lines = lines[first_log_line_index:]
 
+        lines = [line for line in lines if (b"DiscoverServers() start Disabled" not in line and b"DiscoverServers() ends result=false" not in line)]
+
         logs = b"\n".join(lines)
 
         with open(log_destination_path, "ab") as file:
@@ -214,7 +220,7 @@ def save_logs(args, case, last_log_line, current_try, is_multiconnection=False):
 
 def save_latency_tool_logs(args, case, current_try):
     try:
-        log_source_path = os.path.join(os.path.split(args.server_tool)[0], "LatencyTestServer.exe" if args.execution_type == "server" else "LatencyTestClient.exe") + ".log"
+        log_source_path = os.path.join(args.server_tool, "LatencyTestServer.exe" if args.execution_type == "server" else "LatencyTestClient.exe") + ".log"
         log_destination_path = os.path.join(args.output, "tool_logs", case["case"] + "_latency_{}".format(args.execution_type) + ".log")
 
         with open(log_source_path, "rb") as file:
@@ -571,6 +577,7 @@ def check_artifacts_and_save_status(artifact_path, json_path, logger, limit=1000
     checking_thread.start()
 
 
+<<<<<<< HEAD
 # Function return protocol type(tcp\udp) from server keys in case
 def getTransportProtocol(case):
     current_protocol = "tcp"
@@ -589,3 +596,38 @@ def make_window_maximized(window):
 
 def hide_window(window):
     win32gui.ShowWindow(window, 6)
+=======
+# Function return protocol type(tcp\udp) from server keys in case (in case of Streaming SDK) or from transport_protocol key (in case of Full Samples)
+def getTransportProtocol(args, case):
+    if args.streaming_type == StreamingType.SDK or args.streaming_type == StreamingType.FULL_SAMPLES:
+        current_protocol = "tcp"
+        if "-protocol udp" in case["server_keys"].lower():
+            current_protocol = "udp"
+        return current_protocol
+
+
+def get_tool_name(args):
+    if args.streaming_type == StreamingType.SDK:
+        if args.execution_type == "server":
+            if platform.system() == "Windows":
+                return "RemoteGameServer.exe"
+            else:
+                return "RemoteGameServer"
+        else:
+            return "RemoteGameClient.exe"
+    elif args.streaming_type == StreamingType.FULL_SAMPLES:
+        if args.execution_type == "server":
+            return "FullGameServer.exe"
+        else:
+            return "FullGameClient.exe"
+
+
+def find_by_xpath(xpath, driver, wait=5):
+    try:
+        element = WebDriverWait(driver, wait).until(
+            lambda d: d.find_element(By.XPATH, xpath)
+        )
+        return element
+    except TimeoutException:
+        return ValueError(f"Could not find element with XPATH: {xpath}")
+>>>>>>> origin/full_samples

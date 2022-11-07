@@ -132,7 +132,7 @@ def start_client_side_tests(args, case, process, last_log_line, audio_device_nam
             params["client_type"] = "win_client"
             params["messages"] = error_messages
             if args.streaming_type != StreamingType.AMD_LINK:
-                params["transport_protocol"] = getTransportProtocol(case)
+                params["transport_protocol"] = getTransportProtocol(args, case)
             params["script_path"] = script_path
             params["process"] = process
             params["case_json_path"] = os.path.join(args.output, case["case"] + CASE_REPORT_SUFFIX)
@@ -173,7 +173,7 @@ def start_client_side_tests(args, case, process, last_log_line, audio_device_nam
 
                 main_logger.info("Finish action execution\n\n\n")
 
-            process = close_streaming(args.execution_type, case, process, streaming_type=args.streaming_type, game_name=args.game_name)
+            process = close_streaming(args, case, process)
 
             # say server to start next case
             main_logger.info("Send NextCase command")

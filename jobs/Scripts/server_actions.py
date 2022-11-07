@@ -397,7 +397,7 @@ class Encryption(MulticonnectionAction):
 
         self.sock.send("start".encode("utf-8"))
 
-        compressing_thread = Thread(target=analyze_encryption, args=(self.params["case"], "server", getTransportProtocol(self.params["case"]), \
+        compressing_thread = Thread(target=analyze_encryption, args=(self.params["case"], "server", getTransportProtocol(self.params["args"], self.params["case"]), \
             "-encrypt" in self.params["case"]["server_keys"].lower(), self.params["messages"], self.params["client_address"]))
         compressing_thread.start()
 
@@ -528,8 +528,7 @@ class StartStreaming(MulticonnectionAction):
         if self.args.streaming_type == StreamingType.AMD_LINK:
             debug_screen_path = os.path.join(self.params["screen_path"], f"{self.case['case']}_debug.jpg")
 
-            self.process = start_streaming(self.args.execution_type, 
-                streaming_type=self.args.streaming_type, case=self.case, socket=self.sock, debug_screen_path=debug_screen_path, game_name=self.args.game_name)
+            self.process = start_streaming(self.args, self.case, socket=self.sock, debug_screen_path=debug_screen_path)
 
             window = win32gui.FindWindow(None, games_actions.get_game_window_name(self.game_name))
             make_window_active(window)
@@ -539,7 +538,7 @@ class StartStreaming(MulticonnectionAction):
             should_collect_traces = (self.args.collect_traces == "BeforeTests")
 
             if self.args.streaming_type != StreamingType.AMD_LINK:
-                self.process = start_streaming(self.args.execution_type, streaming_type=self.args.streaming_type, script_path=self.script_path)
+                self.process = start_streaming(self.args, self.case, script_path=self.script_path, socket=self.sock)
 
             if self.args.test_group in mc_config["second_win_client"] or self.args.test_group in mc_config["android_client"]:
                 sleep(5)
@@ -552,7 +551,7 @@ class StartStreaming(MulticonnectionAction):
         # TODO: make single parameter to configure launching order
         # start android client after server or default behaviour
         if "android_start" not in self.case or self.case["android_start"] == "after_server":
-            if self.android_client_closed:
+            if self.android_client_closed and self.args.test_group in mc_config["android_client"]:
                 multiconnection_start_android(self.args.test_group)
                 # small delay to give client time to connect
                 sleep(5)
@@ -564,6 +563,9 @@ class StartStreaming(MulticonnectionAction):
             sleep(5)
 
         self.sock.send("done".encode("utf-8"))
+
+        if self.args.streaming_type == StreamingType.FULL_SAMPLES:
+            games_actions.make_game_foreground(self.args.game_name)
 
 
 # Close clumsy
@@ -586,7 +588,7 @@ class StartLatencyTool(MulticonnectionAction):
     def parse(self):
         self.action = self.params["action_line"]
         self.args = self.params["args"]
-        self.tool_path = os.path.join(os.path.split(self.args.server_tool)[0], "LatencyTestServer.exe")
+        self.tool_path = os.path.join(self.args.server_tool, "LatencyTestServer.exe")
 
     def execute(self):
         self.process = start_latency_tool(self.args.execution_type, self.tool_path)
