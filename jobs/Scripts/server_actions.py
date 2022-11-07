@@ -564,9 +564,6 @@ class StartStreaming(MulticonnectionAction):
 
         self.sock.send("done".encode("utf-8"))
 
-        if self.args.streaming_type == StreamingType.FULL_SAMPLES:
-            games_actions.make_game_foreground(self.args.game_name)
-
 
 # Close clumsy
 class RecoveryClumsy(Action):

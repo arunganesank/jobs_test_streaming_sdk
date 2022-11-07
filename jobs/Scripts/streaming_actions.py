@@ -12,6 +12,7 @@ import pyscreenshot
 from selenium import webdriver
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.chrome.service import Service
+from webdriver_manager.firefox import GeckoDriverManager
 from threading import Thread
 import utils
 from games_actions import locate_and_click, locate_on_screen, click_on_element, get_game_window_name
@@ -28,6 +29,9 @@ ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
 sys.path.append(ROOT_PATH)
 from jobs_launcher.core.config import main_logger
+
+
+WEBDRIVER_VERSION = GeckoDriverManager().install()
 
 
 class StreamingType(Enum):
@@ -398,10 +402,10 @@ def start_full_samples(args, case, script_path, socket):
 
         if args.execution_type == "server":
             try:
-                service = Service(os.path.join(os.path.dirname(__file__), "..", "..", "driver", "chromedriver.exe"))
-                chrome_options = webdriver.ChromeOptions()
-                chrome_options.add_argument("--start-maximized")
-                driver = webdriver.Chrome(service=service, options=chrome_options)
+                service = Service(WEBDRIVER_VERSION)
+                firefox_options = webdriver.FirefoxOptions()
+                options.headless = True
+                driver = webdriver.Chrome(service=service, options=firefox_options)
                 sleep(3)
                 driver.get("http://localhost")
 
