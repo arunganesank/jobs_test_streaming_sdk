@@ -191,7 +191,8 @@ def prepare_game(game_name, game_launcher, fullscreen=True):
         else:
             locate_and_click(HeavenElements.RUN_BUTTON_UBUNTU.build_path())
 
-        subprocess.call("taskkill /f /im browser_x86.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
+        if platform.system() == "Windows":
+            subprocess.call("taskkill /f /im browser_x86.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
 
         sleep(20)
     if game_name == "valleydx9" or game_name == "valleydx11" or game_name == "valleyopengl":
@@ -229,7 +230,8 @@ def prepare_game(game_name, game_launcher, fullscreen=True):
         else:
             locate_and_click(ValleyElements.RUN_BUTTON_UBUNTU.build_path())
 
-        subprocess.call("taskkill /f /im browser_x86.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
+        if platform.system() == "Windows":
+            subprocess.call("taskkill /f /im browser_x86.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
 
         sleep(20)
     elif game_name == "valorant":
@@ -282,7 +284,8 @@ def prepare_game(game_name, game_launcher, fullscreen=True):
         click("center_0", "center_0")
         sleep(1)
         click("center_10", "center_10")
-        press_keys("shift+x ctrl+shift+i shift+y:17 ctrl+e ctrl+r")
+        press_keys("shift+x ctrl+shift+i shift+y:3 ctrl+e ctrl+r")
+        press_keys("Y")
     elif game_name == "dota2dx11" or game_name == "dota2vulkan":
         sleep(60)
         press_keys("esc")

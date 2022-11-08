@@ -294,7 +294,7 @@ def execute_tests(args):
 
                 prepared_keys = prepare_keys(args, case)
                 tool_name = get_tool_name(args)
-                target_path = os.path.join(tool_path, tool_name)
+                target_path = os.path.join(args.server_tool, tool_name)
 
                 server_execution_script = f"{target_path} {prepared_keys}"
 

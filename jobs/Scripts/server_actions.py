@@ -367,6 +367,10 @@ class DoTestActions(Action):
                 if self.stage > 2:
                     self.stage = 0
             elif self.game_name == "dota2dx11" or self.game_name == "dota2vulkan":
+                # do centering of the in-game camera on the hero
+                pydirectinput.press("f1")
+                pydirectinput.press("f1")
+
                 pydirectinput.press("r")
                 sleep(1)
                 pydirectinput.press("w")
@@ -376,7 +380,7 @@ class DoTestActions(Action):
                 pyautogui.click()
             else:
                 sleep(0.5)
-                
+
         except Exception as e:
             self.logger.error("Failed to do test actions: {}".format(str(e)))
             self.logger.error("Traceback: {}".format(traceback.format_exc()))

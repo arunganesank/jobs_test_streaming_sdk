@@ -9,10 +9,6 @@ import platform
 from enum import Enum
 import pyautogui
 import pyscreenshot
-from selenium import webdriver
-from selenium.webdriver.support.select import Select
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.firefox import GeckoDriverManager
 from threading import Thread
 import utils
 from games_actions import locate_and_click, locate_on_screen, click_on_element, get_game_window_name
@@ -24,14 +20,19 @@ if platform.system() == "Windows":
     import win32gui
     import win32con
     import win32clipboard
+    import pydirectinput
+
+    from selenium import webdriver
+    from selenium.webdriver.support.select import Select
+    from selenium.webdriver.chrome.service import Service
+    from webdriver_manager.firefox import GeckoDriverManager
+
+    WEBDRIVER_VERSION = GeckoDriverManager().install()
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
 sys.path.append(ROOT_PATH)
 from jobs_launcher.core.config import main_logger
-
-
-WEBDRIVER_VERSION = GeckoDriverManager().install()
 
 
 class StreamingType(Enum):
@@ -43,7 +44,7 @@ class StreamingType(Enum):
 def start_streaming(args, case, script_path=None, socket=None, debug_screen_path=None):
     main_logger.info("Start StreamingSDK {}".format(args.execution_type))
 
-    if args.streaming_type == StreamingType.SDK:
+    if getattr(args, "streaming_type", None) == None or args.streaming_type == StreamingType.SDK:
         if not script_path:
             raise ValueError("Script path is required to launch Streaming SDK")
 
@@ -404,7 +405,7 @@ def start_full_samples(args, case, script_path, socket):
             try:
                 service = Service(WEBDRIVER_VERSION)
                 firefox_options = webdriver.FirefoxOptions()
-                options.headless = True
+                firefox_options.headless = True
                 driver = webdriver.Chrome(service=service, options=firefox_options)
                 sleep(3)
                 driver.get("http://localhost")
@@ -524,10 +525,10 @@ def start_full_samples(args, case, script_path, socket):
     return process
 
 
-def close_streaming(args, case, process, tool_path=None):
+def close_streaming(args, case, process):
     try:
-        if args.streaming_type == StreamingType.SDK:
-            return close_streaming_sdk(args, case, process, tool_path=tool_path)
+        if getattr(args, "streaming_type", None) == None or args.streaming_type == StreamingType.SDK:
+            return close_streaming_sdk(args, case, process)
         elif args.streaming_type == StreamingType.AMD_LINK:
             return close_streaming_amd_link(args, case, process)
         elif args.streaming_type == StreamingType.FULL_SAMPLES:
@@ -547,7 +548,7 @@ def close_streaming_sdk(args, case, process):
         main_logger.info("Start closing")
 
         if platform.system() == "Windows":
-            if execution_type != "server":
+            if args.execution_type != "server":
                 for window in pyautogui.getAllWindows():
                     if "RemoteGameClient" in window.title:
                         streaming_window = window._hWnd
@@ -627,7 +628,7 @@ def close_streaming_amd_link(args, case, process):
             except:
                 pass
 
-        elif execution_type == "client":
+        elif args.execution_type == "client":
             for window in pyautogui.getAllWindows():
                 if "AMD Link" in window.title:
                     amd_link_window = window._hWnd
@@ -652,7 +653,7 @@ def close_full_samples(args, case, process):
         main_logger.info("Start closing")
 
         if platform.system() == "Windows":
-            if execution_type != "server":
+            if args.execution_type != "server":
                 for window in pyautogui.getAllWindows():
                     if "RemoteGameClient" in window.title:
                         streaming_window = window._hWnd

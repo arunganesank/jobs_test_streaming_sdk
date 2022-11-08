@@ -271,7 +271,7 @@ def start_server_side_tests(args, case, process, android_client_closed, last_log
                 connection_sc.send("finish passed".encode("utf-8"))
                 sleep(1)
 
-            process = close_streaming(args, case, process, tool_path=args.server_tool)
+            process = close_streaming(args, case, process)
 
             if args.test_group in MC_CONFIG["android_client"]:
                 # close Streaming SDK android app
