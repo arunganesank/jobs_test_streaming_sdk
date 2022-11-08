@@ -178,3 +178,13 @@ class AMDLinkElements:
             "hevc": HEVC
         }
     }
+
+
+class FSElementLocation(ElementLocation):
+    def __init__(self, element_name):
+        super().__init__("FullSamples", element_name)
+
+
+class FSElements:
+    CONNECT = FSElementLocation("connect")
+    CONNECT_TO = FSElementLocation("connect_to")

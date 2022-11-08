@@ -10,4 +10,4 @@ python prepare_test_cases.py --os_name "Android"
 
 python -m pip install -r requirements-win.txt
 
-python ..\jobs_launcher\executeTests.py --test_filter %TESTS_FILTER% --file_filter %FILE_FILTER% --tests_root ..\jobs --work_root ..\Work\Results --work_dir StreamingSDK --cmd_variables clientTool "..\StreamingSDKAndroid\app-arm.apk" serverTool "..\StreamingSDK\RemoteGameServer.exe" retries %RETRIES% gameName %GAME_NAME%
+python ..\jobs_launcher\executeTests.py --test_filter %TESTS_FILTER% --file_filter %FILE_FILTER% --tests_root ..\jobs --work_root ..\Work\Results --work_dir StreamingSDK --cmd_variables clientTool "..\StreamingSDKAndroid\app-arm.apk" serverTool "..\StreamingSDK" retries %RETRIES% gameName %GAME_NAME%

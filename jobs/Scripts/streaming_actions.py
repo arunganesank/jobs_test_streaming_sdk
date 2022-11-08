@@ -9,15 +9,25 @@ import platform
 from enum import Enum
 import pyautogui
 import pyscreenshot
+from threading import Thread
 import utils
 from games_actions import locate_and_click, locate_on_screen, click_on_element, get_game_window_name
-from elements import AMDLinkElements
+from elements import AMDLinkElements, FSElements
 import signal
+from locators import FSServerLocators
 
 if platform.system() == "Windows":
     import win32gui
     import win32con
     import win32clipboard
+    import pydirectinput
+
+    from selenium import webdriver
+    from selenium.webdriver.support.select import Select
+    from selenium.webdriver.chrome.service import Service
+    from webdriver_manager.firefox import GeckoDriverManager
+
+    WEBDRIVER_VERSION = GeckoDriverManager().install()
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
@@ -28,31 +38,34 @@ from jobs_launcher.core.config import main_logger
 class StreamingType(Enum):
     SDK = 1
     AMD_LINK = 2
-    WEB = 3
+    FULL_SAMPLES = 3
 
 
-def start_streaming(execution_type, streaming_type=StreamingType.SDK, script_path=None, case=None, socket=None, debug_screen_path=None, game_name=None):
-    main_logger.info("Start StreamingSDK {}".format(execution_type))
+def start_streaming(args, case, script_path=None, socket=None, debug_screen_path=None):
+    main_logger.info("Start StreamingSDK {}".format(args.execution_type))
 
-    if streaming_type == StreamingType.SDK:
+    if getattr(args, "streaming_type", None) == None or args.streaming_type == StreamingType.SDK:
         if not script_path:
             raise ValueError("Script path is required to launch Streaming SDK")
 
-        return start_streaming_sdk(execution_type, script_path)
-    elif streaming_type == StreamingType.AMD_LINK:
-        if not case:
-            raise ValueError("Case is required to launch AMD Link")
+        return start_streaming_sdk(args, case, script_path)
+    elif args.streaming_type == StreamingType.AMD_LINK:
         if not socket:
             raise ValueError("Socket is required to launch AMD Link")
-        if not game_name:
-            raise ValueError("Game name is required to launch AMD Link")
 
-        return start_streaming_amd_link(execution_type, case, socket, game_name, debug_screen_path=debug_screen_path)
+        return start_streaming_amd_link(args, case, socket, debug_screen_path=debug_screen_path)
+    elif args.streaming_type == StreamingType.FULL_SAMPLES:
+        if not script_path:
+            raise ValueError("Script path is required to launch Full Samples")
+        if not socket:
+            raise ValueError("Socket is required to launch AMD Link")
+
+        return start_full_samples(args, case, script_path, socket)
     else:
-        raise ValueError(f"Unknown StreamingSDK type: {streaming_type}")
+        raise ValueError(f"Unknown StreamingSDK type: {args.streaming_type}")
 
 
-def start_streaming_sdk(execution_type, script_path):
+def start_streaming_sdk(args, case, script_path):
     if platform.system() == "Windows":
         process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
     else:
@@ -104,12 +117,12 @@ def set_adrenalin_params(case):
     configure_boolean_option(case, field_width, "use_encryption")
 
 
-def start_streaming_amd_link(execution_type, case, socket, game_name, debug_screen_path=None):
-    if execution_type == "server":
+def start_streaming_amd_link(args, case, socket, debug_screen_path=None):
+    if args.execution_type == "server":
         client_already_started = False
 
         try:
-            window = win32gui.FindWindow(None, get_game_window_name(game_name))
+            window = win32gui.FindWindow(None, get_game_window_name(args.game_name))
             utils.hide_window(window)
             sleep(1)
             pyautogui.hotkey("win", "m")
@@ -384,17 +397,144 @@ def start_streaming_amd_link(execution_type, case, socket, game_name, debug_scre
     return process
 
 
-def close_streaming(execution_type, case, process, tool_path=None, streaming_type=StreamingType.SDK, game_name=None):
-    try:
-        if streaming_type == StreamingType.SDK:
-            return close_streaming_sdk(execution_type, case, process)
-        elif streaming_type == StreamingType.AMD_LINK:
-            if not game_name:
-                raise ValueError("Game name is required to close AMD Link")
+def start_full_samples(args, case, script_path, socket):
+    if platform.system() == "Windows":
+        process = psutil.Popen(script_path)
 
-            return close_streaming_amd_link(execution_type, case, process, game_name)
+        if args.execution_type == "server":
+            try:
+                service = Service(WEBDRIVER_VERSION)
+                firefox_options = webdriver.FirefoxOptions()
+                firefox_options.headless = True
+                driver = webdriver.Chrome(service=service, options=firefox_options)
+                sleep(3)
+                driver.get("http://localhost")
+
+                for tab, options in case["full_samples_settings"].items():
+                    utils.find_by_xpath(FSServerLocators.TAB_TEMPLATE.replace("<tab_name>", tab), driver).click()
+
+                    sleep(0.5)
+
+                    # There are four possible types of options: boolean, select, input and double input (e.g. encoder resolution)
+
+                    for option_name, option_value in options.items():
+                        main_logger.error(f"Set {option_name} option ({tab} tab)")
+
+                        if isinstance(option_value, bool):
+                            main_logger.info("Set the option value in a flag")
+                            element = utils.find_by_xpath(FSServerLocators.BOOLEAN_OPTION_TEMPLATE.replace("<option_name>", option_name), driver)
+
+                            if option_value != element.is_selected():
+                                element.click()
+
+                        elif isinstance(option_value, str):
+                            is_input = False
+
+                            try:
+                                element = utils.find_by_xpath(FSServerLocators.SELECT_OPTION_TEMPLATE.replace("<option_name>", option_name), driver)
+                            except:
+                                element = utils.find_by_xpath(FSServerLocators.INPUT_OPTION_TEMPLATE.replace("<option_name>", option_name), driver)
+                                is_input = True
+
+                            if is_input:
+                                main_logger.info("Set the option value in an input")
+                                element.clear()
+                                element.send_keys(option_value)
+                            else:
+                                main_logger.info("Set the option value in a select")
+                                Select(element).select_by_value(option_value)
+                        elif isinstance(option_value, list):
+                            main_logger.info("Set the option value in two inputs")
+                            first_element = utils.find_by_xpath(FSServerLocators.INPUT_OPTION_TEMPLATE_FIRST.replace("<option_name>", option_name), driver)
+                            second_element = utils.find_by_xpath(FSServerLocators.INPUT_OPTION_TEMPLATE_SECOND.replace("<option_name>", option_name), driver)
+
+                            first_element.clear()
+                            first_element.send_keys(option_value[0])
+
+                            second_element.clear()
+                            second_element.send_keys(option_value[1])
+                        else:
+                            raise ValueError(f"Unknown value type for option '{option_name}' of tab '{tab}'")
+
+                utils.find_by_xpath(FSServerLocators.APPLY_BUTTON, driver).click()
+
+                socket.send("done".encode("utf-8"))
+
+                driver_closing_thread = Thread(target=driver.close, args=())
+                driver_closing_thread.start()
+            except Exception as e:
+                socket.send("failed".encode("utf-8"))
+                raise e
         else:
-            raise ValueError(f"Unknown StreamingSDK type: {streaming_type}")
+            sleep(3)
+
+            server_answer = socket.recv(1024).decode("utf-8")
+
+            if server_answer != "done":
+               raise Exception("Failed to open Full Samples on server side") 
+
+            # wait Full Samples window opening
+            for window in pyautogui.getAllWindows():
+                if "RemoteGameClient" in window.title:
+                    window_hwnd = window._hWnd
+                    break
+
+            if not window_hwnd:
+                raise Exception("Full Samples client window wasn't found")
+
+            win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
+
+            coords = locate_on_screen(FSElements.CONNECT_TO.build_path(), tries=7, delay=1, step=0.02)
+
+            pyautogui.click(coords[0] + coords[2] + 35, coords[1] + coords[3] / 2)
+
+            if utils.getTransportProtocol(args, case) == "udp":
+                pyautogui.moveTo(coords[0] + coords[2] + 35, coords[1] + coords[3] / 2 + 25)
+            else:
+                pyautogui.moveTo(coords[0] + coords[2] + 35, coords[1] + coords[3] / 2 + 45)
+
+            sleep(0.1)
+            pyautogui.click()
+            sleep(0.1)
+
+            pyautogui.press("tab")
+            sleep(0.1)
+            pyautogui.press("backspace", presses=30)
+            sleep(0.1)
+            pyautogui.typewrite(args.ip_address)
+
+            sleep(0.1)
+
+            pyautogui.press("tab")
+            sleep(0.1)
+            pyautogui.press("backspace", presses=30)
+            sleep(0.1)
+            pyautogui.typewrite("1235")
+
+            sleep(0.1)
+
+            if "client_password" in case:
+                pyautogui.press("tab")
+                sleep(0.1)
+                pyautogui.press("backspace", presses=30)
+                sleep(0.1)
+                pyautogui.typewrite(case["client_password"])
+
+            locate_and_click(FSElements.CONNECT.build_path())
+
+    return process
+
+
+def close_streaming(args, case, process):
+    try:
+        if getattr(args, "streaming_type", None) == None or args.streaming_type == StreamingType.SDK:
+            return close_streaming_sdk(args, case, process)
+        elif args.streaming_type == StreamingType.AMD_LINK:
+            return close_streaming_amd_link(args, case, process)
+        elif args.streaming_type == StreamingType.FULL_SAMPLES:
+            return close_full_samples(args, case, process)
+        else:
+            raise ValueError(f"Unknown StreamingSDK type: {args.streaming_type}")
     except Exception as e:
         main_logger.error("Failed to close Streaming SDK process. Exception: {}".format(str(e)))
         main_logger.error("Traceback: {}".format(traceback.format_exc()))
@@ -402,13 +542,13 @@ def close_streaming(execution_type, case, process, tool_path=None, streaming_typ
         return None
 
 
-def close_streaming_sdk(execution_type, case, process):
-    if utils.should_case_be_closed(execution_type, case):
+def close_streaming_sdk(args, case, process):
+    if utils.should_case_be_closed(args.execution_type, case):
         # close the current Streaming SDK process
         main_logger.info("Start closing")
 
         if platform.system() == "Windows":
-            if execution_type != "server":
+            if args.execution_type != "server":
                 for window in pyautogui.getAllWindows():
                     if "RemoteGameClient" in window.title:
                         streaming_window = window._hWnd
@@ -419,7 +559,7 @@ def close_streaming_sdk(execution_type, case, process):
                 close_streaming_server_process(process)
 
 
-            if execution_type == "server":
+            if args.execution_type == "server":
                 crash_window = win32gui.FindWindow(None, "RemoteGameServer.exe")
             else:
                 crash_window = win32gui.FindWindow(None, "RemoteGameClient.exe")
@@ -439,12 +579,12 @@ def close_streaming_sdk(execution_type, case, process):
     return process
 
 
-def close_streaming_amd_link(execution_type, case, process, game_name):
-    if utils.should_case_be_closed(execution_type, case):
+def close_streaming_amd_link(args, case, process):
+    if utils.should_case_be_closed(args.execution_type, case):
         # close the current Streaming SDK process
         main_logger.info("Start closing") 
 
-        if execution_type == "server":
+        if args.execution_type == "server":
             # wait closing on client
             sleep(3)
 
@@ -488,13 +628,14 @@ def close_streaming_amd_link(execution_type, case, process, game_name):
             except:
                 pass
 
-        elif execution_type == "client":
+        elif args.execution_type == "client":
             for window in pyautogui.getAllWindows():
                 if "AMD Link" in window.title:
                     amd_link_window = window._hWnd
                     break
 
             win32gui.PostMessage(amd_link_window, win32con.WM_CLOSE, 0, 0)
+
             sleep(3)
 
         main_logger.info("Finish closing")
@@ -502,6 +643,31 @@ def close_streaming_amd_link(execution_type, case, process, game_name):
         return None
     else:
         main_logger.info("Keep StreamingSDK instance")
+
+    return process
+
+
+def close_full_samples(args, case, process):
+    if utils.should_case_be_closed(args.execution_type, case):
+        # close the current Streaming SDK process
+        main_logger.info("Start closing")
+
+        if platform.system() == "Windows":
+            if args.execution_type != "server":
+                for window in pyautogui.getAllWindows():
+                    if "RemoteGameClient" in window.title:
+                        streaming_window = window._hWnd
+                        break
+
+                win32gui.PostMessage(streaming_window, win32con.WM_CLOSE, 0, 0)
+            else:
+                close_streaming_server_process(process)
+
+        main_logger.info("Finish closing")
+
+        return None
+    else:
+        main_logger.info("Keep Full Samples instance")
 
     return process
 

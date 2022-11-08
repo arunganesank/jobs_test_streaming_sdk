@@ -116,11 +116,14 @@ def prepare_keys(args, case):
         # place the current screen resolution in keys of the server instance
         return keys.replace("<resolution>", args.screen_resolution.replace("x", ","))
     else:
-        return "{keys} -connectionurl {transport_protocol}://{ip_address}:1235".format(
-            keys=keys,
-            transport_protocol = getTransportProtocol(case),
-            ip_address=args.ip_address
-        )
+        if args.streaming_type == StreamingType.SDK:
+            return "{keys} -connectionurl {transport_protocol}://{ip_address}:1235".format(
+                keys=keys,
+                transport_protocol = getTransportProtocol(args, case),
+                ip_address=args.ip_address
+            )
+        else:
+            return keys
 
 
 def prepare_empty_reports(args, current_conf):
@@ -165,6 +168,8 @@ def prepare_empty_reports(args, current_conf):
 
             if args.streaming_type == StreamingType.AMD_LINK:
                 test_case_report['tool'] = 'AMDLink'
+            elif args.streaming_type == StreamingType.FULL_SAMPLES:
+                test_case_report['tool'] = 'Full Samples'
             else:
                 test_case_report['tool'] = 'StreamingSDK'
 
@@ -295,8 +300,9 @@ def execute_tests(args, current_conf):
     with open(os.path.join(os.path.abspath(args.output), "test_cases.json"), "r") as json_file:
         cases = json.load(json_file)
 
-    tool_path = args.server_tool if args.execution_type == "server" else args.client_tool
 
+    # TODO replace server_tool and client_tool params by single param
+    tool_path = args.server_tool if args.execution_type == "server" else args.client_tool
     tool_path = os.path.abspath(tool_path)
 
     if args.execution_type == "client":
@@ -338,7 +344,8 @@ def execute_tests(args, current_conf):
                         base_folder = os.path.join(os.getenv("APPDATA"), "..", "Local", "AMD", "RemoteGameServer", "settings")
                         settings_json_path = os.path.join(base_folder, "settings.json")
                     else:
-                        base_folder = f"/home/{os.getenv('USER')}/.AMD/cl.cacheRemoteGameServer/settings"
+                        username = os.getenv('USER')
+                        base_folder = f"/home/{username}/.AMD/cl.cacheRemoteGameServer/settings"
                         settings_json_path = os.path.join(base_folder, "settings.json")
 
                     if not os.path.exists(base_folder):
@@ -373,11 +380,16 @@ def execute_tests(args, current_conf):
 
                 if args.streaming_type != StreamingType.AMD_LINK:
                     prepared_keys = prepare_keys(args, case)
+                    tool_name = get_tool_name(args)
+                    target_path = os.path.join(tool_path, tool_name)
 
                     if platform.system() == "Windows":
-                        execution_script = "{tool} {keys}".format(tool=tool_path, keys=prepared_keys)
+                        if args.execution_type == "client" and args.streaming_type == StreamingType.FULL_SAMPLES:
+                            execution_script = f"start cmd /k \"{target_path} {prepared_keys} & exit 0\""
+                        else:
+                            execution_script = f"{target_path} {prepared_keys}"
                     else:
-                        execution_script = "sudo -E {tool} {keys}".format(tool=tool_path, keys=prepared_keys)
+                        execution_script = f"sudo -E {target_path} {prepared_keys}"
 
                     case["prepared_keys"] = prepared_keys
 
@@ -420,7 +432,7 @@ def execute_tests(args, current_conf):
 
                 break
             except Exception as e:
-                PROCESS = close_streaming(args.execution_type, case, PROCESS, streaming_type=args.streaming_type, game_name=args.game_name)
+                PROCESS = close_streaming(args, case, PROCESS)
 
                 if (args.test_group in MC_CONFIG["android_client"]) and args.execution_type == "server":
                     # close Streaming SDK android app
