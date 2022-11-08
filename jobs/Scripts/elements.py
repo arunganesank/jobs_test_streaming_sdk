@@ -29,6 +29,18 @@ class CSGOElements:
     GO_BUTTON = CSGOElementLocation("go_button")
 
 
+class PUBGElementLocation(GameElementLocation):
+    def __init__(self, element_name):
+        super().__init__("PUBG", element_name)
+
+
+class PUBGElements:
+    CONFIRM_EXIT_TO_LOBBY = PUBGElementLocation("confirm_exit_to_lobby")
+    EXIT_TO_LOBBY = PUBGElementLocation("exit_to_lobby")
+    PLAY_BUTTON = PUBGElementLocation("play_button")
+    RIGHT_ARROW = PUBGElementLocation("right_arrow")
+
+
 class Dota2ElementLocation(GameElementLocation):
     def __init__(self, element_name):
         super().__init__("Dota2", element_name)

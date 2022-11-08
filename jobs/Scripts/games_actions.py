@@ -81,6 +81,7 @@ def close_game_process(game_name):
             "csgo": ["csgo.exe"],
             "dota2dx11": ["dota2.exe"],
             "dota2vulkan": ["dota2.exe"],
+            "pubg": ["TslGame.exe"]
         }
 
         if game_name in games_processes:
@@ -379,6 +380,19 @@ def prepare_game(game_name, game_launcher, fullscreen=True):
             sleep(0.5)
             pydirectinput.press("enter")
 
+    elif game_name == "pubg":
+        sleep(60)
+
+        try:
+            locate_and_click(PUBGElements.RIGHT_ARROW.build_path(), scale=True)
+        except:
+            press_keys("esc")
+            locate_and_click(PUBGElements.RIGHT_ARROW.build_path(), scale=True)
+
+        sleep(0.5)
+        locate_and_click(PUBGElements.PLAY_BUTTON.build_path(), scale=True)
+        sleep(30)
+
 
 def press_keys(keys_string):
     keys = keys_string.split()
@@ -498,6 +512,7 @@ def get_game_window_name(game_name):
             "dota2dx11": "Dota 2",
             "dota2vulkan": "Dota 2",
             "csgo": "Counter-Strike: Global Offensive - Direct3D 9",
+            "pubg": "PUBG: BATTLEGROUNDS",
             "empty": None
         },
         "Linux": {
@@ -526,6 +541,7 @@ def get_game_process_name(game_name):
             "dota2dx11": "dota2.exe",
             "dota2vulkan": "dota2.exe",
             "csgo": "csgo.exe",
+            "pubg": "TslGame.exe",
             "empty": None
         },
         "Linux": {
@@ -554,6 +570,7 @@ def get_game_launcher_path(game_name):
             "dota2dx11": "C:\\JN\\dota2.exe.lnk",
             "dota2vulkan": "C:\\JN\\dota2.exe.lnk",
             "csgo": "C:\\JN\\csgo.exe.url",
+            "pubg": "C:\\JN\\pubg.url",
             "empty": None
         },
         "Linux": {

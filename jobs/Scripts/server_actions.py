@@ -378,6 +378,22 @@ class DoTestActions(Action):
                 pydirectinput.press("4")
                 sleep(1)
                 pyautogui.click()
+            elif self.game_name == "pubg":
+                pydirectinput.press("z")
+                sleep(0.2)
+                pydirectinput.press("m")
+                sleep(0.2)
+                pydirectinput.press("m")
+                sleep(0.2)
+                pydirectinput.press("z")
+                sleep(0.2)
+                pydirectinput.press("v")
+                sleep(0.2)
+                pydirectinput.press("tab")
+                sleep(0.2)
+                pydirectinput.press("tab")
+                sleep(0.2)
+                pydirectinput.press("v")
             else:
                 sleep(0.5)
 
