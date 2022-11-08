@@ -357,7 +357,7 @@ class DoTestActions(Action):
                     pyautogui.click(button="right")
                     sleep(1.5)
                 elif self.stage == 2:
-                    pyautogui.moveTo(center_x, center_y)
+                    pyautogui.moveTo(center_x - 230, center_y - 60)
                     sleep(0.1)
                     pyautogui.click(button="right")
                     sleep(1.5)

@@ -285,7 +285,7 @@ def prepare_game(game_name, game_launcher, fullscreen=True):
         sleep(1)
         click("center_10", "center_10")
         press_keys("shift+x ctrl+shift+i shift+y:3 ctrl+e ctrl+r")
-        press_keys("Y")
+        press_keys("y")
     elif game_name == "dota2dx11" or game_name == "dota2vulkan":
         sleep(60)
         press_keys("esc")
