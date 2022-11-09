@@ -381,7 +381,7 @@ def prepare_game(game_name, game_launcher, fullscreen=True):
             pydirectinput.press("enter")
 
     elif game_name == "pubg":
-        sleep(60)
+        sleep(75)
 
         try:
             locate_and_click(PUBGElements.RIGHT_ARROW.build_path(), scale=True)
