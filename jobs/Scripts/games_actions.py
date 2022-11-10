@@ -512,7 +512,7 @@ def get_game_window_name(game_name):
             "dota2dx11": "Dota 2",
             "dota2vulkan": "Dota 2",
             "csgo": "Counter-Strike: Global Offensive - Direct3D 9",
-            "pubg": "PUBG: BATTLEGROUNDS",
+            "pubg": "PUBG: BATTLEGROUNDS ",
             "empty": None
         },
         "Linux": {
