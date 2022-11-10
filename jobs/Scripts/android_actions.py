@@ -282,12 +282,14 @@ def do_test_actions(game_name, logger):
                 sleep(1)
                 pydirectinput.click()
                 sleep(3)
+
         elif game_name == "dota2dx11" or game_name == "dota2vulkan":
             for i in range(6):
                 pydirectinput.press("r")
                 sleep(3)
                 pydirectinput.press("w")
                 sleep(3)
+
         elif game_name == "csgo":
             for i in range(20):
                 pydirectinput.press("4")
@@ -317,6 +319,23 @@ def do_test_actions(game_name, logger):
                 sleep(0.1)
                 pyautogui.click(button="right")
                 sleep(1.5)
+
+        elif game_name == "pubg":
+            pyautogui.press("z")
+            sleep(0.2)
+            pyautogui.press("m")
+            sleep(0.2)
+            pyautogui.press("m")
+            sleep(0.2)
+            pyautogui.press("z")
+            sleep(0.2)
+            pyautogui.press("v")
+            sleep(0.2)
+            pyautogui.press("tab")
+            sleep(0.2)
+            pyautogui.press("tab")
+            sleep(0.2)
+            pyautogui.press("v")
 
     except Exception as e:
         logger.error("Failed to do test actions: {}".format(str(e)))

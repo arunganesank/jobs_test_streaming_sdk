@@ -351,5 +351,30 @@
         "sleep 3",
         "record_video 8",
         "sleep_and_screen 4 4 3 test_actions"
+    ],
+
+    "pubg_actions": [
+        "open_game",
+        "start_streaming",
+        "sleep 5",
+        "make_screen",
+        "move 400 800",
+        "click",
+        "start_test_actions_server",
+        "start_test_actions_client",
+        "make_screen test_actions",
+        "sleep 3",
+        "record_video 8",
+        "sleep_and_screen 4 4 3 test_actions"
+    ],
+
+    "pubg_actions_android": [
+        "open_game",
+        "sleep 5",
+        "start_actions",
+        "make_screen test_actions",
+        "sleep 3",
+        "record_video 8",
+        "sleep_and_screen 4 4 3 test_actions"
     ]
 }
