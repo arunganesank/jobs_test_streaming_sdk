@@ -27,7 +27,10 @@ if platform.system() == "Windows":
     from selenium.webdriver.chrome.service import Service
     from webdriver_manager.firefox import GeckoDriverManager
 
-    WEBDRIVER_VERSION = GeckoDriverManager().install()
+    try:
+        WEBDRIVER_VERSION = GeckoDriverManager().install()
+    except:
+        pass
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
