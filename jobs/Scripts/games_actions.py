@@ -388,9 +388,13 @@ def prepare_game(game_name, game_launcher, fullscreen=True):
 
         try:
             locate_and_click(PUBGElements.RIGHT_ARROW.build_path(), scale=True)
+            sleep(0.5)
+            pydirectinput.click()
         except:
             press_keys("esc")
             locate_and_click(PUBGElements.RIGHT_ARROW.build_path(), scale=True)
+            sleep(0.5)
+            pydirectinput.click()
 
         sleep(0.5)
         locate_and_click(PUBGElements.PLAY_BUTTON.build_path(), scale=True)
