@@ -26,6 +26,7 @@ if platform.system() == "Windows":
     import win32gui
     import win32con
     import pydirectinput
+    pydirectinput.FAILSAFE = False
     from selenium.webdriver.common.by import By
     from selenium.webdriver.support.wait import WebDriverWait
     from selenium.common.exceptions import TimeoutException

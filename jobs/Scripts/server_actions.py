@@ -18,6 +18,7 @@ if platform.system() == "Windows":
     import win32api
     from pyffmpeg import FFmpeg
     import pydirectinput
+    pydirectinput.FAILSAFE = False
 
 pyautogui.FAILSAFE = False
 MC_CONFIG = get_mc_config()

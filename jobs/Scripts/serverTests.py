@@ -21,6 +21,7 @@ from streaming_actions import close_streaming, StreamingType
 
 if platform.system() == "Windows":
     import pydirectinput
+    pydirectinput.FAILSAFE = False
 
 
 ROOT_PATH = os.path.abspath(os.path.join(
