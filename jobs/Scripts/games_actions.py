@@ -16,6 +16,7 @@ if platform.system() == "Windows":
     import win32api
     import win32gui
     import pydirectinput
+    pydirectinput.FAILSAFE = False
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))

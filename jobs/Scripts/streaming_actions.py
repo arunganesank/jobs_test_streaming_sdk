@@ -21,6 +21,7 @@ if platform.system() == "Windows":
     import win32con
     import win32clipboard
     import pydirectinput
+    pydirectinput.FAILSAFE = False
 
     from selenium import webdriver
     from selenium.webdriver.support.select import Select
@@ -36,6 +37,8 @@ ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
 sys.path.append(ROOT_PATH)
 from jobs_launcher.core.config import main_logger
+
+pyautogui.FAILSAFE = False
 
 
 class StreamingType(Enum):
@@ -591,7 +594,7 @@ def close_streaming_amd_link(args, case, process):
             # wait closing on client
             sleep(3)
 
-            window = win32gui.FindWindow(None, get_game_window_name(game_name))
+            window = win32gui.FindWindow(None, get_game_window_name(args.game_name))
             utils.hide_window(window)
             sleep(1)
             pyautogui.hotkey("win", "m")
