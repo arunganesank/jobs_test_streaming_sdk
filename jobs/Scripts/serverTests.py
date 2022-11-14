@@ -362,8 +362,8 @@ def start_server_side_tests(args, case, process, android_client_closed, last_log
         else:
             main_logger.info("Time left from the latest restart of game: {}".format(time() - state["restart_time"]))
             if args.game_name.lower() in REBOOTING_GAMES and (time() - state["restart_time"]) > REBOOTING_GAMES[args.game_name.lower()]["time_to_reboot"]:
-                close_game(game_name.lower())
-                result = close_processes(processes, main_logger)
+                close_game(args.game_name.lower())
+                close_game_process(args.game_name.lower())
                 main_logger.info("Processes were closed with status: {}".format(result))
 
                 # sleep a bit if it's required (some games can open same lobby if restart game immediately)
