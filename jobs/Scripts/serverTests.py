@@ -35,7 +35,7 @@ MC_CONFIG = get_mc_config()
 GAMES_WITH_TIMEOUTS = ['apexlegends']
 
 # some games should be rebooted sometimes
-REBOOTING_GAMES = {"valorant": {"time_to_reboot": 3000, "delay": 120}, "lol": {"time_to_reboot": 3000}, "pubg": {"time_to_reboot": 1800}}
+REBOOTING_GAMES = {"valorant": {"time_to_reboot": 3000, "delay": 120}, "lol": {"time_to_reboot": 3000}, "pubg": {"time_to_reboot": 1700, "delay": 20}}
 
 
 # mapping of commands and their implementations
@@ -362,16 +362,15 @@ def start_server_side_tests(args, case, process, android_client_closed, last_log
         else:
             main_logger.info("Time left from the latest restart of game: {}".format(time() - state["restart_time"]))
             if args.game_name.lower() in REBOOTING_GAMES and (time() - state["restart_time"]) > REBOOTING_GAMES[args.game_name.lower()]["time_to_reboot"]:
-                close_game(game_name.lower())
-                result = close_processes(processes, main_logger)
-                main_logger.info("Processes were closed with status: {}".format(result))
+                close_game(args.game_name.lower())
+                close_game_process(args.game_name.lower())
 
                 # sleep a bit if it's required (some games can open same lobby if restart game immediately)
                 if "delay" in REBOOTING_GAMES[args.game_name.lower()]:
                     sleep(REBOOTING_GAMES[args.game_name.lower()]["delay"])
 
                 state["restart_time"] = time()
-                
+
         with open(os.path.join(ROOT_PATH, "state.py"), "w+") as json_file:
             json.dump(state, json_file, indent=4)
 

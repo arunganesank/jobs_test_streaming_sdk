@@ -64,8 +64,6 @@ def close_game(game_name):
         pyautogui.mouseUp()
 
         sleep(3)
-    elif game_name == "pubg":
-        subprocess.call("taskkill /f /im TslGame.exe", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=30)
 
 
 def close_game_process(game_name):
