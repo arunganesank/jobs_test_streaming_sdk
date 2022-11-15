@@ -23,15 +23,7 @@ if platform.system() == "Windows":
     import pydirectinput
     pydirectinput.FAILSAFE = False
 
-    from selenium import webdriver
-    from selenium.webdriver.support.select import Select
-    from selenium.webdriver.chrome.service import Service
-    from webdriver_manager.firefox import GeckoDriverManager
-
-    try:
-        WEBDRIVER_VERSION = GeckoDriverManager().install()
-    except:
-        pass
+    WEBDRIVER_VERSION = None
 
 ROOT_PATH = os.path.abspath(os.path.join(
     os.path.dirname(__file__), os.path.pardir, os.path.pardir))
