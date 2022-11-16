@@ -106,7 +106,7 @@ def locate_on_screen(template, scale=False, tries=3, delay=0, step=0.07, **kwarg
             # pyautogui locateOnScreen doesn't consider scale of elements
             # scale screenshots of elements with a small step to pick up the necessary scale
             # screenshots of elements made on 2k resolution (16:9). Screenshots are supported for up to 4k (16:10 and 16:9) resolution or down to full hd (16:10 and 16:9) resolution
-            scale_up = win32api.GetSystemMetrics(0) >= 2560
+            scale_up = False
         else:
             kwargs["confidence"] = 0.95
 
