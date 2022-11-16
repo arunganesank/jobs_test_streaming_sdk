@@ -1,7 +1,7 @@
 [
     {
         "case": "STR_RT_001",
-        "status": "observed",
+        "status": "active",
         "server_keys": "-Resolution <resolution> -extStats true -Framerate 60 -Render OpenGL -Protocol udp",
         "client_keys": "-Fullscreen true",
         "script_info": [
@@ -37,7 +37,7 @@
     },
     {
         "case": "STR_RT_005",
-        "status": "observed",
+        "status": "active",
         "server_keys": "-Resolution <resolution> -Render OpenGL -extStats true -Framerate 60 -Protocol tcp",
         "client_keys": "-Fullscreen true",
         "script_info": [
