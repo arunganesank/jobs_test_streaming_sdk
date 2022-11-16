@@ -2,7 +2,7 @@
     {
         "case": "FS_SM_001",
         "status": "active",
-        "server_keys": "-extStats true -Protocol udp",
+        "server_keys": "-extStats true -Protocol udp -Codec h.265",
         "client_keys": "",
         "full_samples_settings": {
         },
@@ -13,7 +13,7 @@
     {
         "case": "FS_SM_002",
         "status": "active",
-        "server_keys": "-extStats true -Protocol tcp",
+        "server_keys": "-extStats true -Protocol tcp -Codec h.265",
         "client_keys": "",
         "full_samples_settings": {
         },
