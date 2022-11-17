@@ -417,7 +417,7 @@ def start_full_samples(args, case, socket, script_path=None):
                 main_logger.error(f"Failed to set Full Samples server options: {e}")
                 main_logger.error("Traceback: {}".format(traceback.format_exc()))
 
-            sleep(3)
+            sleep(4)
         else:
             sleep(3)
 
