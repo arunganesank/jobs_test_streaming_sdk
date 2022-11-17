@@ -66,7 +66,7 @@ def start_streaming(args, case, script_path=None, socket=None, debug_screen_path
         if not socket:
             raise ValueError("Socket is required to launch AMD Link")
 
-        return start_full_samples(args, case, script_path, socket)
+        return start_full_samples(args, case, socket, script_path=script_path)
     else:
         raise ValueError(f"Unknown StreamingSDK type: {args.streaming_type}")
 
@@ -403,71 +403,15 @@ def start_streaming_amd_link(args, case, socket, debug_screen_path=None):
     return process
 
 
-def start_full_samples(args, case, script_path, socket):
+def start_full_samples(args, case, socket, script_path=None):
     if platform.system() == "Windows":
-        process = psutil.Popen(script_path)
+        if script_path:
+            process = psutil.Popen(script_path)
 
         if args.execution_type == "server":
             try:
-                service = Service(WEBDRIVER_VERSION)
-                firefox_options = webdriver.FirefoxOptions()
-                firefox_options.headless = True
-                driver = webdriver.Chrome(service=service, options=firefox_options)
-                sleep(3)
-                driver.get("http://localhost")
-
-                for tab, options in case["full_samples_settings"].items():
-                    utils.find_by_xpath(FSServerLocators.TAB_TEMPLATE.replace("<tab_name>", tab), driver).click()
-
-                    sleep(0.5)
-
-                    # There are four possible types of options: boolean, select, input and double input (e.g. encoder resolution)
-
-                    for option_name, option_value in options.items():
-                        main_logger.error(f"Set {option_name} option ({tab} tab)")
-
-                        if isinstance(option_value, bool):
-                            main_logger.info("Set the option value in a flag")
-                            element = utils.find_by_xpath(FSServerLocators.BOOLEAN_OPTION_TEMPLATE.replace("<option_name>", option_name), driver)
-
-                            if option_value != element.is_selected():
-                                element.click()
-
-                        elif isinstance(option_value, str):
-                            is_input = False
-
-                            try:
-                                element = utils.find_by_xpath(FSServerLocators.SELECT_OPTION_TEMPLATE.replace("<option_name>", option_name), driver)
-                            except:
-                                element = utils.find_by_xpath(FSServerLocators.INPUT_OPTION_TEMPLATE.replace("<option_name>", option_name), driver)
-                                is_input = True
-
-                            if is_input:
-                                main_logger.info("Set the option value in an input")
-                                element.clear()
-                                element.send_keys(option_value)
-                            else:
-                                main_logger.info("Set the option value in a select")
-                                Select(element).select_by_value(option_value)
-                        elif isinstance(option_value, list):
-                            main_logger.info("Set the option value in two inputs")
-                            first_element = utils.find_by_xpath(FSServerLocators.INPUT_OPTION_TEMPLATE_FIRST.replace("<option_name>", option_name), driver)
-                            second_element = utils.find_by_xpath(FSServerLocators.INPUT_OPTION_TEMPLATE_SECOND.replace("<option_name>", option_name), driver)
-
-                            first_element.clear()
-                            first_element.send_keys(option_value[0])
-
-                            second_element.clear()
-                            second_element.send_keys(option_value[1])
-                        else:
-                            raise ValueError(f"Unknown value type for option '{option_name}' of tab '{tab}'")
-
-                utils.find_by_xpath(FSServerLocators.APPLY_BUTTON, driver).click()
-
+                set_full_samples_server_options(case)
                 socket.send("done".encode("utf-8"))
-
-                driver_closing_thread = Thread(target=driver.close, args=())
-                driver_closing_thread.start()
             except Exception as e:
                 socket.send("failed".encode("utf-8"))
                 raise e
@@ -490,45 +434,112 @@ def start_full_samples(args, case, script_path, socket):
 
             win32gui.ShowWindow(window_hwnd, win32con.SW_MAXIMIZE)
 
-            coords = locate_on_screen(FSElements.CONNECT_TO.build_path(), tries=7, delay=1, step=0.02)
-
-            pyautogui.click(coords[0] + coords[2] + 35, coords[1] + coords[3] / 2)
-
-            if utils.getTransportProtocol(args, case) == "udp":
-                pyautogui.moveTo(coords[0] + coords[2] + 35, coords[1] + coords[3] / 2 + 25)
-            else:
-                pyautogui.moveTo(coords[0] + coords[2] + 35, coords[1] + coords[3] / 2 + 45)
-
-            sleep(0.1)
-            pyautogui.click()
-            sleep(0.1)
-
-            pyautogui.press("tab")
-            sleep(0.1)
-            pyautogui.press("backspace", presses=30)
-            sleep(0.1)
-            pyautogui.typewrite(args.ip_address)
-
-            sleep(0.1)
-
-            pyautogui.press("tab")
-            sleep(0.1)
-            pyautogui.press("backspace", presses=30)
-            sleep(0.1)
-            pyautogui.typewrite("1235")
-
-            sleep(0.1)
-
-            if "client_password" in case:
-                pyautogui.press("tab")
-                sleep(0.1)
-                pyautogui.press("backspace", presses=30)
-                sleep(0.1)
-                pyautogui.typewrite(case["client_password"])
-
-            locate_and_click(FSElements.CONNECT.build_path())
+            # connect Full Samples client to server only if client is just opened
+            if script_path:
+                connect_full_samples_client(case)
 
     return process
+
+
+def set_full_samples_server_options(case):
+    if "full_samples_settings" in case and len(case["full_samples_settings"]) > 0:
+        service = Service(WEBDRIVER_VERSION)
+        firefox_options = webdriver.FirefoxOptions()
+        firefox_options.headless = True
+        driver = webdriver.Chrome(service=service, options=firefox_options)
+        sleep(3)
+        driver.get("http://localhost")
+
+        for tab, options in case["full_samples_settings"].items():
+            utils.find_by_xpath(FSServerLocators.TAB_TEMPLATE.replace("<tab_name>", tab), driver).click()
+
+            sleep(0.5)
+
+            # There are four possible types of options: boolean, select, input and double input (e.g. encoder resolution)
+
+            for option_name, option_value in options.items():
+                main_logger.error(f"Set {option_name} option ({tab} tab)")
+
+                if isinstance(option_value, bool):
+                    main_logger.info("Set the option value in a flag")
+                    element = utils.find_by_xpath(FSServerLocators.BOOLEAN_OPTION_TEMPLATE.replace("<option_name>", option_name), driver)
+
+                    if option_value != element.is_selected():
+                        element.click()
+
+                elif isinstance(option_value, str):
+                    is_input = False
+
+                    try:
+                        element = utils.find_by_xpath(FSServerLocators.SELECT_OPTION_TEMPLATE.replace("<option_name>", option_name), driver)
+                    except:
+                        element = utils.find_by_xpath(FSServerLocators.INPUT_OPTION_TEMPLATE.replace("<option_name>", option_name), driver)
+                        is_input = True
+
+                    if is_input:
+                        main_logger.info("Set the option value in an input")
+                        element.clear()
+                        element.send_keys(option_value)
+                    else:
+                        main_logger.info("Set the option value in a select")
+                        Select(element).select_by_value(option_value)
+                elif isinstance(option_value, list):
+                    main_logger.info("Set the option value in two inputs")
+                    first_element = utils.find_by_xpath(FSServerLocators.INPUT_OPTION_TEMPLATE_FIRST.replace("<option_name>", option_name), driver)
+                    second_element = utils.find_by_xpath(FSServerLocators.INPUT_OPTION_TEMPLATE_SECOND.replace("<option_name>", option_name), driver)
+
+                    first_element.clear()
+                    first_element.send_keys(option_value[0])
+
+                    second_element.clear()
+                    second_element.send_keys(option_value[1])
+                else:
+                    raise ValueError(f"Unknown value type for option '{option_name}' of tab '{tab}'")
+
+        utils.find_by_xpath(FSServerLocators.APPLY_BUTTON, driver).click()
+
+        driver_closing_thread = Thread(target=driver.close, args=())
+        driver_closing_thread.start()
+
+
+def connect_full_samples_client(case):
+    coords = locate_on_screen(FSElements.CONNECT_TO.build_path(), tries=7, delay=1, step=0.02)
+
+    pyautogui.click(coords[0] + coords[2] + 35, coords[1] + coords[3] / 2)
+
+    if utils.getTransportProtocol(args, case) == "udp":
+        pyautogui.moveTo(coords[0] + coords[2] + 35, coords[1] + coords[3] / 2 + 25)
+    else:
+        pyautogui.moveTo(coords[0] + coords[2] + 35, coords[1] + coords[3] / 2 + 45)
+
+    sleep(0.1)
+    pyautogui.click()
+    sleep(0.1)
+
+    pyautogui.press("tab")
+    sleep(0.1)
+    pyautogui.press("backspace", presses=30)
+    sleep(0.1)
+    pyautogui.typewrite(args.ip_address)
+
+    sleep(0.1)
+
+    pyautogui.press("tab")
+    sleep(0.1)
+    pyautogui.press("backspace", presses=30)
+    sleep(0.1)
+    pyautogui.typewrite("1235")
+
+    sleep(0.1)
+
+    if "client_password" in case:
+        pyautogui.press("tab")
+        sleep(0.1)
+        pyautogui.press("backspace", presses=30)
+        sleep(0.1)
+        pyautogui.typewrite(case["client_password"])
+
+    locate_and_click(FSElements.CONNECT.build_path())
 
 
 def close_streaming(args, case, process):

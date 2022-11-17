@@ -568,6 +568,8 @@ class StartStreaming(MulticonnectionAction):
                 collect_traces(self.archive_path, self.archive_name + "_server.zip")
             elif "start_first" in self.case and self.case["start_first"] == "server":
                 sleep(5)
+        elif self.args.streaming_type == StreamingType.FULL_SAMPLES:
+            self.process = start_streaming(self.args, self.case, script_path=None, socket=self.sock)
 
         # TODO: make single parameter to configure launching order
         # start android client after server or default behaviour
