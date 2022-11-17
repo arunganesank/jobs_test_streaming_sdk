@@ -441,7 +441,7 @@ def start_full_samples(args, case, socket, script_path=None):
 
             # connect Full Samples client to server only if client is just opened
             if script_path:
-                connect_full_samples_client(case)
+                connect_full_samples_client(args, case)
 
     return process
 
@@ -507,7 +507,7 @@ def set_full_samples_server_options(case):
         driver_closing_thread.start()
 
 
-def connect_full_samples_client(case):
+def connect_full_samples_client(args, case):
     coords = locate_on_screen(FSElements.CONNECT_TO.build_path(), tries=7, delay=1, step=0.02)
 
     pyautogui.click(coords[0] + coords[2] + 35, coords[1] + coords[3] / 2)
