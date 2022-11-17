@@ -402,6 +402,8 @@ def start_streaming_amd_link(args, case, socket, debug_screen_path=None):
 
 
 def start_full_samples(args, case, socket, script_path=None):
+    process = None
+
     if platform.system() == "Windows":
         if script_path:
             main_logger.info("Run Full Samples script")

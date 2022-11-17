@@ -434,7 +434,7 @@ class StartStreaming(Action):
                     if self.process is None:
                         self.process = start_streaming(self.args, self.case, script_path=self.script_path, socket=self.sock)
                     else:
-                        self.process = start_streaming(self.args, self.case, script_path=None, socket=self.sock)
+                        start_streaming(self.args, self.case, script_path=None, socket=self.sock)
 
                     if should_collect_traces:
                         collect_traces(self.archive_path, self.archive_name + "_client.zip")
