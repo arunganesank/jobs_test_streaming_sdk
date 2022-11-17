@@ -404,13 +404,14 @@ def start_streaming_amd_link(args, case, socket, debug_screen_path=None):
 def start_full_samples(args, case, socket, script_path=None):
     if platform.system() == "Windows":
         if script_path:
-            main_logger.error("Run Full Samples script")
+            main_logger.info("Run Full Samples script")
             process = psutil.Popen(script_path)
 
         if args.execution_type == "server":
             try:
                 set_full_samples_server_options(case)
                 socket.send("done".encode("utf-8"))
+                main_logger.info("Parameters were applied")
             except Exception as e:
                 socket.send("failed".encode("utf-8"))
                 main_logger.error(f"Failed to set Full Samples server options: {e}")
@@ -419,6 +420,8 @@ def start_full_samples(args, case, socket, script_path=None):
             sleep(3)
 
             server_answer = socket.recv(1024).decode("utf-8")
+
+            main_logger.info(f"Received server answer code: {server_answer}")
 
             if server_answer != "done":
                raise Exception("Failed to open Full Samples on server side") 
