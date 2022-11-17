@@ -61,8 +61,6 @@ def start_streaming(args, case, script_path=None, socket=None, debug_screen_path
 
         return start_streaming_amd_link(args, case, socket, debug_screen_path=debug_screen_path)
     elif args.streaming_type == StreamingType.FULL_SAMPLES:
-        if not script_path:
-            raise ValueError("Script path is required to launch Full Samples")
         if not socket:
             raise ValueError("Socket is required to launch AMD Link")
 
@@ -406,6 +404,7 @@ def start_streaming_amd_link(args, case, socket, debug_screen_path=None):
 def start_full_samples(args, case, socket, script_path=None):
     if platform.system() == "Windows":
         if script_path:
+            main_logger.error("Run Full Samples script")
             process = psutil.Popen(script_path)
 
         if args.execution_type == "server":
@@ -414,7 +413,8 @@ def start_full_samples(args, case, socket, script_path=None):
                 socket.send("done".encode("utf-8"))
             except Exception as e:
                 socket.send("failed".encode("utf-8"))
-                raise e
+                main_logger.error(f"Failed to set Full Samples server options: {e}")
+                main_logger.error("Traceback: {}".format(traceback.format_exc()))
         else:
             sleep(3)
 
