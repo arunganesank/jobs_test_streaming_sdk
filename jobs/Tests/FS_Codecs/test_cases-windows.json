@@ -39,7 +39,7 @@
         "client_keys": "-Fullscreen true",
         "full_samples_settings": {
             "Video": {
-                "codec": "HEVC (h.265)"
+                "codec": "2"
             }
         },
         "script_info": [
@@ -87,7 +87,7 @@
         "client_keys": "-Fullscreen true",
         "full_samples_settings": {
             "Video": {
-                "codec": "HEVC (h.265)"
+                "codec": "2"
             }
         },
         "script_info": [
