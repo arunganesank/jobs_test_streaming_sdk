@@ -622,4 +622,4 @@ def find_by_xpath(xpath, driver, wait=5):
         )
         return element
     except TimeoutException:
-        return ValueError(f"Could not find element with XPATH: {xpath}")
+        raise ValueError(f"Could not find element with XPATH: {xpath}")

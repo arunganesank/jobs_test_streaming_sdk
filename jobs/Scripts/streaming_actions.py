@@ -480,10 +480,8 @@ def set_full_samples_server_options(case):
 
                     try:
                         element = utils.find_by_xpath(FSServerLocators.SELECT_OPTION_TEMPLATE.replace("<option_name>", option_name), driver)
-                        main_logger.info("Found select {} with selector {}".format(element, FSServerLocators.SELECT_OPTION_TEMPLATE.replace("<option_name>", option_name)))
                     except:
                         element = utils.find_by_xpath(FSServerLocators.INPUT_OPTION_TEMPLATE.replace("<option_name>", option_name), driver)
-                        main_logger.info("Found select {} with selector {}".format(element, FSServerLocators.INPUT_OPTION_TEMPLATE.replace("<option_name>", option_name)))
                         is_input = True
 
                     if is_input:
