@@ -20,6 +20,7 @@
         <argument>--collect_traces "{collectTraces}"</argument>
         <argument>--screen_resolution "{screenResolution}"</argument>
         <argument>--track_used_memory True</argument>
+        <argument>--streaming_type FULL_SAMPLES</argument>
     </execute>
 
     <execute command='python "{ResourcesDir}/makeCompareReport.py"'>
