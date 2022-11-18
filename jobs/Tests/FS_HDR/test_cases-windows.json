@@ -29,7 +29,7 @@
         "client_keys": "-Fullscreen true",
         "full_samples_settings": {
             "Video": {
-                "HDR": "true"
+                "HDR": true
             }
         },
         "script_info": [
@@ -46,7 +46,7 @@
         "client_keys": "-Fullscreen true",
         "full_samples_settings": {
             "Video": {
-                "HDR": "false"
+                "HDR": false
             }
         },
         "script_info": [
@@ -85,7 +85,7 @@
         "client_keys": "-Fullscreen true",
         "full_samples_settings": {
             "Video": {
-                "HDR": "true"
+                "HDR": true
             }
         },
         "script_info": [
@@ -102,7 +102,7 @@
         "client_keys": "-Fullscreen true",
         "full_samples_settings": {
             "Video": {
-                "HDR": "false"
+                "HDR": false
             }
         },
         "script_info": [
