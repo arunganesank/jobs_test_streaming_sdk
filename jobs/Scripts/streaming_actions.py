@@ -453,11 +453,12 @@ def set_full_samples_server_options(case):
         service = Service(WEBDRIVER_VERSION)
         firefox_options = webdriver.FirefoxOptions()
         firefox_options.headless = True
-        driver = webdriver.Chrome(service=service, options=firefox_options)
+        driver = webdriver.Firefox(service=service, options=firefox_options)
         sleep(3)
         driver.get("http://localhost")
 
         for tab, options in case["full_samples_settings"].items():
+            main_logger.info(f"Switch to {tab} tab")
             utils.find_by_xpath(FSServerLocators.TAB_TEMPLATE.replace("<tab_name>", tab), driver).click()
 
             sleep(0.5)
