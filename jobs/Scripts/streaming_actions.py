@@ -572,7 +572,7 @@ def close_streaming_sdk(args, case, process):
         main_logger.info("Start closing")
 
         if platform.system() == "Windows":
-            if args.execution_type != "server":
+            if args.execution_type != "server" and args.execution_type != "android":
                 for window in pyautogui.getAllWindows():
                     if "RemoteGameClient" in window.title:
                         streaming_window = window._hWnd
@@ -582,8 +582,7 @@ def close_streaming_sdk(args, case, process):
             else:
                 close_streaming_server_process(process)
 
-
-            if args.execution_type == "server":
+            if args.execution_type == "server" or args.execution_type == "android":
                 crash_window = win32gui.FindWindow(None, "RemoteGameServer.exe")
             else:
                 crash_window = win32gui.FindWindow(None, "RemoteGameClient.exe")
@@ -715,10 +714,14 @@ def close_streaming_server_process(process):
         except:
             pass
 
-    # main process is necesary to close only on Ubuntu (to close xterm window)
+    sleep(0.5)
+
     try:
         main_logger.info(process.pid)
         main_logger.info(process.name())
+        os.kill(process.pid, stop_signal)
+        sleep(0.5)
+        # sometimes first siging signal is ignored by cmd process
         os.kill(process.pid, stop_signal)
     except:
         pass
