@@ -1,0 +1,3 @@
+[submodule "autotests/jobs_launcher"]
+	path = autotests/jobs_launcher
+	url = https://github.com/luxteam/jobs_launcher.git
