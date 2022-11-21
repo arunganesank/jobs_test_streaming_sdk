@@ -122,7 +122,7 @@
     },
     {
         "case": "STR_FRN_012",
-        "status": "active",
+        "status": "observed",
         "server_keys": "-extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
         "full_samples_settings": {
@@ -138,7 +138,7 @@
     },
     {
         "case": "STR_FRN_013",
-        "status": "active",
+        "status": "observed",
         "server_keys": "-Resolution 3840,2160 -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
         "full_samples_settings": {
@@ -155,7 +155,7 @@
     },
     {
         "case": "STR_FRN_014",
-        "status": "active",
+        "status": "observed",
         "server_keys": "-Resolution 1280,720 -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
         "full_samples_settings": {
@@ -304,7 +304,7 @@
     },
     {
         "case": "STR_FRN_026",
-        "status": "active",
+        "status": "observed",
         "server_keys": "-Codec h.264 -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
         "full_samples_settings": {
@@ -321,7 +321,7 @@
     },
     {
         "case": "STR_FRN_027",
-        "status": "active",
+        "status": "observed",
         "server_keys": "-Resolution 3840,2160 -Codec h.264 -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
         "full_samples_settings": {
@@ -339,7 +339,7 @@
     },
     {
         "case": "STR_FRN_028",
-        "status": "active",
+        "status": "observed",
         "server_keys": "-Resolution 1280,720 -Codec h.264 -extStats true -Protocol udp",
         "client_keys": "-Fullscreen true",
         "full_samples_settings": {
@@ -663,7 +663,7 @@
     },
     {
         "case": "STR_FRN_054",
-        "status": "active",
+        "status": "observed",
         "server_keys": "-extStats true -Protocol tcp",
         "client_keys": "-Fullscreen true",
         "full_samples_settings": {
@@ -679,7 +679,7 @@
     },
     {
         "case": "STR_FRN_055",
-        "status": "active",
+        "status": "observed",
         "server_keys": "-Resolution 3840,2160 -extStats true -Protocol tcp",
         "client_keys": "-Fullscreen true",
         "full_samples_settings": {
@@ -696,7 +696,7 @@
     },
     {
         "case": "STR_FRN_056",
-        "status": "active",
+        "status": "observed",
         "server_keys": "-Resolution 1280,720 -extStats true -Protocol tcp",
         "client_keys": "-Fullscreen true",
         "full_samples_settings": {
@@ -845,7 +845,7 @@
     },
     {
         "case": "STR_FRN_068",
-        "status": "active",
+        "status": "observed",
         "server_keys": "-Codec h.264 -extStats true -Protocol tcp",
         "client_keys": "-Fullscreen true",
         "full_samples_settings": {
@@ -862,7 +862,7 @@
     },
     {
         "case": "STR_FRN_069",
-        "status": "active",
+        "status": "observed",
         "server_keys": "-Resolution 3840,2160 -Codec h.264 -extStats true -Protocol tcp",
         "client_keys": "-Fullscreen true",
         "full_samples_settings": {
@@ -880,7 +880,7 @@
     },
     {
         "case": "STR_FRN_070",
-        "status": "active",
+        "status": "observed",
         "server_keys": "-Resolution 1280,720 -Codec h.264 -extStats true -Protocol tcp",
         "client_keys": "-Fullscreen true",
         "full_samples_settings": {
