@@ -407,7 +407,7 @@ def start_full_samples(args, case, socket, script_path=None):
     if platform.system() == "Windows":
         if script_path:
             main_logger.info("Run Full Samples script")
-            process = psutil.Popen(script_path)
+            process = psutil.Popen(script_path, stdout=PIPE, stderr=PIPE, shell=True)
 
         if args.execution_type == "server":
             try:
