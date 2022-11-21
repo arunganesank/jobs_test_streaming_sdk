@@ -573,7 +573,7 @@ def close_streaming_sdk(args, case, process):
         main_logger.info("Start closing")
 
         if platform.system() == "Windows":
-            if args.execution_type != "server" and args.execution_type != "android":
+            if args.execution_type != "server":
                 for window in pyautogui.getAllWindows():
                     if "RemoteGameClient" in window.title:
                         streaming_window = window._hWnd
@@ -583,7 +583,7 @@ def close_streaming_sdk(args, case, process):
             else:
                 close_streaming_server_process(process)
 
-            if args.execution_type == "server" or args.execution_type == "android":
+            if args.execution_type == "server":
                 crash_window = win32gui.FindWindow(None, "RemoteGameServer.exe")
             else:
                 crash_window = win32gui.FindWindow(None, "RemoteGameClient.exe")
@@ -712,17 +712,23 @@ def close_streaming_server_process(process):
             main_logger.info(ch.pid)
             main_logger.info(ch.name())
             os.kill(ch.pid, stop_signal)
-        except:
+            sleep(0.5)
+            status = process.status()
+            main_logger.info("Process is still alive. Try to send sigint second time")
+            os.kill(ch.pid, stop_signal)
+            sleep(0.5)
+            status = process.status()
+            main_logger.info("Process is still alive. Try to force terminate process")
+            utils.terminate_process(ch.pid)
+            status = process.status()
+            raise Exception("Process is alive after force termination")
+        except psutil.NoSuchProcess:
             pass
 
-    sleep(0.5)
-
+    # try to close cmd/terminal process
     try:
         main_logger.info(process.pid)
         main_logger.info(process.name())
-        os.kill(process.pid, stop_signal)
-        sleep(0.5)
-        # sometimes first siging signal is ignored by cmd process
         os.kill(process.pid, stop_signal)
     except:
         pass
