@@ -392,6 +392,7 @@ def execute_tests(args):
                         # start server after client
                         if "start_first" not in case or case["start_first"] == "client":
                             main_logger.info("Start Streaming SDK server instance")
+                            sleep(5)
                             process = start_streaming(args, case, script_path=server_script_path)
 
                     main_logger.info("Finish action execution\n\n\n")
@@ -474,7 +475,9 @@ def execute_tests(args):
 
         # make a delay if it's specified for the current test case
         if "case_delay" in case:
-            time.sleep(case["case_delay"])
+            sleep(case["case_delay"])
+        else:
+            sleep(5)
 
     return rc
 
