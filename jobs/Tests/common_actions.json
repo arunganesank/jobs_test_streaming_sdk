@@ -10,7 +10,7 @@
         "start_test_actions_client",
         "make_screen test_actions",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 test_actions"
     ],
 
@@ -20,7 +20,7 @@
         "start_actions",
         "make_screen test_actions",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 test_actions"
     ],
 
@@ -35,7 +35,7 @@
         "start_test_actions_client",
         "make_screen test_actions",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 test_actions"
     ],
 
@@ -45,7 +45,7 @@
         "start_actions",
         "make_screen test_actions",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 test_actions"
     ],
 
@@ -60,7 +60,7 @@
         "sleep 1",
         "make_screen heaven_benchmark",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 heaven_benchmark",
         "press_keys_server \"esc\""
     ],
@@ -72,7 +72,7 @@
         "sleep 1",
         "make_screen heaven_benchmark",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 heaven_benchmark",
         "press_keys \"esc\""
     ],
@@ -88,7 +88,7 @@
         "sleep 1",
         "make_screen heaven_benchmark",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 heaven_benchmark",
         "press_keys_server \"esc\""
     ],
@@ -100,7 +100,7 @@
         "sleep 1",
         "make_screen heaven_benchmark",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 heaven_benchmark",
         "press_keys \"esc\""
     ],
@@ -116,7 +116,7 @@
         "sleep 1",
         "make_screen heaven_benchmark",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 heaven_benchmark",
         "press_keys_server \"esc\""
     ],
@@ -128,7 +128,7 @@
         "sleep 1",
         "make_screen heaven_benchmark",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 heaven_benchmark",
         "press_keys \"esc\""
     ],
@@ -144,7 +144,7 @@
         "sleep 1",
         "make_screen heaven_benchmark",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 heaven_benchmark",
         "press_keys_server \"esc\""
     ],
@@ -160,7 +160,7 @@
         "sleep 1",
         "make_screen valley_benchmark",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 valley_benchmark",
         "press_keys_server \"esc\""
     ],
@@ -172,7 +172,7 @@
         "sleep 1",
         "make_screen valley_benchmark",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 valley_benchmark",
         "press_keys \"esc\""
     ],
@@ -188,7 +188,7 @@
         "sleep 1",
         "make_screen valley_benchmark",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 valley_benchmark",
         "press_keys_server \"esc\""
     ],
@@ -200,7 +200,7 @@
         "sleep 1",
         "make_screen valley_benchmark",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 valley_benchmark",
         "press_keys \"esc\""
     ],
@@ -216,7 +216,7 @@
         "sleep 1",
         "make_screen valley_benchmark",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 valley_benchmark",
         "press_keys_server \"esc\""
     ],
@@ -228,7 +228,7 @@
         "sleep 1",
         "make_screen valley_benchmark",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 valley_benchmark",
         "press_keys \"esc\""
     ],
@@ -244,7 +244,7 @@
         "sleep 1",
         "make_screen valley_benchmark",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 valley_benchmark",
         "press_keys_server \"esc\""
     ],
@@ -289,7 +289,7 @@
         "start_test_actions_client",
         "make_screen test_actions",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 test_actions"
     ],
 
@@ -299,7 +299,7 @@
         "start_actions",
         "make_screen test_actions",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 test_actions"
     ],
 
@@ -314,7 +314,7 @@
         "start_test_actions_client",
         "make_screen test_actions",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 test_actions"
     ],
 
@@ -324,7 +324,7 @@
         "start_actions",
         "make_screen test_actions",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 test_actions"
     ],
 
@@ -339,7 +339,7 @@
         "start_test_actions_client",
         "make_screen test_actions",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 test_actions"
     ],
 
@@ -349,7 +349,7 @@
         "start_actions",
         "make_screen test_actions",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 test_actions"
     ],
 
@@ -364,7 +364,7 @@
         "start_test_actions_client",
         "make_screen test_actions",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 test_actions"
     ],
 
@@ -374,7 +374,7 @@
         "start_actions",
         "make_screen test_actions",
         "sleep 3",
-        "record_video 8",
+        "record_video 30",
         "sleep_and_screen 4 4 3 test_actions"
     ]
 }
