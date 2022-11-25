@@ -254,19 +254,10 @@
         "sleep 5",
         "make_screen",
         "sleep 1",
-        "move 1000 800",
-        "sleep 1",
-        "click",
-        "sleep 1",
-        "click",
-        "sleep 1",
-        "start_latency_tool",
-        "sleep 3",
-        "check_game \"VIDEORENDER\" \"RuntimeBroker.exe\"",
         "make_screen empty",
-        "sleep 4",
-        "record_video 10",
-        "sleep_and_screen 5 4 4 empty"
+        "sleep 3",
+        "record_video 30",
+        "sleep_and_screen 4 4 3 empty"
     ],
 
     "empty_actions_android": [
@@ -274,8 +265,8 @@
         "sleep 5",
         "make_screen empty",
         "sleep 3",
-        "record_video 10",
-        "sleep_and_screen 5 4 4 empty"
+        "record_video 30",
+        "sleep_and_screen 4 4 3 empty"
     ],
 
     "dota2dx11_actions": [
