@@ -583,7 +583,6 @@ def close_streaming_sdk(args, case, process):
             else:
                 close_streaming_server_process(process)
 
-
             if args.execution_type == "server":
                 crash_window = win32gui.FindWindow(None, "RemoteGameServer.exe")
             else:
@@ -713,10 +712,20 @@ def close_streaming_server_process(process):
             main_logger.info(ch.pid)
             main_logger.info(ch.name())
             os.kill(ch.pid, stop_signal)
-        except:
+            sleep(0.5)
+            status = process.status()
+            main_logger.info("Process is still alive. Try to send sigint second time")
+            os.kill(ch.pid, stop_signal)
+            sleep(0.5)
+            status = process.status()
+            main_logger.info("Process is still alive. Try to force terminate process")
+            utils.terminate_process(ch.pid)
+            status = process.status()
+            raise Exception("Process is alive after force termination")
+        except psutil.NoSuchProcess:
             pass
 
-    # main process is necesary to close only on Ubuntu (to close xterm window)
+    # try to close cmd/terminal process
     try:
         main_logger.info(process.pid)
         main_logger.info(process.name())

@@ -206,8 +206,7 @@ def save_results(args, case, cases, execution_time = 0.0, test_case_status = "",
 
         # gray artifacts were datected
         if test_case_report["gray_artifacts_detected"] and test_case_report["test_status"] != "error":
-            test_case_report["test_status"] = "failed"
-            test_case_report["message"] += ["Gray artifacts detected on Android client"]
+            test_case_report["message"] += ["Gray artifacts could be detected on Android client"]
 
     with open(os.path.join(args.output, case["case"] + CASE_REPORT_SUFFIX), "w") as file:
         json.dump([test_case_report], file, indent=4)
@@ -392,6 +391,7 @@ def execute_tests(args):
                         # start server after client
                         if "start_first" not in case or case["start_first"] == "client":
                             main_logger.info("Start Streaming SDK server instance")
+                            sleep(5)
                             process = start_streaming(args, case, script_path=server_script_path)
 
                     main_logger.info("Finish action execution\n\n\n")
@@ -474,7 +474,9 @@ def execute_tests(args):
 
         # make a delay if it's specified for the current test case
         if "case_delay" in case:
-            time.sleep(case["case_delay"])
+            sleep(case["case_delay"])
+        else:
+            sleep(5)
 
     return rc
 
