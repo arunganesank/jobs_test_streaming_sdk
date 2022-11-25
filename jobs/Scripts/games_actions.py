@@ -518,7 +518,8 @@ def get_game_window_name(game_name):
             "dota2vulkan": "Dota 2",
             "csgo": "Counter-Strike: Global Offensive - Direct3D 9",
             "pubg": "PUBG: BATTLEGROUNDS ",
-            "empty": None
+            "empty": None,
+            "basicsanity": None
         },
         "Linux": {
             "heavenopengl": "Unigine Heaven Benchmark 4.0 (Basic Edition)",
@@ -547,7 +548,8 @@ def get_game_process_name(game_name):
             "dota2vulkan": "dota2.exe",
             "csgo": "csgo.exe",
             "pubg": "TslGame.exe",
-            "empty": None
+            "empty": None,
+            "basicsanity": None
         },
         "Linux": {
             "heavenopengl": "heaven_x64",
@@ -576,7 +578,8 @@ def get_game_launcher_path(game_name):
             "dota2vulkan": "C:\\JN\\dota2.exe.lnk",
             "csgo": "C:\\JN\\csgo.exe.url",
             "pubg": "C:\\JN\\pubg.url",
-            "empty": None
+            "empty": None,
+            "basicsanity": None
         },
         "Linux": {
             "heavenopengl": "/scripts/launch_heaven",
