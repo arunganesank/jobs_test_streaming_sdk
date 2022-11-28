@@ -990,13 +990,20 @@ def analyze_logs(work_dir, json_content, case, execution_type="server", streamin
             if os.path.exists(log_path):
                 with open(log_path, 'r') as log_file:
                     number_of_problems = 0
+                    max_avg_latency = 0
                     log = log_file.readlines()
 
                     for line in log:
                         if "DiscoverServers() ends result=false" in line:
                             number_of_problems += 1
 
-                        if number_of_problems >= 10:
+                        if "Info: Average latency: full" in max_avg_latency:
+                            avg_latency = float(max_avg_latency.split("Info: Average latency: full")[1].split(",")[0])
+
+                            if avg_latency > max_avg_latency:
+                                max_avg_latency = avg_latency
+
+                        if number_of_problems >= 10 or max_avg_latency == 0:
                             main_logger.warning("Android client could not connect")
                             if "expected_connection_problems" not in case or "android_client" not in case["expected_connection_problems"]:
                                 json_content["message"].append("Android client could not connect")
