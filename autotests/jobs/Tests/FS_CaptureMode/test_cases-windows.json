@@ -174,7 +174,7 @@
         "script_info": [
             "Present Capture Mode",
             "CapFPS true",
-            "Capture Mode change Framerate",
+            "Capture Mode change ASAP",
             "TCP"
         ]
     },
