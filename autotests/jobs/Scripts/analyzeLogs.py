@@ -980,12 +980,7 @@ def analyze_logs(work_dir, json_content, case, execution_type="server", streamin
             main_logger.info("Saved errors: {}".format(saved_errors))
 
         elif execution_type == "android_client":
-            log_key = "android_log"
-
-            if log_key in json_content:
-                log_path = os.path.join(work_dir, json_content[log_key]).replace('/', os.path.sep).replace('\\', os.path.sep)
-            else:
-                log_path = os.path.join(work_dir, "tool_logs", json_content["test_case"] + "_android.log")
+            log_path = os.path.join(work_dir, "tool_logs", json_content["test_case"] + "_android.log")
 
             if os.path.exists(log_path):
                 with open(log_path, 'r') as log_file:
@@ -993,25 +988,27 @@ def analyze_logs(work_dir, json_content, case, execution_type="server", streamin
                     log = log_file.readlines()
 
                     for line in log:
-                        if "Info: Average latency: full" in max_avg_latency:
-                            avg_latency = float(max_avg_latency.split("Info: Average latency: full")[1].split(",")[0])
+                        if "Info: Average latency: full" in line:
+                            avg_latency = float(line.split("Info: Average latency: full")[1].split(",")[0])
 
                             if max_avg_latency is None or avg_latency > max_avg_latency:
                                 max_avg_latency = avg_latency
 
-                        if max_avg_latency is None or max_avg_latency == 0:
-                            main_logger.warning("Android client could not connect")
-                            if "expected_connection_problems" not in case or "android_client" not in case["expected_connection_problems"]:
-                                json_content["message"].append("Android client could not connect")
-                                if json_content["test_status"] != "observed":
-                                    json_content["test_status"] = "error"
+                    main_logger.info(f"Max avg latency (Android): {max_avg_latency}")
 
-                            break
-                    else:
-                        if "expected_connection_problems" in case and "android_client" in case["expected_connection_problems"]:
-                            json_content["message"].append("Android client has connected, but it wasn't expected")
+                    if max_avg_latency is None or max_avg_latency == 0:
+                        main_logger.warning("Android client could not connect")
+                        if "expected_connection_problems" not in case or "android_client" not in case["expected_connection_problems"]:
+                            json_content["message"].append("Android client could not connect")
                             if json_content["test_status"] != "observed":
                                 json_content["test_status"] = "error"
+
+                    elif "expected_connection_problems" in case and "android_client" in case["expected_connection_problems"]:
+                        json_content["message"].append("Android client has connected, but it wasn't expected")
+                        if json_content["test_status"] != "observed":
+                            json_content["test_status"] = "error"
+            else:
+                main_logger.warning("Android log does not exist")
 
         elif execution_type == "windows_client" or execution_type == "second_windows_client":
             if execution_type == "windows_client":
