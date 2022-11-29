@@ -1,0 +1,238 @@
+[
+    {
+        "case": "STR_FRT_001",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -extStats true -Protocol udp",
+        "client_keys": "-Fullscreen true",
+        "full_samples_settings": {
+            "Video": {
+                "Render type": "OpenGL"
+            }
+        },
+        "script_info": [
+            "Default Render Type",
+            "Render Type change OpenGL",
+            "UDP"
+        ]
+    },
+    {
+        "case": "STR_FRT_002",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -extStats true -Protocol udp",
+        "client_keys": "-Fullscreen true",
+        "full_samples_settings": {
+            "Video": {
+                "Render type": "Vulkan"
+            }
+        },
+        "script_info": [
+            "Default Render Type",
+            "Render Type change Vulkan",
+            "UDP"
+        ]
+    },
+    {
+        "case": "STR_FRT_003",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -Render OpenGL -extStats true -Protocol udp",
+        "client_keys": "-Fullscreen true",
+        "full_samples_settings": {
+            "Video": {
+                "Render type": "DX11"
+            }
+        },
+        "script_info": [
+            "OpenGL Render Type",
+            "Render Type change DX11",
+            "UDP"
+        ]
+    },
+    {
+        "case": "STR_FRT_004",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -Render OpenGL -extStats true -Protocol udp",
+        "client_keys": "-Fullscreen true",
+        "full_samples_settings": {
+            "Video": {
+                "Render type": "Vulkan"
+            }
+        },
+        "script_info": [
+            "OpenGL Render Type",
+            "Render Type change Vulkan",
+            "UDP"
+        ]
+    },
+    {
+        "case": "STR_FRT_005",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -Render Vulkan -extStats true -Protocol udp",
+        "client_keys": "-Fullscreen true",
+        "full_samples_settings": {
+            "Video": {
+                "Render type": "OpenGL"
+            }
+        },
+        "script_info": [
+            "Vulkan Render Type",
+            "Render Type change OpenGL",
+            "UDP"
+        ]
+    },
+    {
+        "case": "STR_FRT_006",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -Render Vulkan -extStats true -Protocol udp",
+        "client_keys": "-Fullscreen true",
+        "full_samples_settings": {
+            "Video": {
+                "Render type": "OpenGL"
+            }
+        },
+        "script_info": [
+            "Vulkan Render Type",
+            "Render Type change DX11",
+            "UDP"
+        ]
+    },
+    {
+        "case": "STR_FRT_007",
+        "status": "skipped",
+        "server_keys": "-Resolution <resolution> -extStats true -Protocol udp",
+        "client_keys": "-Fullscreen true -Render OpenGL",
+
+        "script_info": [
+            "Client Render Type OpenGL",
+            "UDP"
+        ]
+    },
+    {
+        "case": "STR_FRT_008",
+        "status": "skipped",
+        "server_keys": "-Resolution <resolution> -extStats true -Protocol udp",
+        "client_keys": "-Fullscreen true -Render Vulkan",
+
+        "script_info": [
+            "Client Render Type Vulkan",
+            "UDP"
+        ]
+    },
+    {
+        "case": "STR_FRT_009",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -extStats true -Protocol tcp",
+        "client_keys": "-Fullscreen true",
+        "full_samples_settings": {
+            "Video": {
+                "Render type": "OpenGL"
+            }
+        },
+        "script_info": [
+            "Default Render Type",
+            "Render Type change OpenGL",
+            "TCP"
+        ]
+    },
+    {
+        "case": "STR_FRT_010",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -extStats true -Protocol tcp",
+        "client_keys": "-Fullscreen true",
+        "full_samples_settings": {
+            "Video": {
+                "Render type": "Vulkan"
+            }
+        },
+        "script_info": [
+            "Default Render Type",
+            "Render Type change Vulkan",
+            "TCP"
+        ]
+    },
+    {
+        "case": "STR_FRT_011",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -Render OpenGL -extStats true -Protocol tcp",
+        "client_keys": "-Fullscreen true",
+        "full_samples_settings": {
+            "Video": {
+                "Render type": "DX11"
+            }
+        },
+        "script_info": [
+            "OpenGL Render Type",
+            "Render Type change DX11",
+            "TCP"
+        ]
+    },
+    {
+        "case": "STR_FRT_012",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -Render OpenGL -extStats true -Protocol tcp",
+        "client_keys": "-Fullscreen true",
+        "full_samples_settings": {
+            "Video": {
+                "Render type": "Vulkan"
+            }
+        },
+        "script_info": [
+            "OpenGL Render Type",
+            "Render Type change Vulkan",
+            "TCP"
+        ]
+    },
+    {
+        "case": "STR_FRT_013",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -Render Vulkan -extStats true -Protocol tcp",
+        "client_keys": "-Fullscreen true",
+        "full_samples_settings": {
+            "Video": {
+                "Render type": "OpenGL"
+            }
+        },
+        "script_info": [
+            "Vulkan Render Type",
+            "Render Type change OpenGL",
+            "TCP"
+        ]
+    },
+    {
+        "case": "STR_FRT_014",
+        "status": "active",
+        "server_keys": "-Resolution <resolution> -Render Vulkan -extStats true -Protocol tcp",
+        "client_keys": "-Fullscreen true",
+        "full_samples_settings": {
+            "Video": {
+                "Render type": "DX11"
+            }
+        },
+        "script_info": [
+            "Vulkan Render Type",
+            "Render Type change DX11",
+            "TCP"
+        ]
+    },
+    {
+        "case": "STR_FRT_015",
+        "status": "skipped",
+        "server_keys": "-Resolution <resolution> -extStats true -Protocol tcp",
+        "client_keys": "-Fullscreen true -Render OpenGL",
+
+        "script_info": [
+            "Client Render Type OpenGL",
+            "TCP"
+        ]
+    },
+    {
+        "case": "STR_FRT_016",
+        "status": "skipped",
+        "server_keys": "-Resolution <resolution> -extStats true -Protocol tcp",
+        "client_keys": "-Fullscreen true -Render Vulkan",
+
+        "script_info": [
+            "Client Render Type Vulkan",
+            "TCP"
+        ]
+    }
+]
