@@ -102,7 +102,7 @@
     {
         "case": "STR_CFG_032",
         "status": "active",
-        "server_keys": "-extStats true -CaptureMode asap -Protocol tcp",
+        "server_keys": "-extStats true -CaptureMode framerate -Protocol tcp",
         "client_keys": "",
         "script_info": [
             "Display block",
@@ -112,7 +112,7 @@
     {
         "case": "STR_CFG_033",
         "status": "active",
-        "server_keys": "-extStats true -CaptureMode asap -Protocol tcp",
+        "server_keys": "-extStats true -CaptureMode framerate -Protocol tcp",
         "client_keys": "",
         "script_info": [
             "Display block",
@@ -313,7 +313,7 @@
     {
         "case": "STR_CFG_011",
         "status": "active",
-        "server_keys": "-extStats true -CaptureMode asap -Protocol udp",
+        "server_keys": "-extStats true -CaptureMode framerate -Protocol udp",
         "client_keys": "",
         "script_info": [
             "Display block",
@@ -323,7 +323,7 @@
     {
         "case": "STR_CFG_012",
         "status": "active",
-        "server_keys": "-extStats true -CaptureMode asap -Protocol udp",
+        "server_keys": "-extStats true -CaptureMode framerate -Protocol udp",
         "client_keys": "",
         "script_info": [
             "Display block",
