@@ -99,7 +99,7 @@
         "case": "STR_FRT_007",
         "status": "active",
         "server_keys": "-Resolution <resolution> -extStats true -Protocol udp",
-        "client_keys": "-Fullscreen true, -Render OpenGL",
+        "client_keys": "-Fullscreen true -Render OpenGL",
 
         "script_info": [
             "Client Render Type OpenGL",
@@ -110,7 +110,7 @@
         "case": "STR_FRT_008",
         "status": "active",
         "server_keys": "-Resolution <resolution> -extStats true -Protocol udp",
-        "client_keys": "-Fullscreen true, -Render Vulkan",
+        "client_keys": "-Fullscreen true -Render Vulkan",
 
         "script_info": [
             "Client Render Type Vulkan",
@@ -217,7 +217,7 @@
         "case": "STR_FRT_015",
         "status": "active",
         "server_keys": "-Resolution <resolution> -extStats true -Protocol tcp",
-        "client_keys": "-Fullscreen true, -Render OpenGL",
+        "client_keys": "-Fullscreen true -Render OpenGL",
 
         "script_info": [
             "Client Render Type OpenGL",
@@ -228,7 +228,7 @@
         "case": "STR_FRT_016",
         "status": "active",
         "server_keys": "-Resolution <resolution> -extStats true -Protocol tcp",
-        "client_keys": "-Fullscreen true, -Render Vulkan",
+        "client_keys": "-Fullscreen true -Render Vulkan",
 
         "script_info": [
             "Client Render Type Vulkan",
