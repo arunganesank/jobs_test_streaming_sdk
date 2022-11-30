@@ -18,3 +18,5 @@ python prepare_test_cases.py --os_name "Windows"
 python -m pip install -r requirements-win.txt
 
 python ..\jobs_launcher\executeTests.py --test_filter %TESTS_FILTER% --file_filter %FILE_FILTER% --tests_root ..\jobs --work_root ..\Work\Results --work_dir StreamingSDK --cmd_variables clientTool "..\StreamingSDK" serverTool "..\StreamingSDK" executionType %EXECUTION_TYPE% ipAddress %IP_ADDRESS% communicationPort %COMMUNICATION_PORT% retries %RETRIES% serverGPUName %SERVER_GPU_NAME% serverOSName %SERVER_OS_NAME% gameName %GAME_NAME% collectTraces %COLLECT_TRACES% screenResolution %SCREEN_RESOLUTION%
+
+python close_games.py --game_name %GAME_NAME%
